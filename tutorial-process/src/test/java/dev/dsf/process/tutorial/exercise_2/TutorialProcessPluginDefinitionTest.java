@@ -58,7 +58,7 @@ public class TutorialProcessPluginDefinitionTest
 		String valueSetUrl = "http://dsf.dev/fhir/ValueSet/tutorial";
 
 		String codeSystemFile = "fhir/CodeSystem/tutorial.xml";
-		String valueSetFile = "fhir/CodeSystem/tutorial.xml";
+		String valueSetFile = "fhir/ValueSet/tutorial.xml";
 		String draftTaskFile = "fhir/Task/task-start-dic-process.xml";
 
 

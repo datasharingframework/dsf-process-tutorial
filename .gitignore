@@ -18,6 +18,9 @@ dev-setup/**/bpe/last_event/time.file
 dev-setup/**/bpe/plugin/*.jar
 dev-setup/**/bpe/process/*.jar
 
+dev-setup/keycloak/*
+dev-setup/secrets/keycloak_trust_store.jks
+
 dev-setup/**/fhir/conf/bundle.xml
 dev-setup/**/fhir/log/*.log
 dev-setup/**/fhir/log/*.log.gz
