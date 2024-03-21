@@ -401,7 +401,7 @@
     } ],
     "disableableCredentialTypes" : [ ],
     "requiredActions" : [ ],
-    "realmRoles" : [ "default-roles-cos" ],
+    "realmRoles" : [ "default-roles-cos" , "admin" ],
     "notBefore" : 0,
     "groups" : [ ]
   } ],
