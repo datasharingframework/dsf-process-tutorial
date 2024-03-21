@@ -401,7 +401,7 @@
     } ],
     "disableableCredentialTypes" : [ ],
     "requiredActions" : [ ],
-    "realmRoles" : [ "default-roles-hrp" ],
+    "realmRoles" : [ "default-roles-hrp" , "admin" ],
     "notBefore" : 0,
     "groups" : [ ]
   } ],
