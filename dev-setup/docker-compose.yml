@@ -145,6 +145,20 @@ services:
       DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_server_trust_certificates.pem
       DEV_DSF_SERVER_AUTH_OIDC_CLIENT_ID: cos-fhir
       DEV_DSF_SERVER_AUTH_OIDC_CLIENT_SECRET: P7XhxzBixIf9vPdprItkbOXZwtSX2JNt
+      DEV_DSF_FHIR_SERVER_ROLECONFIG: |
+        - webbrowser_test_user:
+            thumbprint: ${WEBBROWSER_TEST_USER_THUMBPRINT}
+            token-role: admin
+            dsf-role:
+              - CREATE
+              - READ
+              - UPDATE
+              - DELETE
+              - SEARCH
+              - HISTORY
+              - PERMANENT_DELETE
+            practitioner-role:
+              - http://dsf.dev/fhir/CodeSystem/practitioner-role|DSF_ADMIN
 
     networks:
       cos-fhir-frontend:
@@ -208,6 +222,12 @@ services:
       DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_server_trust_certificates.pem
       DEV_DSF_SERVER_AUTH_OIDC_CLIENT_ID: cos-bpe
       DEV_DSF_SERVER_AUTH_OIDC_CLIENT_SECRET: 5GtUIUfoXnQVcsRfd0Hg4EGv14iAknGq
+      DEV_DSF_BPE_SERVER_ROLECONFIG: |
+        - webbrowser_test_user:
+            thumbprint: ${WEBBROWSER_TEST_USER_THUMBPRINT}
+            token-role: admin
+            dsf-role:
+              - ADMIN
     networks:
       cos-bpe-frontend:
         ipv4_address: 172.20.0.147
@@ -265,6 +285,20 @@ services:
       DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_server_trust_certificates.pem
       DEV_DSF_SERVER_AUTH_OIDC_CLIENT_ID: dic-fhir
       DEV_DSF_SERVER_AUTH_OIDC_CLIENT_SECRET: mF0GEtjFoyWIM3in4VCwifGI3azb4DTn
+      DEV_DSF_FHIR_SERVER_ROLECONFIG: |
+        - webbrowser_test_user:
+            thumbprint: ${WEBBROWSER_TEST_USER_THUMBPRINT}
+            token-role: admin
+            dsf-role:
+              - CREATE
+              - READ
+              - UPDATE
+              - DELETE
+              - SEARCH
+              - HISTORY
+              - PERMANENT_DELETE
+            practitioner-role:
+              - http://dsf.dev/fhir/CodeSystem/practitioner-role|DSF_ADMIN
     networks:
       dic-fhir-frontend:
         ipv4_address: 172.20.0.67
@@ -327,6 +361,12 @@ services:
       DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_server_trust_certificates.pem
       DEV_DSF_SERVER_AUTH_OIDC_CLIENT_ID: dic-bpe
       DEV_DSF_SERVER_AUTH_OIDC_CLIENT_SECRET: ytqFCErw9GfhVUrrM8xc0Grbu4r7qGig
+      DEV_DSF_BPE_SERVER_ROLECONFIG: |
+        - webbrowser_test_user:
+            thumbprint: ${WEBBROWSER_TEST_USER_THUMBPRINT}
+            token-role: admin
+            dsf-role:
+              - ADMIN
 
       DEV_DSF_PROCESS_TUTORIAL_LOGGINGENABLED: 'true'
     networks:
@@ -386,6 +426,20 @@ services:
       DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_server_trust_certificates.pem
       DEV_DSF_SERVER_AUTH_OIDC_CLIENT_ID: hrp-fhir
       DEV_DSF_SERVER_AUTH_OIDC_CLIENT_SECRET: 9i9WRfIedG7N3QoL5WuGM8hCoySblAhK
+      DEV_DSF_FHIR_SERVER_ROLECONFIG: |
+        - webbrowser_test_user:
+            thumbprint: ${WEBBROWSER_TEST_USER_THUMBPRINT}
+            token-role: admin
+            dsf-role:
+              - CREATE
+              - READ
+              - UPDATE
+              - DELETE
+              - SEARCH
+              - HISTORY
+              - PERMANENT_DELETE
+            practitioner-role:
+              - http://dsf.dev/fhir/CodeSystem/practitioner-role|DSF_ADMIN
     networks:
       hrp-fhir-frontend:
         ipv4_address: 172.20.0.83
@@ -449,6 +503,12 @@ services:
       DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_server_trust_certificates.pem
       DEV_DSF_SERVER_AUTH_OIDC_CLIENT_ID: hrp-bpe
       DEV_DSF_SERVER_AUTH_OIDC_CLIENT_SECRET: VGTQD3WWH4uGUMz408NWNzcHF1MsfV0l
+      DEV_DSF_BPE_SERVER_ROLECONFIG: |
+        - webbrowser_test_user:
+            thumbprint: ${WEBBROWSER_TEST_USER_THUMBPRINT}
+            token-role: admin
+            dsf-role:
+              - ADMIN
     networks:
       hrp-bpe-frontend:
         ipv4_address: 172.20.0.131
