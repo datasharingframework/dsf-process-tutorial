@@ -48,5 +48,8 @@ public interface ConstantsTutorial
 			+ RESOURCE_VERSION;
 	String PROFILE_TUTORIAL_TASK_HELLO_HRP_MESSAGE_NAME = "helloHrp";
 
+	String CODESYSTEM_TUTORIAL = "http://dsf.dev/fhir/CodeSystem/tutorial";
+	String CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT = "tutorial-input";
+
 	String TUTORIAL_HRP_ORGANIZATION_IDENTIFIER = "Test_HRP";
 }
