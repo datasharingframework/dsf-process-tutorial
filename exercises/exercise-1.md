@@ -29,7 +29,8 @@ In order to solve this exercise, you need to have read the topics on [FHIR](../l
 [Service Delegates](../learning/concepts/dsf/service-delegates.md),
 [BPMN Process Execution](../learning/concepts/dsf/bpmn-process-execution.md), 
 [BPMN Process Variables](../learning/concepts/dsf/bpmn-process-variables.md), 
-[Accessing BPMN Process Variables](../learning/guides/accessing-bpmn-process-variables.md)
+[Accessing BPMN Process Variables](../learning/guides/accessing-bpmn-process-variables.md),
+[About Version, Placeholders and URLs](../learning/concepts/dsf/about-version-placeholders-and-urls.md)
 and [Starting a Process via Task Resources](../learning/guides/starting-a-process-via-task-resources.md).
 
 Solutions to this exercise are found on the branch `solutions/exercise-1`.
@@ -110,7 +111,7 @@ To verify the `dsfdev_dicProcess` can be executed successfully, we need to deplo
 	Verify the DSF BPE server started successfully and deployed the `dsfdev_dicProcess`. 
     The DSF BPE server should print a message that the process was deployed. The DSF FHIR server should now have a new ActivityDefinition resource. Go to `https://dic/fhir/ActivityDefinition` to check if the expected resource was created by the BPE while deploying the process. The returned FHIR Bundle should contain a single ActivityDefinition. Also, go to `https://dic/fhir/StructureDefinition?url=http://dsf.dev/fhir/StructureDefinition/task-start-dic-process` to check if the expected [FHIR Task](../learning/concepts/fhir/task.md) profile was created.
 
-3. Start the `dsfdev_dicProcess` by posting an appropriate [FHIR Task](../learning/concepts/fhir/task.md) resource to the DSF FHIR server using either cURL or the DSF FHIR server's web interface. Check out [Starting A Process Via Task Resources](../learning/guides/starting-a-process-via-task-resources) again if you are unsure.  
+3. Start the `dsfdev_dicProcess` by posting an appropriate [FHIR Task](../learning/concepts/fhir/task.md) resource to the DSF FHIR server using either cURL or the DSF FHIR server's web interface. Check out [Starting A Process Via Task Resources](../learning/guides/starting-a-process-via-task-resources.md) again if you are unsure.  
 	
     Verify that the  [FHIR Task](../learning/concepts/fhir/task.md) resource could be created at the DSF FHIR server. Either look at your docker container log for the DIC FHIR server or find your [Task](../learning/concepts/fhir/task) resource in the list of all [Task](../learning/concepts/fhir/task) resources under https://dic/fhir/Task/. 
 	
