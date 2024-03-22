@@ -27,7 +27,7 @@ public class DockerComposeTest
 	private final String TEST_DIC_FHIR_NAME = "dic-fhir";
 	private final String TEST_HRP_FHIR_NAME = "hrp-fhir";
 
-	private final List<String> dsfInstances = List.of(TEST_COS_FHIR_NAME, TEST_DIC_FHIR_NAME, TEST_HRP_FHIR_NAME);
+	private final List<String> dsfInstances = List.of(TEST_DIC_FHIR_NAME);
 	private final String ROLECONFIG_FINISHED_PATTERN = "(^\\s{4}\\w+:)|(^\\s*$)"; // Either starting the line with 4
 																					// whitespaces followed by a word
 																					// ending with a colon or an "empty"
