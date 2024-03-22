@@ -43,7 +43,7 @@ Verify that the build was successful and no test failures occurred.
 
 ### Process Execution and Manual Tests
 To verify the `dsfdev_dicProcess`, `dsfdev_cosProcess` and `dsfdev_hrpProcess`es can be executed successfully, we need to deploy them into DSF instances and execute the `dsfdev_dicProcess`. The maven `install` build is configured to create a process jar file with all necessary resources and copy the jar to the appropriate locations of the docker dev setup.
-Don't forget that you will have to add the client certificate for the `HRP` instance to your browser the same way you added it for the `DIC` instance
+Don't forget that you will have to add the client certificate for the `HRP` instance to your browser the same way you added it for the `DIC` and `COS` instances
 in [exercise 1](exercise-1.md) and [exercise 4](exercise-5.md) or use the Keycloak user you created in [exercise 3](exercise-3.md) for the `hrp` realm. Otherwise, you won't be able to access [https://hrp/fhir](https://hrp/fhir). You can find the client certificate
 in `.../dsf-process-tutorial/test-data-generator/cert/hrp-client/hrp-client_certificate.p12` (password: password).
 

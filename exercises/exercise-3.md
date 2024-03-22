@@ -10,29 +10,21 @@ with access to all DSF installations.
 This is part of the DSF's access control using the role configuration mechanism. It allows you to specify
 exact rules for accessing the FHIR REST API and starting processes for certain users. Either by providing
 thumbprints of their client certificates or by using [OpenID Connect](https://openid.net/developers/how-connect-works/).  
-For this exercise, we will use OpenID Connect claims to create ourselves a user with sufficient
+For this exercise, we have already created a user for you in the `DIC` realm who has sufficient
 access to the FHIR REST API and who is allowed to start our `dicProcess`.  
-The tutorial project provides a Keycloak instance for this purpose with the administration console accessible under https://keycloak:8443.
-Credentials for administrator access are `username: admin` and `password: admin`.
+This was done through a Keycloak instance with the administration console accessible under https://keycloak:8443.
+Credentials for administrator access are `username: admin` and `password: admin`.  
+Your challenge will be to take this user and explicitly allow them to start the `dicProcess`. Optionally, you can also add
+Keycloak users for the `COS` and `HRP` instances.
 
 In order to solve this exercise, you need to have read the documentation on [Access Control](https://dsf.dev/stable/maintain/fhir/access-control.html) 
 and [ActivityDefinitions](../learning/concepts/fhir/activitydefinition).
 
 ## Exercise Tasks
 
-1. In the Keycloak administrator console, create a new realm role called `tutorial` in the `cos`, `dic` and `hrp` realms.
-   <details>
-   <summary>Don't know how to access realms?</summary>
-   
-   Use the dropdown in the top left corner:  
-   ![Keycloak realm dropdown](figures/keycloak_realm_dropdown.png)
-   </details>
-   
-2. In the Keycloak administrator console, create a new user in the `cos`, `dic` and `hrp` realms with the new `tutorial` role. 
-   This will be your credentials to access all DSF FHIR server instances. Make sure you set a **non-temporary** password in the `Credentials` tab.
-3. Add a new role to the `DEV_DSF_FHIR_SERVER_ROLECONFIG` for all FHIR server instances in [docker-compose.yml](../dev-setup/docker-compose.yml). It should match any user with `token-role` equal to
+1. Add a new role to the `DEV_DSF_FHIR_SERVER_ROLECONFIG` for the DIC FHIR server instance in [docker-compose.yml](../dev-setup/docker-compose.yml). It should match any user with `token-role` equal to
    `tutorial` and have `dsf-roles` `CREATE`, `READ`, `UPDATE`, `DELETE`, `SEARCH` and `HISTORY`. Finally, the role should also have the practitioner role `DSF_ADMIN`.
-4. Change the `requester` element in the ActivityDefinition `dic-process.xml` to allow all local clients with a practitioner role of `DSF_ADMIN` to request `dicProcess` messages.
+2. Change the `requester` element in the ActivityDefinition `dic-process.xml` to allow all local clients with a practitioner role of `DSF_ADMIN` to request `dicProcess` messages.
    <details>
    <summary>Don't know how to change the ActivityDefinition?</summary>
 
@@ -40,7 +32,7 @@ and [ActivityDefinitions](../learning/concepts/fhir/activitydefinition).
    You can also check out the [guide on creating ActivityDefinitions](../learning/guides/creating-an-activity-definition.md).
    </details>
 
-5. We just made it so you will not be able to start the `dicProcess` using the client certificate utilized in earlier exercises.
+3. We just made it so you will not be able to start the `dicProcess` using the client certificate utilized in earlier exercises.
    Add another `requester` to the ActivityDefinition `dic-process.xml` which allows local clients from the `Test_DIC` organization to request `dicProcess` messages,
    in case you still want to use the client certificate to start the process.
    <details>
@@ -79,7 +71,7 @@ To verify the `dsfdev_dicProcess` can be executed successfully, we need to deplo
 
 3. Visit https://dic/fhir. First, use the client certificate to log into the DSF FHIR server and make sure you are 
    still able to start a `dsfdev_dicProcess` via the [web interface](../learning/guides/starting-a-process-via-task-resources.md#using-the-dsf-fhir-servers-web-interface).
-4. Now try doing it again, but this time use the user you created earlier. For this, you might have to clear your browser's
+4. Now try doing it again, but this time use Keycloak to log in. Your username and password are both `tutorial`. Also, you might have to clear your browser's
    SSL state because it keeps using the client certificate from before. Afterward, you can visit https://dic/fhir again but refuse to send a 
    client certificate when asked. This should forward you to the Keycloak login page.
 
