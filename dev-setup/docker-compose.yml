@@ -21,10 +21,16 @@ services:
     networks:
       dic-fhir-frontend:
         ipv4_address: 172.20.0.66
+      dic-bpe-frontend:
+        ipv4_address: 172.20.0.114
       hrp-fhir-frontend:
         ipv4_address: 172.20.0.82
+      hrp-bpe-frontend:
+        ipv4_address: 172.20.0.130
       cos-fhir-frontend:
         ipv4_address: 172.20.0.98
+      cos-bpe-frontend:
+        ipv4_address: 172.20.0.146
       internet:
         aliases:
           - cos
@@ -214,6 +220,8 @@ services:
       DEV_DSF_BPE_DB_USER_CAMUNDA_GROUP: cos_camunda_users
       DEV_DSF_BPE_DB_USER_CAMUNDA_USERNAME: cos_camunda_server_user
       DEV_DSF_BPE_FHIR_SERVER_BASE_URL: https://cos/fhir
+      DEV_DSF_BPE_SERVER_BASE_URL: https://cos/bpe
+      DEV_DSF_BPE_SERVER_UI_THEME: dev
       DEV_DSF_SERVER_AUTH_TRUST_CLIENT_CERTIFICATE_CAS: /run/secrets/app_client_trust_certificates.pem
       DEV_DSF_SERVER_AUTH_OIDC_AUTHORIZATION_CODE_FLOW: 'true'
       DEV_DSF_SERVER_AUTH_OIDC_BACK_CHANNEL_LOGOUT: 'true'
@@ -353,6 +361,8 @@ services:
       DEV_DSF_BPE_DB_USER_CAMUNDA_GROUP: dic_camunda_users
       DEV_DSF_BPE_DB_USER_CAMUNDA_USERNAME: dic_camunda_server_user
       DEV_DSF_BPE_FHIR_SERVER_BASE_URL: https://dic/fhir
+      DEV_DSF_BPE_SERVER_BASE_URL: https://dic/bpe
+      DEV_DSF_BPE_SERVER_UI_THEME: dev
       DEV_DSF_SERVER_AUTH_TRUST_CLIENT_CERTIFICATE_CAS: /run/secrets/app_client_trust_certificates.pem
       DEV_DSF_SERVER_AUTH_OIDC_AUTHORIZATION_CODE_FLOW: 'true'
       DEV_DSF_SERVER_AUTH_OIDC_BACK_CHANNEL_LOGOUT: 'true'
@@ -493,6 +503,8 @@ services:
       DEV_DSF_BPE_DB_USER_CAMUNDA_GROUP: hrp_camunda_users
       DEV_DSF_BPE_DB_USER_CAMUNDA_USERNAME: hrp_camunda_server_user
       DEV_DSF_BPE_FHIR_SERVER_BASE_URL: https://hrp/fhir
+      DEV_DSF_BPE_SERVER_BASE_URL: https://hrp/bpe
+      DEV_DSF_BPE_SERVER_UI_THEME: dev
       DEV_DSF_SERVER_AUTH_TRUST_CLIENT_CERTIFICATE_CAS: /run/secrets/app_client_trust_certificates.pem
       DEV_DSF_SERVER_AUTH_OIDC_AUTHORIZATION_CODE_FLOW: 'true'
       DEV_DSF_SERVER_AUTH_OIDC_BACK_CHANNEL_LOGOUT: 'true'
