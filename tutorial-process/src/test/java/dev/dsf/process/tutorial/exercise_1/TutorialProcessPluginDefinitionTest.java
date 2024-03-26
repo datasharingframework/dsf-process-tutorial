@@ -1,19 +1,28 @@
 package dev.dsf.process.tutorial.exercise_1;
 
+import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_TUTORIAL;
+import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT;
+import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_DIC_PROCESS_INSTANTIATES_CANONICAL;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.camunda.bpm.model.bpmn.Bpmn;
 import org.camunda.bpm.model.bpmn.BpmnModelInstance;
 import org.camunda.bpm.model.bpmn.instance.Process;
 import org.camunda.bpm.model.bpmn.instance.ServiceTask;
+import org.hl7.fhir.r4.model.CodeSystem;
 import org.hl7.fhir.r4.model.Resource;
+import org.hl7.fhir.r4.model.StringType;
+import org.hl7.fhir.r4.model.StructureDefinition;
 import org.hl7.fhir.r4.model.Task;
+import org.hl7.fhir.r4.model.ValueSet;
 import org.junit.Test;
 
 import dev.dsf.bpe.plugin.ProcessIdAndVersion;
@@ -49,32 +58,94 @@ public class TutorialProcessPluginDefinitionTest
 	@Test
 	public void testDicProcessResources() throws Exception
 	{
-		String draftTaskFile = "fhir/Task/task-start-dic-process.xml";
+		String structureDefinitionUrl = "http://dsf.dev/fhir/StructureDefinition/task-start-dic-process";
+
 
 		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
 		ProcessPluginImpl processPlugin = TestProcessPluginGenerator.generate(definition, false, getClass());
 		boolean initialized = processPlugin
 				.initializeAndValidateResources(ConstantsTutorial.TUTORIAL_DIC_ORGANIZATION_IDENTIFIER);
+
 		assertEquals(true, initialized);
 
-		List<Resource> dicProcessResources = processPlugin.getFhirResources().get(new ProcessIdAndVersion(
+		var fhirResources = processPlugin.getFhirResources();
+
+		List<Resource> dicProcessResources = fhirResources.get(new ProcessIdAndVersion(
 				ConstantsTutorial.PROCESS_NAME_FULL_DIC, definition.getResourceVersion()));
 
+		Map<String, List<String>> dicProcess = definition.getFhirResourcesByProcessId();
 
-		int numExpectedResources = 2;
+		int numberEntries = dicProcess.size();
+		int expectedEntries = 1;
+		String errorTooManyEntries = "Too many processes in Map. Got " + numberEntries + " entries. Expected " + expectedEntries + ".";
+		assertEquals(errorTooManyEntries, expectedEntries, numberEntries);
 
-		if (draftTaskExists(draftTaskFile))
+		String dicProcessKey = dicProcess.keySet().stream()
+				.filter(k -> k.equals(ConstantsTutorial.PROCESS_NAME_FULL_DIC)).findFirst().get();
+		String errorFaultyProcessName = "Process name is either wrong or missing. Expected '"
+				+ ConstantsTutorial.PROCESS_NAME_FULL_DIC + "' but got '" + dicProcessKey + "' from TutorialProcessPluginDefinition#getFhirResourcesByProcessId";
+		assertEquals(errorFaultyProcessName, ConstantsTutorial.PROCESS_NAME_FULL_DIC, dicProcessKey);
+
+		String errorStructureDefinition = "Process is missing StructureDefinition with url '" + structureDefinitionUrl + "'";
+		assertTrue(errorStructureDefinition, dicProcessResources.stream()
+				.filter(resource -> resource instanceof StructureDefinition)
+				.map(resource -> (StructureDefinition) resource)
+				.anyMatch(structureDefinition -> structureDefinition.getUrl().equals(structureDefinitionUrl)));
+
+		List<Task> draftTasks = getDraftTasks(dicProcessResources);
+		if(!draftTasks.isEmpty())
 		{
-			numExpectedResources = 3;
-			String errorDraftTask = "Process is missing Task resource with status 'draft'.";
-			assertEquals(errorDraftTask, 1, dicProcessResources.stream().filter(r -> r instanceof Task).count());
+			String errorDraftTask = "Process is missing Draft Task Resource with InstantiatesCanonical '" + PROFILE_TUTORIAL_TASK_DIC_PROCESS_INSTANTIATES_CANONICAL + "'.";
+			Optional<Task> draftTask = draftTasks.stream()
+					.filter(task -> task.getInstantiatesCanonical().equals(PROFILE_TUTORIAL_TASK_DIC_PROCESS_INSTANTIATES_CANONICAL))
+					.findFirst();
+			assertTrue(errorDraftTask, draftTask.isPresent());
+			validateDraftTaskResource(draftTask.get());
 		}
-
-		assertEquals(numExpectedResources, dicProcessResources.size());
 	}
 
-	private boolean draftTaskExists(String draftTaskFile)
+	private void validateDraftTaskResource(Task draftTask)
 	{
-		return Objects.nonNull(getClass().getClassLoader().getResourceAsStream(draftTaskFile));
+		String resourceVersion = new TutorialProcessPluginDefinition().getResourceVersion();
+		String error = "Draft Task has wrong/missing meta.profile value. Expected 'http://dsf.dev/fhir/StructureDefinition/task-start-dic-process|" + resourceVersion + "' or the same value but with the version placeholder '#{version}'.";
+		assertTrue(error, draftTask.getMeta().getProfile().stream().anyMatch(profile -> profile.getValue().equals("http://dsf.dev/fhir/StructureDefinition/task-start-dic-process|" + resourceVersion)));
+
+		String identifierSystem = "http://dsf.dev/sid/task-identifier";
+		error = "Draft Task has wrong/missing identifier.system value. Expected '" + identifierSystem + "'.";
+		assertTrue(error, draftTask.getIdentifier().stream().anyMatch(identifier -> identifier.getSystem().equals(identifierSystem)));
+
+		String identifierValue = "http://dsf.dev/bpe/Process/dicProcess/" + resourceVersion + "/task-start-dic-process";
+		error = "Draft Task has wrong/missing identifier.value. Expected '" + identifierValue + "' or the same value but with the version placeholder '#{version}'.";
+		assertTrue(error, draftTask.getIdentifier().stream().anyMatch(identifier ->  identifier.getValue().equals(identifierValue)));
+
+		String instantiatesCanonical = PROFILE_TUTORIAL_TASK_DIC_PROCESS_INSTANTIATES_CANONICAL;
+		error = "Draft Task has wrong/missing instantiatesCanonical value. Expected '" + instantiatesCanonical + "' or the same value but with the version placeholder '#{version}'.";
+		assertTrue(error, draftTask.getInstantiatesCanonical().equals(instantiatesCanonical));
+
+		error = "Draft Task has wrong/missing status value. Expected '" + Task.TaskStatus.DRAFT.name() + "'.";
+		assertTrue(error, draftTask.getStatus().equals(Task.TaskStatus.DRAFT));
+
+		error = "Draft Task has wrong/missing intent value. Expected '" + Task.TaskIntent.ORDER + "'.";
+		assertTrue(error, draftTask.getIntent().equals(Task.TaskIntent.ORDER));
+
+		error = "Draft Task has wrong/missing requester.identifier.value. Expected 'Test_DIC' or the organization placeholder '#{organization}'.";
+		assertTrue(error, draftTask.getRequester().getIdentifier().getValue().equals("Test_DIC"));;
+
+		error = "Draft Task has wrong/missing restriction.recipient.identifier.value. Expected 'Test_DIC' or the organization placeholder '#{organization}'.";
+		assertTrue(error, draftTask.getRestriction().getRecipientFirstRep().getIdentifier().getValue().equals("Test_DIC"));
+
+		String messageName = "startDicProcess";
+		error = "Draft Task has wrong/missing input.valueString. Expected '" + messageName + "'.";
+		assertTrue(error, draftTask.getInput().stream()
+				.filter(input -> input.getValue() instanceof StringType)
+				.anyMatch(input -> ((StringType) input.getValue()).getValue().equals(messageName)));
+	}
+
+	private List<Task> getDraftTasks(List<Resource> resources)
+	{
+		return resources.stream()
+				.filter(resource -> resource instanceof Task)
+				.map(resource -> (Task) resource)
+				.toList();
 	}
 }
