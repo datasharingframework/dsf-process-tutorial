@@ -11,10 +11,11 @@ and [Conditions](../learning/concepts/bpmn/conditions.md).
 Solutions to this exercise are found on the branch `solutions/exercise-5`.
 
 ## Exercise Tasks
-1. In the `DicTask` class, create a boolean variable which decides whether the `dsfdev_cosProcess` should be started based on the start Task's input parameter `tutorial-input`.
-2. Add the boolean variable to the process execution variables, storing the decision.
-3. Add an exclusive gateway to the `dsfdev_dicProcess` model and two outgoing sequence flows - the first starting process `dsfdev_cosProcess`, the second stopping process `dsfdev_dicProcess` without starting process `dsfdev_cosProcess`.
-4. Add condition expressions to each outgoing sequence flow based on the previously stored execution variable.
+1. Add an exclusive gateway to the `dsfdev_dicProcess` model and two outgoing sequence flows - the first starting the process `dsfdev_cosProcess`, the second stopping the process `dsfdev_dicProcess` without starting the process `dsfdev_cosProcess`.
+2. Add condition expressions to each outgoing sequence flow which decides the path that will be taken based on a boolean value.
+3. In the `DicTask` class, create a boolean variable which decides whether the `dsfdev_cosProcess` should be started based on the start Task's input parameter `tutorial-input`.
+4. Add the boolean variable to the process execution variables, storing the decision. It needs to have the same name as the variable used in the condition expression from `2.`
+
 
 ## Solution Verification
 ### Maven Build and Automated Tests
