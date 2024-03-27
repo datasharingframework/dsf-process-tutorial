@@ -36,7 +36,9 @@ and [Starting a Process via Task Resources](../learning/guides/starting-a-proces
 Solutions to this exercise are found on the branch `solutions/exercise-1`.
 
 ## Exercise Tasks
-1. Add a log message to the `DicTask#doExecute` method that logs the recipient organization identifier from the start [FHIR Task](../learning/concepts/fhir/task.md) resource.
+1. Set the `DicTask` class as the service implementation of the appropriate service task within the `dic-process.bpmn` process model.
+2. Register the `DicTask` class as a prototype bean in the `TutorialConfig` class.
+3. Add a log message to the `DicTask#doExecute` method that logs the recipient organization identifier from the start [FHIR Task](../learning/concepts/fhir/task.md) resource.
 
     <details>
         <summary>Don't know where to get a logger?</summary>
@@ -56,8 +58,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-1`.
     Take a look at the official [FHIR Task](../learning/concepts/fhir/task.md) resource, find elements that have a recipient and manoeuvre your way to those elements using the right getters. Then test which of them has the correct value.
     </details>
 
-2. Register the `DicTask` class as a prototype bean in the `TutorialConfig` class.
-3. Set the `DicTask` class as the service implementation of the appropriate service task within the `dic-process.bpmn` process model.
+
 4. In order to start your process you need to either create a regular [Task](../learning/concepts/fhir/task.md) resource
     or a [Draft Task Resource](../learning/concepts/dsf/draft-task-resources.md). Based on whether you would like
     to use cURL or the DSF FHIR server's web interface for starting processes you can do one of the following
