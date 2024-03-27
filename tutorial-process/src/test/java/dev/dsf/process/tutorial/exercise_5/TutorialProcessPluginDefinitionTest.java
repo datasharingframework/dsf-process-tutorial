@@ -182,10 +182,18 @@ public class TutorialProcessPluginDefinitionTest
 				.count());
 
 		String errorStructureDefinition = "Process is missing StructureDefinition with url '" + structureDefinitionUrl + "'";
-		assertTrue(errorStructureDefinition, dicProcessResources.stream()
+		Optional<StructureDefinition> optionalStructureDefinition = dicProcessResources.stream()
 				.filter(resource -> resource instanceof StructureDefinition)
 				.map(resource -> (StructureDefinition) resource)
-				.anyMatch(structureDefinition -> structureDefinition.getUrl().equals(structureDefinitionUrl)));
+				.filter(structureDefinition -> structureDefinition.getUrl().equals(structureDefinitionUrl)).findFirst();
+
+		assertTrue(errorStructureDefinition, optionalStructureDefinition.isPresent());
+
+		StructureDefinition correctStructureDefinition = optionalStructureDefinition.get();
+		String errorNotEnoughInputsAllowed = "StructureDefinition with url " + correctStructureDefinition.getUrl() + " has 'Task.input.max' with value 2. Since you added a new input parameter in exercise 2 you need to increase this value to 3.";
+		assertTrue(errorNotEnoughInputsAllowed, correctStructureDefinition.getDifferential().getElement().stream()
+				.filter(elementDefinition -> elementDefinition.getId().equals("Task.input"))
+				.anyMatch(elementDefinition -> Integer.valueOf(elementDefinition.getMax()).equals(3)));
 
 		List<Task> draftTasks = getDraftTasks(dicProcessResources);
 		if(!draftTasks.isEmpty())

@@ -87,10 +87,12 @@ public class TutorialProcessPluginDefinitionTest
 		assertEquals(errorFaultyProcessName, ConstantsTutorial.PROCESS_NAME_FULL_DIC, dicProcessKey);
 
 		String errorStructureDefinition = "Process is missing StructureDefinition with url '" + structureDefinitionUrl + "'";
-		assertTrue(errorStructureDefinition, dicProcessResources.stream()
+		Optional<StructureDefinition> optionalStructureDefinition = dicProcessResources.stream()
 				.filter(resource -> resource instanceof StructureDefinition)
 				.map(resource -> (StructureDefinition) resource)
-				.anyMatch(structureDefinition -> structureDefinition.getUrl().equals(structureDefinitionUrl)));
+				.filter(structureDefinition -> structureDefinition.getUrl().equals(structureDefinitionUrl)).findFirst();
+
+		assertTrue(errorStructureDefinition, optionalStructureDefinition.isPresent());
 
 		List<Task> draftTasks = getDraftTasks(dicProcessResources);
 		if(!draftTasks.isEmpty())

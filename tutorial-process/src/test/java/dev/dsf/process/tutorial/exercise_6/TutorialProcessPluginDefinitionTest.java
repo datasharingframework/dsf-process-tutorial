@@ -29,6 +29,7 @@ import org.camunda.bpm.model.bpmn.instance.Process;
 import org.camunda.bpm.model.bpmn.instance.ServiceTask;
 import org.camunda.bpm.model.bpmn.instance.TimerEventDefinition;
 import org.camunda.bpm.model.bpmn.instance.camunda.CamundaField;
+import org.glassfish.jaxb.runtime.v2.runtime.reflect.opt.Const;
 import org.hl7.fhir.r4.model.ActivityDefinition;
 import org.hl7.fhir.r4.model.CodeSystem;
 import org.hl7.fhir.r4.model.Resource;
@@ -128,6 +129,7 @@ public class TutorialProcessPluginDefinitionTest
 	@Test
 	public void testGetResourceProviderDic() throws Exception
 	{
+		String structureDefinitionUrl = ConstantsTutorial.PROFILE_TUTORIAL_TASK_DIC_PROCESS;
 		var resources = getResources(ConstantsTutorial.PROCESS_NAME_FULL_DIC,
 				ConstantsTutorial.TUTORIAL_DIC_ORGANIZATION_IDENTIFIER);
 		assertNotNull(resources);
@@ -162,12 +164,27 @@ public class TutorialProcessPluginDefinitionTest
 				.count();
 		assertEquals(1, t1Count);
 
+
+		String errorStructureDefinition = "Process is missing StructureDefinition with url '" + structureDefinitionUrl + "'";
+		Optional<StructureDefinition> optionalStructureDefinition = resources.stream()
+				.filter(resource -> resource instanceof StructureDefinition)
+				.map(resource -> (StructureDefinition) resource)
+				.filter(structureDefinition -> structureDefinition.getUrl().equals(structureDefinitionUrl)).findFirst();
+
 		long t2Count = resources.stream().filter(r -> r instanceof StructureDefinition)
 				.map(r -> (StructureDefinition) r)
-				.filter(c -> "http://dsf.dev/fhir/StructureDefinition/task-start-dic-process".equals(c.getUrl())
+				.filter(c -> structureDefinitionUrl.equals(c.getUrl())
 						&& ConstantsTutorial.RESOURCE_VERSION.equals(c.getVersion()))
 				.count();
 		assertEquals(1, t2Count);
+
+		assertTrue(errorStructureDefinition, optionalStructureDefinition.isPresent());
+
+		StructureDefinition correctStructureDefinition = optionalStructureDefinition.get();
+		String errorNotEnoughInputsAllowed = "StructureDefinition with url " + correctStructureDefinition.getUrl() + " has 'Task.input.max' with value 2. Since you added a new input parameter in exercise 2 you need to increase this value to 3.";
+		assertTrue(errorNotEnoughInputsAllowed, correctStructureDefinition.getDifferential().getElement().stream()
+				.filter(elementDefinition -> elementDefinition.getId().equals("Task.input"))
+				.anyMatch(elementDefinition -> Integer.valueOf(elementDefinition.getMax()).equals(3)));
 
 		long vCount = resources.stream().filter(r -> r instanceof ValueSet).map(r -> (ValueSet) r)
 				.filter(v -> "http://dsf.dev/fhir/ValueSet/tutorial".equals(v.getUrl())
