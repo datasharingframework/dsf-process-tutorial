@@ -12,26 +12,28 @@ and [Message Correlation](../learning/concepts/dsf/message-correlation.md).
 Solutions to this exercise are found on the branch `solutions/exercise-6`.
 
 ## Exercise Tasks
-1. Forward the value from the [Task.input](../learning/concepts/fhir/task.md) parameter of the `dicProcess` [Task](../learning/concepts/fhir/task.md) to the `dsfdev_cosProcess` using the `HelloCosMessage`. To do this, you need to override `HelloCosMessage#getAdditionalInputParameters`. Don't forget to also add the definition of your `tutorial-input` [Input Parameter](../learning/concepts/fhir/task.md#task-input-parameters) from `task-start-dic-process.xml` to `task-hello-cos.xml`. 
+
+1. Modify the `dsfdev_dicProcess`:
+   * Change the [Message End Event](../learning/concepts/bpmn/messaging.md#message-end-event) to an [Intermediate Message Throw Event](../learning/concepts/bpmn/messaging.md#message-intermediate-throwing-event)
+   * Add an [Event Based Gateway](../learning/concepts/bpmn/gateways.md#event-based-gateway) after the throw event
+   * Configure two cases for the [Event Based Gateway](../learning/concepts/bpmn/gateways.md#event-based-gateway):
+      1. An [Intermediate Message Catch Event](../learning/concepts/bpmn/messaging.md#message-intermediate-catching-event) to catch the `goodbyDic` message from the `dsfdev_hrpProcess`.
+      1. An [Intermediate Timer Catch Event](../learning/concepts/bpmn/timer-intermediate-catching-events.md) to end the process if no message is sent by the `dsfdev_hrpProcess` after two minutes.
+         Make sure both cases finish with a process [End Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/none-events/).
 1. Modify the `dsfdev_cosProcess` to use a [Message End Event](../learning/concepts/bpmn/messaging.md#message-end-event) to trigger the process in file `hrp-process.bpmn`. Figure out the values for the `instantiatesCanonical`, `profile` and `messageName` input parameters of the [Message End Event](../learning/concepts/bpmn/messaging.md#message-end-event) based on the [AcitvityDefinition](../learning/concepts/fhir/activitydefinition.md) in file `hrp-process.xml`.
 1. Modify the process in file `hrp-process.bpmn` and set the _process definition key_ and _version_. Figure out the appropriate values based on the [AcitvityDefinition](../learning/concepts/fhir/activitydefinition.md) in file `hrp-process.xml`.
+1. Add a new process authorization extension element to the ActivityDefinition for `dsfdev_dicProcess` using the [parent organization role coding](../learning/concepts/dsf/examples-for-requester-and-recipient-elements.md) where
+     only remote organizations which are part of `medizininformatik-initiative.de` and have the `HRP` role are allowed to request `goodByeDic` messages and only
+     organizations which are part of `medizininformatik-initiative.de` and have the `DIC` role are allowed to receive `goodByeDic` messages
+     <details>
+     <summary>Don't know which values to choose for roles?</summary>
+
+     Take a look at the [dsf-organization-role](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/CodeSystem/dsf-organization-role-1.0.0.xml) CodeSystem.
+     </details>
+1. Forward the value from the [Task.input](../learning/concepts/fhir/task.md) parameter of the `dicProcess` [Task](../learning/concepts/fhir/task.md) to the `dsfdev_cosProcess` using the `HelloCosMessage`. To do this, you need to override `HelloCosMessage#getAdditionalInputParameters`. Don't forget to also add the definition of your `tutorial-input` [Input Parameter](../learning/concepts/fhir/task.md#task-input-parameters) from `task-start-dic-process.xml` to `task-hello-cos.xml`. 
 1. Add the process in file `hrp-process.bpmn` to the `TutorialProcessPluginDefinition` and configure the FHIR resources needed for the three processes.
 1. Add the `CosTask`, `HelloHrpMessage `, `HrpTask` and `GoodbyeDicMessage` classes as Spring Beans. Don't forget the scope.
-1. Modify the `dsfdev_dicProcess`:
-    * Change the [Message End Event](../learning/concepts/bpmn/messaging.md#message-end-event) to an [Intermediate Message Throw Event](../learning/concepts/bpmn/messaging.md#message-intermediate-throwing-event)
-    * Add an [Event Based Gateway](../learning/concepts/bpmn/gateways.md#event-based-gateway) after the throw event
-    * Configure two cases for the [Event Based Gateway](../learning/concepts/bpmn/gateways.md#event-based-gateway):
-        1. An [Intermediate Message Catch Event](../learning/concepts/bpmn/messaging.md#message-intermediate-catching-event) to catch the `goodbyDic` message from the `dsfdev_hrpProcess`.
-        1. An [Intermediate Timer Catch Event](../learning/concepts/bpmn/timer-intermediate-catching-events.md) to end the process if no message is sent by the `dsfdev_hrpProcess` after two minutes.
-        Make sure both cases finish with a process [End Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/none-events/).
-    * Add a new process authorization extension element to the ActivityDefinition for `dsfdev_dicProcess` using the [parent organization role coding](../learning/concepts/dsf/examples-for-requester-and-recipient-elements.md) where
-   only remote organizations which are part of `medizininformatik-initiative.de` and have the `HRP` role are allowed to request `goodByeDic` messages and only
-   organizations which are part of `medizininformatik-initiative.de` and have the `DIC` role are allowed to receive `goodByeDic` messages
-      <details>
-      <summary>Don't know which values to choose for roles?</summary>
-   
-      Take a look at the [dsf-organization-role](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/CodeSystem/dsf-organization-role-1.0.0.xml) CodeSystem.
-      </details>
+
 
 ## Solution Verification
 ### Maven Build and Automated Tests
