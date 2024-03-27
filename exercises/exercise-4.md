@@ -8,7 +8,7 @@ To demonstrate communication between two organizations we will configure message
 
 In order to solve this exercise, you should have solved exercise 2 and read the topics on
 [Messaging](../learning/concepts/bpmn/messaging.md),
-[Message Delegates](../learning/concepts/dsf/message-delegates),
+[Message Delegates](../learning/concepts/dsf/message-delegates.md),
 [Version Pattern](../learning/concepts/dsf/about-version-placeholders-and-urls.md#version-pattern),
 [URLs](../learning/concepts/dsf/about-version-placeholders-and-urls.md#urls) 
 and [Setting Targets for Message Events](../learning/guides/setting-targets-for-message-events.md).
