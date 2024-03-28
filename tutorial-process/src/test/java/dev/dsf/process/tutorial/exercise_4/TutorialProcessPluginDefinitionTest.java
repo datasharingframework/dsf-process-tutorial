@@ -50,6 +50,14 @@ import dev.dsf.process.tutorial.service.DicTask;
 
 public class TutorialProcessPluginDefinitionTest
 {
+	private final String version = "1.3.0.1";
+	private final String resourceVersion = "1.3";
+
+	@Test
+	public void testPluginVersion()
+	{
+		assertEquals(resourceVersion, RESOURCE_VERSION);
+	}
 	@Test
 	public void testDicProcessBpmnProcessFile() throws Exception
 	{
@@ -189,7 +197,6 @@ public class TutorialProcessPluginDefinitionTest
 
 	private void validateDraftTaskResource(Task draftTask)
 	{
-		String resourceVersion = new TutorialProcessPluginDefinition().getResourceVersion();
 		String error = "Draft Task has wrong/missing meta.profile value. Expected 'http://dsf.dev/fhir/StructureDefinition/task-start-dic-process|" + resourceVersion + "' or the same value but with the version placeholder '#{version}'.";
 		assertTrue(error, draftTask.getMeta().getProfile().stream().anyMatch(profile -> profile.getValue().equals("http://dsf.dev/fhir/StructureDefinition/task-start-dic-process|" + resourceVersion)));
 
@@ -212,7 +219,7 @@ public class TutorialProcessPluginDefinitionTest
 		assertTrue(error, draftTask.getIntent().equals(Task.TaskIntent.ORDER));
 
 		error = "Draft Task has wrong/missing requester.identifier.value. Expected 'Test_DIC' or the organization placeholder '#{organization}'.";
-		assertTrue(error, draftTask.getRequester().getIdentifier().getValue().equals("Test_DIC"));;
+		assertTrue(error, draftTask.getRequester().getIdentifier().getValue().equals("Test_DIC"));
 
 		error = "Draft Task has wrong/missing restriction.recipient.identifier.value. Expected 'Test_DIC' or the organization placeholder '#{organization}'.";
 		assertTrue(error, draftTask.getRestriction().getRecipientFirstRep().getIdentifier().getValue().equals("Test_DIC"));
@@ -288,10 +295,10 @@ public class TutorialProcessPluginDefinitionTest
 		String processUrl = "http://dsf.dev/bpe/Process/cosProcess";
 		List<ActivityDefinition> activityDefinitions = cosProcess.stream().filter(r -> r instanceof ActivityDefinition)
 				.map(r -> (ActivityDefinition) r).filter(a -> processUrl.equals(a.getUrl()))
-				.filter(a -> RESOURCE_VERSION.equals(a.getVersion())).collect(Collectors.toList());
+				.filter(a -> resourceVersion.equals(a.getVersion())).collect(Collectors.toList());
 
 		String errorActivityDefinition = "Process is missing ActivityDefinition with url '" + processUrl
-				+ "' and version '" + RESOURCE_VERSION + "'";
+				+ "' and version '" + resourceVersion + "'";
 		assertEquals(errorActivityDefinition, 1, activityDefinitions.size());
 
 		String errorMessageRequester = "ActivityDefinition with url '" + processUrl + "' and version '"
@@ -327,10 +334,10 @@ public class TutorialProcessPluginDefinitionTest
 		String taskHelloCosUrl = "http://dsf.dev/fhir/StructureDefinition/task-hello-cos";
 		List<StructureDefinition> structureDefinitions = cosProcess.stream().filter(r -> r instanceof StructureDefinition)
 				.map(r -> (StructureDefinition) r).filter(s -> taskHelloCosUrl.equals(s.getUrl()))
-				.filter(s -> RESOURCE_VERSION.equals(s.getVersion())).collect(Collectors.toList());
+				.filter(s -> resourceVersion.equals(s.getVersion())).collect(Collectors.toList());
 
 		String errorStructureDefinition = "Process is missing StructureDefinition with url '" + taskHelloCosUrl
-				+ "' and version '" + RESOURCE_VERSION + "'";
+				+ "' and version '" + resourceVersion + "'";
 		assertEquals(errorStructureDefinition, 1, structureDefinitions.size());
 
 		assertEquals(2, cosProcess.size());
