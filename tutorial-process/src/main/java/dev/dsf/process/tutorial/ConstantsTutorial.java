@@ -20,7 +20,7 @@ public interface ConstantsTutorial
 	String PROFILE_TUTORIAL_TASK_GOODBYE_DIC = "http://dsf.dev/fhir/StructureDefinition/task-goodbye-dic";
 	String PROFILE_TUTORIAL_TASK_GOODBYE_DIC_MESSAGE_NAME = "goodbyeDic";
 
-	String TUTORIAL_DIC_ORGANIZATION_IDENTIFIER = "Test_DIC";
+	String TUTORIAL_DIC_ORGANIZATION_IDENTIFIER = "dic.dsf.test";
 
 	// The HELLO_COS constants are only needed for exercise 4 and above
 	String PROCESS_NAME_COS = "cosProcess";
@@ -34,7 +34,7 @@ public interface ConstantsTutorial
 			+ RESOURCE_VERSION;
 	String PROFILE_TUTORIAL_TASK_HELLO_COS_MESSAGE_NAME = "helloCos";
 
-	String TUTORIAL_COS_ORGANIZATION_IDENTIFIER = "Test_COS";
+	String TUTORIAL_COS_ORGANIZATION_IDENTIFIER = "cos.dsf.test";
 
 	// The HELLO_HRP constants are only needed for exercise 6 and above
 	String PROCESS_NAME_HRP = "hrpProcess";
@@ -51,5 +51,5 @@ public interface ConstantsTutorial
 	String CODESYSTEM_TUTORIAL = "http://dsf.dev/fhir/CodeSystem/tutorial";
 	String CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT = "tutorial-input";
 
-	String TUTORIAL_HRP_ORGANIZATION_IDENTIFIER = "Test_HRP";
+	String TUTORIAL_HRP_ORGANIZATION_IDENTIFIER = "hrp.dsf.test";
 }
