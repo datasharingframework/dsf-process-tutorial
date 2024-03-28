@@ -131,7 +131,7 @@ public class TutorialProcessPluginDefinitionTest
 		assertTrue(error, draftTask.getIntent().equals(Task.TaskIntent.ORDER));
 
 		error = "Draft Task has wrong/missing requester.identifier.value. Expected 'Test_DIC' or the organization placeholder '#{organization}'.";
-		assertTrue(error, draftTask.getRequester().getIdentifier().getValue().equals("Test_DIC"));;
+		assertTrue(error, draftTask.getRequester().getIdentifier().getValue().equals("Test_DIC"));
 
 		error = "Draft Task has wrong/missing restriction.recipient.identifier.value. Expected 'Test_DIC' or the organization placeholder '#{organization}'.";
 		assertTrue(error, draftTask.getRestriction().getRecipientFirstRep().getIdentifier().getValue().equals("Test_DIC"));
