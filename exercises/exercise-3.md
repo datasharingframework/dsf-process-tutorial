@@ -4,7 +4,7 @@ ___
 # Exercise 3 - DSF User Role Configuration
 
 In [Exercise 1](exercise-1.md), you added a client certificate to your browser in order to be allowed to access the DIC FHIR
-server. In later exercises we will also use some of the other DSF installations like the Test_COS or Test_HRP. You could add a 
+server. In later exercises we will also use some of the other DSF installations like the cos.dsf.test or hrp.dsf.test. You could add a 
 client certificate to your browser for each one, or you could configure yourself a specific DSF user
 with access to all DSF installations.  
 This is part of the DSF's access control using the role configuration mechanism. It allows you to specify
@@ -33,7 +33,7 @@ and [ActivityDefinitions](../learning/concepts/fhir/activitydefinition).
    </details>
 
 3. We just made it so you will not be able to start the `dicProcess` using the client certificate utilized in earlier exercises.
-   Add another `requester` to the ActivityDefinition `dic-process.xml` which allows local clients from the `Test_DIC` organization to request `dicProcess` messages,
+   Add another `requester` to the ActivityDefinition `dic-process.xml` which allows local clients from the `dic.dsf.test` organization to request `dicProcess` messages,
    in case you still want to use the client certificate to start the process.
    <details>
    <summary>Don't know how to change the ActivityDefinition?</summary>
@@ -59,13 +59,13 @@ Verify that the build was successful and no test failures occurred.
 ### Process Execution and Manual Tests
 To verify the `dsfdev_dicProcess` can be executed successfully, we need to deploy it into a DSF instance and execute the process. The maven `install` build is configured to create a process jar file with all necessary resources and copy the jar to the appropriate locations of the docker dev setup.
 
-1. Start the DSF FHIR server for the `Test_DIC` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
+1. Start the DSF FHIR server for the `dic.dsf.test` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
    ```
    docker-compose up dic-fhir
    ```
    Verify the DSF FHIR server started successfully.
 
-2. Start the DSF BPE server for the `Test_DIC` organization in second console at location `.../dsf-process-tutorial/dev-setup`:
+2. Start the DSF BPE server for the `dic.dsf.test` organization in second console at location `.../dsf-process-tutorial/dev-setup`:
    ```
    docker-compose up dic-bpe
    ```

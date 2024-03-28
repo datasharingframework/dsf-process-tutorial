@@ -10,11 +10,11 @@ The DSF FHIR server and the DSF BPE server applications are written in Java and 
 An `EXTRA_JVM_ARGS` environment variable is already configured for all DSF FHIR server and DSF BPE server docker containers in the tutorial docker-compose test setup. Take a look at the [docker-compose.yml](https://github.com/datasharingframework/dsf-process-tutorial/blob/main/dev-setup/docker-compose.yml) file to look up the port numbers specified for the different DSF FHIR and DSF BPE servers.
 
 ## Exercise Tasks
-1. Start the DSF FHIR server for the `Test_DIC` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
+1. Start the DSF FHIR server for the `dic.dsf.test` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
     ```
     docker-compose up dic-fhir
     ```
-2. Start the DSF BPE server for the `Test_DIC` organization in second console at location `.../dsf-process-tutorial/dev-setup`:
+2. Start the DSF BPE server for the `dic.dsf.test` organization in second console at location `.../dsf-process-tutorial/dev-setup`:
     ```
     docker-compose up dic-bpe
     ```
