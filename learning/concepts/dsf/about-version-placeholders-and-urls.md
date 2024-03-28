@@ -8,7 +8,7 @@ Process plugin versions have to obey the pattern:
 ```
 
 The first two numbers (`1.0`) are used in FHIR resources and signal changes which break compatibility with previous
-process versions. The latter two (`1.2`) signal changes which do not break compatibility with previous process versions. Specifically,
+process versions. For example, altering FHIR resources usually results in a breaking change. The latter two (`1.2`) signal changes which do not break compatibility with previous process versions. Specifically,
 the 4th number is reserved for bug-fixes and the 3rd number includes all other non-breaking changes.
 
 #### Placeholders

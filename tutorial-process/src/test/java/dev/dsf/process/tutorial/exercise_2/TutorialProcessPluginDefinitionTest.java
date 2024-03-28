@@ -3,6 +3,7 @@ package dev.dsf.process.tutorial.exercise_2;
 import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_TUTORIAL;
 import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_DIC_PROCESS_INSTANTIATES_CANONICAL;
+import static dev.dsf.process.tutorial.ConstantsTutorial.RESOURCE_VERSION;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -40,7 +41,14 @@ import dev.dsf.process.tutorial.service.DicTask;
 
 public class TutorialProcessPluginDefinitionTest
 {
+	private final String version = "1.1.0.1";
+	private final String resourceVersion = "1.1";
 
+	@Test
+	public void testPluginVersion()
+	{
+		assertEquals(resourceVersion, RESOURCE_VERSION);
+	}
 	@Test
 	public void testDicProcessBpmnProcessFile() throws Exception
 	{
@@ -135,7 +143,6 @@ public class TutorialProcessPluginDefinitionTest
 
 	private void validateDraftTaskResource(Task draftTask)
 	{
-		String resourceVersion = new TutorialProcessPluginDefinition().getResourceVersion();
 		String error = "Draft Task has wrong/missing meta.profile value. Expected 'http://dsf.dev/fhir/StructureDefinition/task-start-dic-process|" + resourceVersion + "' or the same value but with the version placeholder '#{version}'.";
 		assertTrue(error, draftTask.getMeta().getProfile().stream().anyMatch(profile -> profile.getValue().equals("http://dsf.dev/fhir/StructureDefinition/task-start-dic-process|" + resourceVersion)));
 
@@ -158,7 +165,7 @@ public class TutorialProcessPluginDefinitionTest
 		assertTrue(error, draftTask.getIntent().equals(Task.TaskIntent.ORDER));
 
 		error = "Draft Task has wrong/missing requester.identifier.value. Expected 'Test_DIC' or the organization placeholder '#{organization}'.";
-		assertTrue(error, draftTask.getRequester().getIdentifier().getValue().equals("Test_DIC"));;
+		assertTrue(error, draftTask.getRequester().getIdentifier().getValue().equals("Test_DIC"));
 
 		error = "Draft Task has wrong/missing restriction.recipient.identifier.value. Expected 'Test_DIC' or the organization placeholder '#{organization}'.";
 		assertTrue(error, draftTask.getRestriction().getRecipientFirstRep().getIdentifier().getValue().equals("Test_DIC"));
