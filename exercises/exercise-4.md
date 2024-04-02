@@ -4,7 +4,7 @@ ___
 # Exercise 4 - Messaging
 Communication between organizations in BPMN processes is modeled using message flow. The third exercise shows how a process at one organization can trigger a process at another organization.
 
-To demonstrate communication between two organizations we will configure message flow between the processes `dsfdev_dicProcess` and `dsfdev_cosProcess`. After that, the processes are to be executed at the organizations `Test_DIC` and `Test_COS` respectively in the docker dev setup, with the former triggering execution of the latter by automatically sending a [Task](http://hl7.org/fhir/R4/task.html) resource from organization `Test_DIC` to organization `Test_COS`.
+To demonstrate communication between two organizations we will configure message flow between the processes `dsfdev_dicProcess` and `dsfdev_cosProcess`. After that, the processes are to be executed at the organizations `dic.dsf.test` and `cos.dsf.test` respectively in the docker dev setup, with the former triggering execution of the latter by automatically sending a [Task](http://hl7.org/fhir/R4/task.html) resource from organization `dic.dsf.test` to organization `cos.dsf.test`.
 
 In order to solve this exercise, you should have solved exercise 2 and read the topics on
 [Messaging](../learning/concepts/bpmn/messaging.md),
@@ -31,7 +31,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-4`.
    
    You can base this [Task](../learning/concepts/fhir/task.md) profile off the `StructureDefinition/task-start-dic-process.xml` resource. Then look for elements that need to be added, changed or can be omitted.
     </details>
-1. Create a new [ActivityDefinition](../learning/concepts/fhir/activitydefinition.md) resource for the `dsfdev_cosProcess` and configure the authorization extension to allow the `Test_DIC` organization as the requester and the `Test_COS` organization as the recipient. The file has to be called `cos-process.xml`.
+1. Create a new [ActivityDefinition](../learning/concepts/fhir/activitydefinition.md) resource for the `dsfdev_cosProcess` and configure the authorization extension to allow the `dic.dsf.test` organization as the requester and the `cos.dsf.test` organization as the recipient. The file has to be called `cos-process.xml`.
    <details>
    <summary>Don't know how to get started?</summary>
 
@@ -39,7 +39,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-4`.
    Or you can take a look at the [guide on creating ActivityDefinitions](../learning/guides/creating-an-activity-definition.md).
    </details>
 1. Add the `dsfdev_cosProcess` and its resources to the `TutorialProcessPluginDefinition` class. This will require a new mapping entry with the full process name of the `cosProcess` as the key and a List of associated FHIR resources as the value.
-1. Modify `DicTask` service class to set the `target` process variable for the `Test_COS` organization.
+1. Modify `DicTask` service class to set the `target` process variable for the `cos.dsf.test` organization.
 1. Configure the `HelloCosMessage` class as a Spring Bean in the `TutorialConfig` class. Don't forget the right scope.
 1. Again, we introduced changes that break compatibility. Older plugin versions at the COS instance won't be able to handle the Task resource type we added earlier. Increment your resource version to `1.4`. 
 
@@ -57,34 +57,34 @@ Don't forget that you will have to add the client certificate for the `COS` inst
 in [exercise 1](exercise-1.md) or use the Keycloak user you created in [exercise 3](exercise-3.md) for the `cos` realm. Otherwise, you won't be able to access [https://cos/fhir](https://cos/fhir). You can find the client certificate
 in `.../dsf-process-tutorial/test-data-generator/cert/cos-client/cos-client_certificate.p12` (password: password).
 
-1. Start the DSF FHIR server for the `Test_DIC` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
+1. Start the DSF FHIR server for the `dic.dsf.test` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
    ```
    docker-compose up dic-fhir
    ```
    Verify the DSF FHIR server started successfully.
 
-2. Start the DSF BPE server for the `Test_DIC` organization in another console at location `.../dsf-process-tutorial/dev-setup`:
+2. Start the DSF BPE server for the `dic.dsf.test` organization in another console at location `.../dsf-process-tutorial/dev-setup`:
    ```
    docker-compose up dic-bpe
    ```
    Verify the DSF BPE server started successfully and deployed the `dsfdev_dicProcess`.
 
-3. Start the DSF FHIR server for the `Test_COS` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
+3. Start the DSF FHIR server for the `cos.dsf.test` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
    ```
    docker-compose up cos-fhir
    ```
    Verify the DSF FHIR server started successfully. You can access the webservice of the DSF FHIR server at https://cos/fhir.
 
-4. Start the DSF BPE server for the `Test_COS` organization in another console at location `.../dsf-process-tutorial/dev-setup`:
+4. Start the DSF BPE server for the `cos.dsf.test` organization in another console at location `.../dsf-process-tutorial/dev-setup`:
    ```
    docker-compose up cos-bpe
    ```
    Verify the DSF BPE server started successfully and deployed the `dsfdev_cosProcess`. The DSF BPE server should print a message that the process was deployed. The DSF FHIR server should now have a new [ActivityDefinition](../learning/concepts/fhir/activitydefinition.md) resource. Go to https://cos/fhir/ActivityDefinition to check if the expected resource was created by the BPE while deploying the process. The returned FHIR [Bundle](http://hl7.org/fhir/R4/bundle.html) should contain two [ActivityDefinition](../learning/concepts/fhir/activitydefinition.md) resources. Also, go to https://cos/fhir/StructureDefinition?url=http://dsf.dev/fhir/StructureDefinition/task-hello-cos to check if the expected [Task](../learning/concepts/fhir/task.md) profile was created.
 
-5. Start the `dsfdev_dicProcess` by posting a specific FHIR [Task](../learning/concepts/fhir/task.md) resource to the DSF FHIR server of the `Test_DIC` organization using either cURL or the DSF FHIR server's web interface. Check out [Starting A Process Via Task Resources](../learning/guides/starting-a-process-via-task-resources.md) again if you are unsure.
+5. Start the `dsfdev_dicProcess` by posting a specific FHIR [Task](../learning/concepts/fhir/task.md) resource to the DSF FHIR server of the `dic.dsf.test` organization using either cURL or the DSF FHIR server's web interface. Check out [Starting A Process Via Task Resources](../learning/guides/starting-a-process-via-task-resources.md) again if you are unsure.
 
-   Verify that the FHIR [Task](../learning/concepts/fhir/task.md) resource was created at the DSF FHIR server and the `dsfdev_dicProcess` was executed by the DSF BPE server of the `Test_DIC` organization. The DSF BPE server of the `Test_DIC` organization should print a message showing that a [Task](../learning/concepts/fhir/task.md) resource to start the `dsfdev_cosProcess` was sent to the `Test_COS` organization.  
-   Verify that a FHIR [Task](../learning/concepts/fhir/task.md) resource was created at the DSF FHIR server of the `Test_COS` organization and the `dsfdev_cosProcess` was then executed by the DSF BPE server of the `Test_COS` organization.
+   Verify that the FHIR [Task](../learning/concepts/fhir/task.md) resource was created at the DSF FHIR server and the `dsfdev_dicProcess` was executed by the DSF BPE server of the `dic.dsf.test` organization. The DSF BPE server of the `dic.dsf.test` organization should print a message showing that a [Task](../learning/concepts/fhir/task.md) resource to start the `dsfdev_cosProcess` was sent to the `cos.dsf.test` organization.  
+   Verify that a FHIR [Task](../learning/concepts/fhir/task.md) resource was created at the DSF FHIR server of the `cos.dsf.test` organization and the `dsfdev_cosProcess` was then executed by the DSF BPE server of the `cos.dsf.test` organization.
 
 ___
 [Prerequisites](prerequisites.md) • [Exercise 0](exercise-0.md) • [Exercise 1](exercise-1.md) • [Exercise 1.1](exercise-1-1.md) • [Exercise 2](exercise-2.md) • [Exercise 3](exercise-3.md) • **Exercise 4** • [Exercise 5](exercise-5.md) • [Exercise 6](exercise-6.md)

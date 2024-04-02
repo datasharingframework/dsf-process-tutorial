@@ -17,7 +17,7 @@ public class CosTask extends AbstractServiceDelegate
 	@Override
 	protected void doExecute(DelegateExecution execution, Variables variables)
 	{
-		Target target = variables.createTarget("Test_HRP", "Test_HRP_Endpoint", "https://hrp/fhir");
+		Target target = variables.createTarget("hrp.dsf.test", "hrp.dsf.test_Endpoint", "https://hrp/fhir");
 		variables.setTarget(target);
 	}
 }
