@@ -10,7 +10,7 @@
         <type value="Organization"/>
         <identifier>
             <system value="http://dsf.dev/sid/organization-identifier"/>
-            <value value="Test_DIC" />
+            <value value="dic.dsf.test" />
         </identifier>
     </requester>
     <restriction>
@@ -18,7 +18,7 @@
             <type value="Organization"/>
             <identifier>
                 <system value="http://dsf.dev/sid/organization-identifier" />
-                <value value="Test_DIC" />
+                <value value="dic.dsf.test" />
             </identifier>
         </recipient>
     </restriction>

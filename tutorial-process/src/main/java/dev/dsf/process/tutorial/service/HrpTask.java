@@ -30,12 +30,12 @@ public class HrpTask extends AbstractServiceDelegate
 
 		if (sendResponse)
 		{
-			Target target = variables.createTarget("Test_DIC", "Test_DIC_Endpoint", "https://dic/fhir");
+			Target target = variables.createTarget("dic.dsf.test", "dic.dsf.test_Endpoint", "https://dic/fhir");
 			variables.setTarget(target);
 		}
 		else
 		{
-			logger.info("Not sending response to organization with identifier 'Test_DIC'");
+			logger.info("Not sending response to organization with identifier 'dic.dsf.test'");
 		}
 	}
 }

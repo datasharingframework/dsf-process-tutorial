@@ -240,11 +240,11 @@ public class TutorialProcessPluginDefinitionTest
 		error = "Draft Task has wrong/missing intent value. Expected '" + Task.TaskIntent.ORDER + "'.";
 		assertTrue(error, draftTask.getIntent().equals(Task.TaskIntent.ORDER));
 
-		error = "Draft Task has wrong/missing requester.identifier.value. Expected 'Test_DIC' or the organization placeholder '#{organization}'.";
-		assertTrue(error, draftTask.getRequester().getIdentifier().getValue().equals("Test_DIC"));
+		error = "Draft Task has wrong/missing requester.identifier.value. Expected 'dic.dsf.test' or the organization placeholder '#{organization}'.";
+		assertTrue(error, draftTask.getRequester().getIdentifier().getValue().equals("dic.dsf.test"));
 
-		error = "Draft Task has wrong/missing restriction.recipient.identifier.value. Expected 'Test_DIC' or the organization placeholder '#{organization}'.";
-		assertTrue(error, draftTask.getRestriction().getRecipientFirstRep().getIdentifier().getValue().equals("Test_DIC"));
+		error = "Draft Task has wrong/missing restriction.recipient.identifier.value. Expected 'dic.dsf.test' or the organization placeholder '#{organization}'.";
+		assertTrue(error, draftTask.getRestriction().getRecipientFirstRep().getIdentifier().getValue().equals("dic.dsf.test"));
 
 		String messageName = "startDicProcess";
 		error = "Draft Task has wrong/missing input.valueString. Expected '" + messageName + "'.";

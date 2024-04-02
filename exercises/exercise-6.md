@@ -3,7 +3,7 @@ ___
 
 # Exercise 6 - Event Based Gateways and Intermediate Events
 In the final exercise we will look at message flow between three organizations as well as how to continue a waiting process if no return message arrives. 
-With this exercise we will add a third process and complete a message loop from `Test_DIC` to `Test_COR` to `Test_HRP` back to `Test_DIC`.
+With this exercise we will add a third process and complete a message loop from `dic.dsf.test` to `Test_COR` to `hrp.dsf.test` back to `dic.dsf.test`.
 
 In order to solve this exercise, you should have solved exercise 5 and read the topics on 
 [Managing Multiple Incoming Messages and Missing Messages](../learning/guides/managing-mutiple-incoming-messages-and-missing-messages.md)
@@ -50,49 +50,49 @@ Don't forget that you will have to add the client certificate for the `HRP` inst
 in [exercise 1](exercise-1.md) and [exercise 4](exercise-5.md) or use the Keycloak user you created in [exercise 3](exercise-3.md) for the `hrp` realm. Otherwise, you won't be able to access [https://hrp/fhir](https://hrp/fhir). You can find the client certificate
 in `.../dsf-process-tutorial/test-data-generator/cert/hrp-client/hrp-client_certificate.p12` (password: password).
 
-1. Start the DSF FHIR server for the `Test_DIC` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
+1. Start the DSF FHIR server for the `dic.dsf.test` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
    ```
    docker-compose up dic-fhir
    ```
    Verify the DSF FHIR server started successfully.
 
-2. Start the DSF BPE server for the `Test_DIC` organization in a second console at location `.../dsf-process-tutorial/dev-setup`:
+2. Start the DSF BPE server for the `dic.dsf.test` organization in a second console at location `.../dsf-process-tutorial/dev-setup`:
    ```
    docker-compose up dic-bpe
    ```
    Verify the DSF BPE server started successfully and deployed the `dsfdev_dicProcess`.
 
-3. Start the DSF FHIR server for the `Test_COS` organization in a third console at location `.../dsf-process-tutorial/dev-setup`:
+3. Start the DSF FHIR server for the `cos.dsf.test` organization in a third console at location `.../dsf-process-tutorial/dev-setup`:
    ```
    docker-compose up cos-fhir
    ```
    Verify the DSF FHIR server started successfully.
 
-4. Start the DSF BPE server for the `Test_COS` organization in a fourth console at location `.../dsf-process-tutorial/dev-setup`:
+4. Start the DSF BPE server for the `cos.dsf.test` organization in a fourth console at location `.../dsf-process-tutorial/dev-setup`:
    ```
    docker-compose up cos-bpe
    ```
    Verify the DSF BPE server started successfully and deployed the `dsfdev_dicProcess`.
 
 
-5. Start the DSF FHIR server for the `Test_HRP` organization in a fifth at location `.../dsf-process-tutorial/dev-setup`:
+5. Start the DSF FHIR server for the `hrp.dsf.test` organization in a fifth at location `.../dsf-process-tutorial/dev-setup`:
    ```
    docker-compose up hrp-fhir
    ```
    Verify the DSF FHIR server started successfully. You can access the webservice of the DSF FHIR server at https://hrp/fhir.
 
-6. Start the DSF BPE server for the `Test_HRP` organization in a sixth console at location `.../dsf-process-tutorial/dev-setup`:
+6. Start the DSF BPE server for the `hrp.dsf.test` organization in a sixth console at location `.../dsf-process-tutorial/dev-setup`:
    ```
    docker-compose up hrp-bpe
    ```
    Verify the DSF BPE server started successfully and deployed the `dsfdev_hrpProcess`. The DSF BPE server should print a message that the process was deployed. The DSF FHIR server should now have a new [ActivityDefinition](../learning/concepts/fhir/activitydefinition.md) resource. Go to https://hrp/fhir/ActivityDefinition to check if the expected resource was created by the BPE while deploying the process. The returned FHIR [Bundle](http://hl7.org/fhir/R4/bundle.html) should contain a three [ActivityDefinition](../learning/concepts/fhir/activitydefinition.md) resources. Also, go to https://hrp/fhir/StructureDefinition?url=http://dsf.dev/fhir/StructureDefinition/task-hello-hrp to check if the expected [Task](../learning/concepts/fhir/task.md) profile was created.
 
-7. Start the `dsfdev_dicProcess` by posting a specific FHIR [Task](../learning/concepts/fhir/task.md) resource to the DSF FHIR server of the `Test_DIC` organization using either cURL or the DSF FHIR server's web interface. Check out [Starting A Process Via Task Resources](../learning/guides/starting-a-process-via-task-resources.md) again if you are unsure.
+7. Start the `dsfdev_dicProcess` by posting a specific FHIR [Task](../learning/concepts/fhir/task.md) resource to the DSF FHIR server of the `dic.dsf.test` organization using either cURL or the DSF FHIR server's web interface. Check out [Starting A Process Via Task Resources](../learning/guides/starting-a-process-via-task-resources.md) again if you are unsure.
 
-   Verify that the FHIR [Task](../learning/concepts/fhir/task.md) resource was created at the DSF FHIR server and the `dsfdev_dicProcess` was executed by the DSF BPE server of the `Test_DIC` organization. The DSF BPE server of the `Test_DIC` organization should print a message showing that a [Task](../learning/concepts/fhir/task.md) resource to start the `dsfdev_cosProcess` was sent to the `Test_COS` organization.  
-   Verify that a FHIR [Task](../learning/concepts/fhir/task.md) resource was created at the DSF FHIR server of the `Test_COS` organization and the `dsfdev_cosProcess` was executed by the DSF BPE server of the `Test_COS` organization. The DSF BPE server of the `Test_COS` organization should print a message showing that a [Task](../learning/concepts/fhir/task.md) resource to start the `dsfdev_hrpProcess` was sent to the `Test_HRP` organization.  
+   Verify that the FHIR [Task](../learning/concepts/fhir/task.md) resource was created at the DSF FHIR server and the `dsfdev_dicProcess` was executed by the DSF BPE server of the `dic.dsf.test` organization. The DSF BPE server of the `dic.dsf.test` organization should print a message showing that a [Task](../learning/concepts/fhir/task.md) resource to start the `dsfdev_cosProcess` was sent to the `cos.dsf.test` organization.  
+   Verify that a FHIR [Task](../learning/concepts/fhir/task.md) resource was created at the DSF FHIR server of the `cos.dsf.test` organization and the `dsfdev_cosProcess` was executed by the DSF BPE server of the `cos.dsf.test` organization. The DSF BPE server of the `cos.dsf.test` organization should print a message showing that a [Task](../learning/concepts/fhir/task.md) resource to start the `dsfdev_hrpProcess` was sent to the `hrp.dsf.test` organization.  
    
-   Based on the value of the Task.input parameter you send, the `dsfdev_hrpProcess` will either send a `goodbyDic` message to the `Test_DIC` organization or finish without sending a message.
+   Based on the value of the Task.input parameter you send, the `dsfdev_hrpProcess` will either send a `goodbyDic` message to the `dic.dsf.test` organization or finish without sending a message.
    
    To trigger the `goodbyDic` message, use `send-response` as the `http://dsf.dev/fhir/CodeSystem/tutorial#tutorial-input` input parameter.
    
