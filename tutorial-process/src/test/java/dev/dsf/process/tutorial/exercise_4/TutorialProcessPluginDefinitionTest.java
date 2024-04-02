@@ -230,11 +230,11 @@ public class TutorialProcessPluginDefinitionTest
 		error = "Draft Task has wrong/missing intent value. Expected '" + Task.TaskIntent.ORDER + "'.";
 		assertTrue(error, draftTask.getIntent().equals(Task.TaskIntent.ORDER));
 
-		error = "Draft Task has wrong/missing requester.identifier.value. Expected 'Test_DIC' or the organization placeholder '#{organization}'.";
-		assertTrue(error, draftTask.getRequester().getIdentifier().getValue().equals("Test_DIC"));
+		error = "Draft Task has wrong/missing requester.identifier.value. Expected 'dic.dsf.test' or the organization placeholder '#{organization}'.";
+		assertTrue(error, draftTask.getRequester().getIdentifier().getValue().equals("dic.dsf.test"));
 
-		error = "Draft Task has wrong/missing restriction.recipient.identifier.value. Expected 'Test_DIC' or the organization placeholder '#{organization}'.";
-		assertTrue(error, draftTask.getRestriction().getRecipientFirstRep().getIdentifier().getValue().equals("Test_DIC"));
+		error = "Draft Task has wrong/missing restriction.recipient.identifier.value. Expected 'dic.dsf.test' or the organization placeholder '#{organization}'.";
+		assertTrue(error, draftTask.getRestriction().getRecipientFirstRep().getIdentifier().getValue().equals("dic.dsf.test"));
 
 		String messageName = "startDicProcess";
 		error = "Draft Task has wrong/missing input.valueString. Expected '" + messageName + "'.";
@@ -315,7 +315,7 @@ public class TutorialProcessPluginDefinitionTest
 						.equals(e.getUrl()))
 				.map(Extension::getValue).filter(v -> v instanceof Identifier).map(i -> (Identifier) i)
 				.filter(i -> "http://dsf.dev/sid/organization-identifier".equals(i.getSystem()))
-				.filter(i -> "Test_DIC".equals(i.getValue())).count());
+				.filter(i -> "dic.dsf.test".equals(i.getValue())).count());
 
 		String errorMessageRecipient = "ActivityDefinition with url '" + processUrl + "' and version '"
 				+ RESOURCE_VERSION + "' is missing expected recipient extension";
@@ -330,7 +330,7 @@ public class TutorialProcessPluginDefinitionTest
 						.equals(e.getUrl()))
 				.map(Extension::getValue).filter(v -> v instanceof Identifier).map(i -> (Identifier) i)
 				.filter(i -> "http://dsf.dev/sid/organization-identifier".equals(i.getSystem()))
-				.filter(i -> "Test_COS".equals(i.getValue())).count());
+				.filter(i -> "cos.dsf.test".equals(i.getValue())).count());
 
 		String taskHelloCosUrl = "http://dsf.dev/fhir/StructureDefinition/task-hello-cos";
 		List<StructureDefinition> structureDefinitions = cosFhirResources.stream().filter(r -> r instanceof StructureDefinition)

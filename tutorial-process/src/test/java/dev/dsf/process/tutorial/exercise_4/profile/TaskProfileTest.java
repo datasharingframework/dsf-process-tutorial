@@ -69,9 +69,9 @@ public class TaskProfileTest
 		task.setIntent(TaskIntent.ORDER);
 		task.setAuthoredOn(new Date());
 		task.getRequester().setType(ResourceType.Organization.name()).getIdentifier()
-				.setSystem(NamingSystems.OrganizationIdentifier.SID).setValue("Test_DIC");
+				.setSystem(NamingSystems.OrganizationIdentifier.SID).setValue("dic.dsf.test");
 		task.getRestriction().addRecipient().setType(ResourceType.Organization.name()).getIdentifier()
-				.setSystem(NamingSystems.OrganizationIdentifier.SID).setValue("Test_DIC");
+				.setSystem(NamingSystems.OrganizationIdentifier.SID).setValue("dic.dsf.test");
 
 		task.addInput().setValue(new StringType(PROFILE_TUTORIAL_TASK_DIC_PROCESS_MESSAGE_NAME)).getType().addCoding()
 				.setSystem(CodeSystems.BpmnMessage.URL).setCode(CodeSystems.BpmnMessage.messageName().getCode());
@@ -105,9 +105,9 @@ public class TaskProfileTest
 		task.setIntent(TaskIntent.ORDER);
 		task.setAuthoredOn(new Date());
 		task.getRequester().setType(ResourceType.Organization.name()).getIdentifier()
-				.setSystem(NamingSystems.OrganizationIdentifier.SID).setValue("Test_DIC");
+				.setSystem(NamingSystems.OrganizationIdentifier.SID).setValue("dic.dsf.test");
 		task.getRestriction().addRecipient().setType(ResourceType.Organization.name()).getIdentifier()
-				.setSystem(NamingSystems.OrganizationIdentifier.SID).setValue("Test_COS");
+				.setSystem(NamingSystems.OrganizationIdentifier.SID).setValue("cos.dsf.test");
 
 		task.addInput().setValue(new StringType(PROFILE_TUTORIAL_TASK_HELLO_COS_MESSAGE_NAME)).getType().addCoding()
 				.setSystem(CodeSystems.BpmnMessage.URL).setCode(CodeSystems.BpmnMessage.messageName().getCode());

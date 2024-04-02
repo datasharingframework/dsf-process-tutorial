@@ -111,8 +111,8 @@ public class DicTaskServiceTest
 	@Test
 	public void testDicTaskServiceDoExecute() throws Exception
 	{
-		final String orgIdValue = "Test_COS";
-		final String endpointIdValue = "Test_COS_Endpoint";
+		final String orgIdValue = "cos.dsf.test";
+		final String endpointIdValue = "cos.dsf.test_Endpoint";
 		final String endpointAddress = "https://cos/fhir";
 
 		Optional<DicTask> optService = getInstance(Arrays.asList(ProcessPluginApi.class, boolean.class), api, true);
