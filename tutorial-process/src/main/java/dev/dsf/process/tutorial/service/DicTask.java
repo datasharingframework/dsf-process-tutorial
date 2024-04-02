@@ -39,7 +39,7 @@ public class DicTask extends AbstractServiceDelegate
 					tutorialInputParameter.orElse("<no message>"));
 		}
 
-		Target target = variables.createTarget("Test_COS", "Test_COS_Endpoint", "https://cos/fhir");
+		Target target = variables.createTarget("cos.dsf.test", "cos.dsf.test_Endpoint", "https://cos/fhir");
 		variables.setTarget(target);
 
 		boolean stop = tutorialInputParameter.map("not-cos"::equals).get();

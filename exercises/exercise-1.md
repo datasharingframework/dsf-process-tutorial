@@ -93,7 +93,7 @@ Verify that the build was successful and no test failures occurred.
 ### Process Execution and Manual Tests
 To verify the `dsfdev_dicProcess` can be executed successfully, we need to deploy it into a DSF instance and execute the process. The maven `install` build is configured to create a process jar file with all necessary resources and to copy the jar to the appropriate locations of the docker dev setup.
 
-1. Start the DSF FHIR server for the `Test_DIC` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
+1. Start the DSF FHIR server for the `dic.dsf.test` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
 	```
 	docker-compose up dic-fhir
 	```
@@ -105,7 +105,7 @@ To verify the `dsfdev_dicProcess` can be executed successfully, we need to deplo
 	**Caution:** __If you add the generated Root CA to your browsers certificate store as a trusted Root CA, make sure you are 
     the only one with access to the private key at `.../dsf-process-tutorial/test-data-generator/cert/ca/testca_private-key.pem`.__
 
-2. Start the DSF BPE server for the `Test_DIC` organization in a second console at location `.../dsf-process-tutorial/dev-setup`:
+2. Start the DSF BPE server for the `dic.dsf.test` organization in a second console at location `.../dsf-process-tutorial/dev-setup`:
 	```
 	docker-compose up dic-bpe
 	```

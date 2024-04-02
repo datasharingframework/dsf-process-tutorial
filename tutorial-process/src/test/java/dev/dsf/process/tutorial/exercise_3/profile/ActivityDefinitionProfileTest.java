@@ -127,6 +127,6 @@ public class ActivityDefinitionProfileTest
 
 		Identifier identifier = (Identifier) value;
 		assertEquals("http://dsf.dev/sid/organization-identifier", identifier.getSystem());
-		assertEquals("Test_DIC", identifier.getValue());
+		assertEquals("dic.dsf.test", identifier.getValue());
 	}
 }
