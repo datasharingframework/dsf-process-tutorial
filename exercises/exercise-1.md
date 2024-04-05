@@ -3,6 +3,12 @@ ___
 ## Disclaimer
 The concept of `Tasks` exists in both the FHIR and BPMN domains. For this tutorial `Task resource` always refers
 to [FHIR Tasks](https://www.hl7.org/fhir/R4/task.html) and `Service Task` always means the BPMN concept.
+
+# Troubleshooting Tip
+Over the course of the exercises you will mostly likely want to take a look at the DSF FHIR server or DSF BPE server logs. 
+You can use the logs provided by docker or the debug logs located in `dev-setup/{dsfInstance}/bpe/log` and `dev-setup/{dsfInstance}/fhir/log`.
+The DSF FHIR server also has an audit log available in this directory.
+
 # Exercise 1 - Simple Process
 The first exercise focuses on setting up the development environment used in this tutorial and shows how to implement and execute a simple
 BPMN process. But first, let's make ourselves familiar with the project structure.  
