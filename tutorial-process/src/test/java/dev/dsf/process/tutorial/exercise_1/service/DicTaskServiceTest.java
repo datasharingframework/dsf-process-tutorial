@@ -43,9 +43,14 @@ public class DicTaskServiceTest
 	public void testDicTaskServiceValid() throws Exception
 	{
 		Mockito.lenient().when(variables.getStartTask()).thenReturn(getTask());
-		Mockito.lenient().when(variables.getLatestTask()).thenReturn(null);	//latest task only refers to tasks received after an intermediate message catch event. Therefore, the start task is not returned by getLatestTask
+		Mockito.lenient().when(variables.getLatestTask()).thenReturn(null); // latest task only refers to tasks received
+																			// after an intermediate message catch
+																			// event. Therefore, the start task is not
+																			// returned by getLatestTask
 		Mockito.lenient().when(variables.getTasks()).thenReturn(List.of(getTask()));
-		Mockito.lenient().when(variables.getCurrentTasks()).thenReturn(Collections.emptyList());	//getCurrentTasks doesn't return the start task
+		Mockito.lenient().when(variables.getCurrentTasks()).thenReturn(Collections.emptyList()); // getCurrentTasks
+																									// doesn't return
+																									// the start task
 
 		Mockito.when(api.getVariables(execution)).thenReturn(variables);
 
@@ -55,7 +60,8 @@ public class DicTaskServiceTest
 		}
 		catch (NullPointerException e)
 		{
-			logger.error("You might see this error message when calling 'getCurrentTasks' or 'getLatestTask' in your service delegate because those methods return an empty list in case of 'getCurrentTasks' or null in case of 'getLatestTask'. You shouldn't be using them here. Check their Java Doc for more information");
+			logger.error(
+					"You might see this error message when calling 'getCurrentTasks' or 'getLatestTask' in your service delegate because those methods return an empty list in case of 'getCurrentTasks' or null in case of 'getLatestTask'. You shouldn't be using them here. Check their Java Doc for more information");
 		}
 
 		String errorMessage = "getLatestTask only refers to tasks received after an intermediate message catch event. Therefore, the start task is not returned by getLatestTask. GetLatestTask cannot be used here.";
@@ -64,10 +70,13 @@ public class DicTaskServiceTest
 		errorMessage = "getCurrentTasks doesn't include the start task in the list it returns.";
 		Mockito.verify(variables, Mockito.never().description(errorMessage)).getCurrentTasks();
 
-		int numCallsGetStartTask = (int) new DefaultMockingDetails(variables).getInvocations().stream().map(InvocationOnMock::getMethod).filter(method -> method.getName().equals("getStartTask")).count();
-		int numCallsGetTasks = (int) new DefaultMockingDetails(variables).getInvocations().stream().map(InvocationOnMock::getMethod).filter(method -> method.getName().equals("getTasks")).count();
+		int numCallsGetStartTask = (int) new DefaultMockingDetails(variables).getInvocations().stream()
+				.map(InvocationOnMock::getMethod).filter(method -> method.getName().equals("getStartTask")).count();
+		int numCallsGetTasks = (int) new DefaultMockingDetails(variables).getInvocations().stream()
+				.map(InvocationOnMock::getMethod).filter(method -> method.getName().equals("getTasks")).count();
 
-		if(numCallsGetTasks > 0) logger.warn("You don't have to use 'getTasks' to find the start task. Try using 'getStartTask'.");
+		if (numCallsGetTasks > 0)
+			logger.warn("You don't have to use 'getTasks' to find the start task. Try using 'getStartTask'.");
 
 		errorMessage = "Expected getStartTask or getTasks to be called at least once.";
 		assertTrue(errorMessage, numCallsGetStartTask > 0 || numCallsGetTasks > 0);
