@@ -14,7 +14,6 @@ public class FhirResourceLoader
 
 		var fhirResources = processPlugin.getFhirResources();
 
-		return fhirResources.get(new ProcessIdAndVersion(
-				processId, ConstantsTutorial.RESOURCE_VERSION));
+		return fhirResources.get(new ProcessIdAndVersion(processId, ConstantsTutorial.RESOURCE_VERSION));
 	}
 }
