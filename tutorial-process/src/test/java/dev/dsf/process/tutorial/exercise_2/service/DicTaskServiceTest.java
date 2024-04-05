@@ -1,20 +1,16 @@
 package dev.dsf.process.tutorial.exercise_2.service;
 
+import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_TUTORIAL;
+import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeTrue;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.atLeastOnce;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
@@ -29,7 +25,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
-import org.camunda.feel.syntaxtree.In;
 import org.hl7.fhir.r4.model.CodeSystem;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Resource;
@@ -54,12 +49,6 @@ import dev.dsf.bpe.v1.constants.NamingSystems;
 import dev.dsf.bpe.v1.plugin.ProcessPluginImpl;
 import dev.dsf.bpe.v1.service.TaskHelper;
 import dev.dsf.bpe.v1.variables.Variables;
-
-import static dev.dsf.process.tutorial.ConstantsTutorial.*;
-
-import ca.uhn.fhir.context.FhirContext;
-import ca.uhn.fhir.parser.IParser;
-
 import dev.dsf.process.tutorial.ConstantsTutorial;
 import dev.dsf.process.tutorial.TestProcessPluginGenerator;
 import dev.dsf.process.tutorial.TutorialProcessPluginDefinition;
@@ -96,8 +85,7 @@ public class DicTaskServiceTest
 	private final Logger logger = LoggerFactory.getLogger(DicTaskServiceTest.class.getName());
 	private List<String> taskHelperMethodsToVerify = List.of(GET_FIRST_INPUT_PARAMETER_STRING_VALUE,
 			GET_FIRST_INPUT_PARAMETER_VALUE, GET_FIRST_INPUT_PARAMETER, GET_INPUT_PARAMETER_STRING_VALUES,
-			GET_INPUT_PARAMETER_VALUES, GET_INPUT_PARAMETERS
-	);
+			GET_INPUT_PARAMETER_VALUES, GET_INPUT_PARAMETERS);
 
 	private Optional<Constructor<DicTask>> getConstructor(Class<?>... args)
 	{
@@ -122,8 +110,8 @@ public class DicTaskServiceTest
 
 		if (constructor.isEmpty())
 		{
-			String errorMessage =
-					"One public constructor in class " + DicTask.class.getSimpleName() + " with parameters (" + ProcessPluginApi.class.getSimpleName() + ") expected";
+			String errorMessage = "One public constructor in class " + DicTask.class.getSimpleName()
+					+ " with parameters (" + ProcessPluginApi.class.getSimpleName() + ") expected";
 			fail(errorMessage);
 		}
 	}
@@ -132,13 +120,14 @@ public class DicTaskServiceTest
 	{
 		try
 		{
-			return Optional.of(DicTask.class.getConstructor(types.toArray(Class[]::new))).map(c -> {
+			return Optional.of(DicTask.class.getConstructor(types.toArray(Class[]::new))).map(c ->
+			{
 				try
 				{
 					return c.newInstance(args);
 				}
-				catch (InstantiationException | IllegalAccessException | IllegalArgumentException |
-					   InvocationTargetException e)
+				catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+						| InvocationTargetException e)
 				{
 					throw new RuntimeException(e);
 				}
@@ -170,30 +159,45 @@ public class DicTaskServiceTest
 		Mockito.when(apiMock.getVariables(executionMock)).thenReturn(variablesMock);
 		Mockito.when(apiMock.getTaskHelper()).thenReturn(taskHelperMock);
 
-		//Mock ways to get start task
+		// Mock ways to get start task
 		Mockito.lenient().when(variablesMock.getStartTask()).thenReturn(task);
-		Mockito.lenient().when(variablesMock.getLatestTask()).thenReturn(
-				null);    //latest task only refers to tasks received after an intermediate message catch event. Therefore, the start task is not returned by getLatestTask
+		Mockito.lenient().when(variablesMock.getLatestTask()).thenReturn(null); // latest task only refers to tasks
+																				// received after an intermediate
+																				// message catch event. Therefore, the
+																				// start task is not returned by
+																				// getLatestTask
 		Mockito.lenient().when(variablesMock.getTasks()).thenReturn(List.of(task));
-		Mockito.lenient().when(variablesMock.getCurrentTasks())
-				.thenReturn(Collections.emptyList());    //getCurrentTasks doesn't return the start task
+		Mockito.lenient().when(variablesMock.getCurrentTasks()).thenReturn(Collections.emptyList()); // getCurrentTasks
+																										// doesn't
+																										// return the
+																										// start task
 
-		//Mock ways to get input parameter contents
+		// Mock ways to get input parameter contents
 		TaskMatcher taskMatcher = new TaskMatcher(task);
-		Mockito.lenient().when(taskHelperMock.getFirstInputParameterStringValue(argThat(taskMatcher), eq(CODESYSTEM_TUTORIAL),
-				eq(CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT))).thenReturn(Optional.of(TEST_STRING));
-		Mockito.lenient().when(taskHelperMock.getFirstInputParameter(argThat(taskMatcher), eq(CODESYSTEM_TUTORIAL), eq(CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT), eq(StringType.class)))
+		Mockito.lenient().when(taskHelperMock.getFirstInputParameterStringValue(argThat(taskMatcher),
+				eq(CODESYSTEM_TUTORIAL), eq(CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT)))
+				.thenReturn(Optional.of(TEST_STRING));
+		Mockito.lenient()
+				.when(taskHelperMock.getFirstInputParameter(argThat(taskMatcher), eq(CODESYSTEM_TUTORIAL),
+						eq(CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT), eq(StringType.class)))
 				.thenReturn(Optional.of(parameterComponentMock));
-		Mockito.lenient().when(taskHelperMock.getFirstInputParameterValue(argThat(taskMatcher), eq(CODESYSTEM_TUTORIAL), eq(CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT), eq(StringType.class)))
+		Mockito.lenient()
+				.when(taskHelperMock.getFirstInputParameterValue(argThat(taskMatcher), eq(CODESYSTEM_TUTORIAL),
+						eq(CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT), eq(StringType.class)))
 				.thenReturn(Optional.of(stringTypeMock));
-		Mockito.lenient().when(taskHelperMock.getInputParameters(argThat(taskMatcher), eq(CODESYSTEM_TUTORIAL), eq(CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT), eq(StringType.class)))
+		Mockito.lenient()
+				.when(taskHelperMock.getInputParameters(argThat(taskMatcher), eq(CODESYSTEM_TUTORIAL),
+						eq(CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT), eq(StringType.class)))
 				.thenReturn(Stream.of(parameterComponentMock));
-		Mockito.lenient().when(taskHelperMock.getInputParameterStringValues(argThat(taskMatcher), eq(CODESYSTEM_TUTORIAL),
-				eq(CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT))).thenReturn(Stream.of(TEST_STRING));
-		Mockito.lenient().when(taskHelperMock.getInputParameterValues(argThat(taskMatcher), eq(CODESYSTEM_TUTORIAL), eq(CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT), eq(StringType.class)))
+		Mockito.lenient().when(taskHelperMock.getInputParameterStringValues(argThat(taskMatcher),
+				eq(CODESYSTEM_TUTORIAL), eq(CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT)))
+				.thenReturn(Stream.of(TEST_STRING));
+		Mockito.lenient()
+				.when(taskHelperMock.getInputParameterValues(argThat(taskMatcher), eq(CODESYSTEM_TUTORIAL),
+						eq(CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT), eq(StringType.class)))
 				.thenReturn(Stream.of(stringTypeMock));
 
-		//Mock calls to get value from ParameterComponent and StringType
+		// Mock calls to get value from ParameterComponent and StringType
 		Mockito.lenient().when(parameterComponentMock.getValue()).thenReturn(stringTypeMock);
 		Mockito.lenient().when(stringTypeMock.getValue()).thenReturn(TEST_STRING);
 
@@ -222,13 +226,16 @@ public class DicTaskServiceTest
 		errorMessage = "Expected 'getStartTask' or 'getTasks' to be called at least once.";
 		assertTrue(errorMessage, numCallsGetStartTask > 0 || numCallsGetTasks > 0);
 
-		Mockito.verify(variablesMock, atLeastOnce().description(
-				"'getStartTask' is the most effective way to get the start task. Use this method here.")).getStartTask();
+		Mockito.verify(variablesMock,
+				atLeastOnce().description(
+						"'getStartTask' is the most effective way to get the start task. Use this method here."))
+				.getStartTask();
 
-		Map<String, Integer> numInvocationsForMethods = taskHelperMethodsToVerify.stream().collect(Collectors.toMap(Function.identity(), method -> getNumInvocationsForMethod(method, taskHelperMockingDetails)));
+		Map<String, Integer> numInvocationsForMethods = taskHelperMethodsToVerify.stream().collect(Collectors
+				.toMap(Function.identity(), method -> getNumInvocationsForMethod(method, taskHelperMockingDetails)));
 
-		errorMessage = "Expected one of the following methods to be called at least once:\n"
-				+ numInvocationsForMethods.keySet().stream().reduce("", (previousLine, method) ->  previousLine + method + "\n");
+		errorMessage = "Expected one of the following methods to be called at least once:\n" + numInvocationsForMethods
+				.keySet().stream().reduce("", (previousLine, method) -> previousLine + method + "\n");
 
 		int totalInvocations = numInvocationsForMethods.values().stream().mapToInt(Integer::valueOf).sum();
 
@@ -239,24 +246,31 @@ public class DicTaskServiceTest
 		int numInvocationsFirstInputParameter = numInvocationsForMethods.get(GET_FIRST_INPUT_PARAMETER);
 		int numInvocationsInputParameters = numInvocationsForMethods.get(GET_INPUT_PARAMETERS);
 
-		if (numInvocationsFirstInputParameter + numInvocationsInputParameters > 0 && totalInvocations - (numInvocationsFirstInputParameter + numInvocationsInputParameters) == 0)
+		if (numInvocationsFirstInputParameter + numInvocationsInputParameters > 0
+				&& totalInvocations - (numInvocationsFirstInputParameter + numInvocationsInputParameters) == 0)
 		{
-			Mockito.verify(parameterComponentMock, atLeastOnce().description("Input parameter was retrieved but its value element never got read."))
+			Mockito.verify(parameterComponentMock,
+					atLeastOnce().description("Input parameter was retrieved but its value element never got read."))
 					.getValue();
-			Mockito.verify(stringTypeMock, atLeastOnce().description(
-					"Value element of input parameter was retrieved but the string value was never read.")).getValue();
+			Mockito.verify(stringTypeMock,
+					atLeastOnce().description(
+							"Value element of input parameter was retrieved but the string value was never read."))
+					.getValue();
 		}
 
 		int numInvocationsFirstInputParameterValue = numInvocationsForMethods.get(GET_FIRST_INPUT_PARAMETER_VALUE);
 		int numInvocationsInputParameterValues = numInvocationsForMethods.get(GET_INPUT_PARAMETER_VALUES);
 
-		if (numInvocationsFirstInputParameterValue + numInvocationsInputParameterValues > 0
-				&& totalInvocations - (numInvocationsFirstInputParameterValue + numInvocationsInputParameterValues) == 0)
+		if (numInvocationsFirstInputParameterValue + numInvocationsInputParameterValues > 0 && totalInvocations
+				- (numInvocationsFirstInputParameterValue + numInvocationsInputParameterValues) == 0)
 		{
-			Mockito.verify(stringTypeMock, atLeastOnce().description(
-					"Value element of input parameter was retrieved but the string value was never read.")).getValue();
+			Mockito.verify(stringTypeMock,
+					atLeastOnce().description(
+							"Value element of input parameter was retrieved but the string value was never read."))
+					.getValue();
 		}
-		//Not verifying for getFirstInputParameterStringValue and getInputParameterStringValues since they return the right string value themselves without needing to traverse more getters
+		// Not verifying for getFirstInputParameterStringValue and getInputParameterStringValues since they return the
+		// right string value themselves without needing to traverse more getters
 	}
 
 	private Task getTask()
@@ -272,7 +286,8 @@ public class DicTaskServiceTest
 
 	private int getNumInvocationsForMethod(String methodName, DefaultMockingDetails mockingDetails)
 	{
-		return (int) mockingDetails.getInvocations().stream().map(InvocationOnMock::getMethod).filter(method -> method.getName().equals(methodName)).count();
+		return (int) mockingDetails.getInvocations().stream().map(InvocationOnMock::getMethod)
+				.filter(method -> method.getName().equals(methodName)).count();
 	}
 
 	private CodeSystem getCodeSystem()
@@ -286,12 +301,14 @@ public class DicTaskServiceTest
 
 		var fhirResources = processPlugin.getFhirResources();
 
-		List<Resource> dicProcessResources = fhirResources.get(new ProcessIdAndVersion(
-				ConstantsTutorial.PROCESS_NAME_FULL_DIC, definition.getResourceVersion()));
+		List<Resource> dicProcessResources = fhirResources
+				.get(new ProcessIdAndVersion(ConstantsTutorial.PROCESS_NAME_FULL_DIC, definition.getResourceVersion()));
 
-		return dicProcessResources.stream().filter(resource -> resource instanceof CodeSystem).map(resource -> (CodeSystem) resource)
+		return dicProcessResources.stream().filter(resource -> resource instanceof CodeSystem)
+				.map(resource -> (CodeSystem) resource)
 				.filter(codeSystem -> codeSystem.getUrl().equals(CODESYSTEM_TUTORIAL))
-				.filter(codeSystem -> codeSystem.getConcept().stream().anyMatch(concept -> concept.getCode().equals(CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT)))
+				.filter(codeSystem -> codeSystem.getConcept().stream()
+						.anyMatch(concept -> concept.getCode().equals(CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT)))
 				.findFirst().get();
 	}
 
@@ -301,28 +318,31 @@ public class DicTaskServiceTest
 		Collection<Invocation> invocations = taskHelperMockingDetails.getInvocations();
 
 		List<Invocation> codingArgumentInvocations = invocations.stream()
-				.filter(invocation -> taskHelperMethodsToVerify.stream().anyMatch(method -> method.equals(invocation.getMethod().getName())))
+				.filter(invocation -> taskHelperMethodsToVerify.stream()
+						.anyMatch(method -> method.equals(invocation.getMethod().getName())))
 				.filter(invocation -> Arrays.stream(invocation.getRawArguments()).anyMatch(isCodingArgument()))
 				.toList();
 		List<Invocation> stringArgumentInvocations = invocations.stream()
-				.filter(invocation -> taskHelperMethodsToVerify.stream().anyMatch(method -> method.equals(invocation.getMethod().getName())))
-				.filter(invocation -> isStringMethod(invocation.getArguments()))
-				.toList();
+				.filter(invocation -> taskHelperMethodsToVerify.stream()
+						.anyMatch(method -> method.equals(invocation.getMethod().getName())))
+				.filter(invocation -> isStringMethod(invocation.getArguments())).toList();
 
 		CodeSystem codeSystem = getCodeSystem();
-		errorMessage = "No CodeSystem found with URL " + CODESYSTEM_TUTORIAL + " including a concept with code " + CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT + ".";
+		errorMessage = "No CodeSystem found with URL " + CODESYSTEM_TUTORIAL + " including a concept with code "
+				+ CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT + ".";
 		assertNotNull(errorMessage, codeSystem);
 
-		Map<Invocation, Task> tasksForInvocations = Stream.concat(codingArgumentInvocations.stream(), stringArgumentInvocations.stream())
+		Map<Invocation, Task> tasksForInvocations = Stream
+				.concat(codingArgumentInvocations.stream(), stringArgumentInvocations.stream())
 				.collect(Collectors.toMap(Function.identity(), invocation -> Arrays.stream(invocation.getRawArguments())
-						.filter(arg -> arg instanceof Task)
-						.map(arg -> (Task) arg)
-						.findFirst().get())
-				);
+						.filter(arg -> arg instanceof Task).map(arg -> (Task) arg).findFirst().get()));
 
-		tasksForInvocations.forEach((invocation, task) -> {
+		tasksForInvocations.forEach((invocation, task) ->
+		{
 			TaskMatcher taskMatcher = new TaskMatcher(getTask());
-			String error = "Invocation of " + invocation.getMethod().getName() + " expected argument of type Task to have least one input parameter which has a CodeSystem " + CODESYSTEM_TUTORIAL + " and Code " + CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT + ".";
+			String error = "Invocation of " + invocation.getMethod().getName()
+					+ " expected argument of type Task to have least one input parameter which has a CodeSystem "
+					+ CODESYSTEM_TUTORIAL + " and Code " + CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT + ".";
 			assertTrue(error, taskMatcher.matches(task));
 		});
 
@@ -331,17 +351,19 @@ public class DicTaskServiceTest
 		Map<Invocation, String[]> invocationsWithStringArguments = stringArgumentInvocations.stream()
 				.collect(Collectors.toMap(Function.identity(), this::getCodeSystemAndCodeArguments));
 
-		invocationsWithCodingArgument.forEach((invocation, coding) -> {
-			 String error = "Invocation of " + invocation.getMethod().getName() + " has wrong CodeSystem,";
-			 assertEquals(error, CODESYSTEM_TUTORIAL, coding.getSystem());
-			 error =  "Invocation of " + invocation.getMethod().getName() + " has CodeSystem with wrong Code,";
-			 assertEquals(error, CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT, coding.getCode());
+		invocationsWithCodingArgument.forEach((invocation, coding) ->
+		{
+			String error = "Invocation of " + invocation.getMethod().getName() + " has wrong CodeSystem,";
+			assertEquals(error, CODESYSTEM_TUTORIAL, coding.getSystem());
+			error = "Invocation of " + invocation.getMethod().getName() + " has CodeSystem with wrong Code,";
+			assertEquals(error, CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT, coding.getCode());
 		});
 
-		invocationsWithStringArguments.forEach((invocation, strings) -> {
+		invocationsWithStringArguments.forEach((invocation, strings) ->
+		{
 			String error = "Invocation of " + invocation.getMethod().getName() + " has wrong CodeSystem,";
 			assertEquals(error, CODESYSTEM_TUTORIAL, strings[0]);
-			error =  "Invocation of " + invocation.getMethod().getName() + " has CodeSystem with wrong Code,";
+			error = "Invocation of " + invocation.getMethod().getName() + " has CodeSystem with wrong Code,";
 			assertEquals(error, CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT, strings[1]);
 		});
 	}
@@ -361,13 +383,14 @@ public class DicTaskServiceTest
 		return invocation -> (Coding) Arrays.stream(invocation.getRawArguments()).filter(isCodingArgument()).findFirst()
 				.get();
 	}
+
 	private String[] getCodeSystemAndCodeArguments(Invocation invocation)
 	{
 		String[] codeSystemAndCode = new String[2];
 		int argumentsAdded = 0;
 		for (Object object : invocation.getArguments())
 		{
-			if(object instanceof String && argumentsAdded < 2)
+			if (object instanceof String && argumentsAdded < 2)
 			{
 				codeSystemAndCode[argumentsAdded] = (String) object;
 				argumentsAdded++;
@@ -392,8 +415,8 @@ public class DicTaskServiceTest
 		@Override
 		public boolean matches(Task task)
 		{
-			return task.getInput().stream().anyMatch(parameterComponent -> parameterComponent.getType().getCoding().stream()
-							.anyMatch(coding -> coding.getSystem().equals(system) && coding.getCode().equals(code)));
+			return task.getInput().stream().anyMatch(parameterComponent -> parameterComponent.getType().getCoding()
+					.stream().anyMatch(coding -> coding.getSystem().equals(system) && coding.getCode().equals(code)));
 		}
 	}
 }

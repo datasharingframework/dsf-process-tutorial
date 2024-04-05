@@ -34,7 +34,6 @@ import org.camunda.bpm.model.bpmn.instance.Process;
 import org.camunda.bpm.model.bpmn.instance.ServiceTask;
 import org.camunda.bpm.model.bpmn.instance.TimerEventDefinition;
 import org.camunda.bpm.model.bpmn.instance.camunda.CamundaField;
-import org.glassfish.jaxb.runtime.v2.runtime.reflect.opt.Const;
 import org.hl7.fhir.r4.model.ActivityDefinition;
 import org.hl7.fhir.r4.model.CodeSystem;
 import org.hl7.fhir.r4.model.Resource;
@@ -45,7 +44,6 @@ import org.hl7.fhir.r4.model.ValueSet;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import dev.dsf.bpe.plugin.ProcessIdAndVersion;
 import dev.dsf.bpe.v1.ProcessPluginDefinition;
 import dev.dsf.bpe.v1.plugin.ProcessPluginImpl;
 import dev.dsf.process.tutorial.ConstantsTutorial;
@@ -69,7 +67,8 @@ public class TutorialProcessPluginDefinitionTest
 	public static void loadResources()
 	{
 		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
-		ProcessPluginImpl processPlugin = TestProcessPluginGenerator.generate(definition, false, TutorialProcessPluginDefinitionTest.class);
+		ProcessPluginImpl processPlugin = TestProcessPluginGenerator.generate(definition, false,
+				TutorialProcessPluginDefinitionTest.class);
 		boolean initialized = processPlugin
 				.initializeAndValidateResources(ConstantsTutorial.TUTORIAL_DIC_ORGANIZATION_IDENTIFIER);
 
@@ -125,8 +124,8 @@ public class TutorialProcessPluginDefinitionTest
 		assertNotNull(cosFhirResources);
 		assertEquals(4, cosFhirResources.size());
 
-		long aCount = cosFhirResources.stream().filter(r -> r instanceof ActivityDefinition).map(r -> (ActivityDefinition) r)
-				.filter(a -> "http://dsf.dev/bpe/Process/cosProcess".equals(a.getUrl())
+		long aCount = cosFhirResources.stream().filter(r -> r instanceof ActivityDefinition)
+				.map(r -> (ActivityDefinition) r).filter(a -> "http://dsf.dev/bpe/Process/cosProcess".equals(a.getUrl())
 						&& ConstantsTutorial.RESOURCE_VERSION.equals(a.getVersion()))
 				.count();
 		assertEquals(1, aCount);
@@ -137,7 +136,8 @@ public class TutorialProcessPluginDefinitionTest
 				.count();
 		assertEquals(1, cCount);
 
-		long tCount = cosFhirResources.stream().filter(r -> r instanceof StructureDefinition).map(r -> (StructureDefinition) r)
+		long tCount = cosFhirResources.stream().filter(r -> r instanceof StructureDefinition)
+				.map(r -> (StructureDefinition) r)
 				.filter(c -> "http://dsf.dev/fhir/StructureDefinition/task-hello-cos".equals(c.getUrl())
 						&& ConstantsTutorial.RESOURCE_VERSION.equals(c.getVersion()))
 				.count();
@@ -157,18 +157,18 @@ public class TutorialProcessPluginDefinitionTest
 		assertNotNull(dicFhirResources);
 
 		List<Task> draftTasks = getDraftTasks(dicFhirResources);
-		if(!draftTasks.isEmpty())
+		if (!draftTasks.isEmpty())
 		{
-			String errorDraftTask = "Process is missing Draft Task Resource with InstantiatesCanonical '" + PROFILE_TUTORIAL_TASK_DIC_PROCESS_INSTANTIATES_CANONICAL + "'.";
-			Optional<Task> draftTask = draftTasks.stream()
-					.filter(task -> task.getInstantiatesCanonical().equals(PROFILE_TUTORIAL_TASK_DIC_PROCESS_INSTANTIATES_CANONICAL))
-					.findFirst();
+			String errorDraftTask = "Process is missing Draft Task Resource with InstantiatesCanonical '"
+					+ PROFILE_TUTORIAL_TASK_DIC_PROCESS_INSTANTIATES_CANONICAL + "'.";
+			Optional<Task> draftTask = draftTasks.stream().filter(task -> task.getInstantiatesCanonical()
+					.equals(PROFILE_TUTORIAL_TASK_DIC_PROCESS_INSTANTIATES_CANONICAL)).findFirst();
 			assertTrue(errorDraftTask, draftTask.isPresent());
 			validateDraftTaskResource(draftTask.get());
 		}
 
-		long aCount = dicFhirResources.stream().filter(r -> r instanceof ActivityDefinition).map(r -> (ActivityDefinition) r)
-				.filter(a -> "http://dsf.dev/bpe/Process/dicProcess".equals(a.getUrl())
+		long aCount = dicFhirResources.stream().filter(r -> r instanceof ActivityDefinition)
+				.map(r -> (ActivityDefinition) r).filter(a -> "http://dsf.dev/bpe/Process/dicProcess".equals(a.getUrl())
 						&& ConstantsTutorial.RESOURCE_VERSION.equals(a.getVersion()))
 				.count();
 		assertEquals(1, aCount);
@@ -187,15 +187,15 @@ public class TutorialProcessPluginDefinitionTest
 		assertEquals(1, t1Count);
 
 
-		String errorStructureDefinition = "Process is missing StructureDefinition with url '" + structureDefinitionUrl + "'";
+		String errorStructureDefinition = "Process is missing StructureDefinition with url '" + structureDefinitionUrl
+				+ "'";
 		Optional<StructureDefinition> optionalStructureDefinition = dicFhirResources.stream()
 				.filter(resource -> resource instanceof StructureDefinition)
 				.map(resource -> (StructureDefinition) resource)
 				.filter(structureDefinition -> structureDefinition.getUrl().equals(structureDefinitionUrl)).findFirst();
 
 		long t2Count = dicFhirResources.stream().filter(r -> r instanceof StructureDefinition)
-				.map(r -> (StructureDefinition) r)
-				.filter(c -> structureDefinitionUrl.equals(c.getUrl())
+				.map(r -> (StructureDefinition) r).filter(c -> structureDefinitionUrl.equals(c.getUrl())
 						&& ConstantsTutorial.RESOURCE_VERSION.equals(c.getVersion()))
 				.count();
 		assertEquals(1, t2Count);
@@ -203,10 +203,12 @@ public class TutorialProcessPluginDefinitionTest
 		assertTrue(errorStructureDefinition, optionalStructureDefinition.isPresent());
 
 		StructureDefinition correctStructureDefinition = optionalStructureDefinition.get();
-		String errorNotEnoughInputsAllowed = "StructureDefinition with url " + correctStructureDefinition.getUrl() + " has 'Task.input.max' with value 2. Since you added a new input parameter in exercise 2 you need to increase this value to 3.";
-		assertTrue(errorNotEnoughInputsAllowed, correctStructureDefinition.getDifferential().getElement().stream()
-				.filter(elementDefinition -> elementDefinition.getId().equals("Task.input"))
-				.anyMatch(elementDefinition -> Integer.valueOf(elementDefinition.getMax()).equals(3)));
+		String errorNotEnoughInputsAllowed = "StructureDefinition with url " + correctStructureDefinition.getUrl()
+				+ " has 'Task.input.max' with value 2. Since you added a new input parameter in exercise 2 you need to increase this value to 3.";
+		assertTrue(errorNotEnoughInputsAllowed,
+				correctStructureDefinition.getDifferential().getElement().stream()
+						.filter(elementDefinition -> elementDefinition.getId().equals("Task.input"))
+						.anyMatch(elementDefinition -> Integer.valueOf(elementDefinition.getMax()).equals(3)));
 
 		long vCount = dicFhirResources.stream().filter(r -> r instanceof ValueSet).map(r -> (ValueSet) r)
 				.filter(v -> "http://dsf.dev/fhir/ValueSet/tutorial".equals(v.getUrl())
@@ -217,21 +219,27 @@ public class TutorialProcessPluginDefinitionTest
 
 	private void validateDraftTaskResource(Task draftTask)
 	{
-		String error = "Draft Task has wrong/missing meta.profile value. Expected 'http://dsf.dev/fhir/StructureDefinition/task-start-dic-process|" + resourceVersion + "' or 'http://dsf.dev/fhir/StructureDefinition/task-start-dic-process|#{version}'.";
-		assertTrue(error, draftTask.getMeta().getProfile().stream().anyMatch(profile -> profile.getValue().equals("http://dsf.dev/fhir/StructureDefinition/task-start-dic-process|" + resourceVersion)));
+		String error = "Draft Task has wrong/missing meta.profile value. Expected 'http://dsf.dev/fhir/StructureDefinition/task-start-dic-process|"
+				+ resourceVersion + "' or 'http://dsf.dev/fhir/StructureDefinition/task-start-dic-process|#{version}'.";
+		assertTrue(error, draftTask.getMeta().getProfile().stream().anyMatch(profile -> profile.getValue()
+				.equals("http://dsf.dev/fhir/StructureDefinition/task-start-dic-process|" + resourceVersion)));
 
 		String identifierSystem = "http://dsf.dev/sid/task-identifier";
 		error = "Draft Task has wrong/missing identifier.system value. Expected '" + identifierSystem + "'.";
-		assertTrue(error, draftTask.getIdentifier().stream().anyMatch(identifier -> identifier.getSystem().equals(identifierSystem)));
+		assertTrue(error, draftTask.getIdentifier().stream()
+				.anyMatch(identifier -> identifier.getSystem().equals(identifierSystem)));
 
 		String identifierValue = "http://dsf.dev/bpe/Process/dicProcess/" + resourceVersion + "/task-start-dic-process";
 		String identifierValuePlaceholder = "http://dsf.dev/bpe/Process/dicProcess/#{version}/task-start-dic-process";
-		error = "Draft Task has wrong/missing identifier.value. Expected '" + identifierValue + "' or '" + identifierValuePlaceholder + "'.";
-		assertTrue(error, draftTask.getIdentifier().stream().anyMatch(identifier ->  identifier.getValue().equals(identifierValue)));
+		error = "Draft Task has wrong/missing identifier.value. Expected '" + identifierValue + "' or '"
+				+ identifierValuePlaceholder + "'.";
+		assertTrue(error, draftTask.getIdentifier().stream()
+				.anyMatch(identifier -> identifier.getValue().equals(identifierValue)));
 
 		String instantiatesCanonical = PROFILE_TUTORIAL_TASK_DIC_PROCESS_URI.concat("|" + resourceVersion);
 		String instantiatesCanonicalPlaceholder = PROFILE_TUTORIAL_TASK_DIC_PROCESS_URI.concat("|#{version}");
-		error = "Draft Task has wrong/missing instantiatesCanonical value. Expected '" + instantiatesCanonical + "' or '" + instantiatesCanonicalPlaceholder + "'.";
+		error = "Draft Task has wrong/missing instantiatesCanonical value. Expected '" + instantiatesCanonical
+				+ "' or '" + instantiatesCanonicalPlaceholder + "'.";
 		assertTrue(error, draftTask.getInstantiatesCanonical().equals(instantiatesCanonical));
 
 		error = "Draft Task has wrong/missing status value. Expected '" + Task.TaskStatus.DRAFT.name() + "'.";
@@ -244,26 +252,25 @@ public class TutorialProcessPluginDefinitionTest
 		assertTrue(error, draftTask.getRequester().getIdentifier().getValue().equals("dic.dsf.test"));
 
 		error = "Draft Task has wrong/missing restriction.recipient.identifier.value. Expected 'dic.dsf.test' or the organization placeholder '#{organization}'.";
-		assertTrue(error, draftTask.getRestriction().getRecipientFirstRep().getIdentifier().getValue().equals("dic.dsf.test"));
+		assertTrue(error,
+				draftTask.getRestriction().getRecipientFirstRep().getIdentifier().getValue().equals("dic.dsf.test"));
 
 		String messageName = "startDicProcess";
 		error = "Draft Task has wrong/missing input.valueString. Expected '" + messageName + "'.";
-		assertTrue(error, draftTask.getInput().stream()
-				.filter(input -> input.getValue() instanceof StringType)
+		assertTrue(error, draftTask.getInput().stream().filter(input -> input.getValue() instanceof StringType)
 				.anyMatch(input -> ((StringType) input.getValue()).getValue().equals(messageName)));
 
 		error = "Draft Task has wrong/missing input parameter 'tutorial-input'";
-		assertTrue(error, draftTask.getInput().stream()
-				.anyMatch(input -> input.getType().getCoding().stream()
-						.allMatch(coding -> coding.getSystem().equals(CODESYSTEM_TUTORIAL)
-								&& coding.getCode().equals(CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT))));
+		assertTrue(error,
+				draftTask.getInput().stream()
+						.anyMatch(input -> input.getType().getCoding().stream()
+								.allMatch(coding -> coding.getSystem().equals(CODESYSTEM_TUTORIAL)
+										&& coding.getCode().equals(CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT))));
 	}
 
 	private List<Task> getDraftTasks(List<Resource> resources)
 	{
-		return resources.stream()
-				.filter(resource -> resource instanceof Task)
-				.map(resource -> (Task) resource)
+		return resources.stream().filter(resource -> resource instanceof Task).map(resource -> (Task) resource)
 				.toList();
 	}
 
@@ -272,8 +279,8 @@ public class TutorialProcessPluginDefinitionTest
 	{
 		assumeNotNull(dicFhirResources);
 
-		var aOpt = dicFhirResources.stream().filter(r -> r instanceof ActivityDefinition).map(r -> (ActivityDefinition) r)
-				.filter(a -> "http://dsf.dev/bpe/Process/dicProcess".equals(a.getUrl())
+		var aOpt = dicFhirResources.stream().filter(r -> r instanceof ActivityDefinition)
+				.map(r -> (ActivityDefinition) r).filter(a -> "http://dsf.dev/bpe/Process/dicProcess".equals(a.getUrl())
 						&& ConstantsTutorial.RESOURCE_VERSION.equals(a.getVersion()))
 				.findFirst();
 		assumeTrue(aOpt.isPresent());
@@ -290,8 +297,8 @@ public class TutorialProcessPluginDefinitionTest
 		assertNotNull(hrpFhirResources);
 		assertEquals(4, hrpFhirResources.size());
 
-		long aCount = hrpFhirResources.stream().filter(r -> r instanceof ActivityDefinition).map(r -> (ActivityDefinition) r)
-				.filter(a -> "http://dsf.dev/bpe/Process/hrpProcess".equals(a.getUrl())
+		long aCount = hrpFhirResources.stream().filter(r -> r instanceof ActivityDefinition)
+				.map(r -> (ActivityDefinition) r).filter(a -> "http://dsf.dev/bpe/Process/hrpProcess".equals(a.getUrl())
 						&& ConstantsTutorial.RESOURCE_VERSION.equals(a.getVersion()))
 				.count();
 		assertEquals(1, aCount);
@@ -302,7 +309,8 @@ public class TutorialProcessPluginDefinitionTest
 				.count();
 		assertEquals(1, cCount);
 
-		long tCount = hrpFhirResources.stream().filter(r -> r instanceof StructureDefinition).map(r -> (StructureDefinition) r)
+		long tCount = hrpFhirResources.stream().filter(r -> r instanceof StructureDefinition)
+				.map(r -> (StructureDefinition) r)
 				.filter(c -> "http://dsf.dev/fhir/StructureDefinition/task-hello-hrp".equals(c.getUrl())
 						&& ConstantsTutorial.RESOURCE_VERSION.equals(c.getVersion()))
 				.count();
