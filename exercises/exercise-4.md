@@ -73,7 +73,7 @@ in `.../dsf-process-tutorial/test-data-generator/cert/cos-client/cos-client_cert
    ```
    docker-compose up cos-fhir
    ```
-   Verify the DSF FHIR server started successfully. You can access the webservice of the DSF FHIR server at https://cos/fhir.
+   Verify the DSF FHIR server started successfully. You can access the webservice of the DSF FHIR server at https://cos/fhir. To authenticate yourself to the server you can use the client certificate located at `.../dsf-process-tutorial/test-data-generator/cert/cos-client/cos-client_certificate.p12` (Password: `password`).
 
 4. Start the DSF BPE server for the `cos.dsf.test` organization in another console at location `.../dsf-process-tutorial/dev-setup`:
    ```
