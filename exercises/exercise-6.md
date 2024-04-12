@@ -79,7 +79,7 @@ in `.../dsf-process-tutorial/test-data-generator/cert/hrp-client/hrp-client_cert
    ```
    docker-compose up hrp-fhir
    ```
-   Verify the DSF FHIR server started successfully. You can access the webservice of the DSF FHIR server at https://hrp/fhir.
+   Verify the DSF FHIR server started successfully. You can access the webservice of the DSF FHIR server at https://hrp/fhir. To authenticate yourself to the server you can use the client certificate located at `.../dsf-process-tutorial/test-data-generator/cert/hrp-client/hrp-client_certificate.p12` (Password: `password`).
 
 6. Start the DSF BPE server for the `hrp.dsf.test` organization in a sixth console at location `.../dsf-process-tutorial/dev-setup`:
    ```

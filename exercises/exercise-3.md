@@ -10,11 +10,11 @@ with access to all DSF installations.
 This is part of the DSF's access control using the role configuration mechanism. It allows you to specify
 exact rules for accessing the FHIR REST API and starting processes for certain users. Either by providing
 thumbprints of their client certificates or by using [OpenID Connect](https://openid.net/developers/how-connect-works/).  
-For this exercise, we have already created a user for you in the `DIC` realm who has sufficient
+For this exercise, we will include [OpenID Connect](https://openid.net/developers/how-connect-works/) in the configuration through a [Keycloak](https://www.keycloak.org/) instance. We have already created a user for you in the `DIC` realm who has sufficient
 access to the FHIR REST API and who is allowed to start our `dicProcess`.  
-This was done through a Keycloak instance with the administration console accessible under https://keycloak:8443.
+The administration console for Keycloak is accessible under https://keycloak:8443.
 Credentials for administrator access are `username: admin` and `password: admin`.  
-Your challenge will be to take this user and explicitly allow them to start the `dicProcess`. Optionally, you can also add
+Your task will be to take this user and explicitly allow them to start the `dicProcess`. Optionally, you can also add
 Keycloak users for the `COS` and `HRP` instances.
 
 In order to solve this exercise, you need to have read the documentation on [Access Control](https://dsf.dev/stable/maintain/fhir/access-control.html) 
