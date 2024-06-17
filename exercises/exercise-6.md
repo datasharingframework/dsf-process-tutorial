@@ -92,11 +92,11 @@ in `.../dsf-process-tutorial/test-data-generator/cert/hrp-client/hrp-client_cert
    Verify that the FHIR [Task](../learning/concepts/fhir/task.md) resource was created at the DSF FHIR server and the `dsfdev_dicProcess` was executed by the DSF BPE server of the `dic.dsf.test` organization. The DSF BPE server of the `dic.dsf.test` organization should print a message showing that a [Task](../learning/concepts/fhir/task.md) resource to start the `dsfdev_cosProcess` was sent to the `cos.dsf.test` organization.  
    Verify that a FHIR [Task](../learning/concepts/fhir/task.md) resource was created at the DSF FHIR server of the `cos.dsf.test` organization and the `dsfdev_cosProcess` was executed by the DSF BPE server of the `cos.dsf.test` organization. The DSF BPE server of the `cos.dsf.test` organization should print a message showing that a [Task](../learning/concepts/fhir/task.md) resource to start the `dsfdev_hrpProcess` was sent to the `hrp.dsf.test` organization.  
    
-   Based on the value of the Task.input parameter you send, the `dsfdev_hrpProcess` will either send a `goodbyDic` message to the `dic.dsf.test` organization or finish without sending a message.
+   Based on the value of the Task.input parameter you send, the `dsfdev_hrpProcess` will either send a `goodbyeDic` message to the `dic.dsf.test` organization or finish without sending a message.
    
-   To trigger the `goodbyDic` message, use `send-response` as the `http://dsf.dev/fhir/CodeSystem/tutorial#tutorial-input` input parameter.
+   To trigger the `goodbyeDic` message, use `send-response` as the `http://dsf.dev/fhir/CodeSystem/tutorial#tutorial-input` input parameter.
    
-   Verify that the `dsfdev_dicProcess` either finishes with the arrival of the `goodbyDic` message or after waiting for two minutes.
+   Verify that the `dsfdev_dicProcess` either finishes with the arrival of the `goodbyeDic` message or after waiting for two minutes.
 
 ___
 [Prerequisites](prerequisites.md) • [Exercise 0](exercise-0.md) • [Exercise 1](exercise-1.md) • [Exercise 1.1](exercise-1-1.md) • [Exercise 2](exercise-2.md) • [Exercise 3](exercise-3.md) • [Exercise 4](exercise-4.md) • [Exercise 5](exercise-5.md) • **Exercise 6**
