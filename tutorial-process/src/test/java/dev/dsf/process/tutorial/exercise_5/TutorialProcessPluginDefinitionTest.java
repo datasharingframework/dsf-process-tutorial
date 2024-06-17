@@ -8,7 +8,7 @@ import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_C
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_DIC_PROCESS_INSTANTIATES_CANONICAL;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_DIC_PROCESS_URI;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS;
-import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_COS_PROCESS_MESSAGE_NAME;
+import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS_MESSAGE_NAME;
 import static dev.dsf.process.tutorial.ConstantsTutorial.RESOURCE_VERSION;
 import static dev.dsf.process.tutorial.TutorialProcessPluginDefinition.VERSION;
 import static org.junit.Assert.assertEquals;
@@ -129,10 +129,10 @@ public class TutorialProcessPluginDefinitionTest
 
 		String errorMessageEndEventMessageName = "Process '" + processId + "' in file '" + filename
 				+ "' is missing a MessageEndEvent field injection with name 'messageName' and value '"
-				+ PROFILE_TUTORIAL_TASK_COS_PROCESS_MESSAGE_NAME + "'";
+				+ PROFILE_TUTORIAL_TASK_HELLO_COS_MESSAGE_NAME + "'";
 		assertTrue(errorMessageEndEventMessageName,
 				camundaFields.stream().anyMatch(i -> "messageName".equals(i.getCamundaName())
-						&& PROFILE_TUTORIAL_TASK_COS_PROCESS_MESSAGE_NAME.equals(i.getTextContent())));
+						&& PROFILE_TUTORIAL_TASK_HELLO_COS_MESSAGE_NAME.equals(i.getTextContent())));
 
 		String errorMessageEndEventProfile = "Process '" + processId + "' in file '" + filename
 				+ "' is missing a MessageEndEvent field injection with name 'profile' and value '"
@@ -311,8 +311,8 @@ public class TutorialProcessPluginDefinitionTest
 		assertEquals(errorStartEvent, 1, messageStartEvent.size());
 
 		String errorStartEventMessageName = "Process '" + processId + "' in file '" + filename
-				+ "' is missing a MessageStartEvent with message name 'cosProcess'";
-		assertEquals(errorStartEventMessageName, "cosProcess", messageStartEvent.get(0).getMessage().getName());
+				+ "' is missing a MessageStartEvent with message name 'helloCos'";
+		assertEquals(errorStartEventMessageName, "helloCos", messageStartEvent.get(0).getMessage().getName());
 	}
 
 	@Test
