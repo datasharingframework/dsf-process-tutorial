@@ -5,7 +5,7 @@ import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_D
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_DIC_PROCESS_MESSAGE_NAME;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS_INSTANTIATES_CANONICAL;
-import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_COS_PROCESS_MESSAGE_NAME;
+import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS_MESSAGE_NAME;
 import static dev.dsf.process.tutorial.ConstantsTutorial.RESOURCE_VERSION;
 import static dev.dsf.process.tutorial.TutorialProcessPluginDefinition.RELEASE_DATE;
 import static org.junit.Assert.assertEquals;
@@ -109,7 +109,7 @@ public class TaskProfileTest
 		task.getRestriction().addRecipient().setType(ResourceType.Organization.name()).getIdentifier()
 				.setSystem(NamingSystems.OrganizationIdentifier.SID).setValue("cos.dsf.test");
 
-		task.addInput().setValue(new StringType(PROFILE_TUTORIAL_TASK_COS_PROCESS_MESSAGE_NAME)).getType().addCoding()
+		task.addInput().setValue(new StringType(PROFILE_TUTORIAL_TASK_HELLO_COS_MESSAGE_NAME)).getType().addCoding()
 				.setSystem(CodeSystems.BpmnMessage.URL).setCode(CodeSystems.BpmnMessage.messageName().getCode());
 		task.addInput().setValue(new StringType(UUID.randomUUID().toString())).getType().addCoding()
 				.setSystem(CodeSystems.BpmnMessage.URL).setCode(CodeSystems.BpmnMessage.businessKey().getCode());
