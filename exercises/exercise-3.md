@@ -42,7 +42,7 @@ and [ActivityDefinitions](../learning/concepts/fhir/activitydefinition).
    You can also check out the [guide on creating ActivityDefinitions](../learning/guides/creating-an-activity-definition.md).
    </details>
 
-4. Just like in [exercise 2](exercise-2.md), we just changed a FHIR resource in a way that breaks compatibility with older versions of the plugin. Therefore, we need to signal this change by incrementing the resource version to `1.4`.
+4. Just like in [exercise 2](exercise-2.md), we just changed a FHIR resource in a way that breaks compatibility with older versions of the plugin. Therefore, we need to signal this change by incrementing the resource version to `1.2`.
 
    
 
