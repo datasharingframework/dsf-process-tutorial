@@ -3,7 +3,7 @@ ___
 
 # Exercise 6 - Event Based Gateways and Intermediate Events
 In the final exercise we will look at message flow between three organizations as well as how to continue a waiting process if no return message arrives. 
-With this exercise we will add a third process and complete a message loop from `dic.dsf.test` to `Test_COR` to `hrp.dsf.test` back to `dic.dsf.test`.
+With this exercise we will add a third process and complete a message loop from `dic.dsf.test` to `cos.dsf.test` to `hrp.dsf.test` and back to `dic.dsf.test`.
 
 In order to solve this exercise, you should have solved exercise 5 and read the topics on 
 [Managing Multiple Incoming Messages and Missing Messages](../learning/guides/managing-mutiple-incoming-messages-and-missing-messages.md)
@@ -17,10 +17,10 @@ Solutions to this exercise are found on the branch `solutions/exercise-6`.
    * Change the [Message End Event](../learning/concepts/bpmn/messaging.md#message-end-event) to an [Intermediate Message Throw Event](../learning/concepts/bpmn/messaging.md#message-intermediate-throwing-event)
    * Add an [Event Based Gateway](../learning/concepts/bpmn/gateways.md#event-based-gateway) after the throw event
    * Configure two cases for the [Event Based Gateway](../learning/concepts/bpmn/gateways.md#event-based-gateway):
-      1. An [Intermediate Message Catch Event](../learning/concepts/bpmn/messaging.md#message-intermediate-catching-event) to catch the `goodbyDic` message from the `dsfdev_hrpProcess`.
+      1. An [Intermediate Message Catch Event](../learning/concepts/bpmn/messaging.md#message-intermediate-catching-event) to catch the `goodbyeDic` message from the `dsfdev_hrpProcess`.
       1. An [Intermediate Timer Catch Event](../learning/concepts/bpmn/timer-intermediate-catching-events.md) to end the process if no message is sent by the `dsfdev_hrpProcess` after two minutes.
          Make sure both cases finish with a process [End Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/none-events/).
-1. Modify the `dsfdev_cosProcess` to use a [Message End Event](../learning/concepts/bpmn/messaging.md#message-end-event) to trigger the process in file `hrp-process.bpmn`. Figure out the values for the `instantiatesCanonical`, `profile` and `messageName` input parameters of the [Message End Event](../learning/concepts/bpmn/messaging.md#message-end-event) based on the [AcitvityDefinition](../learning/concepts/fhir/activitydefinition.md) in file `hrp-process.xml`.
+1. Modify the `dsfdev_cosProcess` to use a [Message End Event](../learning/concepts/bpmn/messaging.md#message-end-event) to trigger the process in file `hrp-process.bpmn`. Figure out the values for the `instantiatesCanonical`, `profile` and `messageName` input parameters of the [Message End Event](../learning/concepts/bpmn/messaging.md#message-end-event) based on the [AcitvityDefinition](../learning/concepts/fhir/activitydefinition.md) in file `hrp-process.xml`. Change the `Cos Task` element into a Service Task and include the `CosTask` as the implementation.
 1. Modify the process in file `hrp-process.bpmn` and set the _process definition key_ and _version_. Figure out the appropriate values based on the [AcitvityDefinition](../learning/concepts/fhir/activitydefinition.md) in file `hrp-process.xml`.
 1. Add a new process authorization extension element to the ActivityDefinition for `dsfdev_dicProcess` using the [parent organization role coding](../learning/concepts/dsf/examples-for-requester-and-recipient-elements.md) where
      only remote organizations which are part of `medizininformatik-initiative.de` and have the `HRP` role are allowed to request `goodByeDic` messages and only
@@ -79,7 +79,7 @@ in `.../dsf-process-tutorial/test-data-generator/cert/hrp-client/hrp-client_cert
    ```
    docker-compose up hrp-fhir
    ```
-   Verify the DSF FHIR server started successfully. You can access the webservice of the DSF FHIR server at https://hrp/fhir.
+   Verify the DSF FHIR server started successfully. You can access the webservice of the DSF FHIR server at https://hrp/fhir. To authenticate yourself to the server you can use the client certificate located at `.../dsf-process-tutorial/test-data-generator/cert/hrp-client/hrp-client_certificate.p12` (Password: `password`).
 
 6. Start the DSF BPE server for the `hrp.dsf.test` organization in a sixth console at location `.../dsf-process-tutorial/dev-setup`:
    ```
@@ -92,11 +92,11 @@ in `.../dsf-process-tutorial/test-data-generator/cert/hrp-client/hrp-client_cert
    Verify that the FHIR [Task](../learning/concepts/fhir/task.md) resource was created at the DSF FHIR server and the `dsfdev_dicProcess` was executed by the DSF BPE server of the `dic.dsf.test` organization. The DSF BPE server of the `dic.dsf.test` organization should print a message showing that a [Task](../learning/concepts/fhir/task.md) resource to start the `dsfdev_cosProcess` was sent to the `cos.dsf.test` organization.  
    Verify that a FHIR [Task](../learning/concepts/fhir/task.md) resource was created at the DSF FHIR server of the `cos.dsf.test` organization and the `dsfdev_cosProcess` was executed by the DSF BPE server of the `cos.dsf.test` organization. The DSF BPE server of the `cos.dsf.test` organization should print a message showing that a [Task](../learning/concepts/fhir/task.md) resource to start the `dsfdev_hrpProcess` was sent to the `hrp.dsf.test` organization.  
    
-   Based on the value of the Task.input parameter you send, the `dsfdev_hrpProcess` will either send a `goodbyDic` message to the `dic.dsf.test` organization or finish without sending a message.
+   Based on the value of the Task.input parameter you send, the `dsfdev_hrpProcess` will either send a `goodbyeDic` message to the `dic.dsf.test` organization or finish without sending a message.
    
-   To trigger the `goodbyDic` message, use `send-response` as the `http://dsf.dev/fhir/CodeSystem/tutorial#tutorial-input` input parameter.
+   To trigger the `goodbyeDic` message, use `send-response` as the `http://dsf.dev/fhir/CodeSystem/tutorial#tutorial-input` input parameter.
    
-   Verify that the `dsfdev_dicProcess` either finishes with the arrival of the `goodbyDic` message or after waiting for two minutes.
+   Verify that the `dsfdev_dicProcess` either finishes with the arrival of the `goodbyeDic` message or after waiting for two minutes.
 
 ___
 [Prerequisites](prerequisites.md) • [Exercise 0](exercise-0.md) • [Exercise 1](exercise-1.md) • [Exercise 1.1](exercise-1-1.md) • [Exercise 2](exercise-2.md) • [Exercise 3](exercise-3.md) • [Exercise 4](exercise-4.md) • [Exercise 5](exercise-5.md) • **Exercise 6**

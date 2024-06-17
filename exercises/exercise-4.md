@@ -18,14 +18,14 @@ Solutions to this exercise are found on the branch `solutions/exercise-4`.
 ## Exercise Tasks
 1. Replace the [End Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/none-events/#none-end-event) of the `dsfdev_dicProcess` in the `dic-process.bpmn` file with a [Message End Event](../learning/concepts/bpmn/messaging.md#message-end-event). Give the [Message End Event](../learning/concepts/bpmn/messaging.md#message-end-event) a name and an ID and set its implementation to the `HelloCosMessage` class.  
    Configure field injections `instantiatesCanonical`, `profile` and `messageName` in the BPMN model for the [Message End Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/message-events/#message-end-event).
-    Use `http://dsf.dev/fhir/StructureDefinition/task-hello-cos|#{version}` as the profile and `cosProcess` as the message name. Figure out what the appropriate `instantiatesCanonical` value is, based on the name (process definition key) of the process to be triggered.
+    Use `http://dsf.dev/fhir/StructureDefinition/task-hello-cos|#{version}` as the profile and `helloCos` as the message name. Figure out what the appropriate `instantiatesCanonical` value is, based on the name (process definition key) of the process to be triggered.
    <details>
    <summary>Can't remember how instantiatesCanonical is built?</summary>
 
    Read the concept [here](../learning/concepts/dsf/about-version-placeholders-and-urls.md#urls) again.
     </details>
 1. Modify the `dsfdev_cosProcess` in the `cos-process.bpmn` file and configure the message name of the [Message Start Event](../learning/concepts/bpmn/messaging.md#message-start-event) with the same value as the message name of the [Message End Event](../learning/concepts/bpmn/messaging.md#message-end-event) in the `dsfdev_dicProcess`. 
-1. Create a new [StructureDefinition](http://hl7.org/fhir/R4/structuredefinition.html) with a [Task](../learning/concepts/fhir/task.md) profile for the `cosProcess` message.
+1. Create a new [StructureDefinition](http://hl7.org/fhir/R4/structuredefinition.html) with a [Task](../learning/concepts/fhir/task.md) profile for the `helloCos` message.
     <details>
    <summary>Don't know how to get started?</summary>
    
@@ -41,7 +41,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-4`.
 1. Add the `dsfdev_cosProcess` and its resources to the `TutorialProcessPluginDefinition` class. This will require a new mapping entry with the full process name of the `cosProcess` as the key and a List of associated FHIR resources as the value.
 1. Modify `DicTask` service class to set the `target` process variable for the `cos.dsf.test` organization.
 1. Configure the `HelloCosMessage` class as a Spring Bean in the `TutorialConfig` class. Don't forget the right scope.
-1. Again, we introduced changes that break compatibility. Older plugin versions at the COS instance won't be able to handle the Task resource type we added earlier. Increment your resource version to `1.4`. 
+1. Again, we introduced changes that break compatibility. Older plugin versions at the COS instance won't be able to handle the Task resource type we added earlier. Increment your resource version to `1.3`. 
 
 ## Solution Verification
 ### Maven Build and Automated Tests
@@ -73,7 +73,7 @@ in `.../dsf-process-tutorial/test-data-generator/cert/cos-client/cos-client_cert
    ```
    docker-compose up cos-fhir
    ```
-   Verify the DSF FHIR server started successfully. You can access the webservice of the DSF FHIR server at https://cos/fhir.
+   Verify the DSF FHIR server started successfully. You can access the webservice of the DSF FHIR server at https://cos/fhir. To authenticate yourself to the server you can use the client certificate located at `.../dsf-process-tutorial/test-data-generator/cert/cos-client/cos-client_certificate.p12` (Password: `password`).
 
 4. Start the DSF BPE server for the `cos.dsf.test` organization in another console at location `.../dsf-process-tutorial/dev-setup`:
    ```
