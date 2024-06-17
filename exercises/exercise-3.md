@@ -28,7 +28,7 @@ and [ActivityDefinitions](../learning/concepts/fhir/activitydefinition).
    <details>
    <summary>Don't know how to change the ActivityDefinition?</summary>
 
-   There is a list of examples for the `requester` element [here](../learning/concepts/dsf/examples-for-requester-and-recipient-elements).
+   There is a list of examples for the `requester` element [here](../learning/concepts/dsf/examples-for-requester-and-recipient-elements.md).
    You can also check out the [guide on creating ActivityDefinitions](../learning/guides/creating-an-activity-definition.md).
    </details>
 
