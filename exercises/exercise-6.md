@@ -3,7 +3,7 @@ ___
 
 # Exercise 6 - Event Based Gateways and Intermediate Events
 In the final exercise we will look at message flow between three organizations as well as how to continue a waiting process if no return message arrives. 
-With this exercise we will add a third process and complete a message loop from `dic.dsf.test` to `Test_COR` to `hrp.dsf.test` back to `dic.dsf.test`.
+With this exercise we will add a third process and complete a message loop from `dic.dsf.test` to `cos.dsf.test` to `hrp.dsf.test` and back to `dic.dsf.test`.
 
 In order to solve this exercise, you should have solved exercise 5 and read the topics on 
 [Managing Multiple Incoming Messages and Missing Messages](../learning/guides/managing-mutiple-incoming-messages-and-missing-messages.md)
