@@ -349,8 +349,8 @@ public class TutorialProcessPluginDefinitionTest
 		assertEquals(errorIntermediateMessageThrowEvent, 1, intermediateMessageThrowEvent.size());
 
 		String errorIntermediateMessageThrowEventMessageName = "Process '" + processId + "' in file '" + filename
-				+ "' is missing a IntermediateMessageThrowEvent with message name 'helloCos'";
-		assertEquals(errorIntermediateMessageThrowEventMessageName, "helloCos",
+				+ "' is missing a IntermediateMessageThrowEvent with message name 'cosProcess'";
+		assertEquals(errorIntermediateMessageThrowEventMessageName, "cosProcess",
 				intermediateMessageThrowEvent.get(0).getMessage().getName());
 
 		long eventBasedGatewayCount = processes.get(0).getChildElementsByType(EventBasedGateway.class).stream()
