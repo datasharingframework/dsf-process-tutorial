@@ -45,7 +45,6 @@
   </bpmn:process>
   <bpmn:message id="Message_094gydj" name="helloHrp" />
   <bpmn:message id="Message_000lvyx" name="goodbyeDic" />
-  <bpmn:message id="Message_33na25b" name="cosProcess" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="change_me">
       <bpmndi:BPMNShape id="Event_1azgt5l_di" bpmnElement="startHelloHrp">
