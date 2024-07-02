@@ -11,7 +11,7 @@ For this, you should follow these steps:
    ```
 4. Add the CA certificate from `test-data-generator/cert/ca/testca_certificate.pem` to your browser's certificate store
 5. Add the client certificate from `test-data-generator/cert/Webbrowser_Test_User/Webbrowser_Test_User_certificate.p12` to your browser's certificate store
-6. Visit https://dic/fhir. Your browser should prompt you to supply a client certificate. Select the `Webbrowser Test User` certificate. If it doesn't, you need to research how to configure your browser to send the client certificate
+6. Visit https://dic/fhir. Your browser should prompt you to supply a client certificate. Select the `Webbrowser Test User` certificate. If it doesn't, you need to research how to configure your browser to send the client certificate. If prompted for a password use "password".
 7. You should now be logged into the DSF FHIR server frontend
 8. Repeat step 6 for https://cos/fhir and https://hrp/fhir
 9. Visit https://dic/fhir/Task?_sort=_profile,identifier&status=draft
