@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_17shncm" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.17.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.20.0">
+  <bpmn:process id="dsfdev_vote" isExecutable="true" camunda:versionTag="#{version}" camunda:historyTimeToLive="180">
+    <bpmn:startEvent id="startVote">
+      <bpmn:outgoing>Flow_11i4uri</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0ysp77m" messageRef="Message_3odpo2l" />
+    </bpmn:startEvent>
+    <bpmn:exclusiveGateway id="Gateway_1bbrdcm">
+      <bpmn:incoming>Flow_06adei6</bpmn:incoming>
+      <bpmn:outgoing>Flow_0iqof8t</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1l9j9al</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="Activity_1i64l8h" name="User Vote" camunda:formKey="http://dsf.dev/fhir/Questionnaire/user-vote|#{version}">
+      <bpmn:extensionElements>
+        <camunda:taskListener class="dev.dsf.process.tutorial.listener.QuestionnaireListener" event="create" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0iqof8t</bpmn:incoming>
+      <bpmn:outgoing>Flow_1wvvag2</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0iqof8t" sourceRef="Gateway_1bbrdcm" targetRef="Activity_1i64l8h">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${userVote}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:serviceTask id="Activity_02cz0lm" name="Automated Vote" camunda:class="dev.dsf.process.tutorial.service.AutomatedVote">
+      <bpmn:incoming>Flow_1l9j9al</bpmn:incoming>
+      <bpmn:outgoing>Flow_18x3f0u</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1l9j9al" sourceRef="Gateway_1bbrdcm" targetRef="Activity_02cz0lm">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!userVote}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:exclusiveGateway id="Gateway_19jhq1t">
+      <bpmn:incoming>Flow_1wvvag2</bpmn:incoming>
+      <bpmn:incoming>Flow_18x3f0u</bpmn:incoming>
+      <bpmn:outgoing>Flow_0xhuhqp</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1wvvag2" sourceRef="Activity_1i64l8h" targetRef="Gateway_19jhq1t" />
+    <bpmn:sequenceFlow id="Flow_18x3f0u" sourceRef="Activity_02cz0lm" targetRef="Gateway_19jhq1t" />
+    <bpmn:endEvent id="returnVote">
+      <bpmn:incoming>Flow_0xhuhqp</bpmn:incoming>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0q6p9lp" messageRef="Message_2qca7jg">
+        <bpmn:extensionElements>
+          <camunda:field name="messageName">
+            <camunda:string>returnVote</camunda:string>
+          </camunda:field>
+          <camunda:field name="profile">
+            <camunda:string>http://dsf.dev/fhir/StructureDefinition/task-return-vote|#{version}</camunda:string>
+          </camunda:field>
+          <camunda:field name="instantiatesCanonical">
+            <camunda:string>http://dsf.dev/bpe/Process/voting-process|#{version}</camunda:string>
+          </camunda:field>
+        </bpmn:extensionElements>
+      </bpmn:messageEventDefinition>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0xhuhqp" sourceRef="Gateway_19jhq1t" targetRef="returnVote" />
+    <bpmn:serviceTask id="Activity_0v4icti" name="Prepare Question" camunda:class="dev.dsf.process.tutorial.service.PrepareQuestion">
+      <bpmn:incoming>Flow_11i4uri</bpmn:incoming>
+      <bpmn:outgoing>Flow_06adei6</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_11i4uri" sourceRef="startVote" targetRef="Activity_0v4icti" />
+    <bpmn:sequenceFlow id="Flow_06adei6" sourceRef="Activity_0v4icti" targetRef="Gateway_1bbrdcm" />
+  </bpmn:process>
+  <bpmn:message id="Message_3odpo2l" name="startVote" />
+  <bpmn:message id="Message_2qca7jg" name="returnVote" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="dsfdev_vote">
+      <bpmndi:BPMNShape id="Event_1bjlguc_di" bpmnElement="startVote">
+        <dc:Bounds x="152" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1bbrdcm_di" bpmnElement="Gateway_1bbrdcm" isMarkerVisible="true">
+        <dc:Bounds x="385" y="95" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1i64l8h_di" bpmnElement="Activity_1i64l8h">
+        <dc:Bounds x="510" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_02cz0lm_di" bpmnElement="Activity_02cz0lm">
+        <dc:Bounds x="510" y="190" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_19jhq1t_di" bpmnElement="Gateway_19jhq1t" isMarkerVisible="true">
+        <dc:Bounds x="685" y="95" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_18ylnp0_di" bpmnElement="returnVote">
+        <dc:Bounds x="782" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_12p15xs_di" bpmnElement="Activity_0v4icti">
+        <dc:Bounds x="220" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0iqof8t_di" bpmnElement="Flow_0iqof8t">
+        <di:waypoint x="435" y="120" />
+        <di:waypoint x="510" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1l9j9al_di" bpmnElement="Flow_1l9j9al">
+        <di:waypoint x="410" y="145" />
+        <di:waypoint x="410" y="230" />
+        <di:waypoint x="510" y="230" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1wvvag2_di" bpmnElement="Flow_1wvvag2">
+        <di:waypoint x="610" y="120" />
+        <di:waypoint x="685" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_18x3f0u_di" bpmnElement="Flow_18x3f0u">
+        <di:waypoint x="610" y="230" />
+        <di:waypoint x="710" y="230" />
+        <di:waypoint x="710" y="145" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0xhuhqp_di" bpmnElement="Flow_0xhuhqp">
+        <di:waypoint x="735" y="120" />
+        <di:waypoint x="782" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_11i4uri_di" bpmnElement="Flow_11i4uri">
+        <di:waypoint x="188" y="120" />
+        <di:waypoint x="220" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_06adei6_di" bpmnElement="Flow_06adei6">
+        <di:waypoint x="320" y="120" />
+        <di:waypoint x="385" y="120" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

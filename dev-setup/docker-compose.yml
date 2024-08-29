@@ -235,6 +235,7 @@ services:
             token-role: admin
             dsf-role:
               - ADMIN
+      DEV_DSF_PROCESS_TUTORIAL_USERVOTE: 'true'
     networks:
       cos-bpe-frontend:
         ipv4_address: 172.20.0.147
