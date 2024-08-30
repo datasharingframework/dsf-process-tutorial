@@ -30,12 +30,12 @@
     <bpmn:exclusiveGateway id="Gateway_19jhq1t">
       <bpmn:incoming>Flow_1wvvag2</bpmn:incoming>
       <bpmn:incoming>Flow_18x3f0u</bpmn:incoming>
-      <bpmn:outgoing>Flow_0xhuhqp</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1varrq3</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_1wvvag2" sourceRef="Activity_1i64l8h" targetRef="Gateway_19jhq1t" />
     <bpmn:sequenceFlow id="Flow_18x3f0u" sourceRef="Activity_02cz0lm" targetRef="Gateway_19jhq1t" />
     <bpmn:endEvent id="returnVote">
-      <bpmn:incoming>Flow_0xhuhqp</bpmn:incoming>
+      <bpmn:incoming>Flow_1ga722w</bpmn:incoming>
       <bpmn:messageEventDefinition id="MessageEventDefinition_0q6p9lp" messageRef="Message_2qca7jg">
         <bpmn:extensionElements>
           <camunda:field name="messageName">
@@ -50,13 +50,18 @@
         </bpmn:extensionElements>
       </bpmn:messageEventDefinition>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_0xhuhqp" sourceRef="Gateway_19jhq1t" targetRef="returnVote" />
     <bpmn:serviceTask id="Activity_0v4icti" name="Prepare Question" camunda:class="dev.dsf.process.tutorial.service.PrepareQuestion">
       <bpmn:incoming>Flow_11i4uri</bpmn:incoming>
       <bpmn:outgoing>Flow_06adei6</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_11i4uri" sourceRef="startVote" targetRef="Activity_0v4icti" />
     <bpmn:sequenceFlow id="Flow_06adei6" sourceRef="Activity_0v4icti" targetRef="Gateway_1bbrdcm" />
+    <bpmn:sequenceFlow id="Flow_1varrq3" sourceRef="Gateway_19jhq1t" targetRef="Activity_1bxns1i" />
+    <bpmn:serviceTask id="Activity_1bxns1i" name="Prepare Return Vote" camunda:class="dev.dsf.process.tutorial.service.PrepareReturnVote">
+      <bpmn:incoming>Flow_1varrq3</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ga722w</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1ga722w" sourceRef="Activity_1bxns1i" targetRef="returnVote" />
   </bpmn:process>
   <bpmn:message id="Message_3odpo2l" name="startVote" />
   <bpmn:message id="Message_2qca7jg" name="returnVote" />
@@ -79,11 +84,15 @@
       <bpmndi:BPMNShape id="Gateway_19jhq1t_di" bpmnElement="Gateway_19jhq1t" isMarkerVisible="true">
         <dc:Bounds x="685" y="95" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_18ylnp0_di" bpmnElement="returnVote">
-        <dc:Bounds x="782" y="102" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_12p15xs_di" bpmnElement="Activity_0v4icti">
         <dc:Bounds x="220" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_18ylnp0_di" bpmnElement="returnVote">
+        <dc:Bounds x="972" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_15nk5sl_di" bpmnElement="Activity_1bxns1i">
+        <dc:Bounds x="810" y="80" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0iqof8t_di" bpmnElement="Flow_0iqof8t">
@@ -104,10 +113,6 @@
         <di:waypoint x="710" y="230" />
         <di:waypoint x="710" y="145" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0xhuhqp_di" bpmnElement="Flow_0xhuhqp">
-        <di:waypoint x="735" y="120" />
-        <di:waypoint x="782" y="120" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_11i4uri_di" bpmnElement="Flow_11i4uri">
         <di:waypoint x="188" y="120" />
         <di:waypoint x="220" y="120" />
@@ -115,6 +120,14 @@
       <bpmndi:BPMNEdge id="Flow_06adei6_di" bpmnElement="Flow_06adei6">
         <di:waypoint x="320" y="120" />
         <di:waypoint x="385" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1varrq3_di" bpmnElement="Flow_1varrq3">
+        <di:waypoint x="735" y="120" />
+        <di:waypoint x="810" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ga722w_di" bpmnElement="Flow_1ga722w">
+        <di:waypoint x="910" y="120" />
+        <di:waypoint x="972" y="120" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
