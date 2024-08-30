@@ -112,6 +112,26 @@
             <path value="Task.output" />
             <sliceName value="voting-result" />
         </element>
+        <element id="Task.output:voting-result.extension">
+            <path value="Task.output.extension"/>
+            <slicing>
+                <discriminator>
+                    <type value="value"/>
+                    <path value="url"/>
+                </discriminator>
+                <rules value="open"/>
+            </slicing>
+        </element>
+        <element id="Task.output:voting-result.extension:voting-result-extension">
+            <path value="Task.output.extension"/>
+            <sliceName value="voting-result-extension"/>
+            <min value="1"/>
+            <max value="1"/>
+            <type>
+                <code value="Extension"/>
+                <profile value="http://dsf.dev/fhir/StructureDefinition/extension-voting-result"/>
+            </type>
+        </element>
         <element id="Task.output:voting-result.type">
             <path value="Task.output.type" />
             <min value="1"/>
@@ -159,26 +179,6 @@
                 <strength value="required"/>
                 <valueSet value="http://dsf.dev/fhir/ValueSet/binary-question-answers"/>
             </binding>
-        </element>
-        <element id="Task.output:voting-result.extension">
-            <path value="Task.output.extension"/>
-            <slicing>
-                <discriminator>
-                    <type value="value"/>
-                    <path value="url"/>
-                </discriminator>
-                <rules value="open"/>
-            </slicing>
-        </element>
-        <element id="Task.output:voting-result.extension:voting-result-extension">
-            <path value="Task.output.extension"/>
-            <sliceName value="voting-result-extension"/>
-            <min value="1"/>
-            <max value="1"/>
-            <type>
-                <code value="Extension"/>
-                <profile value="http://dsf.dev/fhir/StructureDefinition/extension-voting-result"/>
-            </type>
         </element>
     </differential>
 </StructureDefinition>
