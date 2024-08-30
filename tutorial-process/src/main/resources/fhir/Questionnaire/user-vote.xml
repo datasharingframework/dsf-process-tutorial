@@ -14,6 +14,18 @@
     <!-- status managed by bpe -->
     <status value="unknown"/>
     <item>
+        <linkId value="business-key"/>
+        <type value="string"/>
+        <text value="The business-key of the process execution"/>
+        <required value="true"/>
+    </item>
+    <item>
+        <linkId value="user-task-id"/>
+        <type value="string"/>
+        <text value="The user-task-id of the process execution"/>
+        <required value="true"/>
+    </item>
+    <item>
         <linkId value="vote"/>
         <type value="boolean"/>
         <text value="Placeholder"/>
