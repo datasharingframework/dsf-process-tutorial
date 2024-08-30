@@ -128,6 +128,42 @@
                 <code value="REMOTE_ORGANIZATION" />
             </valueCoding>
         </extension>
+        <extension url="requester">
+            <valueCoding>
+                <extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization">
+                    <valueIdentifier>
+                        <system value="http://dsf.dev/sid/organization-identifier" />
+                        <value value="dic.dsf.test" />
+                    </valueIdentifier>
+                </extension>
+                <system value="http://dsf.dev/fhir/CodeSystem/process-authorization" />
+                <code value="LOCAL_ORGANIZATION" />
+            </valueCoding>
+        </extension>
+        <extension url="requester">
+            <valueCoding>
+                <extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization">
+                    <valueIdentifier>
+                        <system value="http://dsf.dev/sid/organization-identifier" />
+                        <value value="cos.dsf.test" />
+                    </valueIdentifier>
+                </extension>
+                <system value="http://dsf.dev/fhir/CodeSystem/process-authorization" />
+                <code value="LOCAL_ORGANIZATION" />
+            </valueCoding>
+        </extension>
+        <extension url="requester">
+            <valueCoding>
+                <extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization">
+                    <valueIdentifier>
+                        <system value="http://dsf.dev/sid/organization-identifier" />
+                        <value value="hrp.dsf.test" />
+                    </valueIdentifier>
+                </extension>
+                <system value="http://dsf.dev/fhir/CodeSystem/process-authorization" />
+                <code value="LOCAL_ORGANIZATION" />
+            </valueCoding>
+        </extension>
         <extension url="recipient">
             <valueCoding>
                 <extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization">
