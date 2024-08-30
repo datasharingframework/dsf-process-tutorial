@@ -10,7 +10,7 @@
             <valueString value="startVote" />
         </extension>
         <extension url="task-profile">
-            <valueCanonical value="http://dsf.dev/fhir/StructureDefinition/task-start-voting-process|#{version}" />
+            <valueCanonical value="http://dsf.dev/fhir/StructureDefinition/task-start-vote|#{version}" />
         </extension>
         <extension url="requester">
             <valueCoding>
