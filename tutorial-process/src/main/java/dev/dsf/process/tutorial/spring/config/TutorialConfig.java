@@ -4,10 +4,8 @@ import static dev.dsf.process.tutorial.ConstantsTutorial.PROCESS_NAME_FULL_DIC;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROCESS_NAME_FULL_VOTING_PROCESS;
 import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
-import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -27,6 +25,7 @@ import dev.dsf.process.tutorial.service.CosTask;
 import dev.dsf.process.tutorial.service.DicTask;
 import dev.dsf.process.tutorial.service.HrpTask;
 import dev.dsf.process.tutorial.service.PrepareQuestion;
+import dev.dsf.process.tutorial.service.PrepareReturnVote;
 import dev.dsf.process.tutorial.service.SaveTimeoutResult;
 import dev.dsf.process.tutorial.service.SaveVotingResult;
 import dev.dsf.process.tutorial.service.SelectTargets;
@@ -155,5 +154,12 @@ public class TutorialConfig
 	public AggregateResults aggregateResults()
 	{
 		return new AggregateResults(api);
+	}
+
+	@Bean
+	@Scope(SCOPE_PROTOTYPE)
+	public PrepareReturnVote prepareReturnVote()
+	{
+		return new PrepareReturnVote(api);
 	}
 }
