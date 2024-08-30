@@ -32,14 +32,14 @@ public class ReturnVote extends AbstractTaskMessageSend
 	{
 		if (variables.getBoolean(VOTE_PROCESS_VARIABLE_VOTED_AUTOMATICALLY))
 		{
-			return Stream.of(createInputParameter(variables.getBoolean(VOTE_PROCESS_VARIABLE_AUTOMATED_VOTE)));
+			return Stream.of(createVoteResultInputParameter(variables.getBoolean(VOTE_PROCESS_VARIABLE_AUTOMATED_VOTE)));
 		} else {
 			Optional<QuestionnaireResponse.QuestionnaireResponseItemComponent> optionalItem = api.getQuestionnaireResponseHelper().getFirstItemLeaveMatchingLinkId(variables.getLatestReceivedQuestionnaireResponse(), CODESYSTEM_TUTORIAL_VALUE_VOTE);
-			return optionalItem.stream().map(questionnaireResponseItemComponent -> createInputParameter(((BooleanType) questionnaireResponseItemComponent.getAnswerFirstRep().getValue()).booleanValue()));
+			return optionalItem.stream().map(questionnaireResponseItemComponent -> createVoteResultInputParameter(((BooleanType) questionnaireResponseItemComponent.getAnswerFirstRep().getValue()).booleanValue()));
 		}
 	}
 
-	private ParameterComponent createInputParameter(boolean boolVote)
+	private ParameterComponent createVoteResultInputParameter(boolean boolVote)
 	{
 		ParameterComponent inputParameter = new ParameterComponent();
 		inputParameter.setType(new CodeableConcept().addCoding(new Coding().setSystem(CODESYSTEM_TUTORIAL).setCode(CODESYSTEM_TUTORIAL_VALUE_VOTE)));
