@@ -3,8 +3,8 @@ package dev.dsf.process.tutorial.message;
 import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_TUTORIAL;
 import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_TUTORIAL_VALUE_VOTE;
 import static dev.dsf.process.tutorial.ConstantsTutorial.VOTE_PROCESS_VARIABLE_AUTOMATED_VOTE;
-import static dev.dsf.process.tutorial.ConstantsTutorial.VOTE_PROCESS_VARIABLE_VOTED_AUTOMATICALLY;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -30,9 +30,10 @@ public class ReturnVote extends AbstractTaskMessageSend
 	protected Stream<ParameterComponent> getAdditionalInputParameters(DelegateExecution execution,
 			Variables variables)
 	{
-		if (variables.getBoolean(VOTE_PROCESS_VARIABLE_VOTED_AUTOMATICALLY))
+		Boolean automatedVote = variables.getBoolean(VOTE_PROCESS_VARIABLE_AUTOMATED_VOTE);
+		if (Objects.nonNull(automatedVote))
 		{
-			return Stream.of(createVoteResultInputParameter(variables.getBoolean(VOTE_PROCESS_VARIABLE_AUTOMATED_VOTE)));
+			return Stream.of(createVoteResultInputParameter(automatedVote));
 		} else {
 			Optional<QuestionnaireResponse.QuestionnaireResponseItemComponent> optionalItem = api.getQuestionnaireResponseHelper().getFirstItemLeaveMatchingLinkId(variables.getLatestReceivedQuestionnaireResponse(), CODESYSTEM_TUTORIAL_VALUE_VOTE);
 			return optionalItem.stream().map(questionnaireResponseItemComponent -> createVoteResultInputParameter(((BooleanType) questionnaireResponseItemComponent.getAnswerFirstRep().getValue()).booleanValue()));
@@ -43,8 +44,7 @@ public class ReturnVote extends AbstractTaskMessageSend
 	{
 		ParameterComponent inputParameter = new ParameterComponent();
 		inputParameter.setType(new CodeableConcept().addCoding(new Coding().setSystem(CODESYSTEM_TUTORIAL).setCode(CODESYSTEM_TUTORIAL_VALUE_VOTE)));
-		String voteCode = boolVote ? "yes" : "no";
-		inputParameter.setValue(new Coding().setSystem(CODESYSTEM_TUTORIAL).setCode(voteCode));
+		inputParameter.setValue(new BooleanType(boolVote));
 		return inputParameter;
 	}
 }

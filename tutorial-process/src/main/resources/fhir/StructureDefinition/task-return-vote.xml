@@ -106,23 +106,8 @@
             <min value="1"/>
             <max value="1"/>
             <type>
-                <code value="Coding" />
+                <code value="boolean" />
             </type>
-        </element>
-        <element id="Task.input:vote.value[x].system">
-            <path value="Task.input.value[x].system"/>
-            <min value="1"/>
-            <max value="1"/>
-            <fixedUri value="http://dsf.dev/fhir/CodeSystem/tutorial"/>
-        </element>
-        <element id="Task.input:vote.value[x].code">
-            <path value="Task.input.value[x].code"/>
-            <min value="1"/>
-            <max value="1"/>
-            <binding>
-                <strength value="required"/>
-                <valueSet value="http://dsf.dev/fhir/ValueSet/binary-question-answers|#{version}"/>
-            </binding>
         </element>
     </differential>
 </StructureDefinition>
