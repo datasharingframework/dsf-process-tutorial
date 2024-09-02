@@ -1,5 +1,7 @@
 package dev.dsf.process.tutorial.service;
 
+import java.util.Objects;
+
 import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.hl7.fhir.r4.model.CodeableConcept;
@@ -8,6 +10,8 @@ import org.hl7.fhir.r4.model.Extension;
 import org.hl7.fhir.r4.model.StringType;
 import org.hl7.fhir.r4.model.Task;
 import org.hl7.fhir.r4.model.Task.TaskOutputComponent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import dev.dsf.bpe.v1.ProcessPluginApi;
 import dev.dsf.bpe.v1.activity.AbstractServiceDelegate;
@@ -17,6 +21,8 @@ import dev.dsf.process.tutorial.util.VoteResponse;
 
 public class AggregateResults extends AbstractServiceDelegate
 {
+	Logger logger = LoggerFactory.getLogger(AggregateResults.class);
+
 	public AggregateResults(ProcessPluginApi api)
 	{
 		super(api);
@@ -30,13 +36,17 @@ public class AggregateResults extends AbstractServiceDelegate
 			VoteResponse response = VoteResponse.valueOf(variables.getString(target.getOrganizationIdentifierValue() + "_" + target.getCorrelationKey()));
 			switch (response) {
 				case YES: taskStartVotingProcess.addOutput(createVoteOutput(target.getOrganizationIdentifierValue(), "yes"));
+							break;
 				case NO: taskStartVotingProcess.addOutput(createVoteOutput(target.getOrganizationIdentifierValue(), "no"));
+							break;
 				case TIMEOUT: taskStartVotingProcess.addOutput(createTimeoutOutput(target.getOrganizationIdentifierValue()));
+							break;
 			}
 		});
 	}
 
-	private TaskOutputComponent createVoteOutput(String organizationIdentifierValue, String vote) {
+	private TaskOutputComponent createVoteOutput(String organizationIdentifierValue, String vote)
+	{
 		TaskOutputComponent voteOutput = new TaskOutputComponent();
 		voteOutput.setValue(new Coding().setSystem(ConstantsTutorial.CODESYSTEM_TUTORIAL).setCode(vote));
 		voteOutput.setType(new CodeableConcept().addCoding(new Coding().setCode(ConstantsTutorial.CODESYSTEM_TUTORIAL_VALUE_VOTING_RESULT).setSystem(ConstantsTutorial.CODESYSTEM_TUTORIAL)));
