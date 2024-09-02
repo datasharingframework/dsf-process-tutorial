@@ -53,10 +53,13 @@ public class QuestionnaireListener extends DefaultUserTaskListener implements In
 	{
 		Map<String, List<String>> searchParams = new HashMap<>();
 		searchParams.put("url", List.of(ConstantsTutorial.QUESTIONNAIRE_USER_VOTE_URL));
-		searchParams.put("version", List.of(TutorialProcessPluginDefinition.VERSION));
+		searchParams.put("version", List.of(TutorialProcessPluginDefinition.VERSION.substring(0, 3)));
 		Bundle result = api.getFhirWebserviceClientProvider().getLocalWebserviceClient().searchWithStrictHandling(Questionnaire.class, searchParams);
 		if (result.getTotal() < 1) return Optional.empty();
-		return result.getEntry().stream().findFirst().map(Questionnaire.class::cast);
+		return result.getEntry().stream()
+				.filter(bundleEntryComponent -> bundleEntryComponent.getResource() instanceof Questionnaire)
+				.map(bundleEntryComponent -> (Questionnaire) bundleEntryComponent.getResource())
+				.findFirst();
 	}
 
 	private void updateQuestionnaire(Questionnaire questionnaire)

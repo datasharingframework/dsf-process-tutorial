@@ -5,18 +5,18 @@
             <code value="ALL" />
         </tag>
     </meta>
-    <url value="http://dsf.dev/fhir/ValueSet/binary-question-answers"/>
+    <url value="http://dsf.dev/fhir/ValueSet/voting-results"/>
     <!-- version managed by bpe -->
     <version value="#{version}" />
-    <name value="Binary Question Answer"/>
-    <title value="Binary Question Answer ValueSet"/>
+    <name value="Voting Result"/>
+    <title value="Voting Result ValueSet"/>
     <!-- status managed by bpe -->
     <status value="unknown" />
     <experimental value="false"/>
     <!-- date managed by bpe -->
     <date value="#{date}"/>
     <publisher value="DSF"/>
-    <description value="ValueSet with values for answers to binary questions."/>
+    <description value="ValueSet with values for voting results."/>
     <immutable value="true"/>
     <compose>
         <include>
@@ -26,6 +26,9 @@
             </concept>
             <concept>
                 <code value="no"/>
+            </concept>
+            <concept>
+                <code value="timeout"/>
             </concept>
         </include>
     </compose>

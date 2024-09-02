@@ -36,7 +36,7 @@
     <bpmn:sequenceFlow id="Flow_18x3f0u" sourceRef="Activity_02cz0lm" targetRef="Gateway_19jhq1t" />
     <bpmn:endEvent id="returnVote">
       <bpmn:incoming>Flow_1ga722w</bpmn:incoming>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_0q6p9lp" messageRef="Message_2qca7jg">
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0q6p9lp" messageRef="Message_2qca7jg" camunda:class="dev.dsf.process.tutorial.message.ReturnVote">
         <bpmn:extensionElements>
           <camunda:field name="messageName">
             <camunda:string>returnVote</camunda:string>
@@ -45,7 +45,7 @@
             <camunda:string>http://dsf.dev/fhir/StructureDefinition/task-return-vote|#{version}</camunda:string>
           </camunda:field>
           <camunda:field name="instantiatesCanonical">
-            <camunda:string>http://dsf.dev/bpe/Process/voting-process|#{version}</camunda:string>
+            <camunda:string>http://dsf.dev/bpe/Process/votingProcess|#{version}</camunda:string>
           </camunda:field>
         </bpmn:extensionElements>
       </bpmn:messageEventDefinition>

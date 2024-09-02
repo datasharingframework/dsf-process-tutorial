@@ -4,5 +4,11 @@ public enum VoteResponse
 {
 	YES,
 	NO,
-	TIMEOUT
+	TIMEOUT;
+
+	@Override
+	public String toString()
+	{
+		return name().toLowerCase();
+	}
 }

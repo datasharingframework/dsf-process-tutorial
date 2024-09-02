@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Scope;
 import dev.dsf.bpe.v1.ProcessPluginApi;
 import dev.dsf.bpe.v1.documentation.ProcessDocumentation;
 import dev.dsf.process.tutorial.listener.QuestionnaireListener;
+import dev.dsf.process.tutorial.listener.SetCorrelationKeyListener;
 import dev.dsf.process.tutorial.message.GoodbyeDicMessage;
 import dev.dsf.process.tutorial.message.HelloCosMessage;
 import dev.dsf.process.tutorial.message.HelloHrpMessage;
@@ -161,5 +162,12 @@ public class TutorialConfig
 	public PrepareReturnVote prepareReturnVote()
 	{
 		return new PrepareReturnVote(api);
+	}
+
+	@Bean
+	@Scope(SCOPE_PROTOTYPE)
+	public SetCorrelationKeyListener setCorrelationKeyListener()
+	{
+		return new SetCorrelationKeyListener(api);
 	}
 }

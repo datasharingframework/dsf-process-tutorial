@@ -51,4 +51,9 @@
 		<display value="No" />
 		<definition value="Negative response to a binary question." />
 	</concept>
+	<concept>
+		<code value="timeout" />
+		<display value="Timeout" />
+		<definition value="Voting process timed out." />
+	</concept>
 </CodeSystem> 

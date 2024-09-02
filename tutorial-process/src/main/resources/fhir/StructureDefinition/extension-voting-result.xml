@@ -35,7 +35,7 @@
                 <rules value="open"/>
             </slicing>
             <min value="1"/>
-            <max value="2"/>
+            <max value="1"/>
         </element>
         <element id="Extension.extension:organization-identifier">
             <path value="Extension.extension"/>
@@ -54,24 +54,6 @@
             <type>
                 <code value="string"/>
             </type>
-        </element>
-        <element id="Extension.extension:timeout">
-            <path value="Extension.extension"/>
-            <sliceName value="timeout"/>
-            <max value="1"/>
-        </element>
-        <element id="Extension.extension:timeout.url">
-            <path value="Extension.extension.url"/>
-            <fixedUri value="timeout"/>
-        </element>
-        <element id="Extension.extension:timeout.value[x]">
-            <path value="Extension.extension.value[x]"/>
-            <min value="1"/>
-            <max value="1"/>
-            <type>
-                <code value="string"/>
-            </type>
-            <fixedString value="timeout"/>
         </element>
         <element id="Extension.url">
             <path value="Extension.url"/>

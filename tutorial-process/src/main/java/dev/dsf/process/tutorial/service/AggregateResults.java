@@ -48,8 +48,8 @@ public class AggregateResults extends AbstractServiceDelegate
 	private TaskOutputComponent createVoteOutput(String organizationIdentifierValue, String vote)
 	{
 		TaskOutputComponent voteOutput = new TaskOutputComponent();
-		voteOutput.setValue(new Coding().setSystem(ConstantsTutorial.CODESYSTEM_TUTORIAL).setCode(vote));
 		voteOutput.setType(new CodeableConcept().addCoding(new Coding().setCode(ConstantsTutorial.CODESYSTEM_TUTORIAL_VALUE_VOTING_RESULT).setSystem(ConstantsTutorial.CODESYSTEM_TUTORIAL)));
+		voteOutput.setValue(new Coding().setSystem(ConstantsTutorial.CODESYSTEM_TUTORIAL).setCode(vote));
 
 		Extension votingResultExtension = voteOutput.addExtension();
 		votingResultExtension.setUrl(ConstantsTutorial.VOTING_RESULT_EXTENSION_URL);
@@ -60,11 +60,12 @@ public class AggregateResults extends AbstractServiceDelegate
 	private TaskOutputComponent createTimeoutOutput(String organizationIdentifierValue)
 	{
 		TaskOutputComponent voteOutput = new TaskOutputComponent();
+		voteOutput.setType(new CodeableConcept().addCoding(new Coding().setCode(ConstantsTutorial.CODESYSTEM_TUTORIAL_VALUE_VOTING_RESULT).setSystem(ConstantsTutorial.CODESYSTEM_TUTORIAL)));
+		voteOutput.setValue(new Coding().setSystem(ConstantsTutorial.CODESYSTEM_TUTORIAL).setCode("timeout"));
 
 		Extension votingResultExtension = voteOutput.addExtension();
 		votingResultExtension.setUrl(ConstantsTutorial.VOTING_RESULT_EXTENSION_URL);
 		votingResultExtension.addExtension().setUrl(ConstantsTutorial.VOTING_RESULT_EXTENSION_ORGANIZATION_IDENTIFIER).setValue(new StringType(organizationIdentifierValue));
-		votingResultExtension.addExtension().setUrl(ConstantsTutorial.VOTING_RESULT_EXTENSION_TIMEOUT).setValue(new StringType("timeout"));
 		return voteOutput;
 	}
 }

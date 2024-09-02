@@ -86,7 +86,6 @@ public interface ConstantsTutorial
 
 	String VOTE_PROCESS_VARIABLE_USER_VOTE = "userVote";
 	String VOTE_PROCESS_VARIABLE_AUTOMATED_VOTE = "automatedVote";
-	String VOTE_PROCESS_VARIABLE_VOTED_AUTOMATICALLY = "votedAutomatically";
 
 	String QUESTIONNAIRE_USER_VOTE_URL = "http://dsf.dev/fhir/Questionnaire/user-vote";
 }

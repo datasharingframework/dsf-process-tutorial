@@ -65,7 +65,7 @@ public class TutorialProcessPluginDefinition implements ProcessPluginDefinition
 		String qUserVote = "fhir/Questionnaire/user-vote.xml";
 
 		String sExtensionVotingResult = "fhir/StructureDefinition/extension-voting-result.xml";
-		String vBinaryQuestionAnswers = "fhir/ValueSet/binary-question-answers.xml";
+		String vBinaryQuestionAnswers = "fhir/ValueSet/voting-results.xml";
 		String vVotingParameters = "fhir/ValueSet/voting-parameters.xml";
 
 		return Map.of(ConstantsTutorial.PROCESS_NAME_FULL_DIC,

@@ -30,14 +30,14 @@ public class PrepareReturnVote extends AbstractServiceDelegate
 		Optional<Organization> optionalOrganization = api.getOrganizationProvider().getOrganization(requesterRef.getIdentifier());
 		if (optionalOrganization.isPresent())
 		{
-			Optional<Endpoint> optionalEndpoint = api.getEndpointProvider().getEndpoint(optionalOrganization.get().getEndpointFirstRep().getIdentifier());
-			if (optionalEndpoint.isPresent())
-			{
-				Endpoint requesterEndpoint = optionalEndpoint.get();
-				Target target = variables.createTarget(requesterRef.getIdentifier().getValue(), requesterEndpoint.getIdentifierFirstRep().getValue(), requesterEndpoint.getAddress(), api.getTaskHelper()
-						.getFirstInputParameterStringValue(startTask, CodeSystems.BpmnMessage.URL, CodeSystems.BpmnMessage.Codes.CORRELATION_KEY).get());
-				variables.setTarget(target);
-			}
+			String[] readParams = optionalOrganization.get().getEndpoint().get(0).getReference().split("/");
+			String resourceType = readParams[0];
+			String id = readParams[1];
+			Endpoint requesterEndpoint = (Endpoint) api.getFhirWebserviceClientProvider().getLocalWebserviceClient().read(resourceType, id);
+
+			Target target = variables.createTarget(requesterRef.getIdentifier().getValue(), requesterEndpoint.getIdentifierFirstRep().getValue(), requesterEndpoint.getAddress(), api.getTaskHelper()
+					.getFirstInputParameterStringValue(startTask, CodeSystems.BpmnMessage.URL, CodeSystems.BpmnMessage.Codes.CORRELATION_KEY).get());
+			variables.setTarget(target);
 		}
 	}
 }
