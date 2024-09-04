@@ -9,14 +9,13 @@ import org.camunda.bpm.engine.delegate.DelegateTask;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.Questionnaire;
 import org.hl7.fhir.r4.model.QuestionnaireResponse;
-import org.springframework.beans.factory.InitializingBean;
 
 import dev.dsf.bpe.v1.ProcessPluginApi;
-import dev.dsf.bpe.v1.activity.DefaultUserTaskListener;
+import dev.dsf.bpe.v1.constants.CodeSystems;
 import dev.dsf.process.tutorial.ConstantsTutorial;
 import dev.dsf.process.tutorial.TutorialProcessPluginDefinition;
 
-public class QuestionnaireListener extends DefaultUserTaskListener implements InitializingBean
+public class QuestionnaireListener extends CustomUserTaskListener
 {
 	ProcessPluginApi api;
 	public QuestionnaireListener(ProcessPluginApi api)
@@ -26,26 +25,25 @@ public class QuestionnaireListener extends DefaultUserTaskListener implements In
 	}
 
 	@Override
-	public void afterPropertiesSet() throws Exception
-	{
-		super.afterPropertiesSet();
-	}
-
-	@Override
 	protected void beforeQuestionnaireResponseCreate(DelegateTask userTask, QuestionnaireResponse beforeCreate)
 	{
 		Optional<Questionnaire> optionalQuestionnaire = findQuestionnaire();
-		if (optionalQuestionnaire.isPresent())
+		Optional<String> optCorrelationKey = api.getTaskHelper().getFirstInputParameterStringValue(api.getVariables(userTask.getExecution()).getStartTask(), CodeSystems.BpmnMessage.URL, CodeSystems.BpmnMessage.Codes.CORRELATION_KEY);
+		if (optionalQuestionnaire.isPresent() && optCorrelationKey.isPresent())
 		{
+			String correlationKey = optCorrelationKey.get();
 			String question = (String) userTask.getExecution()
 					.getVariable(ConstantsTutorial.CODESYSTEM_TUTORIAL_VALUE_BINARY_QUESTION);
 
 			Questionnaire questionnaire = optionalQuestionnaire.get();
+			String questionnaireUrl = questionnaire.getUrl();
 			questionnaire.getItem().stream().filter(item -> item.getLinkId().equals("vote")).findFirst().ifPresent(item -> item.setText(question));
-			updateQuestionnaire(questionnaire);
+			questionnaire.setUrl(questionnaire.getUrl().concat("-").concat(correlationKey));
 
-			beforeCreate.getItem().stream().filter(item -> item.getLinkId().equals("vote")).findFirst()
-					.ifPresent(item -> item.setText(question));
+			beforeCreate.getItem().stream().filter(item -> item.getLinkId().equals("vote")).findFirst().ifPresent(item -> item.setText(question));
+			beforeCreate.setQuestionnaire(questionnaireUrl.concat("-").concat(correlationKey).concat("|").concat(new TutorialProcessPluginDefinition().getResourceVersion()));
+
+			uploadQuestionnaire(questionnaire);
 		}
 	}
 
@@ -62,8 +60,8 @@ public class QuestionnaireListener extends DefaultUserTaskListener implements In
 				.findFirst();
 	}
 
-	private void updateQuestionnaire(Questionnaire questionnaire)
+	private void uploadQuestionnaire(Questionnaire questionnaire)
 	{
-		api.getFhirWebserviceClientProvider().getLocalWebserviceClient().update(questionnaire);
+		api.getFhirWebserviceClientProvider().getLocalWebserviceClient().create(questionnaire);
 	}
 }
