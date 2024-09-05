@@ -283,7 +283,7 @@ public class CustomUserTaskListener implements TaskListener, InitializingBean
 	{
 		Bundle bundle = new Bundle();
 		bundle.setId("urn:uuid:" + UUID.randomUUID().toString());
-		bundle.setType(Bundle.BundleType.BATCH);
+		bundle.setType(Bundle.BundleType.TRANSACTION);
 		if (uploadQuestionnaire)
 		{
 			questionnaire.setId("urn:uuid:" + UUID.randomUUID().toString());
