@@ -52,8 +52,19 @@
             <min value="1"/>
             <max value="1"/>
             <type>
-                <code value="string"/>
+                <code value="Identifier"/>
             </type>
+        </element>
+        <element id="Extension.extension:organization-identifier.value[x].system">
+            <path value="Extension.extension.value[x].system"/>
+            <min value="1"/>
+            <max value="1"/>
+            <fixedUri value="http://dsf.dev/sid/organization-identifier"/>
+        </element>
+        <element id="Extension.extension:organization-identifier.value[x].value">
+            <path value="Extension.extension.value[x].value"/>
+            <min value="1"/>
+            <max value="1"/>
         </element>
         <element id="Extension.url">
             <path value="Extension.url"/>
