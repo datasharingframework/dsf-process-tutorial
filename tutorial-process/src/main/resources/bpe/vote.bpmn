@@ -7,8 +7,8 @@
     </bpmn:startEvent>
     <bpmn:exclusiveGateway id="Gateway_1bbrdcm">
       <bpmn:incoming>Flow_06adei6</bpmn:incoming>
-      <bpmn:outgoing>Flow_0iqof8t</bpmn:outgoing>
       <bpmn:outgoing>Flow_1l9j9al</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0iqof8t</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:userTask id="Activity_1i64l8h" name="User Vote" camunda:formKey="http://dsf.dev/fhir/Questionnaire/user-vote|#{version}">
       <bpmn:extensionElements>
@@ -17,9 +17,6 @@
       <bpmn:incoming>Flow_0iqof8t</bpmn:incoming>
       <bpmn:outgoing>Flow_1wvvag2</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:sequenceFlow id="Flow_0iqof8t" sourceRef="Gateway_1bbrdcm" targetRef="Activity_1i64l8h">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${userVote}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
     <bpmn:serviceTask id="Activity_02cz0lm" name="Automated Vote" camunda:class="dev.dsf.process.tutorial.service.AutomatedVote">
       <bpmn:incoming>Flow_1l9j9al</bpmn:incoming>
       <bpmn:outgoing>Flow_18x3f0u</bpmn:outgoing>
@@ -62,6 +59,9 @@
       <bpmn:outgoing>Flow_1ga722w</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_1ga722w" sourceRef="Activity_1bxns1i" targetRef="returnVote" />
+    <bpmn:sequenceFlow id="Flow_0iqof8t" sourceRef="Gateway_1bbrdcm" targetRef="Activity_1i64l8h">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${userVote}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
   </bpmn:process>
   <bpmn:message id="Message_3odpo2l" name="startVote" />
   <bpmn:message id="Message_2qca7jg" name="returnVote" />

@@ -1,17 +1,16 @@
 package dev.dsf.process.tutorial.listener;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.time.Instant;
+import java.util.Date;
+import java.util.UUID;
 
 import org.camunda.bpm.engine.delegate.DelegateTask;
-import org.hl7.fhir.r4.model.Bundle;
+import org.hl7.fhir.r4.model.Coding;
+import org.hl7.fhir.r4.model.Enumerations;
+import org.hl7.fhir.r4.model.Meta;
 import org.hl7.fhir.r4.model.Questionnaire;
-import org.hl7.fhir.r4.model.QuestionnaireResponse;
 
 import dev.dsf.bpe.v1.ProcessPluginApi;
-import dev.dsf.bpe.v1.constants.CodeSystems;
 import dev.dsf.process.tutorial.ConstantsTutorial;
 import dev.dsf.process.tutorial.TutorialProcessPluginDefinition;
 
@@ -25,43 +24,55 @@ public class QuestionnaireListener extends CustomUserTaskListener
 	}
 
 	@Override
-	protected void beforeQuestionnaireResponseCreate(DelegateTask userTask, QuestionnaireResponse beforeCreate)
+	protected void beforeQuestionnaireResponseCreate(DelegateTask userTask, Questionnaire questionnaire)
 	{
-		Optional<Questionnaire> optionalQuestionnaire = findQuestionnaire();
-		Optional<String> optCorrelationKey = api.getTaskHelper().getFirstInputParameterStringValue(api.getVariables(userTask.getExecution()).getStartTask(), CodeSystems.BpmnMessage.URL, CodeSystems.BpmnMessage.Codes.CORRELATION_KEY);
-		if (optionalQuestionnaire.isPresent() && optCorrelationKey.isPresent())
-		{
-			String correlationKey = optCorrelationKey.get();
-			String question = (String) userTask.getExecution()
-					.getVariable(ConstantsTutorial.CODESYSTEM_TUTORIAL_VALUE_BINARY_QUESTION);
-
-			Questionnaire questionnaire = optionalQuestionnaire.get();
-			String questionnaireUrl = questionnaire.getUrl();
-			questionnaire.getItem().stream().filter(item -> item.getLinkId().equals("vote")).findFirst().ifPresent(item -> item.setText(question));
-			questionnaire.setUrl(questionnaire.getUrl().concat("-").concat(correlationKey));
-
-			beforeCreate.getItem().stream().filter(item -> item.getLinkId().equals("vote")).findFirst().ifPresent(item -> item.setText(question));
-			beforeCreate.setQuestionnaire(questionnaireUrl.concat("-").concat(correlationKey).concat("|").concat(new TutorialProcessPluginDefinition().getResourceVersion()));
-
-			uploadQuestionnaire(questionnaire);
-		}
+		String question = (String) userTask.getExecution()
+				.getVariable(ConstantsTutorial.CODESYSTEM_TUTORIAL_VALUE_BINARY_QUESTION);
+		questionnaire.getItem().stream().filter(item -> item.getLinkId().equals("vote")).findFirst().ifPresent(item -> item.setText(question));
 	}
 
-	private Optional<Questionnaire> findQuestionnaire()
+	@Override
+	protected Questionnaire provideQuestionnaire()
 	{
-		Map<String, List<String>> searchParams = new HashMap<>();
-		searchParams.put("url", List.of(ConstantsTutorial.QUESTIONNAIRE_USER_VOTE_URL));
-		searchParams.put("version", List.of(TutorialProcessPluginDefinition.VERSION.substring(0, 3)));
-		Bundle result = api.getFhirWebserviceClientProvider().getLocalWebserviceClient().searchWithStrictHandling(Questionnaire.class, searchParams);
-		if (result.getTotal() < 1) return Optional.empty();
-		return result.getEntry().stream()
-				.filter(bundleEntryComponent -> bundleEntryComponent.getResource() instanceof Questionnaire)
-				.map(bundleEntryComponent -> (Questionnaire) bundleEntryComponent.getResource())
-				.findFirst();
+		return getQuestionnaire();
 	}
 
-	private void uploadQuestionnaire(Questionnaire questionnaire)
+	private Questionnaire getQuestionnaire()
 	{
-		api.getFhirWebserviceClientProvider().getLocalWebserviceClient().create(questionnaire);
+		Questionnaire questionnaire = new Questionnaire();
+		questionnaire.setMeta(
+				new Meta()
+						.addProfile("http://dsf.dev/fhir/StructureDefinition/questionnaire|1.5.0")
+						.addTag(new Coding().setSystem("http://dsf.dev/fhir/CodeSystem/read-access-tag").setCode("ALL"))
+		);
+		questionnaire.setUrl("http://dsf.dev/fhir/Questionnaire/user-vote");
+		questionnaire.setId(UUID.randomUUID().toString());
+
+		questionnaire.setVersion(new TutorialProcessPluginDefinition().getResourceVersion());
+		questionnaire.setDate(Date.from(Instant.now()));
+		questionnaire.setStatus(Enumerations.PublicationStatus.DRAFT);
+
+		Questionnaire.QuestionnaireItemComponent businessKeyItem = new Questionnaire.QuestionnaireItemComponent();
+		businessKeyItem.setLinkId("business-key");
+		businessKeyItem.setType(Questionnaire.QuestionnaireItemType.STRING);
+		businessKeyItem.setText("The business-key of the process execution");
+		businessKeyItem.setRequired(true);
+		questionnaire.addItem(businessKeyItem);
+
+		Questionnaire.QuestionnaireItemComponent userTaskIdItem = new Questionnaire.QuestionnaireItemComponent();
+		userTaskIdItem.setLinkId("user-task-id");
+		userTaskIdItem.setType(Questionnaire.QuestionnaireItemType.STRING);
+		userTaskIdItem.setText("The user-task-id of the process execution");
+		userTaskIdItem.setRequired(true);
+		questionnaire.addItem(userTaskIdItem);
+
+		Questionnaire.QuestionnaireItemComponent voteItem = new Questionnaire.QuestionnaireItemComponent();
+		voteItem.setLinkId("vote");
+		voteItem.setType(Questionnaire.QuestionnaireItemType.BOOLEAN);
+		voteItem.setText("Placeholder");
+		voteItem.setRequired(true);
+		questionnaire.addItem(voteItem);
+
+		return questionnaire;
 	}
 }

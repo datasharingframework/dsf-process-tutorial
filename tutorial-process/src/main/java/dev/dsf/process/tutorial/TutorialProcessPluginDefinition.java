@@ -73,7 +73,7 @@ public class TutorialProcessPluginDefinition implements ProcessPluginDefinition
 				ConstantsTutorial.PROCESS_NAME_FULL_COS, List.of(aCosProcess, sTaskHelloCos, cTutorial, vTutorial),
 				ConstantsTutorial.PROCESS_NAME_FULL_HRP, List.of(aHrpProcess, sTaskHelloHrp, cTutorial, vTutorial),
 				ConstantsTutorial.PROCESS_NAME_FULL_VOTING_PROCESS, List.of(aVotingProcess, sTaskStartVotingProcess, tTaskStartVotingProcess, sTaskReturnVote, sExtensionVotingResult, cTutorial, vBinaryQuestionAnswers, vTutorial, vVotingParameters),
-				ConstantsTutorial.PROCESS_NAME_FULL_VOTE, List.of(aVoteProcess, sTaskStartVote, qUserVote, sExtensionVotingResult, cTutorial, vBinaryQuestionAnswers, vTutorial, vVotingParameters));
+				ConstantsTutorial.PROCESS_NAME_FULL_VOTE, List.of(aVoteProcess, sTaskStartVote, sExtensionVotingResult, cTutorial, vBinaryQuestionAnswers, vTutorial, vVotingParameters));
 	}
 
 	@Override

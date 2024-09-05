@@ -88,4 +88,5 @@ public interface ConstantsTutorial
 	String VOTE_PROCESS_VARIABLE_AUTOMATED_VOTE = "automatedVote";
 
 	String QUESTIONNAIRE_USER_VOTE_URL = "http://dsf.dev/fhir/Questionnaire/user-vote";
+	String SYSTEM_DSF_ORGANIZATION_IDENTIFIER = "http://dsf.dev/sid/organization-identifier";
 }
