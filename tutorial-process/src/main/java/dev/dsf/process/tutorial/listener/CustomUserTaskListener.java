@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
@@ -11,6 +12,7 @@ import org.camunda.bpm.engine.delegate.DelegateTask;
 import org.camunda.bpm.engine.delegate.TaskListener;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.CodeableConcept;
+import org.hl7.fhir.r4.model.Enumerations;
 import org.hl7.fhir.r4.model.Questionnaire;
 import org.hl7.fhir.r4.model.QuestionnaireResponse;
 import org.hl7.fhir.r4.model.Reference;
@@ -20,6 +22,7 @@ import org.hl7.fhir.r4.model.Task;
 import org.hl7.fhir.r4.model.Task.TaskOutputComponent;
 import org.hl7.fhir.r4.model.Task.TaskStatus;
 import org.hl7.fhir.r4.model.Type;
+import org.hl7.fhir.r4.model.codesystems.PublicationStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -46,14 +49,6 @@ public class CustomUserTaskListener implements TaskListener, InitializingBean
 		uploadQuestionnaire = false;
 	}
 
-	public CustomUserTaskListener(ProcessPluginApi api, Questionnaire questionnaire)
-	{
-		this.api = api;
-		questionnaireUrlWithVersion = "";
-		this.questionnaire = questionnaire;
-		uploadQuestionnaire = true;
-	}
-
 	@Override
 	public void afterPropertiesSet() throws Exception
 	{
@@ -65,6 +60,11 @@ public class CustomUserTaskListener implements TaskListener, InitializingBean
 		return userTask.getBpmnModelElementInstance().getCamundaFormKey();
 	}
 
+	protected Questionnaire provideQuestionnaire()
+	{
+		return null;
+	}
+
 	@Override
 	public final void notify(DelegateTask userTask)
 	{
@@ -74,6 +74,7 @@ public class CustomUserTaskListener implements TaskListener, InitializingBean
 		try
 		{
 			logger.trace("Execution of user task with id='{}'", execution.getCurrentActivityId());
+			questionnaire = provideQuestionnaire();
 
 			if (Objects.isNull(questionnaire))
 			{
@@ -82,21 +83,28 @@ public class CustomUserTaskListener implements TaskListener, InitializingBean
 			} else
 			{
 				questionnaireUrlWithVersion = questionnaire.getUrl().concat("|").concat(questionnaire.getVersion());
+				uploadQuestionnaire = true;
 			}
 
 			String businessKey = execution.getBusinessKey();
 			String userTaskId = userTask.getId();
 
+			beforeQuestionnaireResponseCreate(userTask, questionnaire);
+
 			QuestionnaireResponse questionnaireResponse = createDefaultQuestionnaireResponse(
 					questionnaireUrlWithVersion, businessKey, userTaskId);
 			transformQuestionnaireItemsToQuestionnaireResponseItems(questionnaireResponse, questionnaire);
 
-			beforeQuestionnaireResponseCreate(userTask, questionnaireResponse);
+			afterQuestionnaireResponseCreate(userTask, questionnaireResponse);
+
+			beforeResourceUpload(userTask, questionnaire, questionnaireResponse);
+
+			checkQuestionnaire(questionnaire);
 			checkQuestionnaireResponse(questionnaireResponse);
+			QuestionnaireAndResponse created = upload(questionnaire, questionnaireResponse);
 
-			QuestionnaireResponse created = upload(questionnaireResponse);
+			afterResourceUpload(userTask, created.getQuestionnaire(), created.getQuestionnaireResponse());
 
-			afterQuestionnaireResponseCreate(userTask, created);
 		}
 		catch (Exception exception)
 		{
@@ -199,7 +207,21 @@ public class CustomUserTaskListener implements TaskListener, InitializingBean
 			throw new RuntimeException("QuestionnaireResponse must be in status 'in-progress'");
 	}
 
-	protected void beforeQuestionnaireResponseCreate(DelegateTask userTask, QuestionnaireResponse beforeCreate)
+	private void checkQuestionnaire(Questionnaire questionnaire)
+	{
+		questionnaire.setStatus(Enumerations.PublicationStatus.DRAFT);
+		questionnaire.getItem().stream().filter(i -> BpmnUserTask.Codes.BUSINESS_KEY.equals(i.getLinkId()))
+				.findFirst()
+				.orElseThrow(() -> new RuntimeException("Questionnaire does not contain an item with linkId='"
+						+ BpmnUserTask.Codes.BUSINESS_KEY + "'"));
+
+		questionnaire.getItem().stream().filter(i -> BpmnUserTask.Codes.USER_TASK_ID.equals(i.getLinkId()))
+				.findFirst()
+				.orElseThrow(() -> new RuntimeException("Questionnaire does not contain an item with linkId='"
+						+ BpmnUserTask.Codes.USER_TASK_ID + "'"));
+	}
+
+	protected void beforeQuestionnaireResponseCreate(DelegateTask userTask, Questionnaire beforeCreate)
 	{
 		// Nothing to do in default behavior
 	}
@@ -207,6 +229,16 @@ public class CustomUserTaskListener implements TaskListener, InitializingBean
 	protected void afterQuestionnaireResponseCreate(DelegateTask userTask, QuestionnaireResponse afterCreate)
 	{
 		// Nothing to do in default behavior
+	}
+
+	protected void beforeResourceUpload(DelegateTask userTask, Questionnaire questionnaire, QuestionnaireResponse questionnaireResponse)
+	{
+
+	}
+
+	protected void afterResourceUpload(DelegateTask userTask, Questionnaire questionnaire, QuestionnaireResponse questionnaireResponse)
+	{
+
 	}
 
 	private void updateFailedIfInprogress(List<Task> tasks, String errorMessage)
@@ -247,17 +279,20 @@ public class CustomUserTaskListener implements TaskListener, InitializingBean
 		}
 	}
 
-	private QuestionnaireResponse upload(QuestionnaireResponse questionnaireResponse)
+	private QuestionnaireAndResponse upload(Questionnaire questionnaire, QuestionnaireResponse questionnaireResponse)
 	{
 		Bundle bundle = new Bundle();
-		bundle.setType(Bundle.BundleType.TRANSACTION);
+		bundle.setId("urn:uuid:" + UUID.randomUUID().toString());
+		bundle.setType(Bundle.BundleType.BATCH);
 		if (uploadQuestionnaire)
 		{
+			questionnaire.setId("urn:uuid:" + UUID.randomUUID().toString());
 			bundle.addEntry()
 					.setResource(questionnaire)
 					.setFullUrl("urn:uuid:" + questionnaire.getId())
 					.getRequest().setMethod(Bundle.HTTPVerb.POST).setUrl(ResourceType.Questionnaire.name());
 		}
+		questionnaireResponse.setId("urn:uuid:" + UUID.randomUUID().toString());
 		bundle.addEntry()
 				.setResource(questionnaireResponse)
 				.setFullUrl("urn:uuid:" + questionnaireResponse.getId())
@@ -265,15 +300,67 @@ public class CustomUserTaskListener implements TaskListener, InitializingBean
 
 		Bundle created = api.getFhirWebserviceClientProvider().getLocalWebserviceClient().withRetryForever(60000).postBundle(bundle);
 
-		String resourcesInBundle = uploadQuestionnaire ? "Questionnaire and QuestionnaireResponse" : "QuestionnaireResponse";
-		logger.info("Created Bundle with {} for user task at {}, process waiting for it's completion",
-				resourcesInBundle, created.getIdElement().toVersionless()
-						.withServerBase(api.getFhirWebserviceClientProvider().getLocalWebserviceClient().getBaseUrl(),
-								ResourceType.Task.name()).getValue());
-
-		return created.getEntry().stream()
+		QuestionnaireResponse createdQuestionnaireResponse = created.getEntry().stream()
 				.filter(entry -> entry.getResource().getResourceType().equals(ResourceType.QuestionnaireResponse))
 				.map(entry -> (QuestionnaireResponse) entry.getResource())
-				.findFirst().orElse(null);
+				.findFirst().orElseThrow(() -> new RuntimeException("Failed to create QuestionnaireResponse"));
+
+		QuestionnaireAndResponse questionnaireAndResponse = new QuestionnaireAndResponse(questionnaire,
+				createdQuestionnaireResponse);
+
+		if (uploadQuestionnaire)
+		{
+			Questionnaire createdQuestionnaire = created.getEntry().stream()
+					.filter(entry -> entry.getResource().getResourceType().equals(ResourceType.Questionnaire))
+					.map(entry -> (Questionnaire) entry.getResource())
+					.findFirst().orElseThrow(() -> new RuntimeException("Failed to create Questionnaire"));
+			questionnaireAndResponse.setQuestionnaire(createdQuestionnaire);
+			logger.info("Created Questionnaire for user task at {} and QuestionnaireResponse for user task at {}, process waiting for it's completion",
+					createdQuestionnaire.getIdElement().toVersionless()
+							.withServerBase(api.getFhirWebserviceClientProvider().getLocalWebserviceClient().getBaseUrl(),
+									ResourceType.Questionnaire.name()).getValue(),
+					createdQuestionnaireResponse.getIdElement().toVersionless()
+							.withServerBase(api.getFhirWebserviceClientProvider().getLocalWebserviceClient().getBaseUrl(),
+									ResourceType.QuestionnaireResponse.name()).getValue());
+		} else {
+			logger.info("Created QuestionnaireResponse for user task at {}, process waiting for it's completion",
+					createdQuestionnaireResponse.getIdElement().toVersionless()
+							.withServerBase(api.getFhirWebserviceClientProvider().getLocalWebserviceClient().getBaseUrl(),
+									ResourceType.QuestionnaireResponse.name()).getValue());
+		}
+
+		return questionnaireAndResponse;
+	}
+
+	private static class QuestionnaireAndResponse
+	{
+		private Questionnaire questionnaire;
+		private QuestionnaireResponse questionnaireResponse;
+
+		public QuestionnaireAndResponse(Questionnaire questionnaire, QuestionnaireResponse questionnaireResponse)
+		{
+			this.questionnaire = questionnaire;
+			this.questionnaireResponse = questionnaireResponse;
+		}
+
+		public Questionnaire getQuestionnaire()
+		{
+			return questionnaire;
+		}
+
+		public void setQuestionnaire(Questionnaire questionnaire)
+		{
+			this.questionnaire = questionnaire;
+		}
+
+		public QuestionnaireResponse getQuestionnaireResponse()
+		{
+			return questionnaireResponse;
+		}
+
+		public void setQuestionnaireResponse(QuestionnaireResponse questionnaireResponse)
+		{
+			this.questionnaireResponse = questionnaireResponse;
+		}
 	}
 }
