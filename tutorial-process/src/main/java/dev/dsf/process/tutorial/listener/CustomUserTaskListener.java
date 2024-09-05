@@ -28,6 +28,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 
 import dev.dsf.bpe.v1.ProcessPluginApi;
+import dev.dsf.bpe.v1.constants.CodeSystems;
 import dev.dsf.bpe.v1.constants.CodeSystems.BpmnMessage;
 import dev.dsf.bpe.v1.constants.CodeSystems.BpmnUserTask;
 import dev.dsf.bpe.v1.variables.Variables;
@@ -82,6 +83,8 @@ public class CustomUserTaskListener implements TaskListener, InitializingBean
 				questionnaire = readQuestionnaire(questionnaireUrlWithVersion);
 			} else
 			{
+				String correlationKey = api.getTaskHelper().getFirstInputParameterStringValue(variables.getStartTask(), CodeSystems.BpmnMessage.URL, CodeSystems.BpmnMessage.Codes.CORRELATION_KEY).get();
+				questionnaire.setUrl(questionnaire.getUrl().concat("-").concat(correlationKey));
 				questionnaireUrlWithVersion = questionnaire.getUrl().concat("|").concat(questionnaire.getVersion());
 				uploadQuestionnaire = true;
 			}
@@ -283,7 +286,7 @@ public class CustomUserTaskListener implements TaskListener, InitializingBean
 	{
 		Bundle bundle = new Bundle();
 		bundle.setId("urn:uuid:" + UUID.randomUUID().toString());
-		bundle.setType(Bundle.BundleType.TRANSACTION);
+		bundle.setType(Bundle.BundleType.BATCH);
 		if (uploadQuestionnaire)
 		{
 			questionnaire.setId("urn:uuid:" + UUID.randomUUID().toString());
