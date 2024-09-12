@@ -143,7 +143,7 @@
         </element>
         <element id="Task.output:voting-result.type.coding">
             <path value="Task.output.type.coding"/>
-            <min value="0"/>
+            <min value="1"/>
             <max value="1"/>
         </element>
         <element id="Task.output:voting-result.type.coding.system">
@@ -179,6 +179,44 @@
                 <strength value="required"/>
                 <valueSet value="http://dsf.dev/fhir/ValueSet/voting-results"/>
             </binding>
+        </element>
+        <element id="Task.output:result-bundle">
+            <path value="Task.output"/>
+            <sliceName value="result-bundle"/>
+        </element>
+        <element id="Task.output:result-bundle.type">
+            <path value="Task.output.type"/>
+            <min value="1"/>
+            <max value="1"/>
+            <binding>
+                <strength value="required"/>
+                <valueSet value="http://dsf.dev/fhir/ValueSet/voting-parameters"/>
+            </binding>
+        </element>
+        <element id="Task.output:result-bundle.type.coding">
+            <path value="Task.output.type.coding"/>
+            <min value="1"/>
+            <max value="1"/>
+        </element>
+        <element id="Task.output:result-bundle.type.coding.system">
+            <path value="Task.out.type.coding.system"/>
+            <min value="1"/>
+            <max value="1"/>
+            <fixedUri value="http://dsf.dev/fhir/CodeSystem/tutorial"/>
+        </element>
+        <element id="Task.output:result-bundle.type.coding.code">
+            <path value="Task.out.type.coding.code"/>
+            <min value="1"/>
+            <max value="1"/>
+            <fixedCode value="result-bundle"/>
+        </element>
+        <element id="Task.output:result-bundle.value[x]">
+            <path value="Task.output:result-bundle.value[x]"/>
+            <min value="1"/>
+            <max value="1"/>
+            <type>
+                <code value="url"/>
+            </type>
         </element>
     </differential>
 </StructureDefinition>
