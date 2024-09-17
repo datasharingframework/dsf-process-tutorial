@@ -61,7 +61,7 @@ public class CustomUserTaskListener implements TaskListener, InitializingBean
 		return userTask.getBpmnModelElementInstance().getCamundaFormKey();
 	}
 
-	protected Questionnaire provideQuestionnaire()
+	protected Questionnaire provideQuestionnaire(ProcessPluginApi api, DelegateTask userTask)
 	{
 		return null;
 	}
@@ -75,7 +75,7 @@ public class CustomUserTaskListener implements TaskListener, InitializingBean
 		try
 		{
 			logger.trace("Execution of user task with id='{}'", execution.getCurrentActivityId());
-			questionnaire = provideQuestionnaire();
+			questionnaire = provideQuestionnaire(api, userTask);
 
 			if (Objects.isNull(questionnaire))
 			{
@@ -97,8 +97,6 @@ public class CustomUserTaskListener implements TaskListener, InitializingBean
 			QuestionnaireResponse questionnaireResponse = createDefaultQuestionnaireResponse(
 					questionnaireUrlWithVersion, businessKey, userTaskId);
 			transformQuestionnaireItemsToQuestionnaireResponseItems(questionnaireResponse, questionnaire);
-
-			afterQuestionnaireResponseCreate(userTask, questionnaireResponse);
 
 			beforeResourceUpload(userTask, questionnaire, questionnaireResponse);
 
@@ -146,7 +144,6 @@ public class CustomUserTaskListener implements TaskListener, InitializingBean
 
 		return questionnaires.get(0);
 	}
-
 
 	private QuestionnaireResponse createDefaultQuestionnaireResponse(String questionnaireUrlWithVersion,
 			String businessKey, String userTaskId)
@@ -229,11 +226,6 @@ public class CustomUserTaskListener implements TaskListener, InitializingBean
 		// Nothing to do in default behavior
 	}
 
-	protected void afterQuestionnaireResponseCreate(DelegateTask userTask, QuestionnaireResponse afterCreate)
-	{
-		// Nothing to do in default behavior
-	}
-
 	protected void beforeResourceUpload(DelegateTask userTask, Questionnaire questionnaire, QuestionnaireResponse questionnaireResponse)
 	{
 
@@ -292,13 +284,13 @@ public class CustomUserTaskListener implements TaskListener, InitializingBean
 			questionnaire.setId("urn:uuid:" + UUID.randomUUID().toString());
 			bundle.addEntry()
 					.setResource(questionnaire)
-					.setFullUrl("urn:uuid:" + questionnaire.getId())
+					.setFullUrl((questionnaire.getId()))
 					.getRequest().setMethod(Bundle.HTTPVerb.POST).setUrl(ResourceType.Questionnaire.name());
 		}
 		questionnaireResponse.setId("urn:uuid:" + UUID.randomUUID().toString());
 		bundle.addEntry()
 				.setResource(questionnaireResponse)
-				.setFullUrl("urn:uuid:" + questionnaireResponse.getId())
+				.setFullUrl(questionnaireResponse.getId())
 				.getRequest().setMethod(Bundle.HTTPVerb.POST).setUrl(ResourceType.QuestionnaireResponse.name());
 
 		Bundle created = api.getFhirWebserviceClientProvider().getLocalWebserviceClient().withRetryForever(60000).postBundle(bundle);
@@ -318,7 +310,7 @@ public class CustomUserTaskListener implements TaskListener, InitializingBean
 					.map(entry -> (Questionnaire) entry.getResource())
 					.findFirst().orElseThrow(() -> new RuntimeException("Failed to create Questionnaire"));
 			questionnaireAndResponse.setQuestionnaire(createdQuestionnaire);
-			logger.info("Created Questionnaire for user task at {} and QuestionnaireResponse for user task at {}, process waiting for it's completion",
+			logger.debug("Created Questionnaire for user task at {} and QuestionnaireResponse for user task at {}, process waiting for it's completion",
 					createdQuestionnaire.getIdElement().toVersionless()
 							.withServerBase(api.getFhirWebserviceClientProvider().getLocalWebserviceClient().getBaseUrl(),
 									ResourceType.Questionnaire.name()).getValue(),
@@ -326,7 +318,7 @@ public class CustomUserTaskListener implements TaskListener, InitializingBean
 							.withServerBase(api.getFhirWebserviceClientProvider().getLocalWebserviceClient().getBaseUrl(),
 									ResourceType.QuestionnaireResponse.name()).getValue());
 		} else {
-			logger.info("Created QuestionnaireResponse for user task at {}, process waiting for it's completion",
+			logger.debug("Created QuestionnaireResponse for user task at {}, process waiting for it's completion",
 					createdQuestionnaireResponse.getIdElement().toVersionless()
 							.withServerBase(api.getFhirWebserviceClientProvider().getLocalWebserviceClient().getBaseUrl(),
 									ResourceType.QuestionnaireResponse.name()).getValue());
