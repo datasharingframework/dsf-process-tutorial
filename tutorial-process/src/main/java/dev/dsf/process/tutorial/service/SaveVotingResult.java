@@ -24,9 +24,9 @@ public class SaveVotingResult extends AbstractServiceDelegate
 	protected void doExecute(DelegateExecution delegateExecution, Variables variables) throws BpmnError, Exception
 	{
 		Target target = variables.getTarget();
-		boolean vote = api.getTaskHelper().getFirstInputParameterValue(variables.getLatestTask(), CODESYSTEM_VOTING_PROCESS, CODESYSTEM_VOTING_PROCESS_VOTE, BooleanType.class).get().getValue();
-		variables.setString(
-				target.getOrganizationIdentifierValue() + "_" + target.getCorrelationKey(),
+		boolean vote = api.getTaskHelper().getFirstInputParameterValue(variables.getLatestTask(),
+				CODESYSTEM_VOTING_PROCESS, CODESYSTEM_VOTING_PROCESS_VOTE, BooleanType.class).get().getValue();
+		variables.setString(target.getOrganizationIdentifierValue() + "_" + target.getCorrelationKey(),
 				vote ? VoteResponse.YES.name() : VoteResponse.NO.name());
 	}
 }

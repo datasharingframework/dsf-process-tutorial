@@ -34,7 +34,8 @@ public class TutorialProcessPluginDefinition implements ProcessPluginDefinition
 	public List<String> getProcessModels()
 	{
 
-		return List.of("bpe/dic-process.bpmn", "bpe/cos-process.bpmn", "bpe/hrp-process.bpmn", "bpe/vote.bpmn", "bpe/voting-process.bpmn");
+		return List.of("bpe/dic-process.bpmn", "bpe/cos-process.bpmn", "bpe/hrp-process.bpmn", "bpe/vote.bpmn",
+				"bpe/voting-process.bpmn");
 	}
 
 	@Override
@@ -74,8 +75,13 @@ public class TutorialProcessPluginDefinition implements ProcessPluginDefinition
 				List.of(aDicProcess, sTaskDicProcess, tTaskDicProcess, sTaskGoodbyeDic, cTutorial, vTutorial),
 				ConstantsTutorial.PROCESS_NAME_FULL_COS, List.of(aCosProcess, sTaskHelloCos, cTutorial, vTutorial),
 				ConstantsTutorial.PROCESS_NAME_FULL_HRP, List.of(aHrpProcess, sTaskHelloHrp, cTutorial, vTutorial),
-				ConstantsTutorial.PROCESS_NAME_FULL_VOTING_PROCESS, List.of(aVotingProcess, sTaskStartVotingProcess, tTaskStartVotingProcess, sTaskReturnVote, sExtensionVotingResult, cTutorial, vBinaryQuestionAnswers, vTutorial, cVotingProcess, vVotingParameters, vVotingResults),
-				ConstantsTutorial.PROCESS_NAME_FULL_VOTE, List.of(aVoteProcess, sTaskStartVote, qUserVote, sExtensionVotingResult, cTutorial, vBinaryQuestionAnswers, vTutorial, cVotingProcess, vVotingParameters, vVotingResults));
+				ConstantsTutorial.PROCESS_NAME_FULL_VOTING_PROCESS,
+				List.of(aVotingProcess, sTaskStartVotingProcess, tTaskStartVotingProcess, sTaskReturnVote,
+						sExtensionVotingResult, cTutorial, vBinaryQuestionAnswers, vTutorial, cVotingProcess,
+						vVotingParameters, vVotingResults),
+				ConstantsTutorial.PROCESS_NAME_FULL_VOTE,
+				List.of(aVoteProcess, sTaskStartVote, qUserVote, sExtensionVotingResult, cTutorial,
+						vBinaryQuestionAnswers, vTutorial, cVotingProcess, vVotingParameters, vVotingResults));
 	}
 
 	@Override

@@ -26,8 +26,8 @@ public class ReturnVote extends AbstractTaskMessageSend
 	protected Stream<ParameterComponent> getAdditionalInputParameters(DelegateExecution execution, Variables variables)
 	{
 		boolean vote = variables.getBoolean(VOTE_PROCESS_VARIABLE_VOTE);
-		Task.ParameterComponent voteComponent = api.getTaskHelper().createInput(new BooleanType(vote), CODESYSTEM_VOTING_PROCESS,
-				CODESYSTEM_VOTING_PROCESS_VOTE);
+		Task.ParameterComponent voteComponent = api.getTaskHelper().createInput(new BooleanType(vote),
+				CODESYSTEM_VOTING_PROCESS, CODESYSTEM_VOTING_PROCESS_VOTE);
 
 		return Stream.of(voteComponent);
 	}

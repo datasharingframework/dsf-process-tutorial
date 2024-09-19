@@ -21,7 +21,8 @@ public class SaveUserVote extends AbstractServiceDelegate
 	protected void doExecute(DelegateExecution execution, Variables variables) throws BpmnError, Exception
 	{
 		QuestionnaireResponse userResponse = variables.getLatestReceivedQuestionnaireResponse();
-		boolean vote = userResponse.getItem().stream().filter(item -> item.getLinkId().equals("vote")).map(item -> (BooleanType) item.getAnswerFirstRep().getValue()).findFirst().get().getValue();
+		boolean vote = userResponse.getItem().stream().filter(item -> item.getLinkId().equals("vote"))
+				.map(item -> (BooleanType) item.getAnswerFirstRep().getValue()).findFirst().get().getValue();
 		variables.setBoolean(ConstantsTutorial.VOTE_PROCESS_VARIABLE_VOTE, vote);
 	}
 }

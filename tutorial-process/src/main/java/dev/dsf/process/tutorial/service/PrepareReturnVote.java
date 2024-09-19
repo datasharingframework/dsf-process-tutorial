@@ -27,16 +27,22 @@ public class PrepareReturnVote extends AbstractServiceDelegate
 	{
 		Task startTask = variables.getStartTask();
 		Reference requesterRef = startTask.getRequester();
-		Optional<Organization> optionalOrganization = api.getOrganizationProvider().getOrganization(requesterRef.getIdentifier());
+		Optional<Organization> optionalOrganization = api.getOrganizationProvider()
+				.getOrganization(requesterRef.getIdentifier());
 		if (optionalOrganization.isPresent())
 		{
 			String[] readParams = optionalOrganization.get().getEndpoint().get(0).getReference().split("/");
 			String resourceType = readParams[0];
 			String id = readParams[1];
-			Endpoint requesterEndpoint = (Endpoint) api.getFhirWebserviceClientProvider().getLocalWebserviceClient().read(resourceType, id);
+			Endpoint requesterEndpoint = (Endpoint) api.getFhirWebserviceClientProvider().getLocalWebserviceClient()
+					.read(resourceType, id);
 
-			Target target = variables.createTarget(requesterRef.getIdentifier().getValue(), requesterEndpoint.getIdentifierFirstRep().getValue(), requesterEndpoint.getAddress(), api.getTaskHelper()
-					.getFirstInputParameterStringValue(startTask, CodeSystems.BpmnMessage.URL, CodeSystems.BpmnMessage.Codes.CORRELATION_KEY).get());
+			Target target = variables
+					.createTarget(requesterRef.getIdentifier().getValue(),
+							requesterEndpoint.getIdentifierFirstRep().getValue(), requesterEndpoint.getAddress(), api
+									.getTaskHelper().getFirstInputParameterStringValue(startTask,
+											CodeSystems.BpmnMessage.URL, CodeSystems.BpmnMessage.Codes.CORRELATION_KEY)
+									.get());
 			variables.setTarget(target);
 		}
 	}

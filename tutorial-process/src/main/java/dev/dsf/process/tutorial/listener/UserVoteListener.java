@@ -2,7 +2,6 @@ package dev.dsf.process.tutorial.listener;
 
 import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_VOTING_PROCESS;
 import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_VOTING_PROCESS_VALUE_BINARY_QUESTION;
-import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_VOTING_PROCESS_VOTE;
 
 import java.util.Optional;
 
@@ -29,10 +28,13 @@ public class UserVoteListener extends DefaultUserTaskListener
 		Variables variables = api.getVariables(userTask.getExecution());
 		String question = api.getTaskHelper().getFirstInputParameterStringValue(variables.getStartTask(),
 				CODESYSTEM_VOTING_PROCESS, CODESYSTEM_VOTING_PROCESS_VALUE_BINARY_QUESTION).get();
-		Optional<QuestionnaireResponse.QuestionnaireResponseItemComponent> displayItem = beforeCreate.getItem()
-				.stream().filter(i -> i.getLinkId().equals(CODESYSTEM_VOTING_PROCESS_VALUE_BINARY_QUESTION))
+		Optional<QuestionnaireResponse.QuestionnaireResponseItemComponent> displayItem = beforeCreate.getItem().stream()
+				.filter(i -> i.getLinkId().equals(CODESYSTEM_VOTING_PROCESS_VALUE_BINARY_QUESTION))
 				.filter(QuestionnaireResponse.QuestionnaireResponseItemComponent::hasText).findFirst();
 
-		displayItem.ifPresent(questionnaireResponseItemComponent -> questionnaireResponseItemComponent.setText(question));
+		displayItem
+				.ifPresent(questionnaireResponseItemComponent -> questionnaireResponseItemComponent.setText(question));
 	}
+
+
 }

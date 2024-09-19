@@ -24,8 +24,10 @@ public class StartVote extends AbstractTaskMessageSend
 	protected Stream<Task.ParameterComponent> getAdditionalInputParameters(DelegateExecution execution,
 			Variables variables)
 	{
-		String question = api.getTaskHelper().getFirstInputParameterStringValue(variables.getStartTask(), CODESYSTEM_VOTING_PROCESS, CODESYSTEM_VOTING_PROCESS_VALUE_BINARY_QUESTION).get();
-		Task.ParameterComponent questionComponent = api.getTaskHelper().createInput(new StringType(question), CODESYSTEM_VOTING_PROCESS, CODESYSTEM_VOTING_PROCESS_VALUE_BINARY_QUESTION);
+		String question = api.getTaskHelper().getFirstInputParameterStringValue(variables.getStartTask(),
+				CODESYSTEM_VOTING_PROCESS, CODESYSTEM_VOTING_PROCESS_VALUE_BINARY_QUESTION).get();
+		Task.ParameterComponent questionComponent = api.getTaskHelper().createInput(new StringType(question),
+				CODESYSTEM_VOTING_PROCESS, CODESYSTEM_VOTING_PROCESS_VALUE_BINARY_QUESTION);
 
 		return Stream.of(questionComponent);
 	}

@@ -20,6 +20,7 @@ public class SaveTimeoutResult extends AbstractServiceDelegate
 	protected void doExecute(DelegateExecution delegateExecution, Variables variables) throws BpmnError, Exception
 	{
 		Target target = variables.getTarget();
-		variables.setString(target.getOrganizationIdentifierValue() + "_" + target.getCorrelationKey(), VoteResponse.TIMEOUT.name());
+		variables.setString(target.getOrganizationIdentifierValue() + "_" + target.getCorrelationKey(),
+				VoteResponse.TIMEOUT.name());
 	}
 }

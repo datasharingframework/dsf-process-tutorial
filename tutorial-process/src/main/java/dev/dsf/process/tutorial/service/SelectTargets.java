@@ -21,10 +21,12 @@ public class SelectTargets extends AbstractServiceDelegate
 	protected void doExecute(DelegateExecution delegateExecution, Variables variables) throws BpmnError, Exception
 	{
 		Targets targets = variables.createTargets(
-				variables.createTarget("dic.dsf.test", "dic.dsf.test_Endpoint", "https://dic/fhir", UUID.randomUUID().toString()),
-				variables.createTarget("cos.dsf.test", "cos.dsf.test_Endpoint", "https://cos/fhir", UUID.randomUUID().toString()),
-				variables.createTarget("hrp.dsf.test", "hrp.dsf.test_Endpoint", "https://hrp/fhir", UUID.randomUUID().toString())
-		);
+				variables.createTarget("dic.dsf.test", "dic.dsf.test_Endpoint", "https://dic/fhir",
+						UUID.randomUUID().toString()),
+				variables.createTarget("cos.dsf.test", "cos.dsf.test_Endpoint", "https://cos/fhir",
+						UUID.randomUUID().toString()),
+				variables.createTarget("hrp.dsf.test", "hrp.dsf.test_Endpoint", "https://hrp/fhir",
+						UUID.randomUUID().toString()));
 		variables.setTargets(targets);
 	}
 }
