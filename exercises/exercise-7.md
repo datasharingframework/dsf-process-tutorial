@@ -1,19 +1,24 @@
 [Prerequisites](prerequisites.md) • [Exercise 0](exercise-0.md) • [Exercise 1](exercise-1.md) • [Exercise 1.1](exercise-1-1.md) • [Exercise 2](exercise-2.md) • [Exercise 3](exercise-3.md) • [Exercise 4](exercise-4.md) • [Exercise 5](exercise-5.md) • **Exercise 6**
 ___
 
-# Exercise 7 - UserTasks, Resource Download and Task Output Parameters
+# Exercise 7 - User Tasks and Task Output Parameters
 
 This exercise introduces a new scenario which will serve as an example where [User Tasks](../learning/concepts/bpmn/user-task.md), resource download and [Task Output Parameters](../learning/concepts/fhir/task.md#task-output-parameters)
-will be utilized. The scenario is a voting process where one DSF instances of the tutorial setup will send a question to the other instances and itself in form of a Questionnaire
+will be utilized. The scenario is a voting process where one DSF instances of the tutorial setup will send a question to the other instances and itself.
+The question can be set when starting the voting process. The question can will then be answerable through a [QuestionnaireResponse](https://www.hl7.org/fhir/R4/questionnaireresponse.html) resource on the instance's DSF FHIR server.
+The answer then gets sent back to the instance which initiated the voting process.
+The scenario comes with a skeleton including two BPMN models for the voting process and the subprocess which handles the vote itself. 
+It also includes most of the Java implementation for both processes and the required FHIR resources. Your task will be to fill in the parts concerning the [User Task](../learning/concepts/bpmn/user-task.md)
+and [Task Output Parameters](../learning/concepts/fhir/task.md#task-output-parameters).
 
 In order to solve this exercise, you should have solved exercise 6 and read the topics on
 [User Tasks](../learning/guides/user-tasks-in-the-dsf.md)
 and [adding Task Output Parameters](../learning/guides/adding-task-output-parameters-to-task-profiles.md).
 
-Solutions to this exercise are found on the branch `solutions/exercise-7`.
+Solutions to this exercise are found on the branch `solutions/exercise-7`. The skeleton can be found on the branch `skeleton/exercise-7`.
 
 ## Exercise Tasks
-
+1. 
 1. Modify the `dsfdev_dicProcess`:
     * Change the [Message End Event](../learning/concepts/bpmn/messaging.md#message-end-event) to an [Intermediate Message Throw Event](../learning/concepts/bpmn/messaging.md#message-intermediate-throwing-event)
     * Add an [Event Based Gateway](../learning/concepts/bpmn/gateways.md#event-based-gateway) after the throw event
