@@ -33,7 +33,6 @@
     <item>
         <linkId value="vote"/>
         <type value="boolean"/>
-        <text value="Answer to the question"/>
         <required value="true"/>
     </item>
 </Questionnaire>
