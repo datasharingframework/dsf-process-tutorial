@@ -38,7 +38,7 @@
     <input>
         <type>
             <coding>
-                <system value="http://dsf.dev/fhir/CodeSystem/tutorial" />
+                <system value="http://dsf.dev/fhir/CodeSystem/voting-process" />
                 <code value="binary-question" />
             </coding>
         </type>

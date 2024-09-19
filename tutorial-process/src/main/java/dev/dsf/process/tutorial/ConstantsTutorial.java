@@ -50,10 +50,12 @@ public interface ConstantsTutorial
 
 	String CODESYSTEM_TUTORIAL = "http://dsf.dev/fhir/CodeSystem/tutorial";
 	String CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT = "tutorial-input";
-	String CODESYSTEM_TUTORIAL_VALUE_BINARY_QUESTION = "binary-question";
-	String CODESYSTEM_BINARY_QUESTION_ANSWER = "http://dsf.dev/fhir/CodeSystem/binary-question-answer";
-	String CODESYSTEM_TUTORIAL_VALUE_VOTE = "vote";
-	String CODESYSTEM_TUTORIAL_VALUE_VOTING_RESULT = "voting-result";
+	String CODESYSTEM_VOTING_PROCESS = "http://dsf.dev/fhir/CodeSystem/voting-process";
+	String CODESYSTEM_VOTING_PROCESS_VALUE_BINARY_QUESTION = "binary-question";
+	String CODESYSTEM_VOTING_PROCESS_BINARY_QUESTION_ANSWER = "http://dsf.dev/fhir/CodeSystem/binary-question-answer";
+	String CODESYSTEM_VOTING_PROCESS_VOTE = "vote";
+	String CODESYSTEM_VOTING_PROCESS_VOTING_RESULT = "voting-result";
+	String CODESYSTEM_VOTING_PROCESS_RESULT_BUNDLE = "result-bundle";
 
 	String VOTING_RESULT_EXTENSION_URL = "http://dsf.dev/fhir/StructureDefinition/extension-voting-result";
 	String VOTING_RESULT_EXTENSION_ORGANIZATION_IDENTIFIER = "organization-identifier";
@@ -84,8 +86,8 @@ public interface ConstantsTutorial
 	String PROFILE_TUTORIAL_TASK_START_VOTE_INSTANTIATES_CANONICAL = PROFILE_TUTORIAL_TASK_VOTE_URI + "|" + RESOURCE_VERSION;
 	String PROFILE_TUTORIAL_TASK_START_VOTE_MESSAGE_NAME = "startVote";
 
-	String VOTE_PROCESS_VARIABLE_USER_VOTE = "userVote";
-	String VOTE_PROCESS_VARIABLE_AUTOMATED_VOTE = "automatedVote";
+	String VOTE_PROCESS_VARIABLE_VOTE = "vote";
+	String VOTE_PROCESS_VARIABLE_SHOULD_USER_VOTE = "userVote";
 
 	String QUESTIONNAIRE_USER_VOTE_URL = "http://dsf.dev/fhir/Questionnaire/user-vote";
 	String SYSTEM_DSF_ORGANIZATION_IDENTIFIER = "http://dsf.dev/sid/organization-identifier";

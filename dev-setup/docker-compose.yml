@@ -103,8 +103,23 @@ services:
       --spi-truststore-file-password=password
       --spi-truststore-file-hostname-verification-policy=STRICT
 
+  hapi:
+    image: hapiproject/hapi:latest
+    ports:
+      - 127.0.0.1:8080:8080
+    networks:
+      - internet
+      - cos-fhir-backend
+      - dic-fhir-backend
+      - hrp-fhir-backend
+      - cos-bpe-backend
+      - dic-bpe-backend
+      - hrp-bpe-backend
+    environment:
+      HAPI_FHIR_ALLOWED_BUNDLE_TYPES: COLLECTION,DOCUMENT,MESSAGE,TRANSACTION,TRANSACTIONRESPONSE,BATCH,BATCHRESPONSE,HISTORY,SEARCHSET
+
   cos-fhir:
-    image: ghcr.io/datasharingframework/fhir:1.5.0
+    image: ghcr.io/datasharingframework/fhir:1.5.2
     restart: "no"
     ports:
       - 127.0.0.1:5002:5002
@@ -174,8 +189,9 @@ services:
       - db
       - proxy
       - keycloak
+      - hapi
   cos-bpe:
-    image: ghcr.io/datasharingframework/bpe:1.5.0
+    image: ghcr.io/datasharingframework/bpe:1.5.2
     restart: "no"
     ports:
       - 127.0.0.1:5005:5005
@@ -188,6 +204,8 @@ services:
       - app_cos_client_certificate.pem
       - app_cos_client_certificate_private_key.pem
       - app_cos_client_certificate_private_key.pem.password
+      - dms_private_key
+      - dms_public_key
     volumes:
       - type: bind
         source: ./cos/bpe/plugin
@@ -235,6 +253,9 @@ services:
             token-role: admin
             dsf-role:
               - ADMIN
+      DE_MEDIZININFORMATIK_INITIATIVE_DATA_SHARING_DMS_FHIR_SERVER_BASE_URL: http://hapi:8080/fhir
+      DE_MEDIZININFORMATIK_INITIATIVE_DMS_PRIVATE_KEY: /run/secrets/dms_private_key
+      DE_MEDIZININFORMATIK_INITIATIVE_DMS_PUBLIC_KEY: /run/secrets/dms_public_key
     networks:
       cos-bpe-frontend:
         ipv4_address: 172.20.0.147
@@ -244,9 +265,10 @@ services:
       - db
       - cos-fhir
       - keycloak
+      - hapi
 
   dic-fhir:
-    image: ghcr.io/datasharingframework/fhir:1.5.0
+    image: ghcr.io/datasharingframework/fhir:1.5.2
     restart: "no"
     ports:
       - 127.0.0.1:5000:5000
@@ -326,8 +348,9 @@ services:
       - db
       - proxy
       - keycloak
+      - hapi
   dic-bpe:
-    image: ghcr.io/datasharingframework/bpe:1.5.0
+    image: ghcr.io/datasharingframework/bpe:1.5.2
     restart: "no"
     ports:
       - 127.0.0.1:5003:5003
@@ -387,6 +410,7 @@ services:
             token-role: admin
             dsf-role:
               - ADMIN
+      DE_MEDIZININFORMATIK_INITIATIVE_DATA_SHARING_DIC_FHIR_SERVER_BASE_URL: http://hapi:8080/fhir
 
       DEV_DSF_PROCESS_TUTORIAL_LOGGINGENABLED: 'true'
       DEV_DSF_PROCESS_TUTORIAL_USERVOTE: 'true'
@@ -399,9 +423,10 @@ services:
       - db
       - dic-fhir
       - keycloak
+      - hapi
 
   hrp-fhir:
-    image: ghcr.io/datasharingframework/fhir:1.5.0
+    image: ghcr.io/datasharingframework/fhir:1.5.2
     restart: "no"
     ports:
       - 127.0.0.1:5001:5001
@@ -470,9 +495,10 @@ services:
       - db
       - proxy
       - keycloak
+      - hapi
 
   hrp-bpe:
-    image: ghcr.io/datasharingframework/bpe:1.5.0
+    image: ghcr.io/datasharingframework/bpe:1.5.2
     restart: "no"
     ports:
       - 127.0.0.1:5004:5004
@@ -541,6 +567,7 @@ services:
       - db
       - hrp-fhir
       - keycloak
+      - hapi
 
 secrets:
   proxy_certificate_and_int_cas.pem:
@@ -559,6 +586,11 @@ secrets:
     file: ./secrets/keycloak_certificate_private_key.pem
   keycloak_trust_store.jks:
     file: ./secrets/keycloak_trust_store.jks
+
+  dms_private_key:
+    file: ./secrets/dms_private_key.pem
+  dms_public_key:
+    file: ./secrets/dms_public_key.pem
 
   db_dic_fhir_user.password:
     file: ./secrets/db_dic_fhir_user.password

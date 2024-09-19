@@ -1,9 +1,8 @@
 package dev.dsf.process.tutorial.message;
 
-import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_TUTORIAL;
-import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_TUTORIAL_VALUE_BINARY_QUESTION;
+import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_VOTING_PROCESS;
+import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_VOTING_PROCESS_VALUE_BINARY_QUESTION;
 
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
@@ -25,8 +24,9 @@ public class StartVote extends AbstractTaskMessageSend
 	protected Stream<Task.ParameterComponent> getAdditionalInputParameters(DelegateExecution execution,
 			Variables variables)
 	{
-		Optional<String> question = api.getTaskHelper().getFirstInputParameterStringValue(variables.getStartTask(),
-				CODESYSTEM_TUTORIAL, CODESYSTEM_TUTORIAL_VALUE_BINARY_QUESTION);
-		return question.map(q -> api.getTaskHelper().createInput(new StringType(q), CODESYSTEM_TUTORIAL, CODESYSTEM_TUTORIAL_VALUE_BINARY_QUESTION)).stream();
+		String question = api.getTaskHelper().getFirstInputParameterStringValue(variables.getStartTask(), CODESYSTEM_VOTING_PROCESS, CODESYSTEM_VOTING_PROCESS_VALUE_BINARY_QUESTION).get();
+		Task.ParameterComponent questionComponent = api.getTaskHelper().createInput(new StringType(question), CODESYSTEM_VOTING_PROCESS, CODESYSTEM_VOTING_PROCESS_VALUE_BINARY_QUESTION);
+
+		return Stream.of(questionComponent);
 	}
 }

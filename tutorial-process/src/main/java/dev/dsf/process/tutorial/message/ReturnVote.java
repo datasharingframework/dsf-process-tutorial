@@ -1,18 +1,14 @@
 package dev.dsf.process.tutorial.message;
 
-import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_TUTORIAL;
-import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_TUTORIAL_VALUE_VOTE;
-import static dev.dsf.process.tutorial.ConstantsTutorial.VOTE_PROCESS_VARIABLE_AUTOMATED_VOTE;
+import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_VOTING_PROCESS;
+import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_VOTING_PROCESS_VOTE;
+import static dev.dsf.process.tutorial.ConstantsTutorial.VOTE_PROCESS_VARIABLE_VOTE;
 
-import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.hl7.fhir.r4.model.BooleanType;
-import org.hl7.fhir.r4.model.CodeableConcept;
-import org.hl7.fhir.r4.model.Coding;
-import org.hl7.fhir.r4.model.QuestionnaireResponse;
+import org.hl7.fhir.r4.model.Task;
 import org.hl7.fhir.r4.model.Task.ParameterComponent;
 
 import dev.dsf.bpe.v1.ProcessPluginApi;
@@ -27,24 +23,12 @@ public class ReturnVote extends AbstractTaskMessageSend
 	}
 
 	@Override
-	protected Stream<ParameterComponent> getAdditionalInputParameters(DelegateExecution execution,
-			Variables variables)
+	protected Stream<ParameterComponent> getAdditionalInputParameters(DelegateExecution execution, Variables variables)
 	{
-		Boolean automatedVote = variables.getBoolean(VOTE_PROCESS_VARIABLE_AUTOMATED_VOTE);
-		if (Objects.nonNull(automatedVote))
-		{
-			return Stream.of(createVoteResultInputParameter(automatedVote));
-		} else {
-			Optional<QuestionnaireResponse.QuestionnaireResponseItemComponent> optionalItem = api.getQuestionnaireResponseHelper().getFirstItemLeaveMatchingLinkId(variables.getLatestReceivedQuestionnaireResponse(), CODESYSTEM_TUTORIAL_VALUE_VOTE);
-			return optionalItem.stream().map(questionnaireResponseItemComponent -> createVoteResultInputParameter(((BooleanType) questionnaireResponseItemComponent.getAnswerFirstRep().getValue()).booleanValue()));
-		}
-	}
+		boolean vote = variables.getBoolean(VOTE_PROCESS_VARIABLE_VOTE);
+		Task.ParameterComponent voteComponent = api.getTaskHelper().createInput(new BooleanType(vote), CODESYSTEM_VOTING_PROCESS,
+				CODESYSTEM_VOTING_PROCESS_VOTE);
 
-	private ParameterComponent createVoteResultInputParameter(boolean boolVote)
-	{
-		ParameterComponent inputParameter = new ParameterComponent();
-		inputParameter.setType(new CodeableConcept().addCoding(new Coding().setSystem(CODESYSTEM_TUTORIAL).setCode(CODESYSTEM_TUTORIAL_VALUE_VOTE)));
-		inputParameter.setValue(new BooleanType(boolVote));
-		return inputParameter;
+		return Stream.of(voteComponent);
 	}
 }

@@ -1,6 +1,6 @@
 package dev.dsf.process.tutorial.service;
 
-import static dev.dsf.process.tutorial.ConstantsTutorial.VOTE_PROCESS_VARIABLE_AUTOMATED_VOTE;
+import static dev.dsf.process.tutorial.ConstantsTutorial.VOTE_PROCESS_VARIABLE_VOTE;
 
 import java.util.Random;
 
@@ -19,8 +19,8 @@ public class AutomatedVote extends AbstractServiceDelegate
 	}
 
 	@Override
-	protected void doExecute(DelegateExecution delegateExecution, Variables variables) throws BpmnError, Exception
+	protected void doExecute(DelegateExecution execution, Variables variables) throws BpmnError, Exception
 	{
-		variables.setBoolean(VOTE_PROCESS_VARIABLE_AUTOMATED_VOTE, new Random().nextBoolean());
+		variables.setBoolean(VOTE_PROCESS_VARIABLE_VOTE, new Random().nextBoolean());
 	}
 }

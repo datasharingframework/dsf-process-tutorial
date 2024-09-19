@@ -70,43 +70,43 @@
             <max value="1" />
         </element>
         <element id="Task.input:vote">
-            <path value="Task.input" />
-            <sliceName value="vote" />
-            <min value="1" />
-            <max value="1" />
+            <path value="Task.input"/>
+            <sliceName value="vote"/>
+            <min value="1"/>
+            <max value="1"/>
         </element>
         <element id="Task.input:vote.type">
-            <path value="Task.input.type" />
+            <path value="Task.input.type"/>
             <min value="1"/>
             <max value="1"/>
             <binding>
-                <strength value="required" />
-                <valueSet value="http://dsf.dev/fhir/ValueSet/voting-parameters" />
+                <strength value="required"/>
+                <valueSet value="http://dsf.dev/fhir/ValueSet/voting-parameters"/>
             </binding>
         </element>
         <element id="Task.input:vote.type.coding">
-            <path value="Task.input.type.coding" />
-            <min value="1" />
-            <max value="1" />
+            <path value="Task.input.type.coding"/>
+            <min value="1"/>
+            <max value="1"/>
         </element>
         <element id="Task.input:vote.type.coding.system">
-            <path value="Task.input.type.coding.system" />
+            <path value="Task.input.type.coding.system"/>
             <min value="1"/>
             <max value="1"/>
-            <fixedUri value="http://dsf.dev/fhir/CodeSystem/tutorial" />
+            <fixedUri value="http://dsf.dev/fhir/CodeSystem/voting-process"/>
         </element>
         <element id="Task.input:vote.type.coding.code">
-            <path value="Task.input.type.coding.code" />
+            <path value="Task.input.type.coding.code"/>
             <min value="1"/>
             <max value="1"/>
-            <fixedCode value="vote" />
+            <fixedCode value="vote"/>
         </element>
         <element id="Task.input:vote.value[x]">
-            <path value="Task.input.value[x]" />
+            <path value="Task.input.value[x]"/>
             <min value="1"/>
             <max value="1"/>
             <type>
-                <code value="boolean" />
+                <code value="boolean"/>
             </type>
         </element>
     </differential>

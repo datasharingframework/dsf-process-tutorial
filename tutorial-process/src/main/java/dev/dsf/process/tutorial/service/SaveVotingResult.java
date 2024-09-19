@@ -1,9 +1,7 @@
 package dev.dsf.process.tutorial.service;
 
-import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_TUTORIAL;
-import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_TUTORIAL_VALUE_VOTE;
-
-import java.util.Optional;
+import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_VOTING_PROCESS;
+import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_VOTING_PROCESS_VOTE;
 
 import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
@@ -26,9 +24,9 @@ public class SaveVotingResult extends AbstractServiceDelegate
 	protected void doExecute(DelegateExecution delegateExecution, Variables variables) throws BpmnError, Exception
 	{
 		Target target = variables.getTarget();
-		Optional<BooleanType> optionalBooleanType = api.getTaskHelper().getFirstInputParameterValue(variables.getLatestTask(), CODESYSTEM_TUTORIAL, CODESYSTEM_TUTORIAL_VALUE_VOTE, BooleanType.class);
-		optionalBooleanType.ifPresent(booleanType -> variables.setString(
+		boolean vote = api.getTaskHelper().getFirstInputParameterValue(variables.getLatestTask(), CODESYSTEM_VOTING_PROCESS, CODESYSTEM_VOTING_PROCESS_VOTE, BooleanType.class).get().getValue();
+		variables.setString(
 				target.getOrganizationIdentifierValue() + "_" + target.getCorrelationKey(),
-				booleanType.booleanValue() ? VoteResponse.YES.name() : VoteResponse.NO.name()));
+				vote ? VoteResponse.YES.name() : VoteResponse.NO.name());
 	}
 }

@@ -64,16 +64,18 @@ public class TutorialProcessPluginDefinition implements ProcessPluginDefinition
 		String sTaskStartVote = "fhir/StructureDefinition/task-start-vote.xml";
 		String qUserVote = "fhir/Questionnaire/user-vote.xml";
 
+		String cVotingProcess = "fhir/CodeSystem/voting-process.xml";
 		String sExtensionVotingResult = "fhir/StructureDefinition/extension-voting-result.xml";
 		String vBinaryQuestionAnswers = "fhir/ValueSet/voting-results.xml";
 		String vVotingParameters = "fhir/ValueSet/voting-parameters.xml";
+		String vVotingResults = "fhir/ValueSet/voting-results.xml";
 
 		return Map.of(ConstantsTutorial.PROCESS_NAME_FULL_DIC,
 				List.of(aDicProcess, sTaskDicProcess, tTaskDicProcess, sTaskGoodbyeDic, cTutorial, vTutorial),
 				ConstantsTutorial.PROCESS_NAME_FULL_COS, List.of(aCosProcess, sTaskHelloCos, cTutorial, vTutorial),
 				ConstantsTutorial.PROCESS_NAME_FULL_HRP, List.of(aHrpProcess, sTaskHelloHrp, cTutorial, vTutorial),
-				ConstantsTutorial.PROCESS_NAME_FULL_VOTING_PROCESS, List.of(aVotingProcess, sTaskStartVotingProcess, tTaskStartVotingProcess, sTaskReturnVote, sExtensionVotingResult, cTutorial, vBinaryQuestionAnswers, vTutorial, vVotingParameters),
-				ConstantsTutorial.PROCESS_NAME_FULL_VOTE, List.of(aVoteProcess, sTaskStartVote, sExtensionVotingResult, cTutorial, vBinaryQuestionAnswers, vTutorial, vVotingParameters));
+				ConstantsTutorial.PROCESS_NAME_FULL_VOTING_PROCESS, List.of(aVotingProcess, sTaskStartVotingProcess, tTaskStartVotingProcess, sTaskReturnVote, sExtensionVotingResult, cTutorial, vBinaryQuestionAnswers, vTutorial, cVotingProcess, vVotingParameters, vVotingResults),
+				ConstantsTutorial.PROCESS_NAME_FULL_VOTE, List.of(aVoteProcess, sTaskStartVote, qUserVote, sExtensionVotingResult, cTutorial, vBinaryQuestionAnswers, vTutorial, cVotingProcess, vVotingParameters, vVotingResults));
 	}
 
 	@Override

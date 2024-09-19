@@ -20,7 +20,7 @@
     <immutable value="true"/>
     <compose>
         <include>
-            <system value="http://dsf.dev/fhir/CodeSystem/tutorial"/>
+            <system value="http://dsf.dev/fhir/CodeSystem/voting-process"/>
             <concept>
                 <code value="binary-question" />
             </concept>

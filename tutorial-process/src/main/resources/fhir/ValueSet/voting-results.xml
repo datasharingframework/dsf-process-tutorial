@@ -20,7 +20,7 @@
     <immutable value="true"/>
     <compose>
         <include>
-            <system value="http://dsf.dev/fhir/CodeSystem/tutorial"/>
+            <system value="http://dsf.dev/fhir/CodeSystem/voting-process"/>
             <concept>
                 <code value="yes"/>
             </concept>
@@ -29,6 +29,9 @@
             </concept>
             <concept>
                 <code value="timeout"/>
+            </concept>
+            <concept>
+                <code value="result-bundle"/>
             </concept>
         </include>
     </compose>

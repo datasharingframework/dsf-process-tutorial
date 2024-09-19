@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Scope;
 
 import dev.dsf.bpe.v1.ProcessPluginApi;
 import dev.dsf.bpe.v1.documentation.ProcessDocumentation;
-import dev.dsf.process.tutorial.listener.QuestionnaireListener;
+import dev.dsf.process.tutorial.listener.UserVoteListener;
 import dev.dsf.process.tutorial.listener.SetCorrelationKeyListener;
 import dev.dsf.process.tutorial.message.GoodbyeDicMessage;
 import dev.dsf.process.tutorial.message.HelloCosMessage;
@@ -25,9 +25,10 @@ import dev.dsf.process.tutorial.service.AutomatedVote;
 import dev.dsf.process.tutorial.service.CosTask;
 import dev.dsf.process.tutorial.service.DicTask;
 import dev.dsf.process.tutorial.service.HrpTask;
-import dev.dsf.process.tutorial.service.PrepareQuestion;
+import dev.dsf.process.tutorial.service.DecideWhetherUserVote;
 import dev.dsf.process.tutorial.service.PrepareReturnVote;
 import dev.dsf.process.tutorial.service.SaveTimeoutResult;
+import dev.dsf.process.tutorial.service.SaveUserVote;
 import dev.dsf.process.tutorial.service.SaveVotingResult;
 import dev.dsf.process.tutorial.service.SelectTargets;
 
@@ -110,9 +111,23 @@ public class TutorialConfig
 
 	@Bean
 	@Scope(SCOPE_PROTOTYPE)
-	public PrepareQuestion prepareQuestion()
+	public DecideWhetherUserVote decideWhetherUserVote()
 	{
-		return new PrepareQuestion(api, userVote);
+		return new DecideWhetherUserVote(api, userVote);
+	}
+
+	@Bean
+	@Scope(SCOPE_PROTOTYPE)
+	public UserVoteListener userVoteListener()
+	{
+		return new UserVoteListener(api);
+	}
+
+	@Bean
+	@Scope(SCOPE_PROTOTYPE)
+	public SaveUserVote saveUserVote()
+	{
+		return new SaveUserVote(api);
 	}
 
 	@Bean
@@ -124,9 +139,9 @@ public class TutorialConfig
 
 	@Bean
 	@Scope(SCOPE_PROTOTYPE)
-	public QuestionnaireListener questionnaireListener()
+	public PrepareReturnVote prepareReturnVote()
 	{
-		return new QuestionnaireListener(api);
+		return new PrepareReturnVote(api);
 	}
 
 	@Bean
@@ -155,13 +170,6 @@ public class TutorialConfig
 	public AggregateResults aggregateResults()
 	{
 		return new AggregateResults(api);
-	}
-
-	@Bean
-	@Scope(SCOPE_PROTOTYPE)
-	public PrepareReturnVote prepareReturnVote()
-	{
-		return new PrepareReturnVote(api);
 	}
 
 	@Bean
