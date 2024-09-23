@@ -1,4 +1,4 @@
-[Prerequisites](prerequisites.md) • [Exercise 0](exercise-0.md) • [Exercise 1](exercise-1.md) • [Exercise 1.1](exercise-1-1.md) • [Exercise 2](exercise-2.md) • [Exercise 3](exercise-3.md) • **Exercise 4** • [Exercise 5](exercise-5.md) • [Exercise 6](exercise-6.md)
+[Prerequisites](prerequisites.md) • [Exercise 0](exercise-0.md) • [Exercise 1](exercise-1.md) • [Exercise 1.1](exercise-1-1.md) • [Exercise 2](exercise-2.md) • [Exercise 3](exercise-3.md) • **Exercise 4** • [Exercise 5](exercise-5.md) • [Exercise 6](exercise-6.md) • [Exercise 7](exercise-7.md)
 ___
 
 # Exercise 4 - Messaging
@@ -54,14 +54,14 @@ Verify that the build was successful and no test failures occurred.
 ### Process Execution and Manual Tests
 To verify the `dsfdev_dicProcess` and `dsfdev_cosProcess`es can be executed successfully, we need to deploy them into DSF instances and execute the `dsfdev_dicProcess`. The maven `install` build is configured to create a process jar file with all necessary resources and copy the jar to the appropriate locations of the docker dev setup.
 Don't forget that you will have to add the client certificate for the `COS` instance to your browser the same way you added it for the `DIC` instance
-in [exercise 1](exercise-1.md) or use the Keycloak user you created in [exercise 3](exercise-3.md) for the `cos` realm. Otherwise, you won't be able to access [https://cos/fhir](https://cos/fhir). You can find the client certificate
+in [exercise 1](exercise-1.md) or use the Keycloak user `Tyler Tester` with username `test` and password `test`. Otherwise, you won't be able to access [https://cos/fhir](https://cos/fhir). You can find the client certificate
 in `.../dsf-process-tutorial/test-data-generator/cert/cos-client/cos-client_certificate.p12` (password: password).
 
 1. Start the DSF FHIR server for the `dic.dsf.test` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
    ```
    docker-compose up dic-fhir
    ```
-   Verify the DSF FHIR server started successfully.
+   Verify the DSF FHIR server started successfully at https://dic/fhir.
 
 2. Start the DSF BPE server for the `dic.dsf.test` organization in another console at location `.../dsf-process-tutorial/dev-setup`:
    ```
@@ -73,7 +73,7 @@ in `.../dsf-process-tutorial/test-data-generator/cert/cos-client/cos-client_cert
    ```
    docker-compose up cos-fhir
    ```
-   Verify the DSF FHIR server started successfully. You can access the webservice of the DSF FHIR server at https://cos/fhir. To authenticate yourself to the server you can use the client certificate located at `.../dsf-process-tutorial/test-data-generator/cert/cos-client/cos-client_certificate.p12` (Password: `password`).
+   Verify the DSF FHIR server started successfully at https://cos/fhir.
 
 4. Start the DSF BPE server for the `cos.dsf.test` organization in another console at location `.../dsf-process-tutorial/dev-setup`:
    ```
@@ -87,4 +87,4 @@ in `.../dsf-process-tutorial/test-data-generator/cert/cos-client/cos-client_cert
    Verify that a FHIR [Task](../learning/concepts/fhir/task.md) resource was created at the DSF FHIR server of the `cos.dsf.test` organization and the `dsfdev_cosProcess` was then executed by the DSF BPE server of the `cos.dsf.test` organization.
 
 ___
-[Prerequisites](prerequisites.md) • [Exercise 0](exercise-0.md) • [Exercise 1](exercise-1.md) • [Exercise 1.1](exercise-1-1.md) • [Exercise 2](exercise-2.md) • [Exercise 3](exercise-3.md) • **Exercise 4** • [Exercise 5](exercise-5.md) • [Exercise 6](exercise-6.md)
+[Prerequisites](prerequisites.md) • [Exercise 0](exercise-0.md) • [Exercise 1](exercise-1.md) • [Exercise 1.1](exercise-1-1.md) • [Exercise 2](exercise-2.md) • [Exercise 3](exercise-3.md) • **Exercise 4** • [Exercise 5](exercise-5.md) • [Exercise 6](exercise-6.md) • [Exercise 7](exercise-7.md)
