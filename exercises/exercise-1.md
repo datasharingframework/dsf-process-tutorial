@@ -103,7 +103,7 @@ To verify the `dsfdev_dicProcess` can be executed successfully, we need to deplo
 	```
 	docker-compose up dic-fhir
 	```
-	Verify the DSF FHIR server started successfully. You can access the webservice of the DSF FHIR server at https://dic/fhir.  
+	Verify the DSF FHIR server started successfully at https://dic/fhir. 
 	The DSF FHIR server uses a server certificate that was generated during the first maven install build. 
     To authenticate yourself to the server you can use the client certificate located at `.../dsf-process-tutorial/test-data-generator/cert/dic-client/dic-client_certificate.p12` (Password: `password`). 
     Add the certificate and the generated Root CA located at `.../dsf-process-tutorial/test-data-generator/cert/ca/testca_certificate.pem` to your browser certificate store.
