@@ -63,7 +63,6 @@ public class TutorialProcessPluginDefinition implements ProcessPluginDefinition
 
 		String aVoteProcess = "fhir/ActivityDefinition/vote.xml";
 		String sTaskStartVote = "fhir/StructureDefinition/task-start-vote.xml";
-		String qUserVote = "fhir/Questionnaire/user-vote.xml";
 
 		String cVotingProcess = "fhir/CodeSystem/voting-process.xml";
 		String sExtensionVotingResult = "fhir/StructureDefinition/extension-voting-result.xml";
@@ -80,7 +79,7 @@ public class TutorialProcessPluginDefinition implements ProcessPluginDefinition
 						sExtensionVotingResult, cTutorial, vBinaryQuestionAnswers, vTutorial, cVotingProcess,
 						vVotingParameters, vVotingResults),
 				ConstantsTutorial.PROCESS_NAME_FULL_VOTE,
-				List.of(aVoteProcess, sTaskStartVote, qUserVote, sExtensionVotingResult, cTutorial,
+				List.of(aVoteProcess, sTaskStartVote, sExtensionVotingResult, cTutorial,
 						vBinaryQuestionAnswers, vTutorial, cVotingProcess, vVotingParameters, vVotingResults));
 	}
 
