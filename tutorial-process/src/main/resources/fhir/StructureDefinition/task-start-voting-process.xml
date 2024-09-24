@@ -180,33 +180,5 @@
                 <valueSet value="http://dsf.dev/fhir/ValueSet/voting-results"/>
             </binding>
         </element>
-        <element id="Task.output:result-bundle">
-            <path value="Task.output"/>
-            <sliceName value="result-bundle"/>
-        </element>
-        <element id="Task.output:result-bundle.type">
-            <path value="Task.output.type"/>
-            <binding>
-                <strength value="required"/>
-                <valueSet value="http://dsf.dev/fhir/ValueSet/voting-results"/>
-            </binding>
-        </element>
-        <element id="Task.output:result-bundle.type.coding">
-            <path value="Task.output.type.coding"/>
-        </element>
-        <element id="Task.output:result-bundle.type.coding.system">
-            <path value="Task.output.type.coding.system"/>
-            <fixedUri value="http://dsf.dev/fhir/CodeSystem/voting-process"/>
-        </element>
-        <element id="Task.output:result-bundle.type.coding.code">
-            <path value="Task.output.type.coding.code"/>
-            <fixedCode value="result-bundle"/>
-        </element>
-        <element id="Task.output:result-bundle.value[x]">
-            <path value="Task.output.value[x]"/>
-            <type>
-                <code value="url"/>
-            </type>
-        </element>
     </differential>
 </StructureDefinition>

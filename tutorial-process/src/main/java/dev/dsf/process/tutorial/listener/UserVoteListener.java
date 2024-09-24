@@ -29,8 +29,7 @@ public class UserVoteListener extends DefaultUserTaskListener
 		String question = api.getTaskHelper().getFirstInputParameterStringValue(variables.getStartTask(),
 				CODESYSTEM_VOTING_PROCESS, CODESYSTEM_VOTING_PROCESS_VALUE_BINARY_QUESTION).get();
 		Optional<QuestionnaireResponse.QuestionnaireResponseItemComponent> displayItem = beforeCreate.getItem().stream()
-				.filter(i -> i.getLinkId().equals(CODESYSTEM_VOTING_PROCESS_VALUE_BINARY_QUESTION))
-				.filter(QuestionnaireResponse.QuestionnaireResponseItemComponent::hasText).findFirst();
+				.filter(i -> i.getLinkId().equals(CODESYSTEM_VOTING_PROCESS_VALUE_BINARY_QUESTION)).findFirst();
 
 		displayItem
 				.ifPresent(questionnaireResponseItemComponent -> questionnaireResponseItemComponent.setText(question));

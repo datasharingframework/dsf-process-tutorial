@@ -5,7 +5,7 @@
       <bpmn:outgoing>Flow_11i4uri</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_0ysp77m" messageRef="Message_3odpo2l" />
     </bpmn:startEvent>
-    <bpmn:exclusiveGateway id="Gateway_1bbrdcm">
+    <bpmn:exclusiveGateway id="Gateway_1bbrdcm" name="User Vote?">
       <bpmn:incoming>Flow_0ogc80p</bpmn:incoming>
       <bpmn:outgoing>Flow_1l9j9al</bpmn:outgoing>
       <bpmn:outgoing>Flow_0iqof8t</bpmn:outgoing>
@@ -17,7 +17,7 @@
       <bpmn:incoming>Flow_0iqof8t</bpmn:incoming>
       <bpmn:outgoing>Flow_0g20j8e</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:sequenceFlow id="Flow_1l9j9al" sourceRef="Gateway_1bbrdcm" targetRef="Activity_02cz0lm">
+    <bpmn:sequenceFlow id="Flow_1l9j9al" name="No" sourceRef="Gateway_1bbrdcm" targetRef="Activity_02cz0lm">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!userVote}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:exclusiveGateway id="Gateway_19jhq1t">
@@ -49,7 +49,7 @@
       <bpmn:outgoing>Flow_1ga722w</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_1ga722w" sourceRef="Activity_1bxns1i" targetRef="returnVote" />
-    <bpmn:sequenceFlow id="Flow_0iqof8t" sourceRef="Gateway_1bbrdcm" targetRef="Activity_1i64l8h">
+    <bpmn:sequenceFlow id="Flow_0iqof8t" name="Yes" sourceRef="Gateway_1bbrdcm" targetRef="Activity_1i64l8h">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${userVote}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:serviceTask id="Activity_11yrx52" name="Decide Whether User Vote" camunda:class="dev.dsf.process.tutorial.service.DecideWhetherUserVote">
@@ -77,6 +77,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1bbrdcm_di" bpmnElement="Gateway_1bbrdcm" isMarkerVisible="true">
         <dc:Bounds x="455" y="95" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="453" y="65" width="55" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1i64l8h_di" bpmnElement="Activity_1i64l8h">
         <dc:Bounds x="580" y="80" width="100" height="80" />
@@ -106,6 +109,9 @@
         <di:waypoint x="480" y="145" />
         <di:waypoint x="480" y="230" />
         <di:waypoint x="580" y="230" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="488" y="185" width="15" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_18x3f0u_di" bpmnElement="Flow_18x3f0u">
         <di:waypoint x="680" y="230" />
@@ -127,6 +133,9 @@
       <bpmndi:BPMNEdge id="Flow_0iqof8t_di" bpmnElement="Flow_0iqof8t">
         <di:waypoint x="505" y="120" />
         <di:waypoint x="580" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="534" y="102" width="18" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0ogc80p_di" bpmnElement="Flow_0ogc80p">
         <di:waypoint x="380" y="120" />

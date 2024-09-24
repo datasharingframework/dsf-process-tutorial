@@ -1,7 +1,6 @@
 package dev.dsf.process.tutorial.service;
 
 import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_VOTING_PROCESS;
-import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_VOTING_PROCESS_RESULT_BUNDLE;
 import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_VOTING_PROCESS_VALUE_BINARY_QUESTION;
 import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_VOTING_PROCESS_VOTING_RESULT;
 import static dev.dsf.process.tutorial.ConstantsTutorial.SYSTEM_DSF_ORGANIZATION_IDENTIFIER;
@@ -9,7 +8,6 @@ import static dev.dsf.process.tutorial.ConstantsTutorial.VOTING_RESULT_EXTENSION
 import static dev.dsf.process.tutorial.ConstantsTutorial.VOTING_RESULT_EXTENSION_URL;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
@@ -19,12 +17,8 @@ import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Extension;
 import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.Meta;
-import org.hl7.fhir.r4.model.Observation;
-import org.hl7.fhir.r4.model.Reference;
-import org.hl7.fhir.r4.model.StringType;
 import org.hl7.fhir.r4.model.Task;
 import org.hl7.fhir.r4.model.Task.TaskOutputComponent;
-import org.hl7.fhir.r4.model.UrlType;
 
 import dev.dsf.bpe.v1.ProcessPluginApi;
 import dev.dsf.bpe.v1.activity.AbstractServiceDelegate;
@@ -58,21 +52,16 @@ public class AggregateResults extends AbstractServiceDelegate
 					String voteYes = "yes";
 					taskStartVotingProcess
 							.addOutput(createVoteOutput(target.getOrganizationIdentifierValue(), voteYes));
-					addVoteToBundle(resultBundle, target.getOrganizationIdentifierValue(), q, voteYes);
 					break;
 				case NO:
 					String voteNo = "no";
 					taskStartVotingProcess.addOutput(createVoteOutput(target.getOrganizationIdentifierValue(), voteNo));
-					addVoteToBundle(resultBundle, target.getOrganizationIdentifierValue(), q, voteNo);
 					break;
 				case TIMEOUT:
 					taskStartVotingProcess.addOutput(createTimeoutOutput(target.getOrganizationIdentifierValue()));
-					addVoteToBundle(resultBundle, target.getOrganizationIdentifierValue(), q, "timeout");
 					break;
 			}
 		}));
-		Bundle response = saveBundle(resultBundle);
-		addBundleUrlToOutput(response, taskStartVotingProcess);
 	}
 
 	private TaskOutputComponent createVoteOutput(String organizationIdentifierValue, String vote)
@@ -101,35 +90,5 @@ public class AggregateResults extends AbstractServiceDelegate
 		votingResultExtension.addExtension().setUrl(VOTING_RESULT_EXTENSION_ORGANIZATION_IDENTIFIER).setValue(
 				new Identifier().setSystem(SYSTEM_DSF_ORGANIZATION_IDENTIFIER).setValue(organizationIdentifierValue));
 		return voteOutput;
-	}
-
-	private void addVoteToBundle(Bundle bundle, String organizationIdentifierValue, String question, String vote)
-	{
-		Observation voteObservation = new Observation().setStatus(Observation.ObservationStatus.FINAL)
-				.setCode(new CodeableConcept(new Coding().setSystem(CODESYSTEM_VOTING_PROCESS)
-						.setCode(CODESYSTEM_VOTING_PROCESS_VOTING_RESULT)))
-				.setValue(new CodeableConcept(new Coding().setSystem(CODESYSTEM_VOTING_PROCESS).setCode(vote)))
-				.addComponent(new Observation.ObservationComponentComponent()
-						.setCode(new CodeableConcept(new Coding().setSystem(CODESYSTEM_VOTING_PROCESS)
-								.setCode(CODESYSTEM_VOTING_PROCESS_VALUE_BINARY_QUESTION)))
-						.setValue(new StringType(question)))
-				.setSubject(new Reference().setIdentifier(new Identifier().setSystem(SYSTEM_DSF_ORGANIZATION_IDENTIFIER)
-						.setValue(organizationIdentifierValue)));
-		voteObservation.setId(UUID.randomUUID().toString());
-		bundle.addEntry().setResource(voteObservation).setFullUrl("urn:uuid:" + voteObservation.getId());
-	}
-
-	private Bundle saveBundle(Bundle bundle)
-	{
-		return api.getFhirWebserviceClientProvider().getLocalWebserviceClient().withRetryForever(60000).create(bundle);
-	}
-
-	private void addBundleUrlToOutput(Bundle bundle, Task task)
-	{
-		TaskOutputComponent bundleUrl = new TaskOutputComponent(
-				new CodeableConcept(new Coding().setSystem(CODESYSTEM_VOTING_PROCESS)
-						.setCode(CODESYSTEM_VOTING_PROCESS_RESULT_BUNDLE)),
-				new UrlType(api.getEndpointProvider().getLocalEndpointAddress() + "/" + bundle.getId()));
-		task.addOutput(bundleUrl);
 	}
 }

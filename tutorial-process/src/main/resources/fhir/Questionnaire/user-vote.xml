@@ -28,7 +28,6 @@
     <item>
         <linkId value="binary-question"/>
         <type value="display"/>
-        <text value="foo"/>
     </item>
     <item>
         <linkId value="vote"/>
