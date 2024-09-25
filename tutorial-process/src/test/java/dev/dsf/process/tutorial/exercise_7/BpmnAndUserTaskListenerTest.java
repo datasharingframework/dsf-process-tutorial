@@ -13,6 +13,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -20,7 +21,9 @@ import java.util.stream.Collectors;
 import org.camunda.bpm.engine.delegate.DelegateTask;
 import org.camunda.bpm.model.bpmn.Bpmn;
 import org.camunda.bpm.model.bpmn.BpmnModelInstance;
+import org.camunda.bpm.model.bpmn.instance.ConditionExpression;
 import org.camunda.bpm.model.bpmn.instance.ExclusiveGateway;
+import org.camunda.bpm.model.bpmn.instance.FlowNode;
 import org.camunda.bpm.model.bpmn.instance.Process;
 import org.camunda.bpm.model.bpmn.instance.SequenceFlow;
 import org.camunda.bpm.model.bpmn.instance.ServiceTask;
@@ -44,6 +47,7 @@ import dev.dsf.bpe.v1.variables.Variables;
 import dev.dsf.process.tutorial.ConstantsTutorial;
 import dev.dsf.process.tutorial.TestProcessPluginGenerator;
 import dev.dsf.process.tutorial.TutorialProcessPluginDefinition;
+import dev.dsf.process.tutorial.Utils;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BpmnAndUserTaskListenerTest
@@ -77,7 +81,7 @@ public class BpmnAndUserTaskListenerTest
 
 		Process process = processes.get(0);
 
-		String errorMissingUserTask = "Process '" + processId + "' in file '" + filename + "is missing a User Task";
+		String errorMissingUserTask = "Process '" + processId + "' in file '" + filename + "' is missing a User Task";
 		int userTaskCount = process.getChildElementsByType(UserTask.class).size();
 		assertTrue(errorMissingUserTask, userTaskCount > 0);
 
@@ -87,21 +91,21 @@ public class BpmnAndUserTaskListenerTest
 				.filter(userTask -> userTask.getIncoming().stream()
 						.anyMatch(isFlowConnectingUserTaskAndExclusiveGateway(userTask)))
 				.filter(userTask -> userTask.getOutgoing().stream()
-						.anyMatch(isFlowConnectingUserTaskAndSaveUserVoteServer(userTask)))
+						.anyMatch(isFlowConnectingUserTaskAndSaveUserVoteServiceTask(userTask)))
 				.findFirst();
 		assertTrue(errorMissingCorrectUserTask, optUserTask.isPresent());
 		UserTask userTask = optUserTask.get();
 
 		String errorUserTaskIncomingFlowMissingCondition = "User Task in process '" + processId + "' in file '"
-				+ filename + " with name " + userTask.getOutgoing()
+				+ filename + "' with name " + userTask.getName()
 				+ " is missing condition expression '${userVote}' on incoming flow from exclusive gateway with name 'User Vote?'";
 		assertTrue(errorUserTaskIncomingFlowMissingCondition,
 				userTask.getIncoming().stream().filter(isFlowConnectingUserTaskAndExclusiveGateway(userTask))
 						.allMatch(hasCorrectConditionExpression()));
 
 		String errorUserTaskIsMissingCorrectFormKey = "User Task in process '" + processId + "' in file '" + filename
-				+ " with name " + userTask.getOutgoing() + " is missing Form Key with value " + questionnaireUrl;
-		assertEquals(errorUserTaskIsMissingCorrectFormKey, userTask.getCamundaFormKey(), questionnaireUrl);
+				+ "' with name " + userTask.getName() + " is missing Form Key with value " + questionnaireUrl;
+		assertEquals(errorUserTaskIsMissingCorrectFormKey, questionnaireUrl, userTask.getCamundaFormKey());
 
 		String packageName = "dev.dsf.process.tutorial.listener";
 		String errorNoUserTaskListenerFound = "No class extending DefaultUserTaskListener found in package '"
@@ -110,7 +114,7 @@ public class BpmnAndUserTaskListenerTest
 		assertTrue(errorNoUserTaskListenerFound, !userTaskListeners.isEmpty());
 
 		String errorUserTaskIsMissingTaskListener = "User Task in process '" + processId + "' in file '" + filename
-				+ " with name " + userTask.getOutgoing()
+				+ "' with name " + userTask.getName()
 				+ " is missing at least one Task Listener which extends DefaultUserTaskListener. Found classes to add which extend DefaultUserTaskListener: "
 				+ userTaskListeners.stream().map(Class::getSimpleName).reduce("", (i, next) -> i + next + " ");
 		List<CamundaTaskListener> camundaTaskListeners = userTask
@@ -135,8 +139,8 @@ public class BpmnAndUserTaskListenerTest
 				.collect(Collectors.toMap(userTaskListener -> userTaskListener, this::validateUserTaskListener));
 
 		String errorNoTaskListenerInUserTaskIsValid = "User Task in process '" + processId + "' in file '" + filename
-				+ " with name " + userTask.getOutgoing()
-				+ " is missing at least one valid UserTaskListener. Errors are: \n";
+				+ " with name " + userTask.getName()
+				+ "' is missing at least one valid UserTaskListener. Errors are: \n";
 		errorNoTaskListenerInUserTaskIsValid += userTaskListenersWithErrors.keySet().stream()
 				.map(key -> formatErrors(key, userTaskListenersWithErrors.get(key))).collect(Collectors.joining());
 
@@ -146,19 +150,43 @@ public class BpmnAndUserTaskListenerTest
 
 	private Predicate<SequenceFlow> isFlowConnectingUserTaskAndExclusiveGateway(UserTask userTask)
 	{
-		return flow -> flow.getTarget().equals(userTask) && flow.getSource() instanceof ExclusiveGateway
-				&& flow.getSource().getName().equals("User Vote?");
+		return flow ->
+		{
+			FlowNode target = flow.getTarget();
+			FlowNode source = flow.getSource();
+			if (Objects.nonNull(target) && Objects.nonNull(source))
+			{
+				return target.equals(userTask) && source instanceof ExclusiveGateway
+						&& "User Vote?".equals(source.getName());
+			}
+			return false;
+		};
 	}
 
 	private Predicate<SequenceFlow> hasCorrectConditionExpression()
 	{
-		return flow -> flow.getConditionExpression().getTextContent().equals("${userVote}");
+		return flow ->
+		{
+			ConditionExpression conditionExpression = flow.getConditionExpression();
+			if (Objects.nonNull(conditionExpression))
+				return "${userVote}".equals(conditionExpression.getTextContent());
+			return false;
+		};
 	}
 
-	private Predicate<SequenceFlow> isFlowConnectingUserTaskAndSaveUserVoteServer(UserTask userTask)
+	private Predicate<SequenceFlow> isFlowConnectingUserTaskAndSaveUserVoteServiceTask(UserTask userTask)
 	{
-		return flow -> flow.getSource().equals(userTask) && flow.getTarget() instanceof ServiceTask
-				&& flow.getTarget().getName().equals("Save User Vote");
+		return flow ->
+		{
+			FlowNode target = flow.getTarget();
+			FlowNode source = flow.getSource();
+			if (Objects.nonNull(target) && Objects.nonNull(source))
+			{
+				return source.equals(userTask) && target instanceof ServiceTask
+						&& "Save User Vote".equals(target.getName());
+			}
+			return false;
+		};
 	}
 
 	private String formatErrors(Class<? extends DefaultUserTaskListener> userTaskListener, List<String> errors)
@@ -166,7 +194,7 @@ public class BpmnAndUserTaskListenerTest
 		String formatted = "";
 
 		formatted += "Class: " + userTaskListener.getSimpleName() + "\n";
-		formatted += "  Errors:\n" + errors.stream().reduce("", (i, next) -> i + "   " + next + "\n");
+		formatted += errors.stream().reduce("", (i, next) -> i + "   " + next + "\n");
 
 		return formatted;
 	}
@@ -230,11 +258,15 @@ public class BpmnAndUserTaskListenerTest
 				errors.add(
 						"Expected one call to QuestionnaireResponseItemComponent#setText for the QuestionnaireResponseItemComponent with linkId 'binary-question'");
 		}
-		catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | InstantiationException e)
+		catch (InvocationTargetException | IllegalAccessException | InstantiationException e)
 		{
 			throw new RuntimeException(e);
 		}
-
+		catch (NoSuchMethodException e)
+		{
+			String errorUserTaskListenerDoesNotOverrideMethod = "Expected override of method 'beforeQuestionnaireResponseCreate'";
+			errors.add(errorUserTaskListenerDoesNotOverrideMethod);
+		}
 		return errors;
 	}
 }
