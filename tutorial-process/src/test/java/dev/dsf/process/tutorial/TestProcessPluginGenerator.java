@@ -44,8 +44,8 @@ public class TestProcessPluginGenerator
 			processAuthorizationHelper, questionnaireResponseHelper, readAccessHelper, taskHelper);
 	private static ConfigurableEnvironment environment = new StandardEnvironment();
 
-	public static ProcessPluginImpl generate(ProcessPluginDefinition processPluginDefinition, boolean draft,
-			Class loadingClass)
+	public static <T> ProcessPluginImpl generate(ProcessPluginDefinition processPluginDefinition, boolean draft,
+			Class<T> loadingClass)
 	{
 		return new ProcessPluginImpl(processPluginDefinition, processPluginApi, draft, Path.of("test.jar"),
 				loadingClass.getClassLoader(), fhirContext, environment);
