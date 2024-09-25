@@ -37,11 +37,11 @@ import dev.dsf.fhir.validation.ResourceValidatorImpl;
 import dev.dsf.fhir.validation.ValidationSupportRule;
 import dev.dsf.process.tutorial.TutorialProcessPluginDefinition;
 
-public class QuestionnaireUserVoteTest
+public class UserVoteTest
 {
 	Questionnaire userVote;
 
-	private final Logger logger = LoggerFactory.getLogger(QuestionnaireUserVoteTest.class);
+	private final Logger logger = LoggerFactory.getLogger(UserVoteTest.class);
 
 	@ClassRule
 	public static final ValidationSupportRule validationRule = new ValidationSupportRule(RESOURCE_VERSION, RELEASE_DATE,
@@ -74,7 +74,8 @@ public class QuestionnaireUserVoteTest
 		}
 		catch (NullPointerException e)
 		{
-			throw new RuntimeException("Missing Questionnaire resource with file name 'user-vote.xml' in 'resources/fhir/Questionnaire'.");
+			throw new RuntimeException(
+					"Missing Questionnaire resource with file name 'user-vote.xml' in 'resources/fhir/Questionnaire'.");
 		}
 
 		userVote = parser.parseResource(Questionnaire.class, xml);
@@ -130,8 +131,9 @@ public class QuestionnaireUserVoteTest
 	public void testQuestionnaireHasCorrectUrl()
 	{
 		String correctUrl = "http://dsf.dev/fhir/Questionnaire/user-vote";
-		String errorWrongUrl = "Questionnaire 'user-vote' has wrong URL.";
-		assertEquals(errorWrongUrl, correctUrl, userVote.getUrl());
+		String errorWrongUrl = "Questionnaire 'user-vote' has wrong URL. Expected '" + correctUrl + "' but got '"
+				+ userVote.getUrl() + "'.";
+		assertTrue(errorWrongUrl, correctUrl.equals(userVote.getUrl()));
 	}
 
 	@Test
