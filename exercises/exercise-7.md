@@ -3,16 +3,16 @@ ___
 
 # Exercise 7 - User Tasks and Task Output Parameters
 
-This exercise introduces a new scenario which will serve as an example where [User Tasks](../learning/concepts/bpmn/user-task.md), resource download and [Task Output Parameters](../learning/concepts/fhir/task.md#task-output-parameters)
+This exercise introduces a new scenario which will serve as an example where [User Tasks](../learning/concepts/bpmn/user-tasks.md), resource download and [Task Output Parameters](../learning/concepts/fhir/task.md#task-output-parameters)
 will be utilized. The scenario is a voting process where one DSF instances of the tutorial setup will send a binary question (yes/no) to the other instances and itself.
 The question can be set when starting the voting process. The question can will then be answerable through a [QuestionnaireResponse](https://www.hl7.org/fhir/R4/questionnaireresponse.html) resource on the instance's DSF FHIR server.
 The answer then gets sent back to the instance which initiated the voting process.
 The scenario comes with a skeleton including two BPMN models. One for orchestrating the voting process called found in `voting-process.bpmn` and the subprocess which handles the vote itself found in `vote.bpmn`. 
-It also includes most of the Java implementation for both processes and the required FHIR resources. Your task will be to fill in the parts concerning the [User Task](../learning/concepts/bpmn/user-task.md)
+It also includes most of the Java implementation for both processes and the required FHIR resources. Your task will be to fill in the parts concerning the [User Task](../learning/concepts/bpmn/user-tasks.md)
 and [Task Output Parameters](../learning/concepts/fhir/task.md#task-output-parameters).
 
 In order to solve this exercise, you should have solved exercise 6 and read the topics on
-[User Tasks](../learning/guides/user-tasks-in-the-dsf.md)
+[User Tasks](../learning/guides/user-taskss-in-the-dsf.md)
 and [adding Task Output Parameters](../learning/guides/adding-task-output-parameters-to-task-profiles.md).
 
 Solutions to this exercise are found on the branch `solutions/exercise-7`. The skeleton can be found on the branch `skeleton/exercise-7`.
@@ -106,21 +106,21 @@ Solutions to this exercise are found on the branch `solutions/exercise-7`. The s
    <details>
    <summary>Don't know how the Questionnaire should look like?</summary>
     
-   Check out the [template](../learning/guides/user-tasks-in-the-dsf.md#questionnaire-template) again. Don't forget changing the URL.
+   Check out the [template](../learning/guides/user-taskss-in-the-dsf.md#questionnaire-template) again. Don't forget changing the URL.
    </details>
     
     * Add an item with linkId `binary-question` and type `display`.
     * Add an item with linkId `vote` and type `boolean`.
-3. We now have a [Questionnaire](https://www.hl7.org/fhir/R4/questionnaire.html) resource that can be referenced in the BPMN model's [User Tasks](../learning/concepts/bpmn/user-task.md).
+3. We now have a [Questionnaire](https://www.hl7.org/fhir/R4/questionnaire.html) resource that can be referenced in the BPMN model's [User Tasks](../learning/concepts/bpmn/user-tasks.md).
    If referenced, the DSF will take this [Questionnaire](https://www.hl7.org/fhir/R4/questionnaire.html) as a template to create the [QuestionnaireResponse](https://www.hl7.org/fhir/R4/questionnaireresponse.html)
    that can be answered by a user in the DSF FHIR server web UI.  
-   Add a [User Task](../learning/concepts/bpmn/user-task.md) to `vote.bpmn` located in `src/main/resources/bpe/vote.bpmn`:
-   * The [User Task](../learning/concepts/bpmn/user-task.md) should be inserted between the [Exclusive Gateway](../learning/concepts/bpmn/gateways.md) and the `Save User Vote` [Service Task](../learning/concepts/bpmn/service-tasks.md).
+   Add a [User Task](../learning/concepts/bpmn/user-tasks.md) to `vote.bpmn` located in `src/main/resources/bpe/vote.bpmn`:
+   * The [User Task](../learning/concepts/bpmn/user-tasks.md) should be inserted between the [Exclusive Gateway](../learning/concepts/bpmn/gateways.md) and the `Save User Vote` [Service Task](../learning/concepts/bpmn/service-tasks.md).
      The connection from the [Exclusive Gateway](../learning/concepts/bpmn/gateways.md) requires a [Condition](../learning/concepts/bpmn/conditions.md) element with type `Expression` and `Condition Expression` with value `${userVote}`.
    * The [Questionnaire](https://www.hl7.org/fhir/R4/questionnaire.html) resource is referenced by providing a `Form key` attribute with the value of the [Questionnaire](https://www.hl7.org/fhir/R4/questionnaire.html) URL you created in the previous step appended by the version placeholder `|#{version}`. This option is found under `Forms` and type `Embedded or External Task Forms`.
 4. The [QuestionnaireResponse](https://www.hl7.org/fhir/R4/questionnaireresponse.html) that is automatically created will copy its items from the template [Questionnaire](https://www.hl7.org/fhir/R4/questionnaire.html).
    This means we need a way to set the `item.text` element of the `binary-question` item you created in the previous step, dynamically. This mechanism is provided by [Task Listeners](https://docs.camunda.org/manual/7.21/user-guide/process-engine/delegation-code/#task-listener).
-   Create a [Task Listener](https://docs.camunda.org/manual/7.21/user-guide/process-engine/delegation-code/#task-listener) in `src/main/java/dev/dsf/process/tutorial/listener` for the [User Task](../learning/concepts/bpmn/user-task.md) you added in the previous step:
+   Create a [Task Listener](https://docs.camunda.org/manual/7.21/user-guide/process-engine/delegation-code/#task-listener) in `src/main/java/dev/dsf/process/tutorial/listener` for the [User Task](../learning/concepts/bpmn/user-tasks.md) you added in the previous step:
     * The new Java class needs to inherit from `DefaultUserTaskListener`
     * Override `beforeQuestionnaireResponseCreate` and set the text of the [QuestionnaireResponse](https://www.hl7.org/fhir/R4/questionnaireresponse.html) item with linkId `binary-question` to the value of the 
       Start Task's input parameter with name `binary-question`
