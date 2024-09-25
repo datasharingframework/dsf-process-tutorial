@@ -25,7 +25,6 @@ import org.slf4j.LoggerFactory;
 
 import ca.uhn.fhir.validation.ResultSeverityEnum;
 import ca.uhn.fhir.validation.ValidationResult;
-
 import dev.dsf.bpe.v1.constants.CodeSystems;
 import dev.dsf.bpe.v1.constants.NamingSystems;
 import dev.dsf.fhir.validation.ResourceValidator;
@@ -40,7 +39,8 @@ public class TaskStartVotingProcessTest
 	public static final ValidationSupportRule validationRule = new ValidationSupportRule(RESOURCE_VERSION, RELEASE_DATE,
 			Arrays.asList("dsf-task-base-1.0.0.xml", "task-start-voting-process.xml", "extension-voting-result.xml"),
 			Arrays.asList("dsf-read-access-tag-1.0.0.xml", "dsf-bpmn-message-1.0.0.xml", "voting-process.xml"),
-			Arrays.asList("dsf-read-access-tag-1.0.0.xml", "dsf-bpmn-message-1.0.0.xml", "voting-parameters.xml", "voting-results.xml"));
+			Arrays.asList("dsf-read-access-tag-1.0.0.xml", "dsf-bpmn-message-1.0.0.xml", "voting-parameters.xml",
+					"voting-results.xml"));
 
 	private ResourceValidator resourceValidator = new ResourceValidatorImpl(validationRule.getFhirContext(),
 			validationRule.getValidationSupport());
@@ -73,17 +73,16 @@ public class TaskStartVotingProcessTest
 		task.getRestriction().addRecipient().setType(ResourceType.Organization.name()).getIdentifier()
 				.setSystem(NamingSystems.OrganizationIdentifier.SID).setValue("dic.dsf.test");
 
-		task.addInput().setValue(new StringType(PROFILE_TUTORIAL_TASK_START_VOTING_PROCESS_MESSAGE_NAME)).getType().addCoding()
-				.setSystem(CodeSystems.BpmnMessage.URL).setCode(CodeSystems.BpmnMessage.messageName().getCode());
+		task.addInput().setValue(new StringType(PROFILE_TUTORIAL_TASK_START_VOTING_PROCESS_MESSAGE_NAME)).getType()
+				.addCoding().setSystem(CodeSystems.BpmnMessage.URL)
+				.setCode(CodeSystems.BpmnMessage.messageName().getCode());
 		task.addInput().setValue(new StringType("A question?")).getType().addCoding()
 				.setSystem(CODESYSTEM_VOTING_PROCESS).setCode(CODESYSTEM_VOTING_PROCESS_VALUE_BINARY_QUESTION);
 
 		Extension votingResultExtension = new Extension();
-		votingResultExtension.addExtension()
-				.setUrl("organization-identifier")
-				.setValue(new Identifier().setSystem("http://dsf.dev/sid/organization-identifier").setValue("dic.dsf.test"));
-		votingResultExtension
-				.setUrl("http://dsf.dev/fhir/StructureDefinition/extension-voting-result");
+		votingResultExtension.addExtension().setUrl("organization-identifier").setValue(
+				new Identifier().setSystem("http://dsf.dev/sid/organization-identifier").setValue("dic.dsf.test"));
+		votingResultExtension.setUrl("http://dsf.dev/fhir/StructureDefinition/extension-voting-result");
 		Task.TaskOutputComponent outputComponent = task.addOutput();
 		outputComponent.setValue(new Coding().setSystem(CODESYSTEM_VOTING_PROCESS).setCode("yes"));
 		outputComponent.getType().addCoding(new Coding().setSystem(CODESYSTEM_VOTING_PROCESS).setCode("voting-result"));

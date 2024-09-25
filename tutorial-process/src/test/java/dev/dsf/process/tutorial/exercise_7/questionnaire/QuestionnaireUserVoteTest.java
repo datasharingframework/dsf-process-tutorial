@@ -32,7 +32,6 @@ import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.parser.IParser;
 import ca.uhn.fhir.validation.ResultSeverityEnum;
 import ca.uhn.fhir.validation.ValidationResult;
-
 import dev.dsf.fhir.validation.ResourceValidator;
 import dev.dsf.fhir.validation.ResourceValidatorImpl;
 import dev.dsf.fhir.validation.ValidationSupportRule;
@@ -47,8 +46,7 @@ public class QuestionnaireUserVoteTest
 	@ClassRule
 	public static final ValidationSupportRule validationRule = new ValidationSupportRule(RESOURCE_VERSION, RELEASE_DATE,
 			Arrays.asList("dsf-task-base-1.0.0.xml", "dsf-questionnaire-1.5.0.xml"),
-			Arrays.asList("dsf-read-access-tag-1.0.0.xml"),
-			Arrays.asList("dsf-read-access-tag-1.0.0.xml"));
+			Arrays.asList("dsf-read-access-tag-1.0.0.xml"), Arrays.asList("dsf-read-access-tag-1.0.0.xml"));
 
 	private ResourceValidator resourceValidator = new ResourceValidatorImpl(validationRule.getFhirContext(),
 			validationRule.getValidationSupport());
@@ -68,13 +66,11 @@ public class QuestionnaireUserVoteTest
 
 		String xml;
 
-		try (Stream<String> lines = Files.lines(Path.of(
-				Objects.requireNonNull(getClass().getResource("/fhir/Questionnaire/user-vote.xml")).toURI())))
+		try (Stream<String> lines = Files.lines(
+				Path.of(Objects.requireNonNull(getClass().getResource("/fhir/Questionnaire/user-vote.xml")).toURI())))
 		{
-			xml = lines
-					.map(line -> versionPattern.matcher(line).replaceAll(versionReplacement))
-					.map(line -> datePattern.matcher(line).replaceAll(dateReplacement))
-					.collect(Collectors.joining());
+			xml = lines.map(line -> versionPattern.matcher(line).replaceAll(versionReplacement))
+					.map(line -> datePattern.matcher(line).replaceAll(dateReplacement)).collect(Collectors.joining());
 		}
 
 		userVote = parser.parseResource(Questionnaire.class, xml);
@@ -98,14 +94,14 @@ public class QuestionnaireUserVoteTest
 	{
 		String errorNoItemWithLinkIdBinaryQuestion = "Questionnaire 'user-vote' is missing item with linkId 'binary-question'";
 		Optional<Questionnaire.QuestionnaireItemComponent> optBinaryQuestion = userVote.getItem().stream()
-				.filter(item -> item.getLinkId().equals(CODESYSTEM_VOTING_PROCESS_VALUE_BINARY_QUESTION))
-				.findAny();
+				.filter(item -> item.getLinkId().equals(CODESYSTEM_VOTING_PROCESS_VALUE_BINARY_QUESTION)).findAny();
 		assertTrue(errorNoItemWithLinkIdBinaryQuestion, optBinaryQuestion.isPresent());
 		Questionnaire.QuestionnaireItemComponent binaryQuestion = optBinaryQuestion.get();
 
-		String errorItemWithLinkIdBinaryQuestionNotOfTypeDisplay = "Item with linkId 'binary-question' in Questionnaire 'user-vote' is of wrong type. Expected type 'display' but got '" + binaryQuestion.getType().getDisplay().toLowerCase() + "'.";
-		assertTrue(errorItemWithLinkIdBinaryQuestionNotOfTypeDisplay, binaryQuestion.getType().equals(
-				Questionnaire.QuestionnaireItemType.DISPLAY));
+		String errorItemWithLinkIdBinaryQuestionNotOfTypeDisplay = "Item with linkId 'binary-question' in Questionnaire 'user-vote' is of wrong type. Expected type 'display' but got '"
+				+ binaryQuestion.getType().getDisplay().toLowerCase() + "'.";
+		assertTrue(errorItemWithLinkIdBinaryQuestionNotOfTypeDisplay,
+				binaryQuestion.getType().equals(Questionnaire.QuestionnaireItemType.DISPLAY));
 	}
 
 	@Test
@@ -113,14 +109,14 @@ public class QuestionnaireUserVoteTest
 	{
 		String errorNoItemWithLinkIdVote = "Questionnaire 'user-vote' is missing item with linkId 'vote'";
 		Optional<Questionnaire.QuestionnaireItemComponent> optVote = userVote.getItem().stream()
-				.filter(item -> item.getLinkId().equals(CODESYSTEM_VOTING_PROCESS_VOTE))
-				.findAny();
+				.filter(item -> item.getLinkId().equals(CODESYSTEM_VOTING_PROCESS_VOTE)).findAny();
 		assertTrue(errorNoItemWithLinkIdVote, optVote.isPresent());
 		Questionnaire.QuestionnaireItemComponent vote = optVote.get();
 
-		String errorItemWithLinkIdVoteNotOfTypeBoolean = "Item with linkId 'vote' in Questionnaire 'user-vote' is of wrong type. Expected type 'boolean' but got '" + vote.getType().getDisplay().toLowerCase() + "'.";
-		assertTrue(errorItemWithLinkIdVoteNotOfTypeBoolean, vote.getType().equals(
-				Questionnaire.QuestionnaireItemType.BOOLEAN));
+		String errorItemWithLinkIdVoteNotOfTypeBoolean = "Item with linkId 'vote' in Questionnaire 'user-vote' is of wrong type. Expected type 'boolean' but got '"
+				+ vote.getType().getDisplay().toLowerCase() + "'.";
+		assertTrue(errorItemWithLinkIdVoteNotOfTypeBoolean,
+				vote.getType().equals(Questionnaire.QuestionnaireItemType.BOOLEAN));
 
 		String errorItemWithLinkIdVoteNotRequired = "Item with linkId 'vote' in Questionnaire 'user-vote' must have 'required' set to 'true'";
 		assertTrue(errorItemWithLinkIdVoteNotRequired, vote.getRequired());
@@ -139,7 +135,10 @@ public class QuestionnaireUserVoteTest
 	{
 		String questionnairePath = "fhir/Questionnaire/user-vote.xml";
 		TutorialProcessPluginDefinition tutorialProcessPluginDefinition = new TutorialProcessPluginDefinition();
-		String errorQuestionnaireNotDefinedAsResourceForVoteProcess = "The process '" + PROCESS_NAME_FULL_VOTE + "' is missing path to Questionnaire resource 'user-vote' in the process plugin definition.";
-		assertTrue(errorQuestionnaireNotDefinedAsResourceForVoteProcess, tutorialProcessPluginDefinition.getFhirResourcesByProcessId().get(PROCESS_NAME_FULL_VOTE).stream().anyMatch(path -> path.equals(questionnairePath)));
+		String errorQuestionnaireNotDefinedAsResourceForVoteProcess = "The process '" + PROCESS_NAME_FULL_VOTE
+				+ "' is missing path to Questionnaire resource 'user-vote' in the process plugin definition.";
+		assertTrue(errorQuestionnaireNotDefinedAsResourceForVoteProcess,
+				tutorialProcessPluginDefinition.getFhirResourcesByProcessId().get(PROCESS_NAME_FULL_VOTE).stream()
+						.anyMatch(path -> path.equals(questionnairePath)));
 	}
 }
