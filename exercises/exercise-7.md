@@ -12,7 +12,7 @@ It also includes most of the Java implementation for both processes and the requ
 and [Task Output Parameters](../learning/concepts/fhir/task.md#task-output-parameters).
 
 In order to solve this exercise, you should have solved exercise 6 and read the topics on
-[User Tasks](../learning/guides/user-taskss-in-the-dsf.md)
+[User Tasks](../learning/guides/user-tasks-in-the-dsf.md)
 and [adding Task Output Parameters](../learning/guides/adding-task-output-parameters-to-task-profiles.md).
 
 Solutions to this exercise are found on the branch `solutions/exercise-7`. The skeleton can be found on the branch `skeleton/exercise-7`.
@@ -106,7 +106,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-7`. The s
    <details>
    <summary>Don't know how the Questionnaire should look like?</summary>
     
-   Check out the [template](../learning/guides/user-taskss-in-the-dsf.md#questionnaire-template) again. Don't forget changing the URL.
+   Check out the [template](../learning/guides/user-tasks-in-the-dsf.md#questionnaire-template) again. Don't forget changing the URL.
    </details>
     
     * Add an item with linkId `binary-question` and type `display`.
