@@ -154,16 +154,6 @@ public class BpmnAndUserTaskListenerTest
 		return formatted;
 	}
 
-	private BiConsumer<HashMap<Class<? extends DefaultUserTaskListener>, List<String>>, Class<? extends DefaultUserTaskListener>> putInMap()
-	{
-		return (map, userTaskListener) -> map.put(userTaskListener, validateUserTaskListener(userTaskListener));
-	}
-
-	private BiConsumer<HashMap<Class<? extends DefaultUserTaskListener>, List<String>>, HashMap<Class<? extends DefaultUserTaskListener>, List<String>>> combineMaps()
-	{
-		return HashMap::putAll;
-	}
-
 	// A UserTaskListener ist considered valid if beforeQuestionnaireResponseCreate() reads the input parameter
 	// 'binary-question' from the Start Task and set the item.text value of the item with linkId 'binary-question'
 	// to the value of the input parameter in the QuestionnaireResponse
