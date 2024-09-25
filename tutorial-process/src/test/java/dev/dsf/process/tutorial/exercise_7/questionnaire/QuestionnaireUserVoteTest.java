@@ -72,6 +72,10 @@ public class QuestionnaireUserVoteTest
 			xml = lines.map(line -> versionPattern.matcher(line).replaceAll(versionReplacement))
 					.map(line -> datePattern.matcher(line).replaceAll(dateReplacement)).collect(Collectors.joining());
 		}
+		catch (NullPointerException e)
+		{
+			throw new RuntimeException("Missing Questionnaire resource with file name 'user-vote.xml' in 'resources/fhir/Questionnaire'.");
+		}
 
 		userVote = parser.parseResource(Questionnaire.class, xml);
 	}
