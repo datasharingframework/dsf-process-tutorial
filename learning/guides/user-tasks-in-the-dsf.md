@@ -10,7 +10,7 @@ After filling out the [QuestionnaireResponse](https://www.hl7.org/fhir/R4/questi
 [User Task](../concepts/bpmn/user-tasks.md) and the updated [QuestionnaireResponse](https://www.hl7.org/fhir/R4/questionnaireresponse.html) will be available through the [Process Plugin Api's](../concepts/dsf/process-api.md)
 `Variables` instance by calling `getLatestReceivedQuestionnaireResponse()`.  
 
-You also have the option to register a [Task Listener](https://docs.camunda.org/manual/7.21/user-guide/process-engine/delegation-code/#task-listener) on the [User Task](../concepts/bpmn/user-tasks.md). 
+You also have the option to register a [Task Listener](https://docs.camunda.org/manual/7.21/user-guide/process-engine/delegation-code/#task-listener) on the [User Task](../concepts/bpmn/user-tasks.md). This allows you to manipulate the [QuestionnaireResponse](https://www.hl7.org/fhir/R4/questionnaireresponse.html) before it is posted to the DSF FHIR server.
 You do this by extending the `DefaultUserTaskListener` class which provides overrides to interact with the [QuestionnaireResponse](https://www.hl7.org/fhir/R4/questionnaireresponse.html).
 Notice that dynamically changing the `item.text` value of an item in a [QuestionnaireResponse](https://www.hl7.org/fhir/R4/questionnaireresponse.html) (that is **NOT** of type `display`) is not allowed. 
 For that, you would have to change the `item.text` value of the corresponding [Questionnaire](https://www.hl7.org/fhir/R4/questionnaire.html) resource as well. 
