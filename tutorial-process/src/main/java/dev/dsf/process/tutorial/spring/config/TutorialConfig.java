@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Scope;
 import dev.dsf.bpe.v1.ProcessPluginApi;
 import dev.dsf.bpe.v1.documentation.ProcessDocumentation;
 import dev.dsf.process.tutorial.listener.SetCorrelationKeyListener;
-import dev.dsf.process.tutorial.listener.UserVoteListener;
 import dev.dsf.process.tutorial.message.GoodbyeDicMessage;
 import dev.dsf.process.tutorial.message.HelloCosMessage;
 import dev.dsf.process.tutorial.message.HelloHrpMessage;
@@ -114,13 +113,6 @@ public class TutorialConfig
 	public DecideWhetherUserVote decideWhetherUserVote()
 	{
 		return new DecideWhetherUserVote(api, userVote);
-	}
-
-	@Bean
-	@Scope(SCOPE_PROTOTYPE)
-	public UserVoteListener userVoteListener()
-	{
-		return new UserVoteListener(api);
 	}
 
 	@Bean
