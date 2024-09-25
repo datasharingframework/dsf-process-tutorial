@@ -7,7 +7,7 @@ This exercise introduces a new scenario which will serve as an example where [Us
 will be utilized. The scenario is a voting process where one DSF instances of the tutorial setup will send a binary question (yes/no) to the other instances and itself.
 The question can be set when starting the voting process. The question can will then be answerable through a [QuestionnaireResponse](https://www.hl7.org/fhir/R4/questionnaireresponse.html) resource on the instance's DSF FHIR server.
 The answer then gets sent back to the instance which initiated the voting process.
-The scenario comes with a skeleton including two BPMN models for the voting process and the subprocess which handles the vote itself. 
+The scenario comes with a skeleton including two BPMN models. One for orchestrating the voting process called found in `voting-process.bpmn` and the subprocess which handles the vote itself found in `vote.bpmn`. 
 It also includes most of the Java implementation for both processes and the required FHIR resources. Your task will be to fill in the parts concerning the [User Task](../learning/concepts/bpmn/user-task.md)
 and [Task Output Parameters](../learning/concepts/fhir/task.md#task-output-parameters).
 
@@ -18,7 +18,10 @@ and [adding Task Output Parameters](../learning/guides/adding-task-output-parame
 Solutions to this exercise are found on the branch `solutions/exercise-7`. The skeleton can be found on the branch `skeleton/exercise-7`.
 
 ## Exercise Tasks
-1. Add a [Task Output Parameter](../learning/concepts/fhir/task.md#task-output-parameters) called `voting-result`:
+1. The StructureDefinition `task-start-voting-process.xml` describes the Task resource which starts the voting process. It already has an input parameter called `binary-question` which stores 
+   the question you want to pose to all DSF instances in the network. When the entire voting process is finished, we would like to see all the voting results of the other instances listed as 
+   output parameters in this resource.  
+   Add a [Task Output Parameter](../learning/concepts/fhir/task.md#task-output-parameters) called `voting-result`:
    * This parameter stores the voting result of one instance as either `yes`, `no` or `timeout`. This can be achieved by using a `Coding` as the type for `Task.output.value[x]`. 
      The codings for this are already provided by the CodeSystem `voting-process` located in `src/main/resources/fhir/CodeSystem/voting-process.xml` and included in a ValueSet 
      called `voting-results` located in `src/main/resources/fhir/ValueSet/voting-results.xml`.
@@ -85,7 +88,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-7`. The s
        ``` xml
        <element id="Task.output:example-output.extension:my-extension">
           <path value="Task.output.extension"/>
-          <sliceName value="my-extension"/>
+          <sliceName value="example-output"/>
           <min value="1"/>
           <max value="1"/>
           <type>
@@ -96,17 +99,31 @@ Solutions to this exercise are found on the branch `solutions/exercise-7`. The s
        ```
        </details>
        </details>
-2. Create a [Questionnaire](https://www.hl7.org/fhir/R4/questionnaire.html) in `src/main/resources/fhir/Questionnaire/user-vote.xml` called `user-vote`. 
+2. In the next steps, we will create the part of the process where a user has to interact with a [QuestionnaireResponse](https://www.hl7.org/fhir/R4/questionnaireresponse.html) 
+   in the DSF FHIR server web UI to answer the question defined in the input parameter of `task-start-voting-process.xml`. 
+   Create a [Questionnaire](https://www.hl7.org/fhir/R4/questionnaire.html) in `src/main/resources/fhir/Questionnaire/user-vote.xml` called `user-vote`. 
    Don't forget to register it in the Process Plugin Definition for the `vote` process.
    <details>
    <summary>Don't know how the Questionnaire should look like?</summary>
     
    Check out the [template](../learning/guides/user-tasks-in-the-dsf.md#questionnaire-template) again. Don't forget changing the URL.
    </details>
-3. Add a [User Task](../learning/concepts/bpmn/user-task.md) to `vote.bpmn` located in `src/main/resources/bpe/vote.bpmn`:
+    
+    * Add an item with linkId `binary-question` and type `display`.
+    * Add an item with linkId `vote` and type `boolean`.
+3. We now have a [Questionnaire](https://www.hl7.org/fhir/R4/questionnaire.html) resource that can be referenced in the BPMN model's [User Tasks](../learning/concepts/bpmn/user-task.md).
+   If referenced, the DSF will take this [Questionnaire](https://www.hl7.org/fhir/R4/questionnaire.html) as a template to create the [QuestionnaireResponse](https://www.hl7.org/fhir/R4/questionnaireresponse.html)
+   that can be answered by a user in the DSF FHIR server web UI.  
+   Add a [User Task](../learning/concepts/bpmn/user-task.md) to `vote.bpmn` located in `src/main/resources/bpe/vote.bpmn`:
    * The [User Task](../learning/concepts/bpmn/user-task.md) should be inserted between the [Exclusive Gateway](../learning/concepts/bpmn/gateways.md) and the `Save User Vote` [Service Task](../learning/concepts/bpmn/service-tasks.md).
      The connection from the [Exclusive Gateway](../learning/concepts/bpmn/gateways.md) requires a [Condition](../learning/concepts/bpmn/conditions.md) element with type `Expression` and `Condition Expression` with value `${userVote}`.
-   * The [User Task](../learning/concepts/bpmn/user-task.md) requires a `Form key` attribute with the value of the Questionnaire URL you created in the previous step. This option is found under `Forms` and type `Embedded or External Task Forms`.
+   * The [Questionnaire](https://www.hl7.org/fhir/R4/questionnaire.html) resource is referenced by providing a `Form key` attribute with the value of the [Questionnaire](https://www.hl7.org/fhir/R4/questionnaire.html) URL you created in the previous step appended by the version placeholder `|#{version}`. This option is found under `Forms` and type `Embedded or External Task Forms`.
+4. The [QuestionnaireResponse](https://www.hl7.org/fhir/R4/questionnaireresponse.html) that is automatically created will copy its items from the template [Questionnaire](https://www.hl7.org/fhir/R4/questionnaire.html).
+   This means we need a way to set the `item.text` element of the `binary-question` item you created in the previous step, dynamically. This mechanism is provided by [Task Listeners](https://docs.camunda.org/manual/7.21/user-guide/process-engine/delegation-code/#task-listener).
+   Create a [Task Listener](https://docs.camunda.org/manual/7.21/user-guide/process-engine/delegation-code/#task-listener) in `src/main/java/dev/dsf/process/tutorial/listener` for the [User Task](../learning/concepts/bpmn/user-task.md) you added in the previous step:
+    * The new Java class needs to inherit from `DefaultUserTaskListener`
+    * Override `beforeQuestionnaireResponseCreate` and set the text of the [QuestionnaireResponse](https://www.hl7.org/fhir/R4/questionnaireresponse.html) item with linkId `binary-question` to the value of the 
+      Start Task's input parameter with name `binary-question`
 
 ## Solution Verification
 ### Maven Build and Automated Tests
