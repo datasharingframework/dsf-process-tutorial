@@ -1,13 +1,13 @@
 package dev.dsf.process.tutorial.exercise_6.config;
 
+import static dev.dsf.process.tutorial.Utils.countBeanMethods;
+import static dev.dsf.process.tutorial.Utils.errorMessageBeanMethod;
 import static org.junit.Assert.assertEquals;
 
-import java.lang.reflect.Modifier;
 import java.util.Arrays;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 
 import dev.dsf.bpe.v1.documentation.ProcessDocumentation;
 import dev.dsf.process.tutorial.message.GoodbyeDicMessage;
@@ -20,19 +20,6 @@ import dev.dsf.process.tutorial.spring.config.TutorialConfig;
 
 public class TutorialConfigTest
 {
-	private long countBeanMethods(Class<?> returnType)
-	{
-		return Arrays.stream(TutorialConfig.class.getMethods()).filter(m -> returnType.equals(m.getReturnType()))
-				.filter(m -> Modifier.isPublic(m.getModifiers())).filter(m -> m.getAnnotation(Bean.class) != null)
-				.count();
-	}
-
-	private String errorMessageBeanMethod(Class<?> returnType)
-	{
-		return "One public spring bean method with return type " + returnType.getSimpleName() + " and annotation "
-				+ Bean.class.getSimpleName() + " expected in " + TutorialConfig.class.getSimpleName();
-	}
-
 	@Test
 	public void testDicTaskBeanDefined() throws Exception
 	{
