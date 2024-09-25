@@ -1,13 +1,14 @@
 package dev.dsf.process.tutorial.exercise_2.spring.config;
 
+import static dev.dsf.process.tutorial.Utils.countBeanMethods;
+import static dev.dsf.process.tutorial.Utils.errorMessageBeanMethod;
 import static org.junit.Assert.assertEquals;
 
-import java.lang.reflect.Modifier;
+import java.security.DigestException;
 import java.util.Arrays;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 
 import dev.dsf.bpe.v1.documentation.ProcessDocumentation;
 import dev.dsf.process.tutorial.service.DicTask;
@@ -18,14 +19,7 @@ public class TutorialConfigTest
 	@Test
 	public void testDicTaskServiceBeanDefined() throws Exception
 	{
-		long count = Arrays.stream(TutorialConfig.class.getMethods())
-				.filter(m -> DicTask.class.equals(m.getReturnType())).filter(m -> Modifier.isPublic(m.getModifiers()))
-				.filter(m -> m.getAnnotation(Bean.class) != null).count();
-
-		String errorMethod = "One public spring bean methods with return type " + DicTask.class.getSimpleName()
-				+ " and annotation " + Bean.class.getSimpleName() + " expected in "
-				+ TutorialConfig.class.getSimpleName();
-		assertEquals(errorMethod, 1, count);
+		assertEquals(errorMessageBeanMethod(DigestException.class), 1, countBeanMethods(DicTask.class));
 	}
 
 	@Test

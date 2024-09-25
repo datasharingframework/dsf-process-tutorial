@@ -1,4 +1,6 @@
-package dev.dsf.process.tutorial.exercise_7;
+package dev.dsf.process.tutorial;
+
+import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -8,6 +10,7 @@ import java.util.List;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
 
 import dev.dsf.bpe.v1.activity.DefaultUserTaskListener;
 import dev.dsf.process.tutorial.spring.config.TutorialConfig;
@@ -29,7 +32,8 @@ public class Utils
 
 	public static String errorMessageBeanMethod(Class<?> returnType)
 	{
-		return "One public spring bean method with return type " + returnType.getSimpleName() + " and annotation "
-				+ Bean.class.getSimpleName() + " expected in " + TutorialConfig.class.getSimpleName();
+		return "One public spring bean method with return type " + returnType.getSimpleName() + ", annotation "
+				+ Bean.class.getSimpleName() + " and annotation " + Scope.class.getSimpleName() + " with type "
+				+ SCOPE_PROTOTYPE + " expected in " + TutorialConfig.class.getSimpleName();
 	}
 }
