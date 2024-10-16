@@ -27,4 +27,7 @@ Communication between organizations is modeled using message flow events in BPMN
 Different execution paths in a process based on the state of process variables can be achieved using exclusive gateways. In exercise 5 we will examine how this can be implemented. For more details see the [exercise 5 description](exercises/exercise-6.md).
 
 ## Exercise 6 - Event Based Gateways and Intermediate Events
-In the final exercise we will look at message flows between three organizations as well as how to continue a waiting process, if no return message arrives. For more details see the [exercise 6 description](exercises/exercise-6.md).
+Exercise 6 will look at message flows between three organizations as well as how to continue a waiting process, if no return message arrives. For more details see the [exercise 6 description](exercises/exercise-6.md).
+
+## Exercise 7 - Exercise 7 - User Tasks and Task Output Parameters
+Exercise 7 will teach you how to utilize User Tasks to provide user input to a running process and how to save data as Task Output Parameters. For more details see the [exercise 7 description](exercises/exercise-7.md).
