@@ -24,7 +24,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-2`.
 4. Add the new environment variable to the `dic-bpe` service in `dev-setup/docker-compose.yml` and set the value to `"true"`.
 5. Create a new [CodeSystem](../learning/concepts/fhir/codesystem.md) with url `http://dsf.dev/fhir/CodeSystem/tutorial` having a concept with code `tutorial-input`. Don't forget to add the `read-access-tag`.
    <details>
-   <summary>Don't how to create a CodeSystem?</summary>
+   <summary>Don't know how to create a CodeSystem?</summary>
 
    Check out [this guide](../learning/guides/creating-codesystems-for-dsf-processes.md).
    </details>
@@ -37,7 +37,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-2`.
 
 6. Create a new [ValueSet](../learning/concepts/fhir/valueset.md) with url `http://dsf.dev/fhir/ValueSet/tutorial` that includes all concepts from the [CodeSystem](../learning/concepts/fhir/codesystem). Don't forget to add the `read-access-tag`.
    <details>
-   <summary>Don't how to create a ValueSet?</summary>
+   <summary>Don't know how to create a ValueSet?</summary>
 
    Check out [this guide](../learning/guides/creating-valuesets-for-dsf-processes.md).
    </details>
@@ -50,7 +50,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-2`.
 
 7. Add a new input parameter of type `tutorial-input` with `Task.input.value[x]` as a `string` to the `task-start-dic-process.xml` [Task](../learning/concepts/fhir/task.md) profile.
    <details>
-   <summary>Don't how to add a new input parameter?</summary>
+   <summary>Don't know how to add a new input parameter?</summary>
 
    Check out [this guide](../learning/guides/adding-task-input-parameters-to-task-profiles.md).
    </details>
