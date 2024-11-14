@@ -2,7 +2,7 @@
 ___
 
 # Exercise 4 - Messaging
-Communication between organizations in BPMN processes is modeled using message flow. The third exercise shows how a process at one organization can trigger a process at another organization.
+Communication between organizations in BPMN processes is modeled using message flow. The fourth exercise shows how a process at one organization can trigger a process at another organization.
 
 To demonstrate communication between two organizations we will configure message flow between the processes `dsfdev_dicProcess` and `dsfdev_cosProcess`. After that, the processes are to be executed at the organizations `dic.dsf.test` and `cos.dsf.test` respectively in the docker dev setup, with the former triggering execution of the latter by automatically sending a [Task](http://hl7.org/fhir/R4/task.html) resource from organization `dic.dsf.test` to organization `cos.dsf.test`.
 

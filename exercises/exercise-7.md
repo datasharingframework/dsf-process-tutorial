@@ -3,11 +3,11 @@ ___
 
 # Exercise 7 - User Tasks and Task Output Parameters
 
-This exercise introduces a new scenario which will serve as an example where [User Tasks](../learning/concepts/bpmn/user-tasks.md), resource download and [Task Output Parameters](../learning/concepts/fhir/task.md#task-output-parameters)
-will be utilized. The scenario is a voting process where one DSF instances of the tutorial setup will send a binary question (yes/no) to the other instances and itself.
+This exercise introduces a new scenario which will serve as an example on how [User Tasks](../learning/concepts/bpmn/user-tasks.md), resource download and [Task Output Parameters](../learning/concepts/fhir/task.md#task-output-parameters)
+may be utilized. The scenario is a voting process where one DSF instances of the tutorial setup will send a binary question (yes/no) to the other instances and itself.
 The question can be set when starting the voting process. The question can will then be answerable through a [QuestionnaireResponse](https://www.hl7.org/fhir/R4/questionnaireresponse.html) resource on the instance's DSF FHIR server.
-The answer then gets sent back to the instance which initiated the voting process.
-The scenario comes with a skeleton including two BPMN models. One for orchestrating the voting process called found in `voting-process.bpmn` and the subprocess which handles the vote itself found in `vote.bpmn`. 
+The answer then gets sent back to the instance which initiated the voting process. This exercise will focus on [User Tasks](../learning/concepts/bpmn/user-tasks.md) and [Task Output Parameters](../learning/concepts/fhir/task.md#task-output-parameters).
+The scenario comes with a skeleton including two BPMN models. One for orchestrating the voting process called `dsfdev_votingProcess` found in `voting-process.bpmn` and the subprocess which handles the vote itself found in `vote.bpmn`. 
 It also includes most of the Java implementation for both processes and the required FHIR resources. Your task will be to fill in the parts concerning the [User Task](../learning/concepts/bpmn/user-tasks.md)
 and [Task Output Parameters](../learning/concepts/fhir/task.md#task-output-parameters).
 
