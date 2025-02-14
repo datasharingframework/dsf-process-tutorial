@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1nrw1pp" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.17.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.17.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1nrw1pp" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.17.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.20.0">
   <bpmn:process id="dsfdev_votingProcess" isExecutable="true" camunda:versionTag="#{version}" camunda:historyTimeToLive="180">
     <bpmn:startEvent id="startVotingProcess" name="Start Voting Process">
       <bpmn:outgoing>Flow_1g64g0p</bpmn:outgoing>
@@ -73,7 +73,10 @@
       </bpmn:exclusiveGateway>
       <bpmn:sequenceFlow id="Flow_06zl7ql" sourceRef="Activity_1t6i9ak" targetRef="Gateway_07c346r" />
       <bpmn:sequenceFlow id="Flow_0m6qfr1" sourceRef="Activity_0xq9m6y" targetRef="Gateway_07c346r" />
-      <bpmn:endEvent id="Event_1aua47n">
+      <bpmn:endEvent id="Event_1aua47n" camunda:asyncAfter="true">
+        <bpmn:extensionElements>
+          <camunda:failedJobRetryTimeCycle>R3/PT5S</camunda:failedJobRetryTimeCycle>
+        </bpmn:extensionElements>
         <bpmn:incoming>Flow_057e3q2</bpmn:incoming>
       </bpmn:endEvent>
       <bpmn:sequenceFlow id="Flow_057e3q2" sourceRef="Gateway_07c346r" targetRef="Event_1aua47n" />

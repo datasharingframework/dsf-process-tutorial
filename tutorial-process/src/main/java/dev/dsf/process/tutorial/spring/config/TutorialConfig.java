@@ -42,7 +42,7 @@ public class TutorialConfig
 	private boolean loggingEnabled;
 
 	@Value("${dev.dsf.process.tutorial.userVote:false}")
-	@ProcessDocumentation(description = "Set to true to enable logging", required = false, processNames = PROCESS_NAME_FULL_VOTING_PROCESS)
+	@ProcessDocumentation(description = "Set to true to enable users to vote", required = false, processNames = PROCESS_NAME_FULL_VOTING_PROCESS)
 	private boolean userVote;
 
 	@Bean
