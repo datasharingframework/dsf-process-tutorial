@@ -8,6 +8,9 @@ The first version of this tutorial was executed at the [GMDS / TMF 2022](https:/
 ## Prerequisites
 In order to be able to solve the exercises described in this tutorial a software development environment with GIT, Java 17, Maven 3.8, Docker, Docker-Compose, a Java IDE like Eclipse or IntelliJ, Camunda Modeler as a BPMN Editor and a minimum of 16GB of RAM is needed. For more details see the [detailed prerequisites document](exercises/prerequisites.md).
 
+## Exercise 0 - Setting Up The Project
+Exercise 0 verifies that the project is set up correctly in order to start working on exercises. 
+
 ## Exercise 1 - Simple Process
 The first exercise focuses on setting up the testing environment used in this tutorial and shows how to implement and execute a simple BPMN process. For more details see the [exercise 1 description](exercises/exercise-1.md).
 
