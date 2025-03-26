@@ -9,7 +9,7 @@ import dev.dsf.process.tutorial.spring.config.TutorialConfig;
 
 public class TutorialProcessPluginDefinition implements ProcessPluginDefinition
 {
-	public static final String VERSION = "2.1.0.0";
+	public static final String VERSION = "2.1.0.1";
 	public static final LocalDate RELEASE_DATE = LocalDate.of(2025, 4, 2);
 
 	@Override
