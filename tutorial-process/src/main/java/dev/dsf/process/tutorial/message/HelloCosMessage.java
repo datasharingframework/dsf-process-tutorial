@@ -19,7 +19,8 @@ import dev.dsf.bpe.v2.variables.Variables;
 public class HelloCosMessage implements MessageSendTask
 {
 	@Override
-	public List<Task.ParameterComponent> getAdditionalInputParameters(ProcessPluginApi api, Variables variables, SendTaskValues sendTaskValues, Target target)
+	public List<Task.ParameterComponent> getAdditionalInputParameters(ProcessPluginApi api, Variables variables,
+			SendTaskValues sendTaskValues, Target target)
 	{
 		Optional<String> tutorialInputParameter = api.getTaskHelper().getFirstInputParameterStringValue(
 				variables.getStartTask(), CODESYSTEM_TUTORIAL, CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT);

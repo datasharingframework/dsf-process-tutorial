@@ -27,8 +27,8 @@ public class TutorialConfig
 	@Bean
 	public ActivityPrototypeBeanCreator activityPrototypeBeanCreator()
 	{
-		return new ActivityPrototypeBeanCreator(HelloCosMessage.class, CosTask.class,
-				HelloHrpMessage.class, HrpTask.class, GoodbyeDicMessage.class);
+		return new ActivityPrototypeBeanCreator(HelloCosMessage.class, CosTask.class, HelloHrpMessage.class,
+				HrpTask.class, GoodbyeDicMessage.class);
 	}
 
 	@Bean
