@@ -23,20 +23,16 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import dev.dsf.bpe.v1.ProcessPluginApi;
-import dev.dsf.bpe.v1.constants.NamingSystems;
-import dev.dsf.bpe.v1.service.FhirWebserviceClientProvider;
-import dev.dsf.bpe.v1.service.TaskHelper;
-import dev.dsf.bpe.v1.variables.Variables;
+import dev.dsf.bpe.v2.ProcessPluginApi;
+import dev.dsf.bpe.v2.constants.NamingSystems;
+import dev.dsf.bpe.v2.service.TaskHelper;
+import dev.dsf.bpe.v2.variables.Variables;
 import dev.dsf.fhir.authorization.read.ReadAccessHelper;
 import dev.dsf.process.tutorial.service.DicTask;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DicTaskServiceTest
 {
-	@Mock
-	private FhirWebserviceClientProvider clientProvider;
-
 	@Mock
 	private TaskHelper taskHelper;
 
@@ -118,13 +114,12 @@ public class DicTaskServiceTest
 		assumeTrue(optService.isPresent());
 
 		Task task = getTask();
-		Mockito.when(api.getVariables(execution)).thenReturn(variables);
 		Mockito.when(api.getTaskHelper()).thenReturn(taskHelper);
 		Mockito.when(variables.getStartTask()).thenReturn(task);
 		Mockito.when(taskHelper.getFirstInputParameterStringValue(any(), eq("http://dsf.dev/fhir/CodeSystem/tutorial"),
 				eq("tutorial-input"))).thenReturn(Optional.of("Test"));
 
-		optService.get().execute(execution);
+		optService.get().execute(api, variables);
 
 		ArgumentCaptor<Task> captor = ArgumentCaptor.forClass(Task.class);
 		Mockito.verify(taskHelper).getFirstInputParameterStringValue(captor.capture(),

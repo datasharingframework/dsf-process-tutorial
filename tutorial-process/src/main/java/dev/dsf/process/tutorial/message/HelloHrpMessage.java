@@ -1,33 +1,29 @@
 package dev.dsf.process.tutorial.message;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
-import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.hl7.fhir.r4.model.StringType;
 import org.hl7.fhir.r4.model.Task;
 
-import dev.dsf.bpe.v1.ProcessPluginApi;
-import dev.dsf.bpe.v1.activity.AbstractTaskMessageSend;
-import dev.dsf.bpe.v1.variables.Variables;
+import dev.dsf.bpe.v2.ProcessPluginApi;
+import dev.dsf.bpe.v2.activity.MessageSendTask;
+import dev.dsf.bpe.v2.activity.values.SendTaskValues;
+import dev.dsf.bpe.v2.variables.Target;
+import dev.dsf.bpe.v2.variables.Variables;
 
 // Only needed for exercise 6 and above
-public class HelloHrpMessage extends AbstractTaskMessageSend
+public class HelloHrpMessage implements MessageSendTask
 {
-	public HelloHrpMessage(ProcessPluginApi api)
-	{
-		super(api);
-	}
-
 	@Override
-	protected Stream<Task.ParameterComponent> getAdditionalInputParameters(DelegateExecution execution,
-			Variables variables)
+	public List<Task.ParameterComponent> getAdditionalInputParameters(ProcessPluginApi api, Variables variables,
+			SendTaskValues sendTaskValues, Target target)
 	{
 		Optional<Task.ParameterComponent> tutorialInputParameter = api.getTaskHelper().getFirstInputParameter(
 				variables.getStartTask(), "http://dsf.dev/fhir/CodeSystem/tutorial", "tutorial-input",
 				StringType.class);
 
-		return tutorialInputParameter.map(i -> api.getTaskHelper().createInput(i.getValue(),
-				"http://dsf.dev/fhir/CodeSystem/tutorial", "tutorial-input")).stream();
+		return tutorialInputParameter.map(i -> List.of(api.getTaskHelper().createInput(i.getValue(),
+				"http://dsf.dev/fhir/CodeSystem/tutorial", "tutorial-input"))).orElse(List.of());
 	}
 }

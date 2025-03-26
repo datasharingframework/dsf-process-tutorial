@@ -24,7 +24,6 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.hl7.fhir.r4.model.CodeSystem;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Resource;
@@ -42,16 +41,15 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import dev.dsf.bpe.plugin.ProcessIdAndVersion;
-import dev.dsf.bpe.v1.ProcessPluginApi;
-import dev.dsf.bpe.v1.ProcessPluginDefinition;
-import dev.dsf.bpe.v1.constants.NamingSystems;
-import dev.dsf.bpe.v1.plugin.ProcessPluginImpl;
-import dev.dsf.bpe.v1.service.TaskHelper;
-import dev.dsf.bpe.v1.variables.Variables;
+import dev.dsf.bpe.v2.ProcessPluginApi;
+import dev.dsf.bpe.v2.ProcessPluginDefinition;
+import dev.dsf.bpe.v2.constants.NamingSystems;
+import dev.dsf.bpe.v2.service.TaskHelper;
+import dev.dsf.bpe.v2.variables.Variables;
 import dev.dsf.process.tutorial.ConstantsTutorial;
-import dev.dsf.process.tutorial.TestProcessPluginGenerator;
+import dev.dsf.process.tutorial.FhirResourceLoader;
 import dev.dsf.process.tutorial.TutorialProcessPluginDefinition;
+import dev.dsf.process.tutorial.Utils;
 import dev.dsf.process.tutorial.service.DicTask;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -66,9 +64,6 @@ public class DicTaskServiceTest
 	public static final String GET_INPUT_PARAMETERS = "getInputParameters";
 	@Mock
 	private TaskHelper taskHelperMock;
-
-	@Mock
-	private DelegateExecution executionMock;
 
 	@Mock
 	private ProcessPluginApi apiMock;
@@ -156,7 +151,6 @@ public class DicTaskServiceTest
 		DefaultMockingDetails taskHelperMockingDetails = new DefaultMockingDetails(taskHelperMock);
 		DefaultMockingDetails variablesMockingDetails = new DefaultMockingDetails(variablesMock);
 
-		Mockito.when(apiMock.getVariables(executionMock)).thenReturn(variablesMock);
 		Mockito.when(apiMock.getTaskHelper()).thenReturn(taskHelperMock);
 
 		// Mock ways to get start task
@@ -203,7 +197,7 @@ public class DicTaskServiceTest
 
 		try
 		{
-			optService.get().execute(executionMock);
+			optService.get().execute(apiMock, variablesMock);
 		}
 		catch (NullPointerException e)
 		{
@@ -293,16 +287,9 @@ public class DicTaskServiceTest
 	private CodeSystem getCodeSystem()
 	{
 		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
-		ProcessPluginImpl processPlugin = TestProcessPluginGenerator.generate(definition, false, getClass());
-		boolean initialized = processPlugin
-				.initializeAndValidateResources(ConstantsTutorial.TUTORIAL_DIC_ORGANIZATION_IDENTIFIER);
+		Map<String, List<Resource>> fhirResources = FhirResourceLoader.getFhirResourcesByProcessId(definition);
 
-		assertEquals(true, initialized);
-
-		var fhirResources = processPlugin.getFhirResources();
-
-		List<Resource> dicProcessResources = fhirResources
-				.get(new ProcessIdAndVersion(ConstantsTutorial.PROCESS_NAME_FULL_DIC, definition.getResourceVersion()));
+		List<Resource> dicProcessResources = fhirResources.get(ConstantsTutorial.PROCESS_NAME_FULL_DIC);
 
 		return dicProcessResources.stream().filter(resource -> resource instanceof CodeSystem)
 				.map(resource -> (CodeSystem) resource)

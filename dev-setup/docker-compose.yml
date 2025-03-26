@@ -104,7 +104,7 @@ services:
       --spi-truststore-file-hostname-verification-policy=STRICT
 
   cos-fhir:
-    image: ghcr.io/datasharingframework/fhir:1.7.0
+    image: ghcr.io/datasharingframework/fhir:2.0.0-M1
     restart: "no"
     ports:
       - 127.0.0.1:5002:5002
@@ -176,7 +176,7 @@ services:
       - proxy
       - keycloak
   cos-bpe:
-    image: ghcr.io/datasharingframework/bpe:1.7.0
+    image: ghcr.io/datasharingframework/bpe:2.0.0-M1
     restart: "no"
     ports:
       - 127.0.0.1:5005:5005
@@ -236,6 +236,8 @@ services:
             token-role: admin
             dsf-role:
               - ADMIN
+      DEV_DSF_BPE_PING_MAXDOWNLOADSIZEBYTES: 1000000000
+      DEV_DSF_BPE_PING_MAXUPLOADSIZEBYTES: 1000000000
     networks:
       cos-bpe-frontend:
         ipv4_address: 172.20.0.147
@@ -247,7 +249,7 @@ services:
       - keycloak
 
   dic-fhir:
-    image: ghcr.io/datasharingframework/fhir:1.7.0
+    image: ghcr.io/datasharingframework/fhir:2.0.0-M1
     restart: "no"
     ports:
       - 127.0.0.1:5000:5000
@@ -307,6 +309,17 @@ services:
               - PERMANENT_DELETE
             practitioner-role:
               - http://dsf.dev/fhir/CodeSystem/practitioner-role|DSF_ADMIN
+        - tutorial_role:
+            token-role: tutorial
+            dsf-role:
+              - CREATE
+              - READ
+              - UPDATE
+              - DELETE
+              - SEARCH
+              - HISTORY
+            practitioner-role:
+              - http://dsf.dev/fhir/CodeSystem/practitioner-role|DSF_ADMIN
     networks:
       dic-fhir-frontend:
         ipv4_address: 172.20.0.67
@@ -317,7 +330,7 @@ services:
       - proxy
       - keycloak
   dic-bpe:
-    image: ghcr.io/datasharingframework/bpe:1.7.0
+    image: ghcr.io/datasharingframework/bpe:2.0.0-M1
     restart: "no"
     ports:
       - 127.0.0.1:5003:5003
@@ -377,6 +390,11 @@ services:
             token-role: admin
             dsf-role:
               - ADMIN
+
+      DEV_DSF_PROCESS_TUTORIAL_LOGGINGENABLED: 'true'
+      DEV_DSF_BPE_PING_MAXDOWNLOADSIZEBYTES: 1000000000
+      DEV_DSF_BPE_PING_MAXUPLOADSIZEBYTES: 1000000000
+
     networks:
       dic-bpe-frontend:
         ipv4_address: 172.20.0.115
@@ -388,7 +406,7 @@ services:
       - keycloak
 
   hrp-fhir:
-    image: ghcr.io/datasharingframework/fhir:1.7.0
+    image: ghcr.io/datasharingframework/fhir:2.0.0-M1
     restart: "no"
     ports:
       - 127.0.0.1:5001:5001
@@ -459,7 +477,7 @@ services:
       - keycloak
 
   hrp-bpe:
-    image: ghcr.io/datasharingframework/bpe:1.7.0
+    image: ghcr.io/datasharingframework/bpe:2.0.0-M1
     restart: "no"
     ports:
       - 127.0.0.1:5004:5004
@@ -519,6 +537,9 @@ services:
             token-role: admin
             dsf-role:
               - ADMIN
+      DEV_DSF_BPE_PING_MAXDOWNLOADSIZEBYTES: 1000000000
+      DEV_DSF_BPE_PING_MAXUPLOADSIZEBYTES: 1000000000
+
     networks:
       hrp-bpe-frontend:
         ipv4_address: 172.20.0.131

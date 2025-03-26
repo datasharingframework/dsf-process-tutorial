@@ -1,13 +1,9 @@
 package dev.dsf.process.tutorial.message;
 
-import dev.dsf.bpe.v1.ProcessPluginApi;
-import dev.dsf.bpe.v1.activity.AbstractTaskMessageSend;
+import dev.dsf.bpe.v2.activity.MessageSendTask;
 
 // Only needed for exercise 4 and above
-public class HelloCosMessage extends AbstractTaskMessageSend
+public class HelloCosMessage implements MessageSendTask
 {
-	public HelloCosMessage(ProcessPluginApi api)
-	{
-		super(api);
-	}
+
 }

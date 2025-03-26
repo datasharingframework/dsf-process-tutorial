@@ -31,39 +31,21 @@ import org.camunda.bpm.model.bpmn.instance.UserTask;
 import org.camunda.bpm.model.bpmn.instance.camunda.CamundaTaskListener;
 import org.hl7.fhir.r4.model.QuestionnaireResponse;
 import org.hl7.fhir.r4.model.Task;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.invocation.Invocation;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import dev.dsf.bpe.v1.ProcessPluginApi;
-import dev.dsf.bpe.v1.ProcessPluginDefinition;
-import dev.dsf.bpe.v1.activity.DefaultUserTaskListener;
-import dev.dsf.bpe.v1.plugin.ProcessPluginImpl;
-import dev.dsf.bpe.v1.service.TaskHelper;
-import dev.dsf.bpe.v1.variables.Variables;
-import dev.dsf.process.tutorial.ConstantsTutorial;
-import dev.dsf.process.tutorial.TestProcessPluginGenerator;
-import dev.dsf.process.tutorial.TutorialProcessPluginDefinition;
+import dev.dsf.bpe.v2.ProcessPluginApi;
+import dev.dsf.bpe.v2.activity.DefaultUserTaskListener;
+import dev.dsf.bpe.v2.service.TaskHelper;
+import dev.dsf.bpe.v2.variables.Variables;
 import dev.dsf.process.tutorial.Utils;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BpmnAndUserTaskListenerTest
 {
-	@BeforeClass
-	public static void loadResources()
-	{
-		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
-		ProcessPluginImpl processPlugin = TestProcessPluginGenerator.generate(definition, false,
-				BpmnAndUserTaskListenerTest.class);
-		boolean initialized = processPlugin
-				.initializeAndValidateResources(ConstantsTutorial.TUTORIAL_DIC_ORGANIZATION_IDENTIFIER);
-
-		assertEquals(true, initialized);
-	}
-
 	@Test
 	public void testVoteBpmnFile()
 	{
@@ -221,7 +203,6 @@ public class BpmnAndUserTaskListenerTest
 
 			String binaryQuestion = "test?";
 
-			Mockito.lenient().when(apiMock.getVariables(any())).thenReturn(variablesMock);
 			Mockito.lenient().when(apiMock.getTaskHelper()).thenReturn(taskHelperMock);
 			Mockito.lenient().when(variablesMock.getStartTask()).thenReturn(startTaskMock);
 			Mockito.lenient().when(taskHelperMock.getFirstInputParameterStringValue(startTaskMock,
