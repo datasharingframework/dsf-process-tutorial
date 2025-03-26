@@ -236,8 +236,7 @@ services:
             token-role: admin
             dsf-role:
               - ADMIN
-      DEV_DSF_BPE_PING_MAXDOWNLOADSIZEBYTES: 1000000000
-      DEV_DSF_BPE_PING_MAXUPLOADSIZEBYTES: 1000000000
+
     networks:
       cos-bpe-frontend:
         ipv4_address: 172.20.0.147
@@ -391,10 +390,6 @@ services:
             dsf-role:
               - ADMIN
 
-      DEV_DSF_PROCESS_TUTORIAL_LOGGINGENABLED: 'true'
-      DEV_DSF_BPE_PING_MAXDOWNLOADSIZEBYTES: 1000000000
-      DEV_DSF_BPE_PING_MAXUPLOADSIZEBYTES: 1000000000
-
     networks:
       dic-bpe-frontend:
         ipv4_address: 172.20.0.115
@@ -537,8 +532,6 @@ services:
             token-role: admin
             dsf-role:
               - ADMIN
-      DEV_DSF_BPE_PING_MAXDOWNLOADSIZEBYTES: 1000000000
-      DEV_DSF_BPE_PING_MAXUPLOADSIZEBYTES: 1000000000
 
     networks:
       hrp-bpe-frontend:
