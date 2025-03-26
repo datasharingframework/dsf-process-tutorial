@@ -10,7 +10,7 @@ import java.util.Arrays;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Value;
 
-import dev.dsf.bpe.v1.documentation.ProcessDocumentation;
+import dev.dsf.bpe.v2.documentation.ProcessDocumentation;
 import dev.dsf.process.tutorial.message.HelloCosMessage;
 import dev.dsf.process.tutorial.service.DicTask;
 import dev.dsf.process.tutorial.spring.config.TutorialConfig;

@@ -44,11 +44,9 @@ import org.hl7.fhir.r4.model.ValueSet;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import dev.dsf.bpe.v1.ProcessPluginDefinition;
-import dev.dsf.bpe.v1.plugin.ProcessPluginImpl;
+import dev.dsf.bpe.v2.ProcessPluginDefinition;
 import dev.dsf.process.tutorial.ConstantsTutorial;
 import dev.dsf.process.tutorial.FhirResourceLoader;
-import dev.dsf.process.tutorial.TestProcessPluginGenerator;
 import dev.dsf.process.tutorial.TutorialProcessPluginDefinition;
 import dev.dsf.process.tutorial.message.HelloHrpMessage;
 import dev.dsf.process.tutorial.service.CosTask;
@@ -67,16 +65,10 @@ public class TutorialProcessPluginDefinitionTest
 	public static void loadResources()
 	{
 		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
-		ProcessPluginImpl processPlugin = TestProcessPluginGenerator.generate(definition, false,
-				TutorialProcessPluginDefinitionTest.class);
-		boolean initialized = processPlugin
-				.initializeAndValidateResources(ConstantsTutorial.TUTORIAL_DIC_ORGANIZATION_IDENTIFIER);
 
-		assertEquals(true, initialized);
-
-		dicFhirResources = FhirResourceLoader.loadResourcesFor(processPlugin, PROCESS_NAME_FULL_DIC);
-		cosFhirResources = FhirResourceLoader.loadResourcesFor(processPlugin, PROCESS_NAME_FULL_COS);
-		hrpFhirResources = FhirResourceLoader.loadResourcesFor(processPlugin, PROCESS_NAME_FULL_HRP);
+		dicFhirResources = FhirResourceLoader.loadResourcesFor(definition, PROCESS_NAME_FULL_DIC);
+		cosFhirResources = FhirResourceLoader.loadResourcesFor(definition, PROCESS_NAME_FULL_COS);
+		hrpFhirResources = FhirResourceLoader.loadResourcesFor(definition, PROCESS_NAME_FULL_HRP);
 	}
 
 

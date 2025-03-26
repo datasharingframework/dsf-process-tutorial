@@ -1,13 +1,9 @@
 package dev.dsf.process.tutorial.message;
 
-import dev.dsf.bpe.v1.ProcessPluginApi;
-import dev.dsf.bpe.v1.activity.AbstractTaskMessageSend;
+import dev.dsf.bpe.v2.activity.MessageSendTask;
 
 // Only needed for exercise 6 and above
-public class GoodbyeDicMessage extends AbstractTaskMessageSend
+public class GoodbyeDicMessage implements MessageSendTask
 {
-	public GoodbyeDicMessage(ProcessPluginApi api)
-	{
-		super(api);
-	}
+
 }

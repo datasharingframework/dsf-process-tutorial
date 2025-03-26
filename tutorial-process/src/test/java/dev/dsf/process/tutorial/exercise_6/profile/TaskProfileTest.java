@@ -31,8 +31,8 @@ import org.slf4j.LoggerFactory;
 
 import ca.uhn.fhir.validation.ResultSeverityEnum;
 import ca.uhn.fhir.validation.ValidationResult;
-import dev.dsf.bpe.v1.constants.CodeSystems;
-import dev.dsf.bpe.v1.constants.NamingSystems;
+import dev.dsf.bpe.v2.constants.CodeSystems;
+import dev.dsf.bpe.v2.constants.NamingSystems;
 import dev.dsf.fhir.validation.ResourceValidator;
 import dev.dsf.fhir.validation.ResourceValidatorImpl;
 import dev.dsf.fhir.validation.ValidationSupportRule;
@@ -79,8 +79,8 @@ public class TaskProfileTest
 		task.getRestriction().addRecipient().setType(ResourceType.Organization.name()).getIdentifier()
 				.setSystem(NamingSystems.OrganizationIdentifier.SID).setValue("dic.dsf.test");
 
-		task.addInput().setValue(new StringType(PROFILE_TUTORIAL_TASK_DIC_PROCESS_MESSAGE_NAME)).getType().addCoding()
-				.setSystem(CodeSystems.BpmnMessage.URL).setCode(CodeSystems.BpmnMessage.Codes.MESSAGE_NAME);
+		task.addInput().setValue(new StringType(PROFILE_TUTORIAL_TASK_DIC_PROCESS_MESSAGE_NAME)).getType()
+				.addCoding(CodeSystems.BpmnMessage.messageName());
 		task.addInput().setValue(new StringType("Tutorial input")).getType().addCoding()
 				.setSystem("http://dsf.dev/fhir/CodeSystem/tutorial").setCode("tutorial-input");
 
@@ -115,10 +115,10 @@ public class TaskProfileTest
 		task.getRestriction().addRecipient().setType(ResourceType.Organization.name()).getIdentifier()
 				.setSystem(NamingSystems.OrganizationIdentifier.SID).setValue("cos.dsf.test");
 
-		task.addInput().setValue(new StringType(PROFILE_TUTORIAL_TASK_HELLO_COS_MESSAGE_NAME)).getType().addCoding()
-				.setSystem(CodeSystems.BpmnMessage.URL).setCode(CodeSystems.BpmnMessage.Codes.MESSAGE_NAME);
-		task.addInput().setValue(new StringType(UUID.randomUUID().toString())).getType().addCoding()
-				.setSystem(CodeSystems.BpmnMessage.URL).setCode(CodeSystems.BpmnMessage.Codes.BUSINESS_KEY);
+		task.addInput().setValue(new StringType(PROFILE_TUTORIAL_TASK_HELLO_COS_MESSAGE_NAME)).getType()
+				.addCoding(CodeSystems.BpmnMessage.messageName());
+		task.addInput().setValue(new StringType(UUID.randomUUID().toString())).getType()
+				.addCoding(CodeSystems.BpmnMessage.businessKey());
 		task.addInput().setValue(new StringType("Tutorial input")).getType().addCoding()
 				.setSystem("http://dsf.dev/fhir/CodeSystem/tutorial").setCode("tutorial-input");
 
@@ -153,10 +153,10 @@ public class TaskProfileTest
 		task.getRestriction().addRecipient().setType(ResourceType.Organization.name()).getIdentifier()
 				.setSystem(NamingSystems.OrganizationIdentifier.SID).setValue("hrp.dsf.test");
 
-		task.addInput().setValue(new StringType(PROFILE_TUTORIAL_TASK_HELLO_HRP_MESSAGE_NAME)).getType().addCoding()
-				.setSystem(CodeSystems.BpmnMessage.URL).setCode(CodeSystems.BpmnMessage.Codes.MESSAGE_NAME);
-		task.addInput().setValue(new StringType(UUID.randomUUID().toString())).getType().addCoding()
-				.setSystem(CodeSystems.BpmnMessage.URL).setCode(CodeSystems.BpmnMessage.Codes.BUSINESS_KEY);
+		task.addInput().setValue(new StringType(PROFILE_TUTORIAL_TASK_HELLO_HRP_MESSAGE_NAME)).getType()
+				.addCoding(CodeSystems.BpmnMessage.messageName());
+		task.addInput().setValue(new StringType(UUID.randomUUID().toString())).getType()
+				.addCoding(CodeSystems.BpmnMessage.businessKey());
 		task.addInput().setValue(new StringType("Tutorial input")).getType().addCoding()
 				.setSystem("http://dsf.dev/fhir/CodeSystem/tutorial").setCode("tutorial-input");
 
@@ -191,10 +191,10 @@ public class TaskProfileTest
 		task.getRestriction().addRecipient().setType(ResourceType.Organization.name()).getIdentifier()
 				.setSystem(NamingSystems.OrganizationIdentifier.SID).setValue("dic.dsf.test");
 
-		task.addInput().setValue(new StringType(PROFILE_TUTORIAL_TASK_GOODBYE_DIC_MESSAGE_NAME)).getType().addCoding()
-				.setSystem(CodeSystems.BpmnMessage.URL).setCode(CodeSystems.BpmnMessage.Codes.MESSAGE_NAME);
-		task.addInput().setValue(new StringType(UUID.randomUUID().toString())).getType().addCoding()
-				.setSystem(CodeSystems.BpmnMessage.URL).setCode(CodeSystems.BpmnMessage.Codes.BUSINESS_KEY);
+		task.addInput().setValue(new StringType(PROFILE_TUTORIAL_TASK_GOODBYE_DIC_MESSAGE_NAME)).getType()
+				.addCoding(CodeSystems.BpmnMessage.messageName());
+		task.addInput().setValue(new StringType(UUID.randomUUID().toString())).getType()
+				.addCoding(CodeSystems.BpmnMessage.businessKey());
 
 		return task;
 	}
