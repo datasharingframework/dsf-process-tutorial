@@ -14,12 +14,11 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<compileSource>17</compileSource>
-		<compileTarget>17</compileTarget>
+		<compileSource>21</compileSource>
+		<compileTarget>21</compileTarget>
 
 		<main.basedir>${project.basedir}</main.basedir>
-		<hapi.version>5.1.0</hapi.version>
-		<dsf.version>1.7.0</dsf.version>
+		<dsf.version>2.0.0-M1</dsf.version>
 		<slf4j.version>2.0.9</slf4j.version>
 		<log4j.version>2.22.0</log4j.version>
 	</properties>
@@ -67,7 +66,7 @@
 			<!-- dsf-dev -->
 			<dependency>
 				<groupId>dev.dsf</groupId>
-				<artifactId>dsf-bpe-process-api-v1</artifactId>
+				<artifactId>dsf-bpe-process-api-v2</artifactId>
 				<version>${dsf.version}</version>
 			</dependency>
 			<dependency>
@@ -89,12 +88,6 @@
 				<groupId>dev.dsf</groupId>
 				<artifactId>dsf-tools-documentation-generator</artifactId>
 				<version>${dsf.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>ca.uhn.hapi.fhir</groupId>
-				<artifactId>hapi-fhir-structures-r4</artifactId>
-				<version>${hapi.version}</version>
 			</dependency>
 
 			<!-- hhn rwh -->
@@ -124,7 +117,7 @@
 			</dependency>
 			<dependency>
 				<groupId>dev.dsf</groupId>
-				<artifactId>dsf-bpe-process-api-v1</artifactId>
+				<artifactId>dsf-bpe-process-api-v2</artifactId>
 				<version>${dsf.version}</version>
 				<type>test-jar</type>
 			</dependency>

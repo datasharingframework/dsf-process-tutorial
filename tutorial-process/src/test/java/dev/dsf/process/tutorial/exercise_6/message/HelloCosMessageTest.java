@@ -6,6 +6,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -22,10 +23,12 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import dev.dsf.bpe.v1.ProcessPluginApi;
-import dev.dsf.bpe.v1.constants.NamingSystems;
-import dev.dsf.bpe.v1.service.TaskHelper;
-import dev.dsf.bpe.v1.variables.Variables;
+import dev.dsf.bpe.v2.ProcessPluginApi;
+import dev.dsf.bpe.v2.activity.values.SendTaskValues;
+import dev.dsf.bpe.v2.constants.NamingSystems;
+import dev.dsf.bpe.v2.service.TaskHelper;
+import dev.dsf.bpe.v2.variables.Target;
+import dev.dsf.bpe.v2.variables.Variables;
 import dev.dsf.process.tutorial.message.HelloCosMessage;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -44,18 +47,19 @@ public class HelloCosMessageTest
 	@Mock
 	private Variables variables;
 
+	@Mock
+	private SendTaskValues sendTaskValues;
+
+	@Mock
+	private Target target;
+
 	private class MockableHelloCosMessage extends HelloCosMessage
 	{
-
-		public MockableHelloCosMessage(ProcessPluginApi api)
-		{
-			super(api);
-		}
-
 		@Override
-		public Stream<ParameterComponent> getAdditionalInputParameters(DelegateExecution execution, Variables variables)
+		public List<ParameterComponent> getAdditionalInputParameters(ProcessPluginApi api, Variables variables,
+				SendTaskValues sendTaskValues, Target target)
 		{
-			return super.getAdditionalInputParameters(execution, variables);
+			return super.getAdditionalInputParameters(api, variables, sendTaskValues, target);
 		}
 	}
 
@@ -63,7 +67,7 @@ public class HelloCosMessageTest
 	public void testGetAdditionalInputParameters() throws Exception
 	{
 
-		MockableHelloCosMessage messageDelegate = new MockableHelloCosMessage(api);
+		MockableHelloCosMessage messageDelegate = new MockableHelloCosMessage();
 
 		Mockito.when(api.getTaskHelper()).thenReturn(taskHelper);
 
@@ -79,13 +83,13 @@ public class HelloCosMessageTest
 								new Coding("http://dsf.dev/fhir/CodeSystem/tutorial", "tutorial-input", null)),
 						new StringType("Test")));
 
-		Stream<ParameterComponent> testParameterComponents = messageDelegate.getAdditionalInputParameters(execution,
-				variables);
+		List<ParameterComponent> testParameterComponents = messageDelegate.getAdditionalInputParameters(api, variables,
+				sendTaskValues, target);
 
 		Mockito.verify(variables).getStartTask();
 		Mockito.verify(taskHelper).createInput(any(Type.class), anyString(), anyString());
 
-		ParameterComponent tutorialInput = testParameterComponents
+		ParameterComponent tutorialInput = testParameterComponents.stream()
 				.filter(parameterComponent -> ((StringType) parameterComponent.getValue()).getValue().equals("Test"))
 				.findFirst().get();
 		assertEquals(1,
