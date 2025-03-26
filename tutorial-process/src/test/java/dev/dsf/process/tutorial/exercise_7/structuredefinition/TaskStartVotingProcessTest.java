@@ -25,8 +25,8 @@ import org.slf4j.LoggerFactory;
 
 import ca.uhn.fhir.validation.ResultSeverityEnum;
 import ca.uhn.fhir.validation.ValidationResult;
-import dev.dsf.bpe.v1.constants.CodeSystems;
-import dev.dsf.bpe.v1.constants.NamingSystems;
+import dev.dsf.bpe.v2.constants.CodeSystems;
+import dev.dsf.bpe.v2.constants.NamingSystems;
 import dev.dsf.fhir.validation.ResourceValidator;
 import dev.dsf.fhir.validation.ResourceValidatorImpl;
 import dev.dsf.fhir.validation.ValidationSupportRule;
@@ -74,8 +74,7 @@ public class TaskStartVotingProcessTest
 				.setSystem(NamingSystems.OrganizationIdentifier.SID).setValue("dic.dsf.test");
 
 		task.addInput().setValue(new StringType(PROFILE_TUTORIAL_TASK_START_VOTING_PROCESS_MESSAGE_NAME)).getType()
-				.addCoding().setSystem(CodeSystems.BpmnMessage.URL)
-				.setCode(CodeSystems.BpmnMessage.messageName().getCode());
+				.addCoding(CodeSystems.BpmnMessage.messageName());
 		task.addInput().setValue(new StringType("A question?")).getType().addCoding()
 				.setSystem(CODESYSTEM_VOTING_PROCESS).setCode(CODESYSTEM_VOTING_PROCESS_VALUE_BINARY_QUESTION);
 

@@ -18,9 +18,9 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import dev.dsf.bpe.v1.ProcessPluginApi;
-import dev.dsf.bpe.v1.constants.NamingSystems;
-import dev.dsf.bpe.v1.variables.Variables;
+import dev.dsf.bpe.v2.ProcessPluginApi;
+import dev.dsf.bpe.v2.constants.NamingSystems;
+import dev.dsf.bpe.v2.variables.Variables;
 import dev.dsf.process.tutorial.service.DicTask;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -52,11 +52,9 @@ public class DicTaskServiceTest
 																									// doesn't return
 																									// the start task
 
-		Mockito.when(api.getVariables(execution)).thenReturn(variables);
-
 		try
 		{
-			service.execute(execution);
+			service.execute(api, variables);
 		}
 		catch (NullPointerException e)
 		{

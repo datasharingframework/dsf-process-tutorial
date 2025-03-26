@@ -1,12 +1,7 @@
 package dev.dsf.process.tutorial.message;
 
-import dev.dsf.bpe.v1.ProcessPluginApi;
-import dev.dsf.bpe.v1.activity.AbstractTaskMessageSend;
+import dev.dsf.bpe.v2.activity.MessageSendTask;
 
-public class StartVotingProcess extends AbstractTaskMessageSend
+public class StartVotingProcess implements MessageSendTask
 {
-	public StartVotingProcess(ProcessPluginApi api)
-	{
-		super(api);
-	}
 }

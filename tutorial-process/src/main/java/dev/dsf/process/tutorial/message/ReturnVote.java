@@ -4,31 +4,28 @@ import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_VOTING_PROCE
 import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_VOTING_PROCESS_VOTE;
 import static dev.dsf.process.tutorial.ConstantsTutorial.VOTE_PROCESS_VARIABLE_VOTE;
 
-import java.util.stream.Stream;
+import java.util.List;
 
-import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.hl7.fhir.r4.model.BooleanType;
 import org.hl7.fhir.r4.model.Task;
 import org.hl7.fhir.r4.model.Task.ParameterComponent;
 
-import dev.dsf.bpe.v1.ProcessPluginApi;
-import dev.dsf.bpe.v1.activity.AbstractTaskMessageSend;
-import dev.dsf.bpe.v1.variables.Variables;
+import dev.dsf.bpe.v2.ProcessPluginApi;
+import dev.dsf.bpe.v2.activity.MessageSendTask;
+import dev.dsf.bpe.v2.activity.values.SendTaskValues;
+import dev.dsf.bpe.v2.variables.Target;
+import dev.dsf.bpe.v2.variables.Variables;
 
-public class ReturnVote extends AbstractTaskMessageSend
+public class ReturnVote implements MessageSendTask
 {
-	public ReturnVote(ProcessPluginApi api)
-	{
-		super(api);
-	}
-
 	@Override
-	protected Stream<ParameterComponent> getAdditionalInputParameters(DelegateExecution execution, Variables variables)
+	public List<ParameterComponent> getAdditionalInputParameters(ProcessPluginApi api, Variables variables,
+			SendTaskValues sendTaskValues, Target target)
 	{
 		boolean vote = variables.getBoolean(VOTE_PROCESS_VARIABLE_VOTE);
 		Task.ParameterComponent voteComponent = api.getTaskHelper().createInput(new BooleanType(vote),
 				CODESYSTEM_VOTING_PROCESS, CODESYSTEM_VOTING_PROCESS_VOTE);
 
-		return Stream.of(voteComponent);
+		return List.of(voteComponent);
 	}
 }
