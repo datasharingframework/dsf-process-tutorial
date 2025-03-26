@@ -11,14 +11,14 @@
 
 	<properties>
 		<main.basedir>${project.basedir}/..</main.basedir>
-		<dsf.version>1.5.0</dsf.version>
+		<dsf.version>2.0.0-M1</dsf.version>
 	</properties>
 
 	<dependencies>
 		<!-- provided by DSF -->
 		<dependency>
 			<groupId>dev.dsf</groupId>
-			<artifactId>dsf-bpe-process-api-v1</artifactId>
+			<artifactId>dsf-bpe-process-api-v2</artifactId>
 			<version>${dsf.version}</version>
 			<scope>provided</scope>
 		</dependency>
@@ -26,14 +26,6 @@
 			<groupId>dev.dsf</groupId>
 			<artifactId>dsf-tools-documentation-generator</artifactId>
 			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>dev.dsf</groupId>
-			<artifactId>dsf-bpe-process-api-v1</artifactId>
-			<version>${dsf.version}</version>
-			<type>test-jar</type>
-			<scope>test</scope>
 		</dependency>
 
 		<dependency>
