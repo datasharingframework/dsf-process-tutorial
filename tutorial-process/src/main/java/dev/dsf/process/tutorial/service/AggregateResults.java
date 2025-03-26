@@ -9,8 +9,6 @@ import static dev.dsf.process.tutorial.ConstantsTutorial.VOTING_RESULT_EXTENSION
 
 import java.util.Optional;
 
-import org.camunda.bpm.engine.delegate.BpmnError;
-import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
@@ -20,21 +18,16 @@ import org.hl7.fhir.r4.model.Meta;
 import org.hl7.fhir.r4.model.Task;
 import org.hl7.fhir.r4.model.Task.TaskOutputComponent;
 
-import dev.dsf.bpe.v1.ProcessPluginApi;
-import dev.dsf.bpe.v1.activity.AbstractServiceDelegate;
-import dev.dsf.bpe.v1.variables.Variables;
+import dev.dsf.bpe.v2.ProcessPluginApi;
+import dev.dsf.bpe.v2.activity.ServiceTask;
+import dev.dsf.bpe.v2.error.ErrorBoundaryEvent;
+import dev.dsf.bpe.v2.variables.Variables;
 import dev.dsf.process.tutorial.util.VoteResponse;
 
-public class AggregateResults extends AbstractServiceDelegate
+public class AggregateResults implements ServiceTask
 {
-
-	public AggregateResults(ProcessPluginApi api)
-	{
-		super(api);
-	}
-
 	@Override
-	protected void doExecute(DelegateExecution delegateExecution, Variables variables) throws BpmnError, Exception
+	public void execute(ProcessPluginApi api, Variables variables) throws ErrorBoundaryEvent, Exception
 	{
 		Task taskStartVotingProcess = variables.getStartTask();
 		Bundle resultBundle = new Bundle().setType(Bundle.BundleType.COLLECTION);

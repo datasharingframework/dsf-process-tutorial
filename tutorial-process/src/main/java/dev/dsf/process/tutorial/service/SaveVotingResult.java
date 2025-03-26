@@ -3,25 +3,19 @@ package dev.dsf.process.tutorial.service;
 import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_VOTING_PROCESS;
 import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_VOTING_PROCESS_VOTE;
 
-import org.camunda.bpm.engine.delegate.BpmnError;
-import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.hl7.fhir.r4.model.BooleanType;
 
-import dev.dsf.bpe.v1.ProcessPluginApi;
-import dev.dsf.bpe.v1.activity.AbstractServiceDelegate;
-import dev.dsf.bpe.v1.variables.Target;
-import dev.dsf.bpe.v1.variables.Variables;
+import dev.dsf.bpe.v2.ProcessPluginApi;
+import dev.dsf.bpe.v2.activity.ServiceTask;
+import dev.dsf.bpe.v2.error.ErrorBoundaryEvent;
+import dev.dsf.bpe.v2.variables.Target;
+import dev.dsf.bpe.v2.variables.Variables;
 import dev.dsf.process.tutorial.util.VoteResponse;
 
-public class SaveVotingResult extends AbstractServiceDelegate
+public class SaveVotingResult implements ServiceTask
 {
-	public SaveVotingResult(ProcessPluginApi api)
-	{
-		super(api);
-	}
-
 	@Override
-	protected void doExecute(DelegateExecution delegateExecution, Variables variables) throws BpmnError, Exception
+	public void execute(ProcessPluginApi api, Variables variables) throws ErrorBoundaryEvent, Exception
 	{
 		Target target = variables.getTarget();
 		boolean vote = api.getTaskHelper().getFirstInputParameterValue(variables.getLatestTask(),

@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
-import dev.dsf.bpe.v1.documentation.ProcessDocumentation;
+import dev.dsf.bpe.v2.documentation.ProcessDocumentation;
 import dev.dsf.bpe.v2.spring.ActivityPrototypeBeanCreator;
 import dev.dsf.process.tutorial.listener.SetCorrelationKeyListener;
 import dev.dsf.process.tutorial.listener.UserVoteListener;
@@ -46,8 +46,8 @@ public class TutorialConfig
 	public ActivityPrototypeBeanCreator activityPrototypeBeanCreator()
 	{
 		return new ActivityPrototypeBeanCreator(HelloCosMessage.class, CosTask.class, HelloHrpMessage.class,
-				HrpTask.class, GoodbyeDicMessage.class, StartVotingProcess.class, SelectTargets.class,
-				StartVote.class, SaveUserVote.class, AutomatedVote.class, PrepareReturnVote.class, ReturnVote.class,
+				HrpTask.class, GoodbyeDicMessage.class, StartVotingProcess.class, SelectTargets.class, StartVote.class,
+				SaveUserVote.class, AutomatedVote.class, PrepareReturnVote.class, ReturnVote.class,
 				SaveVotingResult.class, SaveTimeoutResult.class, AggregateResults.class);
 	}
 

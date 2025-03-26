@@ -2,28 +2,22 @@ package dev.dsf.process.tutorial.service;
 
 import java.util.Optional;
 
-import org.camunda.bpm.engine.delegate.BpmnError;
-import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.hl7.fhir.r4.model.Endpoint;
 import org.hl7.fhir.r4.model.Organization;
 import org.hl7.fhir.r4.model.Reference;
 import org.hl7.fhir.r4.model.Task;
 
-import dev.dsf.bpe.v1.ProcessPluginApi;
-import dev.dsf.bpe.v1.activity.AbstractServiceDelegate;
-import dev.dsf.bpe.v1.constants.CodeSystems;
-import dev.dsf.bpe.v1.variables.Target;
-import dev.dsf.bpe.v1.variables.Variables;
+import dev.dsf.bpe.v2.ProcessPluginApi;
+import dev.dsf.bpe.v2.activity.ServiceTask;
+import dev.dsf.bpe.v2.constants.CodeSystems;
+import dev.dsf.bpe.v2.error.ErrorBoundaryEvent;
+import dev.dsf.bpe.v2.variables.Target;
+import dev.dsf.bpe.v2.variables.Variables;
 
-public class PrepareReturnVote extends AbstractServiceDelegate
+public class PrepareReturnVote implements ServiceTask
 {
-	public PrepareReturnVote(ProcessPluginApi api)
-	{
-		super(api);
-	}
-
 	@Override
-	protected void doExecute(DelegateExecution delegateExecution, Variables variables) throws BpmnError, Exception
+	public void execute(ProcessPluginApi api, Variables variables) throws ErrorBoundaryEvent, Exception
 	{
 		Task startTask = variables.getStartTask();
 		Reference requesterRef = startTask.getRequester();
@@ -32,17 +26,15 @@ public class PrepareReturnVote extends AbstractServiceDelegate
 		if (optionalOrganization.isPresent())
 		{
 			String[] readParams = optionalOrganization.get().getEndpoint().get(0).getReference().split("/");
-			String resourceType = readParams[0];
 			String id = readParams[1];
-			Endpoint requesterEndpoint = (Endpoint) api.getFhirWebserviceClientProvider().getLocalWebserviceClient()
-					.read(resourceType, id);
+			Endpoint requesterEndpoint = (Endpoint) api.getFhirClientProvider().getClient("#local").orElseThrow().read()
+					.resource(Endpoint.class).withId(id).execute();
 
-			Target target = variables
-					.createTarget(requesterRef.getIdentifier().getValue(),
-							requesterEndpoint.getIdentifierFirstRep().getValue(), requesterEndpoint.getAddress(), api
-									.getTaskHelper().getFirstInputParameterStringValue(startTask,
-											CodeSystems.BpmnMessage.URL, CodeSystems.BpmnMessage.Codes.CORRELATION_KEY)
-									.get());
+			Target target = variables.createTarget(requesterRef.getIdentifier().getValue(),
+					requesterEndpoint.getIdentifierFirstRep().getValue(), requesterEndpoint.getAddress(), api
+							.getTaskHelper().getFirstInputParameterStringValue(startTask,
+									CodeSystems.BpmnMessage.SYSTEM, CodeSystems.BpmnMessage.Codes.CORRELATION_KEY)
+							.get());
 			variables.setTarget(target);
 		}
 	}
