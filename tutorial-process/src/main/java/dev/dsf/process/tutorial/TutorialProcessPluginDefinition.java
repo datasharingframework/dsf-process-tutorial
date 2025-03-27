@@ -79,8 +79,8 @@ public class TutorialProcessPluginDefinition implements ProcessPluginDefinition
 						sExtensionVotingResult, cTutorial, vBinaryQuestionAnswers, vTutorial, cVotingProcess,
 						vVotingParameters, vVotingResults),
 				ConstantsTutorial.PROCESS_NAME_FULL_VOTE,
-				List.of(aVoteProcess, sTaskStartVote, sExtensionVotingResult, cTutorial,
-						vBinaryQuestionAnswers, vTutorial, cVotingProcess, vVotingParameters, vVotingResults));
+				List.of(aVoteProcess, sTaskStartVote, sExtensionVotingResult, cTutorial, vBinaryQuestionAnswers,
+						vTutorial, cVotingProcess, vVotingParameters, vVotingResults));
 	}
 
 	@Override
