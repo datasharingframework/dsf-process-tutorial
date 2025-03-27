@@ -24,10 +24,10 @@ An `EXTRA_JVM_ARGS` environment variable is already configured for all DSF FHIR 
     * IntelliJ:  
         ![IntelliJ  remote debugging dialog](figures/remote_debugging_intellij.png)
 
-4. Create a debug breakpoint in the first line of the `DicTask` class `doExecute` method. 
+4. Create a debug breakpoint in the first line of the `DicTask` class `execute` method. 
 5. Start your previously defined remote Java debugger in your IDE.
 6. Execute the `TutorialExampleStarter` class to start `dsfdev_dicProcess`.
-7. Use your IDE's debugger to step through the code of the `DicTask` class `doExecute` method.
+7. Use your IDE's debugger to step through the code of the `DicTask` class `execute` method.
 
 ## Hint
 You can also use this technique to debug the DSF FHIR server and DSF BPE server side of the DSF by cloning the [DSF repository](https://github.com/datasharingframework/dsf) and setting up the remote debugger in that project.

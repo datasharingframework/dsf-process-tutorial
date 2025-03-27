@@ -44,7 +44,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-1`.
 ## Exercise Tasks
 1. Set the `DicTask` class as the service implementation of the appropriate service task within the `dic-process.bpmn` process model.
 2. Register the `DicTask` class as a prototype bean in the `TutorialConfig` class.
-3. Add a log message to the `DicTask#doExecute` method that logs the recipient organization identifier from the start [FHIR Task](../learning/concepts/fhir/task.md) resource.
+3. Add a log message to the `DicTask#execute` method that logs the recipient organization identifier from the start [FHIR Task](../learning/concepts/fhir/task.md) resource.
 
     <details>
         <summary>Don't know where to get a logger?</summary>
@@ -55,7 +55,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-1`.
     <details>
         <summary>Can't find a way to get the start task?</summary>
     
-    The `doExecute` method provides a `Variables` instance. Try it through this one.
+    The `execute` method provides a `Variables` instance. Try it through this one.
     </details>
     
     <details>

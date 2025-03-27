@@ -7,7 +7,7 @@ Make sure you use the fully qualified class name. Like this:
 ```
 org.package.myClass
 ```
-All that is left is for your Java class to extend `AbstractServiceDelegate` and override the `doExecute` method.
+All that is left is for your Java class to extend `AbstractServiceDelegate` and override the `execute` method.
 This is the place where you can put your actual business logic. The method will be called when the [BPMN process execution](../../concepts/dsf/bpmn-process-execution.md)
 arrives at the [Service Task](../../concepts/bpmn/service-tasks.md) your Service Delegate is linked to.  
 The constructor of your delegate class should also forward a `ProcessPluginApi` instance to its superclass constructor.
