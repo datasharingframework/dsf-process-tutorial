@@ -12,4 +12,4 @@ depend on the [ActivityDefinition](../../concepts/fhir/activitydefinition.md) th
 should conform to.  
 As a general rule, you will want to put the identifier of your own organization as the `Task.requester` and `Task.restriction.recipient` elements
 for [Task](../../concepts/fhir/task.md) resources which initially start processes. All other cases depend on the context of
-the message being sent during process execution.
+the message being sent during process execution. For example, sending a message to another organization would require that organization's identifier to be in the `Task.restriction.recipient` element. 
