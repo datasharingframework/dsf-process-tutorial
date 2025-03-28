@@ -82,7 +82,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-1`.
         <details>
         <summary>Don't know how to create Task resources?</summary>
 
-        Take a look at [this guide](../learning/guides/creating-task-resources-based-on-a-definition.md).
+        Checkout the solution and try to understand the [Draft Task Resource](../learning/concepts/dsf/draft-task-resources.md) there. A [Draft Task Resource](../learning/concepts/dsf/draft-task-resources.md) can be turned into a normal resource by replacing the placeholders with actual values.
         </details>
    * Create a [Draft Task Resource](../learning/concepts/dsf/draft-task-resources.md). You will need to be able
     to create [Task](../learning/concepts/fhir/task.md) resources as a prerequisite. If you don't know how to do this, 
