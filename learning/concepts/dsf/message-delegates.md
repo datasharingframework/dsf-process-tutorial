@@ -14,7 +14,7 @@ and the message inputs will be added to that execution's [process variables](../
 
 To make a Message Delegate for [Message Send Events](../../concepts/bpmn/messaging.md), your Java class needs to extend
 `AbstractTaskMessageSend`. Most of the time, you will not be adding any processing logic to your Message Delegates, therefore you usually won't be overwriting
-the `doExecute` method like with [Service Delegates](../../concepts/dsf/service-delegates.md). Instead, you most likely want to
+the `execute` method like with [Service Delegates](../../concepts/dsf/service-delegates.md). Instead, you most likely want to
 aggregate the information you processed in earlier steps and attach it to a message. For this you need to overwrite the
 `getAdditionalInputParamters` method. The DSF translates BPMN messages
 into FHIR [Task](../../concepts/fhir/task.md) resources to execute the communication modeled by your BPMN diagrams. The information
