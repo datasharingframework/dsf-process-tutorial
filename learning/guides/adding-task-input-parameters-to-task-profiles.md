@@ -38,7 +38,7 @@ defined by the `value[x]` element. Staying with the example of the `message-name
 to contain a `String` value. The `value[x]` element may be defined as either a fixed value or a "dynamic" value. Defining a fixed value means that an [Input Parameter](../concepts/fhir/task.md#task-input-parameters)
 of type `type` may only exist with this exact value, or it is deemed invalid. "Dynamic" values may contain any value of the defined data type.
 
-It is important to note that the value `type` elements must always be codes from a [CodeSystem](../concepts/fhir/codesystem.md). Since codes from [CodeSystems](../concepts/fhir/codesystem.md)
+It is important to note that the `type` elements must always contain codes from a [CodeSystem](../concepts/fhir/codesystem.md). Since codes from [CodeSystems](../concepts/fhir/codesystem.md)
 can only be included through [ValueSets](../concepts/fhir/valueset.md), all `type` element values require both a [CodeSystem](../concepts/fhir/codesystem.md) and [ValueSet](../concepts/fhir/valueset.md) resource to be valid.
 See the guides for creating [CodeSystems](creating-codesystems-for-dsf-processes.md) and [ValueSets](creating-valuesets-for-dsf-processes.md) for more information.
 
@@ -63,6 +63,9 @@ in the [StructureDefinition](https://www.hl7.org/fhir/R4/structuredefinition.htm
 ```
 If you cannot find an element with id `Task.input` you should create one. It should sit above any other elements that share the path of `Task.input`.
 
+**Note**: The DSF already comes with 3 [Input Parameters](../concepts/fhir/task.md#task-input-parameters) predefined: `message-name`, `business-key` and `correlation-key`. `message-name` and `business-key` are mandatory in order
+for the DSF to correlate the [Task](../concepts/fhir/task.md) to a process instance. So expect the minimum number of [Input Parameters](../concepts/fhir/task.md#task-input-parameters) to be at least **2**. When addressing a sub-process, 
+a third [Input Parameter](../concepts/fhir/task.md#task-input-parameters) is required: `correlation-key`. This is beyond the scope of the tutorial. Keeping the minimum at **2** should be sufficient.
 
 #### Template: Input Parameter of Primitive Type With Fixed Value
 
