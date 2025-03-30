@@ -1,11 +1,11 @@
-[Prerequisites](prerequisites.md) • [Exercise 0](exercise-0.md) • **Exercise 1** • [Exercise 1.1](exercise-1-1.md) • [Exercise 2](exercise-2.md) • [Exercise 3](exercise-3.md) • [Exercise 4](exercise-4.md) • [Exercise 5](exercise-5.md) • [Exercise 6](exercise-6.md)
+[Prerequisites](prerequisites.md) • [Exercise 0](exercise-0.md) • **Exercise 1** • [Exercise 1.1](exercise-1-1.md) • [Exercise 2](exercise-2.md) • [Exercise 3](exercise-3.md) • [Exercise 4](exercise-4.md) • [Exercise 5](exercise-5.md) • [Exercise 6](exercise-6.md) • [Exercise 7](exercise-7.md)
 ___
 ## Disclaimer
 The concept of `Tasks` exists in both the FHIR and BPMN domains. For this tutorial `Task resource` always refers
 to [FHIR Tasks](https://www.hl7.org/fhir/R4/task.html) and `Service Task` always means the BPMN concept.
 
 # Troubleshooting Tip
-Over the course of the exercises you will mostly likely want to take a look at the DSF FHIR server or DSF BPE server logs. 
+Over the course of the exercises you should keep in mind to take a look at the DSF FHIR server or DSF BPE server logs. 
 You can use the logs provided by docker or the debug logs located in `dev-setup/{dsfInstance}/bpe/log` and `dev-setup/{dsfInstance}/fhir/log`.
 The DSF FHIR server also has an audit log available in this directory.
 
@@ -44,7 +44,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-1`.
 ## Exercise Tasks
 1. Set the `DicTask` class as the service implementation of the appropriate service task within the `dic-process.bpmn` process model.
 2. Register the `DicTask` class as a prototype bean in the `TutorialConfig` class.
-3. Add a log message to the `DicTask#doExecute` method that logs the recipient organization identifier from the start [FHIR Task](../learning/concepts/fhir/task.md) resource.
+3. Add a log message to the `DicTask#execute` method that logs the recipient organization identifier from the start [FHIR Task](../learning/concepts/fhir/task.md) resource.
 
     <details>
         <summary>Don't know where to get a logger?</summary>
@@ -55,7 +55,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-1`.
     <details>
         <summary>Can't find a way to get the start task?</summary>
     
-    The `doExecute` method provides a `Variables` instance. Try it through this one.
+    The `execute` method provides a `Variables` instance. Try it through this one.
     </details>
     
     <details>
@@ -82,7 +82,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-1`.
         <details>
         <summary>Don't know how to create Task resources?</summary>
 
-        Take a look at [this guide](../learning/guides/creating-task-resources-based-on-a-definition.md).
+        Checkout the solution and try to understand the [Draft Task Resource](../learning/concepts/dsf/draft-task-resources.md) there. A [Draft Task Resource](../learning/concepts/dsf/draft-task-resources.md) can be turned into a normal resource by replacing the placeholders with actual values.
         </details>
    * Create a [Draft Task Resource](../learning/concepts/dsf/draft-task-resources.md). You will need to be able
     to create [Task](../learning/concepts/fhir/task.md) resources as a prerequisite. If you don't know how to do this, 
@@ -125,4 +125,4 @@ To verify the `dsfdev_dicProcess` can be executed successfully, we need to deplo
     Verify that the `dsfdev_dicProcess` was executed by the DSF BPE server. The BPE server should print a message showing that the process was started, print the log message you added to the `DicTask` class and end with a message showing that the process finished.
 
 ___
-[Prerequisites](prerequisites.md) • [Exercise 0](exercise-0.md) • **Exercise 1** • [Exercise 1.1](exercise-1-1.md) • [Exercise 2](exercise-2.md) • [Exercise 3](exercise-3.md) • [Exercise 4](exercise-4.md) • [Exercise 5](exercise-5.md) • [Exercise 6](exercise-6.md)
+[Prerequisites](prerequisites.md) • [Exercise 0](exercise-0.md) • **Exercise 1** • [Exercise 1.1](exercise-1-1.md) • [Exercise 2](exercise-2.md) • [Exercise 3](exercise-3.md) • [Exercise 4](exercise-4.md) • [Exercise 5](exercise-5.md) • [Exercise 6](exercise-6.md) • [Exercise 7](exercise-7.md)

@@ -1,4 +1,4 @@
-[Prerequisites](prerequisites.md) • [Exercise 0](exercise-0.md) • [Exercise 1](exercise-1.md) • **Exercise 1.1** • [Exercise 2](exercise-2.md) • [Exercise 3](exercise-3.md) • [Exercise 4](exercise-4.md) • [Exercise 5](exercise-5.md) • [Exercise 6](exercise-6.md)
+[Prerequisites](prerequisites.md) • [Exercise 0](exercise-0.md) • [Exercise 1](exercise-1.md) • **Exercise 1.1** • [Exercise 2](exercise-2.md) • [Exercise 3](exercise-3.md) • [Exercise 4](exercise-4.md) • [Exercise 5](exercise-5.md) • [Exercise 6](exercise-6.md) • [Exercise 7](exercise-7.md)
 ___
 
 # Exercise 1.1 - Process Debugging
@@ -24,14 +24,14 @@ An `EXTRA_JVM_ARGS` environment variable is already configured for all DSF FHIR 
     * IntelliJ:  
         ![IntelliJ  remote debugging dialog](figures/remote_debugging_intellij.png)
 
-4. Create a debug breakpoint in the first line of the `DicTask` class `doExecute` method. 
+4. Create a debug breakpoint in the first line of the `DicTask` class `execute` method. 
 5. Start your previously defined remote Java debugger in your IDE.
 6. Execute the `TutorialExampleStarter` class to start `dsfdev_dicProcess`.
-7. Use your IDE's debugger to step through the code of the `DicTask` class `doExecute` method.
+7. Use your IDE's debugger to step through the code of the `DicTask` class `execute` method.
 
 ## Hint
 You can also use this technique to debug the DSF FHIR server and DSF BPE server side of the DSF by cloning the [DSF repository](https://github.com/datasharingframework/dsf) and setting up the remote debugger in that project.
 You will be able to see what the DSF is doing internally when executing your process.
 
 ___
-[Prerequisites](prerequisites.md) • [Exercise 0](exercise-0.md) • [Exercise 1](exercise-1.md) • **Exercise 1.1** • [Exercise 2](exercise-2.md) • [Exercise 3](exercise-3.md) • [Exercise 4](exercise-4.md) • [Exercise 5](exercise-5.md) • [Exercise 6](exercise-6.md)
+[Prerequisites](prerequisites.md) • [Exercise 0](exercise-0.md) • [Exercise 1](exercise-1.md) • **Exercise 1.1** • [Exercise 2](exercise-2.md) • [Exercise 3](exercise-3.md) • [Exercise 4](exercise-4.md) • [Exercise 5](exercise-5.md) • [Exercise 6](exercise-6.md) • [Exercise 7](exercise-7.md)

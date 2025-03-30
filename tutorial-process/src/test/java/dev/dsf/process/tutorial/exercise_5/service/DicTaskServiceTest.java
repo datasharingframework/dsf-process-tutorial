@@ -66,7 +66,7 @@ public class DicTaskServiceTest
 	@Test
 	public void testDicTaskConstructorWithAdditionalBooleanParameterExists() throws Exception
 	{
-		Optional<Constructor<DicTask>> constructor = getConstructor(ProcessPluginApi.class, boolean.class);
+		Optional<Constructor<DicTask>> constructor = getConstructor(boolean.class);
 
 		if (constructor.isEmpty())
 		{
@@ -110,9 +110,7 @@ public class DicTaskServiceTest
 		final String endpointIdValue = "cos.dsf.test_Endpoint";
 		final String endpointAddress = "https://cos/fhir";
 
-		Optional<DicTask> optService = getInstance(Arrays.asList(ProcessPluginApi.class, boolean.class), api, true);
-		if (optService.isEmpty())
-			optService = getInstance(Arrays.asList(boolean.class, ProcessPluginApi.class), true, api);
+		Optional<DicTask> optService = getInstance(Arrays.asList(boolean.class), true);
 
 		assumeTrue(optService.isPresent());
 
