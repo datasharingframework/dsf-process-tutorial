@@ -1,236 +1,324 @@
 ### Adding Task Input Parameters to Task Profiles
 
-When adding a new [Input Parameter](../concepts/fhir/task.md#task-input-parameters) to a [Task](../concepts/fhir/task.md)
-profile, you are essentially adding a new slice to `Task.input`. [Slicing](https://www.hl7.org/fhir/R4/profiling.html#slicing) is part
-of [profiling](https://www.hl7.org/fhir/R4/profiling.html) in FHIR. Profiling lets you create your own
-FHIR definitions based on pre-existing FHIR definitions. A slicing defines constraints on element lists
-like `Task.input` e.g. by only allowing the elements to be of certain types. For example, you
-might have a list of fruits in a `FruitBasket` resource. Constraining that list to only include
-fruits of type `Apple`, `Banana` and `Orange` would be considered [slicing](https://www.hl7.org/fhir/R4/profiling.html#slicing).  
-This guide will not cover how slicing works in general, only for the case presented by the DSF FHIR resource
-context. Our goal will be to add a new [Input Parameter](../concepts/fhir/task.md#task-input-parameters)
-of type `example-input` to the `task-start-dic-process.xml` profile which will be used to submit `integer` values to our `dicProcess`.
-
-Let us start out by adding a slice to `task-start-dic-process.xml`. Since there is already a slicing defined
-on `Task.input` by `task-start-dic-process.xml`'s `baseDefinition`, we have to check out this resource first.
-As a part of the [differential](https://www.hl7.org/fhir/R4/profiling.html#snapshot) statement, slicing also uses [Element Definitions](https://www.hl7.org/fhir/R4/elementdefinition.html).
-The slicing for `Task.input` is defined in this part of the `baseDefinition`:
+Task Input Parameters are added to the differential element of a [StructureDefinition](https://www.hl7.org/fhir/R4/structuredefinition.html) in the
+`src/resources/fhir/StructureDefinition` directory of a project: 
 ```xml
-<element id="Task.input">
-    <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">
-        <valueString value="Parameter" />
-    </extension>
-    <path value="Task.input" />
-    <slicing>
-        <discriminator>
-            <type value="value" />
-            <path value="type.coding.system" />
-        </discriminator>
-        <discriminator>
-            <type value="value" />
-            <path value="type.coding.code" />
-        </discriminator>
-        <rules value="openAtEnd" />
-    </slicing>
-    <min value="1" />
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <meta>
+    <tag>
+      <system value="http://dsf.dev/fhir/CodeSystem/read-access-tag" />
+      <code value="ALL" />
+    </tag>
+  </meta>
+  <url value="http://dsf.dev/fhir/StructureDefinition/my-task" />       <!-- this is a placeholder, replace with the URL of your Task -->
+  <!-- version managed by bpe -->
+  <version value="#{version}" />
+  <name value="MyTask" />                                               <!-- "MyTask" is a placeholder, replace with the name of your Task -->
+  <!-- status managed by bpe -->
+  <status value="unknown" />
+  <experimental value="false" />
+  <!-- date managed by bpe -->
+  <date value="#{date}" />
+  <fhirVersion value="4.0.1" />
+  <kind value="resource" />
+  <abstract value="false" />
+  <type value="Task" />
+  <baseDefinition value="http://dsf.dev/fhir/StructureDefinition/task-base" />
+  <derivation value="constraint" />
+  <differential>
+    <!-- Place input parameters here -->
+  </differential>
+</StructureDefinition>
+```
+[Input Parameters](../concepts/fhir/task.md#task-input-parameters) are made up of two elements: a `type` and a `value[x]`. `type` does not refer to the actual data type like `String`,
+`Integer` or complex types like `Reference` or `Coding`. It instead describes the role of the [Input Parameter](../concepts/fhir/task.md#task-input-parameters)
+in its usage context. For example, DSF Tasks require an [Input Parameter](../concepts/fhir/task.md#task-input-parameters) of `type` `message-name` because its role is to
+identify the kind of message that is being sent. The actual data type of the [Input Parameter](../concepts/fhir/task.md#task-input-parameters) is 
+defined by the `value[x]` element. Staying with the example of the `message-name` [Input Parameter](../concepts/fhir/task.md#task-input-parameters), its `value[x]` element is defined
+to contain a `String` value. The `value[x]` element may be defined as either a fixed value or a "dynamic" value. Defining a fixed value means that an [Input Parameter](../concepts/fhir/task.md#task-input-parameters)
+of type `type` may only exist with this exact value, or it is deemed invalid. "Dynamic" values may contain any value of the defined data type.
+
+It is important to note that the `type` elements must always contain codes from a [CodeSystem](../concepts/fhir/codesystem.md). Since codes from [CodeSystems](../concepts/fhir/codesystem.md)
+can only be included through [ValueSets](../concepts/fhir/valueset.md), all `type` element values require both a [CodeSystem](../concepts/fhir/codesystem.md) and [ValueSet](../concepts/fhir/valueset.md) resource to be valid.
+See the guides for creating [CodeSystems](creating-codesystems-for-dsf-processes.md) and [ValueSets](creating-valuesets-for-dsf-processes.md) for more information.
+
+This guide contains templates for the most common types of [Input Parameters](../concepts/fhir/task.md#task-input-parameters).
+Before adding any, you should think about how many you want to add and adjust the expected amount of [Input Parameters](../concepts/fhir/task.md#task-input-parameters)
+in the [StructureDefinition](https://www.hl7.org/fhir/R4/structuredefinition.html):
+
+```xml
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  ...
+  <differential>
+      <element id="Task.input">
+          <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">
+              <valueString value="Parameter" />
+          </extension>
+          <path value="Task.input" />
+          <min value="4" />         <!-- adjust minimum number of input parameters -->
+          <max value="6" />         <!-- adjust maximum number of input parameters -->
+      </element>
+  </differential>
+</StructureDefinition>
+```
+If you cannot find an element with id `Task.input` you should create one. It should sit above any other elements that share the path of `Task.input`.
+
+**Note**: The DSF already comes with 3 [Input Parameters](../concepts/fhir/task.md#task-input-parameters) predefined: `message-name`, `business-key` and `correlation-key`. `message-name` and `business-key` are mandatory in order
+for the DSF to correlate the [Task](../concepts/fhir/task.md) to a process instance. So expect the minimum number of [Input Parameters](../concepts/fhir/task.md#task-input-parameters) to be at least **2**. When addressing a sub-process, 
+a third [Input Parameter](../concepts/fhir/task.md#task-input-parameters) is required: `correlation-key`. This is beyond the scope of the tutorial. Keeping the minimum at **2** should be sufficient.
+
+#### Template: Input Parameter of Primitive Type With Fixed Value
+
+```xml
+<element id="Task.input:my-input">          <!-- replace all occurrances of "my-input" with the name of your input parameter. -->
+  <path value="Task.input"/>                <!-- this value should also be the value of the code from the CodeSystem in -->
+  <sliceName value="my-input"/>             <!-- Task.input.type.coding.code's <fixedCode/> element -->
+  <min value="0"/>
+  <max value="1"/>
+</element>
+<element id="Task.input:my-input.type">
+  <path value="Task.input.type"/>
+  <min value="1"/>
+  <max value="1"/>
+  <binding>
+    <strength value="required"/>
+    <valueSet value="http://dsf.dev/fhir/ValueSet/my-valueset"/>        <!-- replace URL with the URL of your ValueSet -->
+  </binding>
+</element>
+<element id="Task.input:my-input.type.coding">
+  <path value="Task.input.type.coding"/>
+  <min value="1"/>
+  <max value="1"/>
+</element>
+<element id="Task.input:my-input.type.coding.system">
+  <path value="Task.input.type.coding.system"/>
+  <min value="1"/>
+  <max value="1"/>
+  <fixedUri value="http://dsf.dev/fhir/CodeSystem/my-codesystem"/>      <!-- replace URL with the URL of your CodeSystem -->
+</element>
+<element id="Task.input:my-input.type.coding.code">
+  <path value="Task.input.type.coding.code"/>
+  <min value="1"/>
+  <max value="1"/>
+  <fixedCode value="my-input"/>
+</element>
+<element id="Task.input:my-input.value[x]">
+  <path value="Task.input.value[x]"/>
+  <min value="1"/>
+  <max value="1"/>
+  <fixedInteger value="1"/>                                             <!-- replace "fixedInteger" with a primitive data type of your choosing and set the respective value -->
 </element>
 ```
-*The resource can be found [here](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-task-base-1.0.0.xml)*
 
-We will only need to take a look at the `discrimitator` tag for now.
-Discriminators define the elements a FHIR processor needs to distinguish slices by. In our case, a processor
-would look at the values for `type.coding.system` and `type.coding.code` to determine which
-slice this element belongs to. The discriminator type `value` implies that `type.coding.system` and `type.coding.code`
-have to be present in all slices and need to have a fixed value.
-You can learn more about discriminators [here](https://www.hl7.org/fhir/R4/profiling.html#discriminator).
-
-Let us revisit `task-start-dic-process.xml` and start adding a slice called `example-input` to it:
-```xml
-<StructureDefinition xmlns="http://hl7.org/fhir">
-    ...
-    <differential>
-        ...
-        <element id="Task.input:example-input">
-            <path value="Task.input" />
-            <sliceName value="example-input" />
-            <min value="1" />
-            <max value="1" />
-        </element>
-    </differential>
-</StructureDefinition>
-```
-*Unnecessary elements for this guide are hidden by ... placeholders.*
-
-We have now defined a slice on `Task.input` with the name and id of `example-input` and cardinality of `1..1`. You might
-want a different cardinality for your use case. We recommend you also take a look at the documentation for [ElementDefinition.id](https://www.hl7.org/fhir/R4/elementdefinition.html#id)
-and [ElementDefinition.path](https://www.hl7.org/fhir/R4/elementdefinition.html#path). They explain how to create the proper
-values for these elements. Cardinality is also part of the [element definition](https://www.hl7.org/fhir/R4/elementdefinition.html)
-hierarchy (see [ElementDefinition.min](https://www.hl7.org/fhir/R4/elementdefinition-definitions.html#ElementDefinition.min) and [ElementDefinition.max](https://www.hl7.org/fhir/R4/elementdefinition-definitions.html#ElementDefinition.max)).
-
-Next up, we need to define the binding for `Task.input:example-input.type`. Because `Task.input.type`
-is a `CodeableConcept` which uses codings from a [ValueSet](../concepts/fhir/valueset.md),
-the [discriminator](https://www.hl7.org/fhir/R4/profiling.html#discriminator) requires us to use `required` as the binding strength:
-```xml
-<StructureDefinition xmlns="http://hl7.org/fhir">
-    ...
-    <differential>
-        ...
-        <element id="Task.input:example-input">
-            <path value="Task.input" />
-            <sliceName value="example-input" />
-            <min value="1" />
-            <max value="1" />
-        </element>
-        <element id="Task.input:example-input.type">
-            <path value="Task.input.type" />
-            <binding>
-                <strength value="required"/>
-                <valueSet value="http://dsf.dev/fhir/ValueSet/example" />
-            </binding>
-        </element>
-    </differential>
-</StructureDefinition>
-```
-As you can see, we referenced a [ValueSet](../concepts/fhir/valueset.md) in this binding.
-When adding an actual slice for your use case, you will have to reference an existing [ValueSet](../concepts/fhir/valueset.md) resource or create a new
-one. A guide on how to create them can be found [here](../guides/creating-valuesets-for-dsf-processes.md).
-
-Since the [discriminator](https://www.hl7.org/fhir/R4/profiling.html#discriminator) requires
-`Task.input.coding.code` and `Task.input.coding.system` to be present, we will make `Task.input.coding` mandatory as well:
-```xml
-<StructureDefinition xmlns="http://hl7.org/fhir">
-    ...
-    <differential>
-        ...
-        <element id="Task.input:example-input">
-            <path value="Task.input" />
-            <sliceName value="example-input" />
-            <min value="1" />
-            <max value="1" />
-        </element>
-        <element id="Task.input:example-input.type">
-            <path value="Task.input.type" />
-            <binding>
-                <strength value="required"/>
-                <valueSet value="http://dsf.dev/fhir/ValueSet/example" />
-            </binding>
-        </element>
-        <element id="Task.input:example-input.type.coding">
-            <path value="Task.input.type.coding"/>
-            <min value="1" />
-        </element>
-    </differential>
-</StructureDefinition>
-```
-
-In the beginning we mentioned how `Task.input.type.coding.system` and `Task.input.type.coding.code`
-have to use fixed values. Here is how we accomplish this:
+#### Template: Input Parameter of Primitive Type With "Dynamic" Value
 
 ```xml
-<StructureDefinition xmlns="http://hl7.org/fhir">
-    ...
-    <differential>
-        ...
-        <element id="Task.input:example-input">
-            <path value="Task.input" />
-            <sliceName value="example-input" />
-            <min value="1" />
-            <max value="1" />
-        </element>
-        <element id="Task.input:example-input.type">
-            <path value="Task.input.type" />
-            <binding>
-                <strength value="required"/>
-                <valueSet value="http://dsf.dev/fhir/ValueSet/example" />
-            </binding>
-        </element>
-        <element id="Task.input:example-input.type.coding">
-            <path value="Task.input.type.coding"/>
-            <min value="1" />
-        </element>
-        <element id="Task.input:example-input.type.coding.system">
-            <path value="Task.input.type.coding.system"/>
-            <min value="1"/>
-            <fixedUri value="http://dsf.dev/fhir/CodeSystem/example"/>
-        </element>
-        <element id="Task.input:example-input.type.coding.code">
-            <path value="Task.input.type.coding.code"/>
-            <min value="1"/>
-            <fixedCode value="example-input" />
-        </element>
-    </differential>
-</StructureDefinition>
+<element id="Task.input:my-input">          <!-- replace all occurrances of "my-input" with the name of your input parameter. -->
+  <path value="Task.input"/>                <!-- this value should also be the value of the code from the CodeSystem in -->
+  <sliceName value="my-input"/>             <!-- Task.input.type.coding.code's <fixedCode/> element -->
+  <min value="0"/>
+  <max value="1"/>
+</element>
+<element id="Task.input:my-input.type">
+  <path value="Task.input.type"/>
+  <min value="1"/>
+  <max value="1"/>
+  <binding>
+    <strength value="required"/>
+    <valueSet value="http://dsf.dev/fhir/ValueSet/my-valueset"/>        <!-- replace URL with the URL of your ValueSet -->
+  </binding>
+</element>
+<element id="Task.input:my-input.type.coding">
+  <path value="Task.input.type.coding"/>
+  <min value="1"/>
+  <max value="1"/>
+</element>
+<element id="Task.input:my-input.type.coding.system">
+  <path value="Task.input.type.coding.system"/>
+  <min value="1"/>
+  <max value="1"/>
+  <fixedUri value="http://dsf.dev/fhir/CodeSystem/my-codesystem"/>      <!-- replace URL with the URL of your CodeSystem -->
+</element>
+<element id="Task.input:my-input.type.coding.code">
+  <path value="Task.input.type.coding.code"/>
+  <min value="1"/>
+  <max value="1"/>
+  <fixedCode value="my-input"/>
+</element>
+<element id="Task.input:my-input.value[x]">
+  <path value="Task.input.value[x]"/>
+  <min value="1"/>
+  <max value="1"/>
+  <type>
+      <code value="integer"/>                                           <!-- replace "integer" with a primitive data type of your choosing -->
+  </type>                                            
+</element>
 ```
-*Notice that we also made the two elements mandatory because they are required by the discriminator.*
 
-For the `type.coding.system` element we referenced a [CodeSystem](../concepts/fhir/codesystem.md).
-The `type.coding.code` element uses a code from this [CodeSystem](../concepts/fhir/codesystem.md) called `example-input`.
-This is the mechanism by which you actually "name" your [Input Parameter](../concepts/fhir/task.md#task-input-parameters). The
-`type.coding.code` value will identify your [Input Parameter](../concepts/fhir/task.md#task-input-parameters) when you use
-it in an actual [Task](../concepts/fhir/task.md#task-input-parameters) resource. Here is how this would look like:
+#### Template: Input Parameter of Coding Type With Fixed Value
 
 ```xml
-<Task xmlns="http://hl7.org/fhir">
-    ...
-    <input>
-        <type>
-            <coding>
-                <system value="http://dsf.dev/fhir/CodeSystem/example"/>
-                <code value="example-input" />
-            </coding>
-        </type>
-     ...
-    </input>
-</Task>
+<element id="Task.input:my-input">          <!-- replace all occurrances of "my-input" with the name of your input parameter. -->
+  <path value="Task.input"/>                <!-- this value should also be the value of the code from the CodeSystem in -->
+  <sliceName value="my-input"/>             <!-- Task.input.type.coding.code's <fixedCode/> element -->
+  <min value="0"/>
+  <max value="1"/>
+</element>
+<element id="Task.input:my-input.type">
+  <path value="Task.input.type"/>
+  <min value="1"/>
+  <max value="1"/>
+  <binding>
+    <strength value="required"/>
+    <valueSet value="http://dsf.dev/fhir/ValueSet/my-valueset"/>        <!-- replace URL with the URL of your ValueSet -->
+  </binding>
+</element>
+<element id="Task.input:my-input.type.coding">
+  <path value="Task.input.type.coding"/>
+  <min value="1"/>
+  <max value="1"/>
+</element>
+<element id="Task.input:my-input.type.coding.system">
+  <path value="Task.input.type.coding.system"/>
+  <min value="1"/>
+  <max value="1"/>
+  <fixedUri value="http://dsf.dev/fhir/CodeSystem/my-codesystem"/>      <!-- replace URL with the URL of your CodeSystem -->
+</element>
+<element id="Task.input:my-input.type.coding.code">
+  <path value="Task.input.type.coding.code"/>
+  <min value="1"/>
+  <max value="1"/>
+  <fixedCode value="my-input"/>
+</element>
+<element id="Task.output:my-input.value[x]">
+  <path value="Task.output.value[x]"/>
+  <type>
+    <code value="Coding"/>
+  </type>
+</element>
+<element id="Task.output:my-input.value[x].system">
+  <path value="Task.output.value[x].system"/>
+  <min value="1"/>
+  <fixedUri value="http://dsf.dev/fhir/CodeSystem/my-other-codesystem"/>    <!-- replace URL with the URL of your CodeSystem -->
+</element>
+<element id="Task.output:my-input.value[x].code">
+  <path value="Task.output.value[x].code"/>
+  <min value="1"/>
+  <fixedCode value="my-code"/>                                          <!-- replace "my-code" with the value of your code -->
+</element>
 ```
 
-When adding an actual slice for your use case, you will also need to reference an existing [CodeSystem](../concepts/fhir/codesystem.md) resource or create a new one to reference.
-A guide on how to create them can be found [here](../guides/creating-codesystems-for-dsf-processes.md).
-
-`Task.input.value[x]` is the actual value you will submit using your Input Parameter. You can make it
-any of [these](https://www.hl7.org/fhir/R4/datatypes.html#open) data types. This is because `Type.input.value[x]`  
-refers to `*` instead of any particular type in its [definition](https://www.hl7.org/fhir/R4/task-definitions.html#Task.input.value_x_). Let us define it as an `integer` type`:
+#### Template: Input Parameter of Coding Type With "Dynamic" Value
 
 ```xml
-<StructureDefinition xmlns="http://hl7.org/fhir">
-    ...
-    <differential>
-        ...
-        <element id="Task.input:example-input">
-            <path value="Task.input" />
-            <sliceName value="example-input" />
-            <min value="1" />
-            <max value="1" />
-        </element>
-        <element id="Task.input:example-input.type">
-            <path value="Task.input.type" />
-            <binding>
-                <strength value="required"/>
-                <valueSet value="http://dsf.dev/fhir/ValueSet/example" />
-            </binding>
-        </element>
-        <element id="Task.input:example-input.type.coding">
-            <path value="Task.input.type.coding"/>
-            <min value="1" />
-        </element>
-        <element id="Task.input:example-input.type.coding.system">
-            <path value="Task.input.type.coding.system"/>
-            <min value="1"/>
-            <fixedUri value="http://dsf.dev/fhir/CodeSystem/example"/>
-        </element>
-        <element id="Task.input:example-input.type.coding.code">
-            <path value="Task.input.type.coding.code"/>
-            <min value="1"/>
-            <fixedCode value="example-input" />
-        </element>
-        <element id="Task.input:example-input.value[x]">
-            <path value="Task.input.value[x]"/>
-            <type>
-                <code value="integer"/>
-            </type>
-        </element>
-    </differential>
-</StructureDefinition>
+<element id="Task.input:my-input">          <!-- replace all occurrances of "my-input" with the name of your input parameter. -->
+  <path value="Task.input"/>                <!-- this value should also be the value of the code from the CodeSystem in -->
+  <sliceName value="my-input"/>             <!-- Task.input.type.coding.code's <fixedCode/> element -->
+  <min value="0"/>
+  <max value="1"/>
+</element>
+<element id="Task.input:my-input.type">
+  <path value="Task.input.type"/>
+  <min value="1"/>
+  <max value="1"/>
+  <binding>
+    <strength value="required"/>
+    <valueSet value="http://dsf.dev/fhir/ValueSet/my-valueset|#{version}"/>        <!-- replace URL with the URL of your ValueSet -->
+  </binding>
+</element>
+<element id="Task.input:my-input.type.coding">
+  <path value="Task.input.type.coding"/>
+  <min value="1"/>
+  <max value="1"/>
+</element>
+<element id="Task.input:my-input.type.coding.system">
+  <path value="Task.input.type.coding.system"/>
+  <min value="1"/>
+  <max value="1"/>
+  <fixedUri value="http://dsf.dev/fhir/CodeSystem/my-codesystem"/>      <!-- replace URL with the URL of your CodeSystem -->
+</element>
+<element id="Task.input:my-input.type.coding.code">
+  <path value="Task.input.type.coding.code"/>
+  <min value="1"/>
+  <max value="1"/>
+  <fixedCode value="my-input"/>
+</element>
+<element id="Task.output:my-input.value[x]">
+  <path value="Task.output.value[x]"/>
+  <type>
+    <code value="Coding"/>
+  </type>
+</element>
+<element id="Task.output:my-input.value[x].system">
+  <path value="Task.output.value[x].system"/>
+  <min value="1"/>
+  <fixedUri value="http://dsf.dev/fhir/CodeSystem/my-other-codesystem"/>     <!-- replace URL with the URL of your CodeSystem -->
+</element>
+<element id="Task.output:my-input.value[x].code">
+  <path value="Task.output.value[x].code"/>
+  <min value="1"/>
+  <binding>
+    <strength value="required"/>
+    <valueSet value="http://dsf.dev/fhir/ValueSet/my-other-valueset|#{version}"/>  <!-- replace URL with the URL of your ValueSet -->
+  </binding>
+</element>
 ```
 
-Now we have a new Input Parameter of type `example-input` which accepts any `integer` as its value.
+#### Template: Input Parameter of Reference Type With "Dynamic" Value
+
+```xml
+<element id="Task.input:my-input">          <!-- replace all occurrances of "my-input" with the name of your input parameter. -->
+  <path value="Task.input"/>                <!-- this value should also be the value of the code from the CodeSystem in -->
+  <sliceName value="my-input"/>             <!-- Task.input.type.coding.code's <fixedCode/> element -->
+  <min value="0"/>
+  <max value="1"/>
+</element>
+<element id="Task.input:my-input.type">
+  <path value="Task.input.type"/>
+  <min value="1"/>
+  <max value="1"/>
+  <binding>
+    <strength value="required"/>
+    <valueSet value="http://dsf.dev/fhir/ValueSet/my-valueset"/>        <!-- replace URL with the URL of your ValueSet -->
+  </binding>
+</element>
+<element id="Task.input:my-input.type.coding">
+  <path value="Task.input.type.coding"/>
+  <min value="1"/>
+  <max value="1"/>
+</element>
+<element id="Task.input:my-input.type.coding.system">
+  <path value="Task.input.type.coding.system"/>
+  <min value="1"/>
+  <max value="1"/>
+  <fixedUri value="http://dsf.dev/fhir/CodeSystem/my-codesystem"/>      <!-- replace URL with the URL of your CodeSystem -->
+</element>
+<element id="Task.input:my-input.type.coding.code">
+  <path value="Task.input.type.coding.code"/>
+  <min value="1"/>
+  <max value="1"/>
+  <fixedCode value="my-input"/>
+</element>
+<element id="Task.input:my-input.value[x]">
+  <path value="Task.input.value[x]"/>
+  <type>
+    <code value="Reference" />
+    <targetProfile value="http://hl7.org/fhir/StructureDefinition/Binary" />    <!-- replace with the profile URL of the kind of resource you want to reference -->
+  </type>
+</element>
+<element id="Task.input:my-input.value[x].reference">        
+  <path value="Task.input.value[x].reference"/>
+  <min value="1"/>
+  <max value="1"/>
+</element>
+<element id="Task.input:my-input.value[x].type">
+  <path value="Task.input.value[x].type"/>
+  <min value="1"/>
+  <max value="1"/>
+  <fixedUri value="Binary"/>                                                    <!-- replace with the kind of resource you want to reference -->
+</element>
+<element id="Task.input:my-input.value[x].identifier">
+  <path value="Task.input.value[x].identifier"/>
+  <max value="0"/>
+</element>
+```
