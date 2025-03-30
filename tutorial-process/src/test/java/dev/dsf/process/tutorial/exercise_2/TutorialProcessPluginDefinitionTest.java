@@ -36,8 +36,8 @@ import dev.dsf.process.tutorial.service.DicTask;
 
 public class TutorialProcessPluginDefinitionTest
 {
-	private final String version = "1.1.0.1";
-	private final String resourceVersion = "1.1";
+	private final String version = "2.1.0.1";
+	private final String resourceVersion = "2.1";
 
 	private static List<Resource> dicFhirResources;
 
