@@ -70,7 +70,7 @@ public class DicTaskServiceTest
 	public void testDicTaskConstructorWithAdditionalBooleanParameterExists() throws Exception
 	{
 
-		Optional<Constructor<DicTask>> constructor = getConstructor(ProcessPluginApi.class, boolean.class);
+		Optional<Constructor<DicTask>> constructor = getConstructor(boolean.class);
 
 		if (constructor.isEmpty())
 		{
