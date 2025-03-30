@@ -36,17 +36,17 @@ public class Utils
 	public static long countBeanMethods(Class<?> returnType)
 	{
 		long beanCount = 0;
-		long numBeanMethods = Arrays.stream(TutorialConfig.class.getMethods()).filter(m -> returnType.equals(m.getReturnType()))
-				.filter(m -> Modifier.isPublic(m.getModifiers())).filter(m -> m.getAnnotation(Bean.class) != null)
-				.count();
+		long numBeanMethods = Arrays.stream(TutorialConfig.class.getMethods())
+				.filter(m -> returnType.equals(m.getReturnType())).filter(m -> Modifier.isPublic(m.getModifiers()))
+				.filter(m -> m.getAnnotation(Bean.class) != null).count();
 		beanCount += numBeanMethods;
 
 		TutorialConfig tutorialConfig = new TutorialConfig();
 		BeanDefinitionRegistry beanDefinitionRegistry = new SimpleBeanDefinitionRegistry();
 		Arrays.stream(TutorialConfig.class.getMethods())
 				.filter(m -> ActivityPrototypeBeanCreator.class.equals(m.getReturnType()))
-				.filter(m -> Modifier.isPublic(m.getModifiers()))
-				.map(m -> {
+				.filter(m -> Modifier.isPublic(m.getModifiers())).map(m ->
+				{
 					try
 					{
 						return (ActivityPrototypeBeanCreator) m.invoke(tutorialConfig);
@@ -55,8 +55,7 @@ public class Utils
 					{
 						throw new RuntimeException(e);
 					}
-				})
-				.forEach(a -> a.postProcessBeanDefinitionRegistry(beanDefinitionRegistry));
+				}).forEach(a -> a.postProcessBeanDefinitionRegistry(beanDefinitionRegistry));
 		long numBeansInActivityPrototypeBeanCreator = beanDefinitionRegistry.getBeanDefinitionCount();
 		beanCount += numBeansInActivityPrototypeBeanCreator;
 		return beanCount;
