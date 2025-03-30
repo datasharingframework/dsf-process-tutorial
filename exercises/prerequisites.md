@@ -12,8 +12,8 @@ You also want to have some amount of experience in [HL7 FHIR R4](https://www.hl7
 - An installation guide for Linux, Mac and Windows can be found here: [installation guide](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 - The most basic git CLI commands are described here: [commands](https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository)
 
-## Java 17
-Process plugins for the DSF are written using the [Java](https://www.java.com) programming language in version 17. Various open source releases of the Java Developer Kit (JDK) 17 exist, you are free in your choice.
+## Java 21
+Process plugins for the DSF are written using the [Java](https://www.java.com) programming language in version 21. Various open source releases of the Java Developer Kit (JDK) 21 exist, you are free in your choice.
 
 ## Maven 3.8
 When implementing DSF processes, we use Maven 3.8 to manage the software project's build, reporting and documentation workflow.
