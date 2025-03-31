@@ -56,7 +56,9 @@ public class Utils
 						throw new RuntimeException(e);
 					}
 				}).forEach(a -> a.postProcessBeanDefinitionRegistry(beanDefinitionRegistry));
-		long numBeansInActivityPrototypeBeanCreator = beanDefinitionRegistry.getBeanDefinitionCount();
+		long numBeansInActivityPrototypeBeanCreator = Arrays.stream(beanDefinitionRegistry.getBeanDefinitionNames())
+				.map(beanDefinitionRegistry::getBeanDefinition)
+				.map(definition -> definition.getResolvableType().getRawClass()).filter(returnType::equals).count();
 		beanCount += numBeansInActivityPrototypeBeanCreator;
 		return beanCount;
 	}
