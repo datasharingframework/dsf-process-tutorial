@@ -7,9 +7,9 @@ uses Message Flow. Message Flow is typically represented by a dashed line arrow 
 The following BPMN collaboration diagram shows message exchange between two processes.
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="figures/exercise3_message_flow_inverted.svg">
-  <source media="(prefers-color-scheme: light)" srcset="figures/exercise3_message_flow.svg">
-  <img alt="BPMN collaboration diagram with two processes using message flow to exchange information between two organizations" src="figures/exercise3_message_flow.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="../../../exercises/figures/exercise3_message_flow_inverted.svg">
+  <source media="(prefers-color-scheme: light)" srcset="../../../exercises/figures/exercise3_message_flow.svg">
+  <img alt="BPMN collaboration diagram with two processes using message flow to exchange information between two organizations" src="../../../exercises/figures/exercise3_message_flow.svg">
 </picture>
 
 #### Message Start Event

@@ -54,8 +54,25 @@ public class FhirResourceLoader
 					{
 						return entry.getValue().stream()
 								.map(fileName -> Utils.class.getClassLoader().getResourceAsStream(fileName))
-								.map(stream -> FhirContext.forR4().newXmlParser().parseResource(Resource.class, stream))
-								.toList();
+								.map(stream ->
+								{
+									try
+									{
+										String content = new String(stream.readAllBytes());
+										content = content.replaceAll("#\\{version}",
+												processPluginDefinition.getResourceVersion());
+										content = content.replaceAll("#\\{date}", processPluginDefinition
+												.getReleaseDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+										stream.close();
+										IBaseResource baseResource = FhirContext.forR4().newXmlParser()
+												.parseResource(content);
+										return baseResource instanceof Resource ? (Resource) baseResource : null;
+									}
+									catch (Exception e)
+									{
+										return null;
+									}
+								}).toList();
 					}
 
 					@Override
