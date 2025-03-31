@@ -1,4 +1,4 @@
-**Prerequisites** • [Exercise 0](exercise-0.md) • [Exercise 1](exercise-1.md) • [Exercise 1.1](exercise-1-1.md) • [Exercise 2](exercise-2.md) • [Exercise 4](exercise-4.md) • [Exercise 5](exercise-5.md) • [Exercise 6](exercise-6.md)
+**Prerequisites** • [Exercise 0](exercise-0.md) • [Exercise 1](exercise-1.md) • [Exercise 1.1](exercise-1-1.md) • [Exercise 2](exercise-2.md) • [Exercise 4](exercise-4.md) • [Exercise 5](exercise-5.md) • [Exercise 6](exercise-6.md) • [Exercise 7](exercise-7.md)
 ___
 
 # Prerequisites
@@ -12,8 +12,8 @@ You also want to have some amount of experience in [HL7 FHIR R4](https://www.hl7
 - An installation guide for Linux, Mac and Windows can be found here: [installation guide](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 - The most basic git CLI commands are described here: [commands](https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository)
 
-## Java 17
-Process plugins for the DSF are written using the [Java](https://www.java.com) programming language in version 17. Various open source releases of the Java Developer Kit (JDK) 17 exist, you are free in your choice.
+## Java 21
+Process plugins for the DSF are written using the [Java](https://www.java.com) programming language in version 21. Various open source releases of the Java Developer Kit (JDK) 21 exist, you are free in your choice.
 
 ## Maven 3.8
 When implementing DSF processes, we use Maven 3.8 to manage the software project's build, reporting and documentation workflow.
@@ -57,4 +57,4 @@ relies on Camunda 7 which is incompatible with Camunda 8.
 The minimum hardware requirements to run all simulated organizations as part of the Docker dev-setup is 16 GB of RAM.
 
 ___
-**Prerequisites** • [Exercise 0](exercise-0.md) • [Exercise 1](exercise-1.md) • [Exercise 1.1](exercise-1-1.md) • [Exercise 2](exercise-2.md) • [Exercise 4](exercise-4.md) • [Exercise 5](exercise-5.md) • [Exercise 6](exercise-6.md)
+**Prerequisites** • [Exercise 0](exercise-0.md) • [Exercise 1](exercise-1.md) • [Exercise 1.1](exercise-1-1.md) • [Exercise 2](exercise-2.md) • [Exercise 4](exercise-4.md) • [Exercise 5](exercise-5.md) • [Exercise 6](exercise-6.md) • [Exercise 7](exercise-7.md)

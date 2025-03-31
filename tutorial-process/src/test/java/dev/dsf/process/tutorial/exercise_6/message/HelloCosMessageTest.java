@@ -48,9 +48,6 @@ public class HelloCosMessageTest
 	private Variables variables;
 
 	@Mock
-	private SendTaskValues sendTaskValues;
-
-	@Mock
 	private Target target;
 
 	private class MockableHelloCosMessage extends HelloCosMessage
@@ -84,7 +81,7 @@ public class HelloCosMessageTest
 						new StringType("Test")));
 
 		List<ParameterComponent> testParameterComponents = messageDelegate.getAdditionalInputParameters(api, variables,
-				sendTaskValues, target);
+				new SendTaskValues("", "", ""), target);
 
 		Mockito.verify(variables).getStartTask();
 		Mockito.verify(taskHelper).createInput(any(Type.class), anyString(), anyString());
