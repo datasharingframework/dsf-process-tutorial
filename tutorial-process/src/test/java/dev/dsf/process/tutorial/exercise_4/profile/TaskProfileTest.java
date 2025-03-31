@@ -112,7 +112,7 @@ public class TaskProfileTest
 		task.addInput().setValue(new StringType(PROFILE_TUTORIAL_TASK_HELLO_COS_MESSAGE_NAME)).getType()
 				.addCoding(CodeSystems.BpmnMessage.messageName());
 		task.addInput().setValue(new StringType(UUID.randomUUID().toString())).getType()
-				.addCoding(CodeSystems.BpmnMessage.messageName());
+				.addCoding(CodeSystems.BpmnMessage.businessKey());
 
 		return task;
 	}
