@@ -5,7 +5,7 @@ ___
 BPMN processes might require additional information during execution, e.g. for configuration purposes. 
 We will take a look at two possibilities on how to pass additional information to a BPMN process: Environment Variables and Input Parameters.   
 The goal of this exercise is to enhance the `dsfdev_dicProcess` by trying them both. 
-In both cases the information will be available in the `doExecute` method of your service class.
+In both cases the information will be available in the `execute` method of your service class.
 
 In order to solve this exercise, you should have solved the first exercise and read the topics on
 [Environment Variables](../learning/concepts/dsf/environment-variables.md), 
