@@ -22,7 +22,7 @@ public class TutorialConfig
 	private boolean loggingEnabled;
 
 	@Bean
-	public ActivityPrototypeBeanCreator activityPrototypeBeanCreator()
+	public static ActivityPrototypeBeanCreator activityPrototypeBeanCreator()
 	{
 		return new ActivityPrototypeBeanCreator(HelloCosMessage.class, CosTask.class);
 	}
