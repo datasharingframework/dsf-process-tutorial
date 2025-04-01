@@ -9,12 +9,12 @@ import org.hl7.fhir.r4.model.StringType;
 import org.hl7.fhir.r4.model.Task;
 
 import dev.dsf.bpe.v2.ProcessPluginApi;
-import dev.dsf.bpe.v2.activity.MessageSendTask;
+import dev.dsf.bpe.v2.activity.MessageIntermediateThrowEvent;
 import dev.dsf.bpe.v2.activity.values.SendTaskValues;
 import dev.dsf.bpe.v2.variables.Target;
 import dev.dsf.bpe.v2.variables.Variables;
 
-public class StartVote implements MessageSendTask
+public class StartVote implements MessageIntermediateThrowEvent
 {
 	@Override
 	public List<Task.ParameterComponent> getAdditionalInputParameters(ProcessPluginApi api, Variables variables,
