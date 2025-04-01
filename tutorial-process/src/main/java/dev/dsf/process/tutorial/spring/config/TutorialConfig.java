@@ -9,7 +9,7 @@ import dev.dsf.bpe.v2.spring.ActivityPrototypeBeanCreator;
 public class TutorialConfig
 {
 	@Bean
-	public ActivityPrototypeBeanCreator activityPrototypeBeanCreator()
+	public static ActivityPrototypeBeanCreator activityPrototypeBeanCreator()
 	{
 		return new ActivityPrototypeBeanCreator();
 	}
