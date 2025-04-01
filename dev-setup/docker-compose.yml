@@ -390,6 +390,7 @@ services:
               - ADMIN
 
       DEV_DSF_PROCESS_TUTORIAL_LOGGINGENABLED: 'true'
+      DEV_DSF_PROCESS_TUTORIAL_USERVOTE: 'true'
     networks:
       dic-bpe-frontend:
         ipv4_address: 172.20.0.115
