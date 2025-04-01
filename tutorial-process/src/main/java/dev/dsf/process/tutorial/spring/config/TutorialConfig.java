@@ -20,7 +20,7 @@ public class TutorialConfig
 	private boolean loggingEnabled;
 
 	@Bean
-	public ActivityPrototypeBeanCreator activityPrototypeBeanCreator()
+	public static ActivityPrototypeBeanCreator activityPrototypeBeanCreator()
 	{
 		return new ActivityPrototypeBeanCreator();
 	}
