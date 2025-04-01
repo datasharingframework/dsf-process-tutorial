@@ -10,7 +10,7 @@ import dev.dsf.process.tutorial.service.DicTask;
 public class TutorialConfig
 {
 	@Bean
-	public ActivityPrototypeBeanCreator activityPrototypeBeanCreator()
+	public static ActivityPrototypeBeanCreator activityPrototypeBeanCreator()
 	{
 		return new ActivityPrototypeBeanCreator(DicTask.class);
 	}
