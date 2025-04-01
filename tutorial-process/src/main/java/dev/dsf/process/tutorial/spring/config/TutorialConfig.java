@@ -43,7 +43,7 @@ public class TutorialConfig
 	private boolean userVote;
 
 	@Bean
-	public ActivityPrototypeBeanCreator activityPrototypeBeanCreator()
+	public static ActivityPrototypeBeanCreator activityPrototypeBeanCreator()
 	{
 		return new ActivityPrototypeBeanCreator(HelloCosMessage.class, CosTask.class, HelloHrpMessage.class,
 				HrpTask.class, GoodbyeDicMessage.class, StartVotingProcess.class, SelectTargets.class, StartVote.class,
