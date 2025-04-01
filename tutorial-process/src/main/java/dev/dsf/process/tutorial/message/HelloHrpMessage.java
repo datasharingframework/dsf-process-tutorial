@@ -7,13 +7,13 @@ import org.hl7.fhir.r4.model.StringType;
 import org.hl7.fhir.r4.model.Task;
 
 import dev.dsf.bpe.v2.ProcessPluginApi;
-import dev.dsf.bpe.v2.activity.MessageSendTask;
+import dev.dsf.bpe.v2.activity.MessageEndEvent;
 import dev.dsf.bpe.v2.activity.values.SendTaskValues;
 import dev.dsf.bpe.v2.variables.Target;
 import dev.dsf.bpe.v2.variables.Variables;
 
 // Only needed for exercise 6 and above
-public class HelloHrpMessage implements MessageSendTask
+public class HelloHrpMessage implements MessageEndEvent
 {
 	@Override
 	public List<Task.ParameterComponent> getAdditionalInputParameters(ProcessPluginApi api, Variables variables,

@@ -6,12 +6,11 @@
 	<parent>
 		<groupId>dev.dsf</groupId>
 		<artifactId>dsf-process-tutorial</artifactId>
-		<version>1.0.0.1-SNAPSHOT</version>
+		<version>2.0.0.1-SNAPSHOT</version>
 	</parent>
 
 	<properties>
 		<main.basedir>${project.basedir}/..</main.basedir>
-		<dsf.version>2.0.0-M1</dsf.version>
 	</properties>
 
 	<dependencies>
