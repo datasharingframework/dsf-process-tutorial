@@ -11,7 +11,6 @@
 
 	<properties>
 		<main.basedir>${project.basedir}/..</main.basedir>
-		<dsf.version>2.0.0-M1</dsf.version>
 	</properties>
 
 	<dependencies>
