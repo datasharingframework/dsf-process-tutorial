@@ -307,17 +307,7 @@ services:
               - PERMANENT_DELETE
             practitioner-role:
               - http://dsf.dev/fhir/CodeSystem/practitioner-role|DSF_ADMIN
-        - tutorial_role:
-            token-role: tutorial
-            dsf-role:
-              - CREATE
-              - READ
-              - UPDATE
-              - DELETE
-              - SEARCH
-              - HISTORY
-            practitioner-role:
-              - http://dsf.dev/fhir/CodeSystem/practitioner-role|DSF_ADMIN
+
     networks:
       dic-fhir-frontend:
         ipv4_address: 172.20.0.67
