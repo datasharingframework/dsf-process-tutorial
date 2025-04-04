@@ -14,15 +14,7 @@ have to provide [Spring Beans](https://docs.spring.io/spring-framework/reference
 - `ServiceTask`
 - `UserTaskListener`
 
-Since DSF API v2 there is also the option to register beans by providing an instance of `ActivityPrototypeBeanCreator`:
-```java
-@Bean
-public ActivityPrototypeBeanCreator activityPrototypeBeanCreator()
-{
-    return new ActivityPrototypeBeanCreator(DicTask.class);
-}
-```
-This is only possible if the classes passed into `ActivityPrototypeBeanCreator` can be instantiated through their default constructor.
+Check out the guide on [registering prototype Beans](../../guides/registering-prototype-beans.md) for examples
 
 A [Spring-Framework configuration class](https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans-java-basic-concepts) located in `spring/config` is expected to provide the Spring Beans.
 For this tutorial, the `TutorialConfig` class will take this role. 
