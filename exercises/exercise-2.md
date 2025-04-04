@@ -19,7 +19,13 @@ Solutions to this exercise are found on the branch `solutions/exercise-2`.
 
 ## Exercise Tasks
 1. Add a new boolean variable to the `TutorialConfig` class. It will enable/disable logging and have its value injected from an environment variable. Add the annotation and specify the default value as `false`. You may freely choose a name for your environment variable here. Just make sure you follow the naming convention explained in [Environment Variables](../learning/concepts/dsf/environment-variables.md).
-2. Modify the constructor of the `DicTask` class to use the newly created variable. Don't forget to change the `DicTask` bean in `TutorialConfig`.
+2. Modify the constructor of the `DicTask` class to use the newly created variable. Don't forget to change the `DicTask` bean in `TutorialConfig`. If you previously registered it through `ActivityPrototypeBeanCreator` you now have to register it as a separate Bean because `ActivityPrototypeBeanCreator` can only create beans through default constructors (scope has to be `prototype`).
+   <details>
+   <summary>Don't know how to register prototype beans?</summary>
+
+   Check out [this guide](../learning/guides/registering-prototype-beans.md).
+   </details>
+
 3. Use the value of the environment variable in the `DicTask` class to decide whether the log message from exercise 1 should be printed.
 4. Add the new environment variable to the `dic-bpe` service in `dev-setup/docker-compose.yml` and set the value to `"true"`.
 5. Create a new [CodeSystem](../learning/concepts/fhir/codesystem.md) with url `http://dsf.dev/fhir/CodeSystem/tutorial` having a concept with code `tutorial-input`. Don't forget to add the `read-access-tag`.
