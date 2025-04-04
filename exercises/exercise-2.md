@@ -69,7 +69,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-2`.
    The `TaskHelper` instance will prove useful here. Use it in conjunction with `variables` to get the right Task resource from the BPMN process execution.
    </details>
 10. We just changed the elements a Task resource has to include. So you need to change `example-task.xml` for [cURL](../learning/guides/starting-a-process-via-task-resources.md#using-curl) or `Task/task-start-dic-process.xml`, if you want to use the web interface, to include the new input parameter. The actual value may be any arbitrary string.
-   This also means that we need to change the plugin version, since a Task made according to the old StructureDefinition won't be valid for processes still expecting the old StructureDefinition. The new resource version shall be `1.1`.
+   This also means that we need to change the plugin version, since a Task made according to the old StructureDefinition won't be valid for processes still expecting the old StructureDefinition. The new resource version shall be `2.1`.
 
 ## Solution Verification
 ### Maven Build and Automated Tests
