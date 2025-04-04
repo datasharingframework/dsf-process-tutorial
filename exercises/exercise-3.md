@@ -18,7 +18,7 @@ Your task will be to take this user and explicitly allow them to start the `dicP
 Keycloak users for the `COS` and `HRP` instances.
 
 In order to solve this exercise, you need to have read the documentation on [Access Control](https://dsf.dev/stable/maintain/fhir/access-control.html) 
-and [ActivityDefinitions](../learning/concepts/fhir/activitydefinition).
+and [ActivityDefinitions](../learning/concepts/fhir/activitydefinition.md).
 
 ## Exercise Tasks
 
