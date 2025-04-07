@@ -28,7 +28,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-2`.
 
 3. Use the value of the environment variable in the `DicTask` class to decide whether the log message from exercise 1 should be printed.
 4. Add the new environment variable to the `dic-bpe` service in `dev-setup/docker-compose.yml` and set the value to `"true"`.
-5. Create a new [CodeSystem](../learning/concepts/fhir/codesystem.md) with url `http://dsf.dev/fhir/CodeSystem/tutorial` having a concept with code `tutorial-input`. Don't forget to add the `read-access-tag`.
+5. Create a new [CodeSystem](../learning/concepts/fhir/codesystem.md) with url `http://dsf.dev/fhir/CodeSystem/tutorial` having a concept with code `tutorial-input` and name the file `tutorial.xml`. Don't forget to add the `read-access-tag`.
    <details>
    <summary>Don't know how to create a CodeSystem?</summary>
 
@@ -41,7 +41,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-2`.
    `tutorial-process/src/main/resources/fhir/CodeSystem`.
    </details>
 
-6. Create a new [ValueSet](../learning/concepts/fhir/valueset.md) with url `http://dsf.dev/fhir/ValueSet/tutorial` that includes all concepts from the [CodeSystem](../learning/concepts/fhir/codesystem). Don't forget to add the `read-access-tag`.
+6. Create a new [ValueSet](../learning/concepts/fhir/valueset.md) with url `http://dsf.dev/fhir/ValueSet/tutorial` that includes all concepts from the [CodeSystem](../learning/concepts/fhir/codesystem) and name the file `tutorial.xml`. Don't forget to add the `read-access-tag`.
    <details>
    <summary>Don't know how to create a ValueSet?</summary>
 
