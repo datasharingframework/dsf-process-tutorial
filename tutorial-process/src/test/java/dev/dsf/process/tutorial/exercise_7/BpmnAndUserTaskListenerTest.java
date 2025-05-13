@@ -39,6 +39,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import dev.dsf.bpe.v2.ProcessPluginApi;
 import dev.dsf.bpe.v2.activity.DefaultUserTaskListener;
+import dev.dsf.bpe.v2.activity.values.CreateQuestionnaireResponseValues;
 import dev.dsf.bpe.v2.service.TaskHelper;
 import dev.dsf.bpe.v2.variables.Variables;
 import dev.dsf.process.tutorial.Utils;
@@ -181,7 +182,7 @@ public class BpmnAndUserTaskListenerTest
 		return formatted;
 	}
 
-	// A UserTaskListener ist considered valid if beforeQuestionnaireResponseCreate() reads the input parameter
+	// A UserTaskListener is considered valid if beforeQuestionnaireResponseCreate() reads the input parameter
 	// 'binary-question' from the Start Task and set the item.text value of the item with linkId 'binary-question'
 	// to the value of the input parameter in the QuestionnaireResponse
 	private List<String> validateUserTaskListener(Class<? extends DefaultUserTaskListener> userTaskListenerClass)
@@ -189,12 +190,10 @@ public class BpmnAndUserTaskListenerTest
 		List<String> errors = new ArrayList<>();
 		try
 		{
-			Constructor<? extends DefaultUserTaskListener> constructor = userTaskListenerClass
-					.getConstructor(ProcessPluginApi.class);
+			Constructor<? extends DefaultUserTaskListener> constructor = userTaskListenerClass.getConstructor();
 
 			ProcessPluginApi apiMock = Mockito.mock(ProcessPluginApi.class);
 			TaskHelper taskHelperMock = Mockito.mock(TaskHelper.class);
-			DelegateTask taskMock = Mockito.mock(DelegateTask.class);
 			QuestionnaireResponse questionnaireResponseMock = Mockito.mock(QuestionnaireResponse.class);
 			Variables variablesMock = Mockito.mock(Variables.class);
 			Task startTaskMock = Mockito.mock(Task.class);
@@ -213,11 +212,12 @@ public class BpmnAndUserTaskListenerTest
 			Mockito.lenient().when(itemMock.getText()).thenReturn("foo");
 			Mockito.lenient().when(itemMock.hasText()).thenReturn(true);
 
-			DefaultUserTaskListener listenerSpy = Mockito.spy(constructor.newInstance(apiMock));
+			DefaultUserTaskListener listenerSpy = Mockito.spy(constructor.newInstance());
 			Method method = userTaskListenerClass.getDeclaredMethod("beforeQuestionnaireResponseCreate",
-					DelegateTask.class, QuestionnaireResponse.class);
+					ProcessPluginApi.class, Variables.class, CreateQuestionnaireResponseValues.class,
+					QuestionnaireResponse.class);
 			method.setAccessible(true);
-			method.invoke(listenerSpy, taskMock, questionnaireResponseMock);
+			method.invoke(listenerSpy, apiMock, variablesMock, null, questionnaireResponseMock);
 
 			Optional<Invocation> optionalInvocation = Mockito.mockingDetails(taskHelperMock).getInvocations().stream()
 					.filter(invocation -> invocation.getMethod().getName().equals("getFirstInputParameterStringValue"))
