@@ -105,7 +105,8 @@ public class TutorialProcessPluginDefinitionTest
 				.map(r -> (CodeSystem) r).filter(c -> codeSystemUrl.equals(c.getUrl()))
 				.filter(c -> c.getConcept().stream().anyMatch(con -> codeSystemCode.equals(con.getCode()))).count());
 
-		String errorValueSet = "Process is missing ValueSet with url '" + valueSetUrl + "' which includes CodeSystem with url '" + codeSystemUrl + "'";
+		String errorValueSet = "Process is missing ValueSet with url '" + valueSetUrl
+				+ "' which includes CodeSystem with url '" + codeSystemUrl + "'";
 		assertEquals(errorValueSet, 1, dicFhirResources.stream().filter(r -> r instanceof ValueSet)
 				.map(r -> (ValueSet) r).filter(v -> valueSetUrl.equals(v.getUrl()))
 				.filter(v -> v.getCompose().getInclude().stream().anyMatch(i -> codeSystemUrl.equals(i.getSystem())))
