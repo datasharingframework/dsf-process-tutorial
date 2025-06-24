@@ -2,7 +2,6 @@ package dev.dsf.process.tutorial.service;
 
 import java.util.Optional;
 
-import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
