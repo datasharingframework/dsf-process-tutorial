@@ -21,17 +21,17 @@
 			<version>${dsf.version}</version>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>dev.dsf</groupId>
-			<artifactId>dsf-tools-documentation-generator</artifactId>
-			<scope>provided</scope>
-		</dependency>
 
 		<dependency>
 			<groupId>dev.dsf</groupId>
 			<artifactId>dsf-bpe-server</artifactId>
 			<version>${dsf.version}</version>
 			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>dev.dsf</groupId>
+			<artifactId>dsf-fhir-auth</artifactId>
 		</dependency>
 
 		<dependency>
@@ -49,6 +49,11 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.reflections</groupId>
+			<artifactId>reflections</artifactId>
+			<version>0.10.2</version>
 		</dependency>
 	</dependencies>
 
@@ -272,23 +277,6 @@
 							<followSymlinks>false</followSymlinks>
 						</fileset>
 					</filesets>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>dev.dsf</groupId>
-				<artifactId>dsf-tools-documentation-generator</artifactId>
-				<version>${dsf.version}</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<workingPackages>
-						<workingPackage>dev.dsf.process.tutorial</workingPackage>
-					</workingPackages>
 				</configuration>
 			</plugin>
 		</plugins>

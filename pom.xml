@@ -76,17 +76,17 @@
 			</dependency>
 			<dependency>
 				<groupId>dev.dsf</groupId>
+				<artifactId>dsf-fhir-auth</artifactId>
+				<version>${dsf.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>dev.dsf</groupId>
 				<artifactId>dsf-fhir-rest-adapter</artifactId>
 				<version>${dsf.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>dev.dsf</groupId>
 				<artifactId>dsf-fhir-server</artifactId>
-				<version>${dsf.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>dev.dsf</groupId>
-				<artifactId>dsf-tools-documentation-generator</artifactId>
 				<version>${dsf.version}</version>
 			</dependency>
 
