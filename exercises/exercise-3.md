@@ -75,6 +75,6 @@ To verify the `dsfdev_dicProcess` can be executed successfully, we need to deplo
    SSL state because it keeps using the client certificate from before. Afterward, you can visit https://dic/fhir again but refuse to send a 
    client certificate when asked. This should forward you to the Keycloak login page.
 
-If all went well, you should have been able to start the process via both the client certificate and your Keycloak user.
+If all went well, you should have been able to start the process via both the client certificate and the Keycloak user.
 ___
 [Prerequisites](prerequisites.md) • [Exercise 0](exercise-0.md) • [Exercise 1](exercise-1.md) • [Exercise 1.1](exercise-1-1.md) • [Exercise 2](exercise-2.md) • **Exercise 3** • [Exercise 4](exercise-4.md) • [Exercise 5](exercise-5.md) • [Exercise 6](exercise-6.md) • [Exercise 7](exercise-7.md)
