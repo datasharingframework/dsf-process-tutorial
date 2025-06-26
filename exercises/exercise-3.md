@@ -22,7 +22,7 @@ and [ActivityDefinitions](../learning/concepts/fhir/activitydefinition.md).
 
 ## Exercise Tasks
 
-1. Change the `requester` element in the ActivityDefinition `dic-process.xml` to allow all local clients with a practitioner role of `DSF_ADMIN` to request `dicProcess` messages.
+1. Add another `requester` element to the ActivityDefinition `dic-process.xml` which allows all local clients with a practitioner role of `DSF_ADMIN` to request `dicProcess` messages.
    <details>
    <summary>Don't know how to change the ActivityDefinition?</summary>
 
@@ -30,17 +30,7 @@ and [ActivityDefinitions](../learning/concepts/fhir/activitydefinition.md).
    You can also check out the [guide on creating ActivityDefinitions](../learning/guides/creating-an-activity-definition.md).
    </details>
 
-2. We just made it so you will not be able to start the `dicProcess` using the client certificate utilized in earlier exercises.
-   Add another `requester` to the ActivityDefinition `dic-process.xml` which allows local clients from the `dic.dsf.test` organization to request `dicProcess` messages,
-   in case you still want to use the client certificate to start the process.
-   <details>
-   <summary>Don't know how to change the ActivityDefinition?</summary>
-
-   There is a list of examples for the `requester` element [here](../learning/concepts/dsf/examples-for-requester-and-recipient-elements).
-   You can also check out the [guide on creating ActivityDefinitions](../learning/guides/creating-an-activity-definition.md).
-   </details>
-
-3. Just like in [exercise 2](exercise-2.md), we just changed a FHIR resource in a way that breaks compatibility with older versions of the plugin. Therefore, we need to signal this change by incrementing the resource version to `1.2`.
+2. Just like in [exercise 2](exercise-2.md), we just changed a FHIR resource in a way that breaks compatibility with older versions of the plugin. Therefore, we need to signal this change by incrementing the resource version to `1.2`.
 
    
 
