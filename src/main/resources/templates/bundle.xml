@@ -12,7 +12,7 @@
 					</tag>
 				</meta>
 				<extension url="http://dsf.dev/fhir/StructureDefinition/extension-certificate-thumbprint">
-					<valueString value="TODO"/>
+					<valueString value="${cos-client.thumbprint}"/>
 				</extension>
 				<identifier>
 					<system value="http://dsf.dev/sid/organization-identifier"/>
@@ -43,7 +43,7 @@
 					</tag>
 				</meta>
 				<extension url="http://dsf.dev/fhir/StructureDefinition/extension-certificate-thumbprint">
-					<valueString value="TODO"/>
+					<valueString value="${dic-client.thumbprint}"/>
 				</extension>
 				<identifier>
 					<system value="http://dsf.dev/sid/organization-identifier"/>
@@ -74,7 +74,7 @@
 					</tag>
 				</meta>
 				<extension url="http://dsf.dev/fhir/StructureDefinition/extension-certificate-thumbprint">
-					<valueString value="TODO"/>
+					<valueString value="${hrp-client.thumbprint}"/>
 				</extension>
 				<identifier>
 					<system value="http://dsf.dev/sid/organization-identifier"/>
