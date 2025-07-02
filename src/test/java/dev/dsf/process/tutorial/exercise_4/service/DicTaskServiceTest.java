@@ -28,7 +28,6 @@ import dev.dsf.bpe.v2.constants.NamingSystems;
 import dev.dsf.bpe.v2.service.TaskHelper;
 import dev.dsf.bpe.v2.variables.Target;
 import dev.dsf.bpe.v2.variables.Variables;
-import dev.dsf.fhir.authorization.read.ReadAccessHelper;
 import dev.dsf.process.tutorial.service.DicTask;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -37,9 +36,6 @@ public class DicTaskServiceTest
 
 	@Mock
 	private TaskHelper taskHelper;
-
-	@Mock
-	private ReadAccessHelper readAccessHelper;
 
 	@Mock
 	private DelegateExecution execution;
