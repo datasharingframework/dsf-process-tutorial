@@ -384,6 +384,8 @@
 										<target>dev-setup/secrets/app_cos_client_certificate.crt</target>
 										<target>dev-setup/secrets/app_cos_client_certificate.key</target>
 										<target>browser-certs/cos-client.p12</target>
+										<target>browser-certs/cos-client.crt</target>
+										<target>browser-certs/cos-client.key</target>
 									</targets>
 								</cert>
 								<cert>
@@ -393,6 +395,8 @@
 										<target>dev-setup/secrets/app_dic_client_certificate.crt</target>
 										<target>dev-setup/secrets/app_dic_client_certificate.key</target>
 										<target>browser-certs/dic-client.p12</target>
+										<target>browser-certs/dic-client.crt</target>
+										<target>browser-certs/dic-client.key</target>
 									</targets>
 								</cert>
 								<cert>
@@ -402,6 +406,8 @@
 										<target>dev-setup/secrets/app_hrp_client_certificate.crt</target>
 										<target>dev-setup/secrets/app_hrp_client_certificate.key</target>
 										<target>browser-certs/hrp-client.p12</target>
+										<target>browser-certs/hrp-client.crt</target>
+										<target>browser-certs/hrp-client.key</target>
 									</targets>
 								</cert>
 							</certs>
