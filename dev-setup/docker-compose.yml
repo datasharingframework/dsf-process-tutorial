@@ -5,9 +5,10 @@ services:
     ports:
       - 127.0.0.1:443:443
     secrets:
-      - proxy_certificate_and_int_cas.pem
-      - proxy_certificate_private_key.pem
-      - proxy_trusted_client_cas.pem
+      - localhost.chain.crt
+      - localhost.key.plain
+      - issuing_ca.crt
+      - ca_chain.crt
     volumes:
       - type: bind
         source: ./proxy/conf.d
@@ -103,7 +104,7 @@ services:
       --spi-truststore-file-hostname-verification-policy=STRICT
 
   cos-fhir:
-    image: ghcr.io/datasharingframework/fhir:2.0.0-M2
+    image: ghcr.io/datasharingframework/fhir:2.0.0-M3
     restart: "no"
     ports:
       - 127.0.0.1:5002:5002
@@ -111,8 +112,7 @@ services:
       - db_liquibase.password
       - db_cos_fhir_user.password
       - db_cos_fhir_user_permanent_delete.password
-      - app_server_trust_certificates.pem
-      - app_client_trust_certificates.pem
+      - ca_chain.crt
       - app_cos_client_certificate.pem
       - app_cos_client_certificate_private_key.pem
       - app_cos_client_certificate_private_key.pem.password
@@ -126,11 +126,11 @@ services:
     environment:
       TZ: Europe/Berlin
       EXTRA_JVM_ARGS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5002
-      JETTY_CLIENT_TRUSTSTORE_PEM: /run/secrets/app_server_trust_certificates.pem
+      JETTY_CLIENT_TRUSTSTORE_PEM: /run/secrets/ca_chain.crt
       DEV_DSF_FHIR_DB_LIQUIBASE_PASSWORD_FILE: /run/secrets/db_liquibase.password
       DEV_DSF_FHIR_DB_USER_PASSWORD_FILE: /run/secrets/db_cos_fhir_user.password
       DEV_DSF_FHIR_DB_USER_PERMANENT_DELETE_PASSWORD_FILE: /run/secrets/db_cos_fhir_user_permanent_delete.password
-      DEV_DSF_FHIR_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_server_trust_certificates.pem
+      DEV_DSF_FHIR_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/ca_chain.crt
       DEV_DSF_FHIR_CLIENT_CERTIFICATE: /run/secrets/app_cos_client_certificate.pem
       DEV_DSF_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY: /run/secrets/app_cos_client_certificate_private_key.pem
       DEV_DSF_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY_PASSWORD_FILE: /run/secrets/app_cos_client_certificate_private_key.pem.password
@@ -142,12 +142,12 @@ services:
       DEV_DSF_FHIR_SERVER_BASE_URL: https://cos/fhir
       DEV_DSF_FHIR_SERVER_ORGANIZATION_IDENTIFIER_VALUE: cos.dsf.test
       DEV_DSF_FHIR_SERVER_ORGANIZATION_THUMBPRINT: ${COS_BUNDLE_USER_THUMBPRINT}
-      DEV_DSF_SERVER_AUTH_TRUST_CLIENT_CERTIFICATE_CAS: /run/secrets/app_client_trust_certificates.pem
+      DEV_DSF_SERVER_AUTH_TRUST_CLIENT_CERTIFICATE_CAS: /run/secrets/ca_chain.crt
       DEV_DSF_SERVER_AUTH_OIDC_AUTHORIZATION_CODE_FLOW: 'true'
       DEV_DSF_SERVER_AUTH_OIDC_BACK_CHANNEL_LOGOUT: 'true'
       DEV_DSF_SERVER_AUTH_OIDC_BEARER_TOKEN: 'true'
       DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_REALM_BASE_URL: https://keycloak:8443/realms/cos
-      DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_server_trust_certificates.pem
+      DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/ca_chain.crt
       DEV_DSF_SERVER_AUTH_OIDC_CLIENT_ID: cos-fhir
       DEV_DSF_SERVER_AUTH_OIDC_CLIENT_SECRET: P7XhxzBixIf9vPdprItkbOXZwtSX2JNt
       DEV_DSF_FHIR_SERVER_ROLECONFIG: |
@@ -175,7 +175,7 @@ services:
       - proxy
       - keycloak
   cos-bpe:
-    image: ghcr.io/datasharingframework/bpe:2.0.0-M2
+    image: ghcr.io/datasharingframework/bpe:2.0.0-M3
     restart: "no"
     ports:
       - 127.0.0.1:5005:5005
@@ -183,8 +183,7 @@ services:
       - db_liquibase.password
       - db_cos_bpe_user.password
       - db_cos_bpe_user_camunda.password
-      - app_server_trust_certificates.pem
-      - app_client_trust_certificates.pem
+      - ca_chain.crt
       - app_cos_client_certificate.pem
       - app_cos_client_certificate_private_key.pem
       - app_cos_client_certificate_private_key.pem.password
@@ -209,7 +208,7 @@ services:
       DEV_DSF_BPE_DB_LIQUIBASE_PASSWORD_FILE: /run/secrets/db_liquibase.password
       DEV_DSF_BPE_DB_USER_PASSWORD_FILE: /run/secrets/db_cos_bpe_user.password
       DEV_DSF_BPE_DB_USER_CAMUNDA_PASSWORD_FILE: /run/secrets/db_cos_bpe_user_camunda.password
-      DEV_DSF_BPE_FHIR_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_client_trust_certificates.pem
+      DEV_DSF_BPE_FHIR_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/ca_chain.crt
       DEV_DSF_BPE_FHIR_CLIENT_CERTIFICATE: /run/secrets/app_cos_client_certificate.pem
       DEV_DSF_BPE_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY: /run/secrets/app_cos_client_certificate_private_key.pem
       DEV_DSF_BPE_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY_PASSWORD_FILE: /run/secrets/app_cos_client_certificate_private_key.pem.password
@@ -221,12 +220,12 @@ services:
       DEV_DSF_BPE_FHIR_SERVER_BASE_URL: https://cos/fhir
       DEV_DSF_BPE_SERVER_BASE_URL: https://cos/bpe
       DEV_DSF_BPE_SERVER_UI_THEME: dev
-      DEV_DSF_SERVER_AUTH_TRUST_CLIENT_CERTIFICATE_CAS: /run/secrets/app_client_trust_certificates.pem
+      DEV_DSF_SERVER_AUTH_TRUST_CLIENT_CERTIFICATE_CAS: /run/secrets/ca_chain.crt
       DEV_DSF_SERVER_AUTH_OIDC_AUTHORIZATION_CODE_FLOW: 'true'
       DEV_DSF_SERVER_AUTH_OIDC_BACK_CHANNEL_LOGOUT: 'true'
       DEV_DSF_SERVER_AUTH_OIDC_BEARER_TOKEN: 'true'
       DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_REALM_BASE_URL: https://keycloak:8443/realms/cos
-      DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_server_trust_certificates.pem
+      DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/ca_chain.crt
       DEV_DSF_SERVER_AUTH_OIDC_CLIENT_ID: cos-bpe
       DEV_DSF_SERVER_AUTH_OIDC_CLIENT_SECRET: 5GtUIUfoXnQVcsRfd0Hg4EGv14iAknGq
       DEV_DSF_BPE_SERVER_ROLECONFIG: |
@@ -247,7 +246,7 @@ services:
       - keycloak
 
   dic-fhir:
-    image: ghcr.io/datasharingframework/fhir:2.0.0-M2
+    image: ghcr.io/datasharingframework/fhir:2.0.0-M3
     restart: "no"
     ports:
       - 127.0.0.1:5000:5000
@@ -255,8 +254,7 @@ services:
       - db_liquibase.password
       - db_dic_fhir_user.password
       - db_dic_fhir_user_permanent_delete.password
-      - app_server_trust_certificates.pem
-      - app_client_trust_certificates.pem
+      - ca_chain.crt
       - app_dic_client_certificate.pem
       - app_dic_client_certificate_private_key.pem
       - app_dic_client_certificate_private_key.pem.password
@@ -273,7 +271,7 @@ services:
       DEV_DSF_FHIR_DB_LIQUIBASE_PASSWORD_FILE: /run/secrets/db_liquibase.password
       DEV_DSF_FHIR_DB_USER_PASSWORD_FILE: /run/secrets/db_dic_fhir_user.password
       DEV_DSF_FHIR_DB_USER_PERMANENT_DELETE_PASSWORD_FILE: /run/secrets/db_dic_fhir_user_permanent_delete.password
-      DEV_DSF_FHIR_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_server_trust_certificates.pem
+      DEV_DSF_FHIR_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/ca_chain.crt
       DEV_DSF_FHIR_CLIENT_CERTIFICATE: /run/secrets/app_dic_client_certificate.pem
       DEV_DSF_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY: /run/secrets/app_dic_client_certificate_private_key.pem
       DEV_DSF_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY_PASSWORD_FILE: /run/secrets/app_dic_client_certificate_private_key.pem.password
@@ -285,12 +283,12 @@ services:
       DEV_DSF_FHIR_SERVER_BASE_URL: https://dic/fhir
       DEV_DSF_FHIR_SERVER_ORGANIZATION_IDENTIFIER_VALUE: dic.dsf.test
       DEV_DSF_FHIR_SERVER_ORGANIZATION_THUMBPRINT: ${DIC_BUNDLE_USER_THUMBPRINT}
-      DEV_DSF_SERVER_AUTH_TRUST_CLIENT_CERTIFICATE_CAS: /run/secrets/app_client_trust_certificates.pem
+      DEV_DSF_SERVER_AUTH_TRUST_CLIENT_CERTIFICATE_CAS: /run/secrets/ca_chain.crt
       DEV_DSF_SERVER_AUTH_OIDC_AUTHORIZATION_CODE_FLOW: 'true'
       DEV_DSF_SERVER_AUTH_OIDC_BACK_CHANNEL_LOGOUT: 'true'
       DEV_DSF_SERVER_AUTH_OIDC_BEARER_TOKEN: 'true'
       DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_REALM_BASE_URL: https://keycloak:8443/realms/dic
-      DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_server_trust_certificates.pem
+      DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/ca_chain.crt
       DEV_DSF_SERVER_AUTH_OIDC_CLIENT_ID: dic-fhir
       DEV_DSF_SERVER_AUTH_OIDC_CLIENT_SECRET: mF0GEtjFoyWIM3in4VCwifGI3azb4DTn
       DEV_DSF_FHIR_SERVER_ROLECONFIG: |
@@ -307,6 +305,17 @@ services:
               - PERMANENT_DELETE
             practitioner-role:
               - http://dsf.dev/fhir/CodeSystem/practitioner-role|DSF_ADMIN
+        - tutorial_role:
+            token-role: tutorial
+            dsf-role:
+              - CREATE
+              - READ
+              - UPDATE
+              - DELETE
+              - SEARCH
+              - HISTORY
+            practitioner-role:
+              - http://dsf.dev/fhir/CodeSystem/practitioner-role|DSF_ADMIN
 
     networks:
       dic-fhir-frontend:
@@ -318,7 +327,7 @@ services:
       - proxy
       - keycloak
   dic-bpe:
-    image: ghcr.io/datasharingframework/bpe:2.0.0-M2
+    image: ghcr.io/datasharingframework/bpe:2.0.0-M3
     restart: "no"
     ports:
       - 127.0.0.1:5003:5003
@@ -326,8 +335,7 @@ services:
       - db_liquibase.password
       - db_dic_bpe_user.password
       - db_dic_bpe_user_camunda.password
-      - app_server_trust_certificates.pem
-      - app_client_trust_certificates.pem
+      - ca_chain.crt
       - app_dic_client_certificate.pem
       - app_dic_client_certificate_private_key.pem
       - app_dic_client_certificate_private_key.pem.password
@@ -352,7 +360,7 @@ services:
       DEV_DSF_BPE_DB_LIQUIBASE_PASSWORD_FILE: /run/secrets/db_liquibase.password
       DEV_DSF_BPE_DB_USER_PASSWORD_FILE: /run/secrets/db_dic_bpe_user.password
       DEV_DSF_BPE_DB_USER_CAMUNDA_PASSWORD_FILE: /run/secrets/db_dic_bpe_user_camunda.password
-      DEV_DSF_BPE_FHIR_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_server_trust_certificates.pem
+      DEV_DSF_BPE_FHIR_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/ca_chain.crt
       DEV_DSF_BPE_FHIR_CLIENT_CERTIFICATE: /run/secrets/app_dic_client_certificate.pem
       DEV_DSF_BPE_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY: /run/secrets/app_dic_client_certificate_private_key.pem
       DEV_DSF_BPE_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY_PASSWORD_FILE: /run/secrets/app_dic_client_certificate_private_key.pem.password
@@ -364,12 +372,12 @@ services:
       DEV_DSF_BPE_FHIR_SERVER_BASE_URL: https://dic/fhir
       DEV_DSF_BPE_SERVER_BASE_URL: https://dic/bpe
       DEV_DSF_BPE_SERVER_UI_THEME: dev
-      DEV_DSF_SERVER_AUTH_TRUST_CLIENT_CERTIFICATE_CAS: /run/secrets/app_client_trust_certificates.pem
+      DEV_DSF_SERVER_AUTH_TRUST_CLIENT_CERTIFICATE_CAS: /run/secrets/ca_chain.crt
       DEV_DSF_SERVER_AUTH_OIDC_AUTHORIZATION_CODE_FLOW: 'true'
       DEV_DSF_SERVER_AUTH_OIDC_BACK_CHANNEL_LOGOUT: 'true'
       DEV_DSF_SERVER_AUTH_OIDC_BEARER_TOKEN: 'true'
       DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_REALM_BASE_URL: https://keycloak:8443/realms/dic
-      DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_server_trust_certificates.pem
+      DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/ca_chain.crt
       DEV_DSF_SERVER_AUTH_OIDC_CLIENT_ID: dic-bpe
       DEV_DSF_SERVER_AUTH_OIDC_CLIENT_SECRET: ytqFCErw9GfhVUrrM8xc0Grbu4r7qGig
       DEV_DSF_BPE_SERVER_ROLECONFIG: |
@@ -391,7 +399,7 @@ services:
       - keycloak
 
   hrp-fhir:
-    image: ghcr.io/datasharingframework/fhir:2.0.0-M2
+    image: ghcr.io/datasharingframework/fhir:2.0.0-M3
     restart: "no"
     ports:
       - 127.0.0.1:5001:5001
@@ -399,8 +407,7 @@ services:
       - db_liquibase.password
       - db_hrp_fhir_user.password
       - db_hrp_fhir_user_permanent_delete.password
-      - app_server_trust_certificates.pem
-      - app_client_trust_certificates.pem
+      - ca_chain.crt
       - app_hrp_client_certificate.pem
       - app_hrp_client_certificate_private_key.pem
       - app_hrp_client_certificate_private_key.pem.password
@@ -417,7 +424,7 @@ services:
       DEV_DSF_FHIR_DB_LIQUIBASE_PASSWORD_FILE: /run/secrets/db_liquibase.password
       DEV_DSF_FHIR_DB_USER_PASSWORD_FILE: /run/secrets/db_hrp_fhir_user.password
       DEV_DSF_FHIR_DB_USER_PERMANENT_DELETE_PASSWORD_FILE: /run/secrets/db_hrp_fhir_user_permanent_delete.password
-      DEV_DSF_FHIR_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_server_trust_certificates.pem
+      DEV_DSF_FHIR_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/ca_chain.crt
       DEV_DSF_FHIR_CLIENT_CERTIFICATE: /run/secrets/app_hrp_client_certificate.pem
       DEV_DSF_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY: /run/secrets/app_hrp_client_certificate_private_key.pem
       DEV_DSF_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY_PASSWORD_FILE: /run/secrets/app_hrp_client_certificate_private_key.pem.password
@@ -429,12 +436,12 @@ services:
       DEV_DSF_FHIR_SERVER_BASE_URL: https://hrp/fhir
       DEV_DSF_FHIR_SERVER_ORGANIZATION_IDENTIFIER_VALUE: hrp.dsf.test
       DEV_DSF_FHIR_SERVER_ORGANIZATION_THUMBPRINT: ${HRP_BUNDLE_USER_THUMBPRINT}
-      DEV_DSF_SERVER_AUTH_TRUST_CLIENT_CERTIFICATE_CAS: /run/secrets/app_client_trust_certificates.pem
+      DEV_DSF_SERVER_AUTH_TRUST_CLIENT_CERTIFICATE_CAS: /run/secrets/ca_chain.crt
       DEV_DSF_SERVER_AUTH_OIDC_AUTHORIZATION_CODE_FLOW: 'true'
       DEV_DSF_SERVER_AUTH_OIDC_BACK_CHANNEL_LOGOUT: 'true'
       DEV_DSF_SERVER_AUTH_OIDC_BEARER_TOKEN: 'true'
       DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_REALM_BASE_URL: https://keycloak:8443/realms/hrp
-      DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_server_trust_certificates.pem
+      DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/ca_chain.crt
       DEV_DSF_SERVER_AUTH_OIDC_CLIENT_ID: hrp-fhir
       DEV_DSF_SERVER_AUTH_OIDC_CLIENT_SECRET: 9i9WRfIedG7N3QoL5WuGM8hCoySblAhK
       DEV_DSF_FHIR_SERVER_ROLECONFIG: |
@@ -462,7 +469,7 @@ services:
       - keycloak
 
   hrp-bpe:
-    image: ghcr.io/datasharingframework/bpe:2.0.0-M2
+    image: ghcr.io/datasharingframework/bpe:2.0.0-M3
     restart: "no"
     ports:
       - 127.0.0.1:5004:5004
@@ -470,8 +477,7 @@ services:
       - db_liquibase.password
       - db_hrp_bpe_user.password
       - db_hrp_bpe_user_camunda.password
-      - app_server_trust_certificates.pem
-      - app_client_trust_certificates.pem
+      - ca_chain.crt
       - app_hrp_client_certificate.pem
       - app_hrp_client_certificate_private_key.pem
       - app_hrp_client_certificate_private_key.pem.password
@@ -496,7 +502,7 @@ services:
       DEV_DSF_BPE_DB_LIQUIBASE_PASSWORD_FILE: /run/secrets/db_liquibase.password
       DEV_DSF_BPE_DB_USER_PASSWORD_FILE: /run/secrets/db_hrp_bpe_user.password
       DEV_DSF_BPE_DB_USER_CAMUNDA_PASSWORD_FILE: /run/secrets/db_hrp_bpe_user_camunda.password
-      DEV_DSF_BPE_FHIR_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_server_trust_certificates.pem
+      DEV_DSF_BPE_FHIR_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/ca_chain.crt
       DEV_DSF_BPE_FHIR_CLIENT_CERTIFICATE: /run/secrets/app_hrp_client_certificate.pem
       DEV_DSF_BPE_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY: /run/secrets/app_hrp_client_certificate_private_key.pem
       DEV_DSF_BPE_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY_PASSWORD_FILE: /run/secrets/app_hrp_client_certificate_private_key.pem.password
@@ -508,12 +514,12 @@ services:
       DEV_DSF_BPE_FHIR_SERVER_BASE_URL: https://hrp/fhir
       DEV_DSF_BPE_SERVER_BASE_URL: https://hrp/bpe
       DEV_DSF_BPE_SERVER_UI_THEME: dev
-      DEV_DSF_SERVER_AUTH_TRUST_CLIENT_CERTIFICATE_CAS: /run/secrets/app_client_trust_certificates.pem
+      DEV_DSF_SERVER_AUTH_TRUST_CLIENT_CERTIFICATE_CAS: /run/secrets/ca_chain.crt
       DEV_DSF_SERVER_AUTH_OIDC_AUTHORIZATION_CODE_FLOW: 'true'
       DEV_DSF_SERVER_AUTH_OIDC_BACK_CHANNEL_LOGOUT: 'true'
       DEV_DSF_SERVER_AUTH_OIDC_BEARER_TOKEN: 'true'
       DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_REALM_BASE_URL: https://keycloak:8443/realms/hrp
-      DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/app_server_trust_certificates.pem
+      DEV_DSF_SERVER_AUTH_OIDC_PROVIDER_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/ca_chain.crt
       DEV_DSF_SERVER_AUTH_OIDC_CLIENT_ID: hrp-bpe
       DEV_DSF_SERVER_AUTH_OIDC_CLIENT_SECRET: VGTQD3WWH4uGUMz408NWNzcHF1MsfV0l
       DEV_DSF_BPE_SERVER_ROLECONFIG: |
@@ -534,20 +540,20 @@ services:
       - keycloak
 
 secrets:
-  proxy_certificate_and_int_cas.pem:
-    file: ./secrets/proxy_certificate_and_int_cas.pem
-  proxy_certificate_private_key.pem:
-    file: ./secrets/proxy_certificate_private_key.pem
-  proxy_trusted_client_cas.pem:
-    file: ./secrets/proxy_trusted_client_cas.pem
+  localhost.chain.crt:
+    file: ./secrets/localhost.chain.crt
+  localhost.key.plain:
+    file: ./secrets/localhost.key.plain
+  issuing_ca.crt:
+    file: ./secrets/issuing_ca.crt
 
   db_liquibase.password:
     file: ./secrets/db_liquibase.password
 
   keycloak_certificate.pem:
-    file: ./secrets/keycloak_certificate_and_int_cas.pem
+    file: ./secrets/keycloak_certificate_and_int_cas.chain.crt
   keycloak_certificate_private_key.pem:
-    file: ./secrets/keycloak_certificate_private_key.pem
+    file: ./secrets/keycloak_certificate.key.plain
   keycloak_trust_store.jks:
     file: ./secrets/keycloak_trust_store.jks
 
@@ -578,29 +584,27 @@ secrets:
   db_cos_bpe_user_camunda.password:
     file: ./secrets/db_cos_bpe_user_camunda.password
 
-  app_server_trust_certificates.pem:
-    file: ./secrets/app_client_trust_certificates.pem
-  app_client_trust_certificates.pem:
-    file: ./secrets/app_client_trust_certificates.pem
+  ca_chain.crt:
+    file: ./secrets/ca_chain.crt
 
   app_dic_client_certificate.pem:
-    file: ./secrets/app_dic_client_certificate.pem
+    file: ./secrets/app_dic_client_certificate.crt
   app_dic_client_certificate_private_key.pem:
-    file: ./secrets/app_dic_client_certificate_private_key.pem
+    file: ./secrets/app_dic_client_certificate.key
   app_dic_client_certificate_private_key.pem.password:
     file: ./secrets/app_client_certificate_private_key.pem.password
 
   app_hrp_client_certificate.pem:
-    file: ./secrets/app_hrp_client_certificate.pem
+    file: ./secrets/app_hrp_client_certificate.crt
   app_hrp_client_certificate_private_key.pem:
-    file: ./secrets/app_hrp_client_certificate_private_key.pem
+    file: ./secrets/app_hrp_client_certificate.key
   app_hrp_client_certificate_private_key.pem.password:
     file: ./secrets/app_client_certificate_private_key.pem.password
 
   app_cos_client_certificate.pem:
-    file: ./secrets/app_cos_client_certificate.pem
+    file: ./secrets/app_cos_client_certificate.crt
   app_cos_client_certificate_private_key.pem:
-    file: ./secrets/app_cos_client_certificate_private_key.pem
+    file: ./secrets/app_cos_client_certificate.key
   app_cos_client_certificate_private_key.pem.password:
     file: ./secrets/app_client_certificate_private_key.pem.password
 
