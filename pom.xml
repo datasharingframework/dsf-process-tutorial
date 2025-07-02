@@ -168,7 +168,7 @@
 	</dependencyManagement>
 
 	<build>
-		<finalName>tutorial-process-${version}</finalName>
+		<finalName>tutorial-process-${project.version}</finalName>
 		<pluginManagement>
 			<plugins>
 				<plugin>
