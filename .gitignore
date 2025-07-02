@@ -28,3 +28,6 @@ dev-setup/**/fhir/log/*.log.gz
 dev-setup/secrets/*.pem
 dev-setup/.env
 dev-setup/docker-compose.override.yml
+
+cert
+browser-certs
