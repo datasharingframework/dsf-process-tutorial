@@ -22,15 +22,14 @@ file if you need ideas on how to fill it out properly.
 
 Below are some cURL command skeletons. Replace all <>-Placeholders with appropriate values. Host name depends on the
 instance you want to address. For this tutorial this is either one of `dic`, `cos` or `hrp`. [Certificates](../concepts/dsf/certificates.md) can be found in
-`test-data-generator/cert`. Client [certificates](../concepts/dsf/certificates.md) and private keys can be found
-in the folder of their respective instance e.g. `test-data-generator/cert/dic-client` for the `dic` instance.
+`browser-certs`. This directory includes client certificates (`.crt`) and their private keys (`.key`) for all instances as well as the CA certificate (`root-ca.crt`).
 
 ##### Linux:
 ```shell
 curl https://<instance-host-name>/fhir/Task \
---cacert <path/to/ca-certificate-file.pem> \
---cert <path/to/client-certificate-file.pem>:password \
---key <path/to/client-private-key-file.pem> \
+--cacert <path/to/ca-certificate-file.crt> \
+--cert <path/to/client-certificate-file.crt>:password \
+--key <path/to/client-private-key-file.key> \
 -H "Content-Type: application/fhir+xml" \
 -H "Accept: application/fhir+xml" \
 -d @<path/to/example-task.xml>
@@ -38,9 +37,9 @@ curl https://<instance-host-name>/fhir/Task \
 ##### Windows CMD:
 ```shell
 curl https://<instance-host-name>/fhir/Task ^
---cacert <path/to/ca-certificate-file.pem> ^
---cert <path/to/client-certificate-file.pem>:password ^
---key <path/to/client-private-key-file.pem> ^
+--cacert <path/to/ca-certificate-file.crt> ^
+--cert <path/to/client-certificate-file.crt>:password ^
+--key <path/to/client-private-key-file.key> ^
 -H "Content-Type: application/fhir+xml" ^
 -H "Accept: application/fhir+xml" ^
 -d @<path/to/example-task.xml>
