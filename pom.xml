@@ -12,7 +12,7 @@
 		<compileTarget>21</compileTarget>
 
 		<main.basedir>${project.basedir}</main.basedir>
-		<dsf.version>2.0.0-M3</dsf.version>
+		<dsf.version>2.0.0-M4</dsf.version>
 		<slf4j.version>2.0.9</slf4j.version>
 		<log4j.version>2.22.0</log4j.version>
 	</properties>
@@ -56,6 +56,18 @@
 		<dependency>
 			<groupId>org.camunda.bpm</groupId>
 			<artifactId>camunda-engine</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>dev.dsf</groupId>
+			<artifactId>dsf-fhir-validation</artifactId>
+			<version>${dsf.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>dev.dsf</groupId>
+			<artifactId>dsf-fhir-auth</artifactId>
+			<version>${dsf.version}</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -235,7 +247,7 @@
 				<groupId>net.revelc.code.formatter</groupId>
 				<artifactId>formatter-maven-plugin</artifactId>
 				<configuration>
-					<configFile>${main.basedir}/src/main/resources/eclipse-formatter-config.xml</configFile>
+					<configFile>eclipse-formatter-config.xml</configFile>
 				</configuration>
 			</plugin>
 			<plugin>
