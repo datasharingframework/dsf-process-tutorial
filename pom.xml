@@ -321,21 +321,21 @@
 				<configuration>
 					<filesets>
 						<fileset>
-							<directory>../dev-setup/cos/bpe/process</directory>
+							<directory>./dev-setup/cos/bpe/process</directory>
 							<includes>
 								<include>*.jar</include>
 							</includes>
 							<followSymlinks>false</followSymlinks>
 						</fileset>
 						<fileset>
-							<directory>../dev-setup/dic/bpe/process</directory>
+							<directory>./dev-setup/dic/bpe/process</directory>
 							<includes>
 								<include>*.jar</include>
 							</includes>
 							<followSymlinks>false</followSymlinks>
 						</fileset>
 						<fileset>
-							<directory>../dev-setup/hrp/bpe/process</directory>
+							<directory>./dev-setup/hrp/bpe/process</directory>
 							<includes>
 								<include>*.jar</include>
 							</includes>
