@@ -38,7 +38,7 @@ public class TaskProfileTest
 
 	@ClassRule
 	public static final ValidationSupportRule validationRule = new ValidationSupportRule(RESOURCE_VERSION, RELEASE_DATE,
-			Arrays.asList("dsf-task-base-1.0.0.xml", "task-start-dic-process.xml", "task-hello-cos.xml"),
+			Arrays.asList("dsf-task-base-2.0.0.xml", "task-start-dic-process.xml", "task-hello-cos.xml"),
 			Arrays.asList("dsf-read-access-tag-1.0.0.xml", "dsf-bpmn-message-1.0.0.xml", "tutorial.xml"),
 			Arrays.asList("dsf-read-access-tag-1.0.0.xml", "dsf-bpmn-message-1.0.0.xml", "tutorial.xml"));
 
