@@ -136,7 +136,7 @@ Verify that the build was successful and no test failures occurred.
 ### Process Execution and Manual Tests
 To verify the `dsfdev_votingProcess` can be executed successfully, we need to deploy them into DSF instances and execute the `dsfdev_votingProcess`. The maven `install` build is configured to create a process jar file with all necessary resources and copy the jar to the appropriate locations of the docker dev setup.
 Again, you may decide to authenticate and start the process via the certificate or the Keycloak user `Tyler Tester` with username `test` and password `test`. You can find the client certificate
-in `.../dsf-process-tutorial/test-data-generator/cert/hrp-client/hrp-client_certificate.p12` (password: password).
+in `.../dsf-process-tutorial/browser-certs/hrp/hrp-client.p12` (password: password).
 
 1. Start the DSF FHIR server for the `dic.dsf.test` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
    ```

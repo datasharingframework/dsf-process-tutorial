@@ -12,7 +12,7 @@
 		<compileTarget>21</compileTarget>
 
 		<main.basedir>${project.basedir}</main.basedir>
-		<dsf.version>2.0.0-M3</dsf.version>
+		<dsf.version>2.0.0-M4</dsf.version>
 		<slf4j.version>2.0.9</slf4j.version>
 		<log4j.version>2.22.0</log4j.version>
 	</properties>
@@ -44,22 +44,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-core</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.camunda.bpm.model</groupId>
-			<artifactId>camunda-bpmn-model</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.camunda.bpm</groupId>
-			<artifactId>camunda-engine</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
 		</dependency>
@@ -79,6 +63,31 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.camunda.bpm.model</groupId>
+			<artifactId>camunda-bpmn-model</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.camunda.bpm</groupId>
+			<artifactId>camunda-engine</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>dev.dsf</groupId>
+			<artifactId>dsf-fhir-validation</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>dev.dsf</groupId>
+			<artifactId>dsf-fhir-auth</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -115,6 +124,11 @@
 			<dependency>
 				<groupId>dev.dsf</groupId>
 				<artifactId>dsf-fhir-server</artifactId>
+				<version>${dsf.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>dev.dsf</groupId>
+				<artifactId>dsf-fhir-validation</artifactId>
 				<version>${dsf.version}</version>
 			</dependency>
 
@@ -168,7 +182,7 @@
 	</dependencyManagement>
 
 	<build>
-		<finalName>tutorial-process-${version}</finalName>
+		<finalName>tutorial-process-${project.version}</finalName>
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -235,7 +249,7 @@
 				<groupId>net.revelc.code.formatter</groupId>
 				<artifactId>formatter-maven-plugin</artifactId>
 				<configuration>
-					<configFile>${main.basedir}/src/main/resources/eclipse-formatter-config.xml</configFile>
+					<configFile>eclipse-formatter-config.xml</configFile>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -309,21 +323,21 @@
 				<configuration>
 					<filesets>
 						<fileset>
-							<directory>../dev-setup/cos/bpe/process</directory>
+							<directory>./dev-setup/cos/bpe/process</directory>
 							<includes>
 								<include>*.jar</include>
 							</includes>
 							<followSymlinks>false</followSymlinks>
 						</fileset>
 						<fileset>
-							<directory>../dev-setup/dic/bpe/process</directory>
+							<directory>./dev-setup/dic/bpe/process</directory>
 							<includes>
 								<include>*.jar</include>
 							</includes>
 							<followSymlinks>false</followSymlinks>
 						</fileset>
 						<fileset>
-							<directory>../dev-setup/hrp/bpe/process</directory>
+							<directory>./dev-setup/hrp/bpe/process</directory>
 							<includes>
 								<include>*.jar</include>
 							</includes>
@@ -384,6 +398,8 @@
 										<target>dev-setup/secrets/app_cos_client_certificate.crt</target>
 										<target>dev-setup/secrets/app_cos_client_certificate.key</target>
 										<target>browser-certs/cos-client.p12</target>
+										<target>browser-certs/cos-client.crt</target>
+										<target>browser-certs/cos-client.key</target>
 									</targets>
 								</cert>
 								<cert>
@@ -393,6 +409,8 @@
 										<target>dev-setup/secrets/app_dic_client_certificate.crt</target>
 										<target>dev-setup/secrets/app_dic_client_certificate.key</target>
 										<target>browser-certs/dic-client.p12</target>
+										<target>browser-certs/dic-client.crt</target>
+										<target>browser-certs/dic-client.key</target>
 									</targets>
 								</cert>
 								<cert>
@@ -402,6 +420,8 @@
 										<target>dev-setup/secrets/app_hrp_client_certificate.crt</target>
 										<target>dev-setup/secrets/app_hrp_client_certificate.key</target>
 										<target>browser-certs/hrp-client.p12</target>
+										<target>browser-certs/hrp-client.crt</target>
+										<target>browser-certs/hrp-client.key</target>
 									</targets>
 								</cert>
 							</certs>
