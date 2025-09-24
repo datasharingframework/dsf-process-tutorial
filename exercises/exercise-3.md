@@ -13,7 +13,7 @@ thumbprints of their client certificates or by using [OpenID Connect](https://op
 For this exercise, we will include [OpenID Connect](https://openid.net/developers/how-connect-works/) in the configuration through a [Keycloak](https://www.keycloak.org/) instance. We have already created a user for you in the `DIC` realm who has sufficient
 access to the FHIR REST API and who is allowed to start our `dicProcess`.  
 The administration console for Keycloak is accessible under https://keycloak:8443.
-Credentials for administrator access are `username: admin` and `password: admin`. There is also a DSF Role Config for the [DIC FHIR server instance](../dev-setup/docker-compose.yml) set up in accordance with the Keycloak configuration.   
+Credentials for administrator access are `username: admin` and `password: admin`. There is also a DSF Role Config for the [DIC FHIR server instance](./dev-setup/docker-compose.yml) set up in accordance with the Keycloak configuration.   
 Your task will be to take this user and explicitly allow them to start the `dicProcess`. Optionally, you can also add
 Keycloak users for the `COS` and `HRP` instances.
 
