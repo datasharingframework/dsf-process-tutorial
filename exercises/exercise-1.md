@@ -5,26 +5,20 @@ The concept of `Tasks` exists in both the FHIR and BPMN domains. For this tutori
 to [FHIR Tasks](https://www.hl7.org/fhir/R4/task.html) and `Service Task` always means the BPMN concept.
 
 # Troubleshooting Tip
-Over the course of the exercises you should keep in mind to take a look at the DSF FHIR server or DSF BPE server logs. 
+Over the course of the exercises you should remember to take a look at the DSF FHIR server or DSF BPE server logs. 
 You can use the logs provided by docker or the debug logs located in `dev-setup/{dsfInstance}/bpe/log` and `dev-setup/{dsfInstance}/fhir/log`.
 The DSF FHIR server also has an audit log available in this directory.
 
 # Exercise 1 - Simple Process
 The first exercise focuses on setting up the development environment used in this tutorial and shows how to implement and execute a simple
 BPMN process. But first, let's make ourselves familiar with the project structure.  
-The tutorial project consists of three parts:
-1. A `test-data-generator` project used to generate X.509 certificates and FHIR resources
-   during the maven build of the project. The certificates and FHIR resources are needed to start DSF instances which simulate
-   installations at three different organizations.
-2. The DSF instances are created using [Docker](https://www.docker.com/) and configured using
-   a `docker-compose.yml` file in the `dev-setup` folder. The docker-compose dev setup uses a single PostgreSQL database server,
-   a single nginx reverse proxy, a keycloak instance as well as three separate DSF FHIR server instances and 3 separate DSF BPE server instances.
-3. The `tutorial-process` project contains all resources (FHIR resources, BPMN models and Java code) for the actual
-   DSF process plugin. Java code for the `tutorial-process` project is located at `src/main/java`, FHIR resources and
-   BPMN process models at `src/main/resources` as well as prepared JUnit tests to verify your solution at `src/test/java`.
+The tutorial project consists of three major parts:
+1. A preconfigured installation of three DSF instances each part of their own organization. The setup can be found in the `dev-setup` directory and is using [Docker](https://www.docker.com/).
+2. A `browser-certs` directory containing all [certificates](../learning/concepts/dsf/certificates.md) that are required during the tutorial.  
+3. The tutorial process plugin and its resources under `src`. Resources include FHIR resources and BPMN files.
 
-FHIR resources used in the DSF are formatted as XML. You can find them in the `tutorial-process/src/main/resources/fhir` directory.
-When creating your own FHIR resources for DSF process plugins you also want to put them in a fitting subdirectory of `tutorial-process/src/main/resources/fhir`.
+FHIR resources used in the DSF are formatted as XML. You can find them in the `src/main/resources/fhir` directory.
+When creating your own FHIR resources for DSF process plugins you also want to put them in a fitting subdirectory of `src/main/resources/fhir`.
 
 We recommend you take a quick glance at all the topics in the `learning` directory to get a 
 feel for the scope of this tutorial.  
@@ -110,13 +104,13 @@ To verify the `dsfdev_dicProcess` can be executed successfully, we need to deplo
 	```
 	Verify the DSF FHIR server started successfully at https://dic/fhir. 
 	The DSF FHIR server uses a server certificate that was generated during the first maven install build. 
-    To authenticate yourself to the server you can use the client certificate located at `.../dsf-process-tutorial/test-data-generator/cert/dic-client/dic-client_certificate.p12` (Password: `password`). 
-    Add the certificate and the generated Root CA located at `.../dsf-process-tutorial/test-data-generator/cert/ca/testca_certificate.pem` to your browser certificate store.
+    To authenticate yourself to the server you can use the client certificate located at `.../dsf-process-tutorial/browser-certs/dic/dic-client.p12` (Password: `password`). 
+    Add the certificate and the generated Root CA located at `.../dsf-process-tutorial/browser-certs/root-ca.crt` to your browser certificate store.
 	
 	**Caution:** __If you add the generated Root CA to your browsers certificate store as a trusted Root CA, make sure you are 
-    the only one with access to the private key at `.../dsf-process-tutorial/test-data-generator/cert/ca/testca_private-key.pem`.__
+    the only one with access to the private key at `.../dsf-process-tutorial/cert/DSF_Dev_Root_CA.key`.__
 
-2. Start the DSF BPE server for the `dic.dsf.test` organization in a second console at location `.../dsf-process-tutorial/dev-setup`:
+2. Start the DSF BPE server for the `dic.dsf.test` organization in a second console in the `dev-setup` directory:
 	```
 	docker-compose up dic-bpe
 	```
