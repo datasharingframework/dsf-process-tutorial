@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1yb5vw3" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.17.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1yb5vw3" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.39.0">
   <bpmn:process id="dsfdev_dicProcess" isExecutable="true" camunda:versionTag="#{version}">
     <bpmn:extensionElements />
-    <bpmn:sequenceFlow id="SequenceFlow_0bbhq2r" sourceRef="startDicProcess" targetRef="DicTask" />
     <bpmn:endEvent id="EndEvent_0xd0x8k">
-      <bpmn:incoming>SequenceFlow_0oyvmcd</bpmn:incoming>
+      <bpmn:incoming>Flow_1xiq2xo</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_0oyvmcd" sourceRef="DicTask" targetRef="EndEvent_0xd0x8k" />
-    <bpmn:serviceTask id="DicTask" name="Dic Task">
-      <bpmn:incoming>SequenceFlow_0bbhq2r</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_0oyvmcd</bpmn:outgoing>
-    </bpmn:serviceTask>
     <bpmn:startEvent id="startDicProcess">
-      <bpmn:outgoing>SequenceFlow_0bbhq2r</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1ec43cj</bpmn:outgoing>
       <bpmn:messageEventDefinition messageRef="Message_1nn2wdw" />
     </bpmn:startEvent>
+    <bpmn:serviceTask id="Activity_1tegofl" name="Dic Task" camunda:class="dev.dsf.process.tutorial.service.DicTask">
+      <bpmn:incoming>Flow_1ec43cj</bpmn:incoming>
+      <bpmn:outgoing>Flow_1xiq2xo</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1ec43cj" sourceRef="startDicProcess" targetRef="Activity_1tegofl" />
+    <bpmn:sequenceFlow id="Flow_1xiq2xo" sourceRef="Activity_1tegofl" targetRef="EndEvent_0xd0x8k" />
   </bpmn:process>
   <bpmn:message id="Message_1nn2wdw" name="startDicProcess" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -22,18 +22,19 @@
       <bpmndi:BPMNShape id="EndEvent_0xd0x8k_di" bpmnElement="EndEvent_0xd0x8k">
         <dc:Bounds x="462" y="103" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="ServiceTask_0um3ad2_di" bpmnElement="DicTask">
-        <dc:Bounds x="280" y="81" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="StartEvent_0x5gijn_di" bpmnElement="startDicProcess">
         <dc:Bounds x="179" y="103" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_0bbhq2r_di" bpmnElement="SequenceFlow_0bbhq2r">
+      <bpmndi:BPMNShape id="Activity_0hg0c8i_di" bpmnElement="Activity_1tegofl">
+        <dc:Bounds x="290" y="81" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1ec43cj_di" bpmnElement="Flow_1ec43cj">
         <di:waypoint x="215" y="121" />
-        <di:waypoint x="280" y="121" />
+        <di:waypoint x="290" y="121" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow_0oyvmcd_di" bpmnElement="SequenceFlow_0oyvmcd">
-        <di:waypoint x="380" y="121" />
+      <bpmndi:BPMNEdge id="Flow_1xiq2xo_di" bpmnElement="Flow_1xiq2xo">
+        <di:waypoint x="390" y="121" />
         <di:waypoint x="462" y="121" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
