@@ -1,3 +1,7 @@
+# DISCLAIMER
+In its current state, the tutorial can only be done by checking out the version of the [DSF](https://github.com/datasharingframework/dsf) that is used in the tutorial and running `maven install` because some dependencies are not uploaded to public repositories.
+
+
 # DSF Process Plugin Tutorial
 This repository contains exercises to learn how to implement process plugins for the [Data Sharing Framework (DSF)](https://github.com/datasharingframework/dsf). The main documentation for the DSF can be found under [dsf.dev](https://dsf.dev). The tutorial is divided into several exercises that build on each other. For each exercise, a sample solution is provided in a separate branch. You should work on solving the exercises in your local main branch and checkout the solution branches if necessary.
 
