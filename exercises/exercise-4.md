@@ -55,7 +55,7 @@ Verify that the build was successful and no test failures occurred.
 To verify the `dsfdev_dicProcess` and `dsfdev_cosProcess`es can be executed successfully, we need to deploy them into DSF instances and execute the `dsfdev_dicProcess`. The maven `install` build is configured to create a process jar file with all necessary resources and copy the jar to the appropriate locations of the docker dev setup.
 Don't forget that you will have to add the client certificate for the `COS` instance to your browser the same way you added it for the `DIC` instance
 in [exercise 1](exercise-1.md) or use the Keycloak user `Tyler Tester` with username `test` and password `test`. Otherwise, you won't be able to access [https://cos/fhir](https://cos/fhir). You can find the client certificate
-in `.../dsf-process-tutorial/test-data-generator/cert/cos-client/cos-client_certificate.p12` (password: password).
+in `.../dsf-process-tutorial/browser-certs/cos/cos-client.p12` (password: password).
 
 1. Start the DSF FHIR server for the `dic.dsf.test` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
    ```
