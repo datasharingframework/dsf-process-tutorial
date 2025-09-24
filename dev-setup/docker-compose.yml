@@ -104,7 +104,7 @@ services:
       --spi-truststore-file-hostname-verification-policy=STRICT
 
   cos-fhir:
-    image: ghcr.io/datasharingframework/fhir:2.0.0-M3
+    image: ghcr.io/datasharingframework/fhir:2.0.0-M4
     restart: "no"
     ports:
       - 127.0.0.1:5002:5002
@@ -175,7 +175,7 @@ services:
       - proxy
       - keycloak
   cos-bpe:
-    image: ghcr.io/datasharingframework/bpe:2.0.0-M3
+    image: ghcr.io/datasharingframework/bpe:2.0.0-M4
     restart: "no"
     ports:
       - 127.0.0.1:5005:5005
@@ -246,7 +246,7 @@ services:
       - keycloak
 
   dic-fhir:
-    image: ghcr.io/datasharingframework/fhir:2.0.0-M3
+    image: ghcr.io/datasharingframework/fhir:2.0.0-M4
     restart: "no"
     ports:
       - 127.0.0.1:5000:5000
@@ -327,7 +327,7 @@ services:
       - proxy
       - keycloak
   dic-bpe:
-    image: ghcr.io/datasharingframework/bpe:2.0.0-M3
+    image: ghcr.io/datasharingframework/bpe:2.0.0-M4
     restart: "no"
     ports:
       - 127.0.0.1:5003:5003
@@ -387,7 +387,7 @@ services:
             dsf-role:
               - ADMIN
 
-      DEV_DSF_PROCESS_TUTORIAL_LOGGINGENABLED: 'true'
+      DEV_DSF_PROCESS_TUTORIAL_LOGGINGENABLED: true
     networks:
       dic-bpe-frontend:
         ipv4_address: 172.20.0.115
@@ -399,7 +399,7 @@ services:
       - keycloak
 
   hrp-fhir:
-    image: ghcr.io/datasharingframework/fhir:2.0.0-M3
+    image: ghcr.io/datasharingframework/fhir:2.0.0-M4
     restart: "no"
     ports:
       - 127.0.0.1:5001:5001
@@ -469,7 +469,7 @@ services:
       - keycloak
 
   hrp-bpe:
-    image: ghcr.io/datasharingframework/bpe:2.0.0-M3
+    image: ghcr.io/datasharingframework/bpe:2.0.0-M4
     restart: "no"
     ports:
       - 127.0.0.1:5004:5004
