@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1yb5vw3" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.39.0">
+  <bpmn:process id="dsfdev_cosProcess" isExecutable="true" camunda:versionTag="#{version}">
+    <bpmn:extensionElements />
+    <bpmn:sequenceFlow id="SequenceFlow_0bbhq2r" sourceRef="startHelloCos" targetRef="CosTask" />
+    <bpmn:sequenceFlow id="SequenceFlow_0oyvmcd" sourceRef="CosTask" targetRef="endHelloCos" />
+    <bpmn:startEvent id="startHelloCos">
+      <bpmn:outgoing>SequenceFlow_0bbhq2r</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0refdls" messageRef="Message_0bmy3hn" />
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="CosTask" name="Cos Task" camunda:class="dev.dsf.process.tutorial.service.CosTask">
+      <bpmn:incoming>SequenceFlow_0bbhq2r</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0oyvmcd</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="endHelloCos">
+      <bpmn:incoming>SequenceFlow_0oyvmcd</bpmn:incoming>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1xuxohn" messageRef="Message_1jciunk" camunda:class="dev.dsf.process.tutorial.message.HelloHrpMessage">
+        <bpmn:extensionElements>
+          <camunda:field name="instantiatesCanonical">
+            <camunda:string>http://dsf.dev/bpe/Process/hrpProcess|#{version}</camunda:string>
+          </camunda:field>
+          <camunda:field name="profile">
+            <camunda:string>http://dsf.dev/fhir/StructureDefinition/task-hello-hrp|#{version}</camunda:string>
+          </camunda:field>
+          <camunda:field name="messageName">
+            <camunda:string>helloHrp</camunda:string>
+          </camunda:field>
+        </bpmn:extensionElements>
+      </bpmn:messageEventDefinition>
+    </bpmn:endEvent>
+  </bpmn:process>
+  <bpmn:message id="Message_0bmy3hn" name="helloCos" />
+  <bpmn:message id="Message_1jciunk" name="helloHrp" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="dsfdev_cosProcess">
+      <bpmndi:BPMNShape id="Event_159ms00_di" bpmnElement="startHelloCos">
+        <dc:Bounds x="179" y="103" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0yuself_di" bpmnElement="CosTask">
+        <dc:Bounds x="280" y="81" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1okys4t_di" bpmnElement="endHelloCos">
+        <dc:Bounds x="462" y="103" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0bbhq2r_di" bpmnElement="SequenceFlow_0bbhq2r">
+        <di:waypoint x="215" y="121" />
+        <di:waypoint x="280" y="121" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0oyvmcd_di" bpmnElement="SequenceFlow_0oyvmcd">
+        <di:waypoint x="380" y="121" />
+        <di:waypoint x="462" y="121" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
