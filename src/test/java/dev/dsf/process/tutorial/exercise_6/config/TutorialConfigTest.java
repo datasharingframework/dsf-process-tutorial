@@ -1,7 +1,7 @@
 package dev.dsf.process.tutorial.exercise_6.config;
 
-import static dev.dsf.process.tutorial.Utils.countBeanMethods;
-import static dev.dsf.process.tutorial.Utils.errorMessageBeanMethod;
+import static dev.dsf.process.tutorial.util.Misc.countBeanMethods;
+import static dev.dsf.process.tutorial.util.Misc.errorMessageBeanMethod;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;

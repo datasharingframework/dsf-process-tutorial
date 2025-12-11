@@ -47,10 +47,9 @@ import dev.dsf.bpe.v2.constants.NamingSystems;
 import dev.dsf.bpe.v2.service.TaskHelper;
 import dev.dsf.bpe.v2.variables.Variables;
 import dev.dsf.process.tutorial.ConstantsTutorial;
-import dev.dsf.process.tutorial.FhirResourceLoader;
 import dev.dsf.process.tutorial.TutorialProcessPluginDefinition;
-import dev.dsf.process.tutorial.Utils;
 import dev.dsf.process.tutorial.service.DicTask;
+import dev.dsf.process.tutorial.util.FhirResourceLoader;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DicTaskServiceTest

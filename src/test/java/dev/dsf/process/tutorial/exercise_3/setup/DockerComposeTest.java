@@ -17,9 +17,9 @@ import java.util.stream.Stream;
 import org.hl7.fhir.r4.model.Coding;
 import org.junit.Test;
 
-import dev.dsf.common.auth.conf.DsfRole;
-import dev.dsf.common.auth.conf.RoleConfig;
-import dev.dsf.common.auth.conf.RoleConfigReader;
+import dev.dsf.process.tutorial.util.DsfRole;
+import dev.dsf.process.tutorial.util.RoleConfig;
+import dev.dsf.process.tutorial.util.RoleConfigReader;
 
 public class DockerComposeTest
 {
@@ -43,12 +43,18 @@ public class DockerComposeTest
 		{
 			return role != null && !role.isBlank() && Stream.of(values()).map(Enum::name).anyMatch(n -> n.equals(role));
 		}
+
+		@Override
+		public boolean matches(DsfRole role)
+		{
+			return false;
+		}
 	}
 
 	@Test
 	public void testDevDsfFhirServerRoleConfig() throws IOException
 	{
-		Map<String, RoleConfig> roleConfigs = getRoleConfigsByDsfInstance();
+		Map<String, RoleConfig<? extends DsfRole>> roleConfigs = getRoleConfigsByDsfInstance();
 		assertEquals(numRoleConfigs, roleConfigs.size());
 
 		int numTokenRolesValid = roleConfigs.entrySet().stream()
@@ -74,10 +80,10 @@ public class DockerComposeTest
 		assertEquals(numRoleConfigs, numPractitionerRolesValid);
 	}
 
-	private Map<String, RoleConfig> getRoleConfigsByDsfInstance() throws IOException
+	private Map<String, RoleConfig<? extends DsfRole>> getRoleConfigsByDsfInstance() throws IOException
 	{
 
-		Map<String, RoleConfig> roleConfigsByDsfInstance = new HashMap<>();
+		Map<String, RoleConfig<? extends DsfRole>> roleConfigsByDsfInstance = new HashMap<>();
 
 		String instance = null;
 		String roleConfigString = "";
@@ -112,7 +118,7 @@ public class DockerComposeTest
 		return roleConfigsByDsfInstance;
 	}
 
-	private RoleConfig getRoleConfig(String roleConfigString)
+	private RoleConfig<? extends DsfRole> getRoleConfig(String roleConfigString)
 	{
 		Function<String, Coding> practitionerRoleFactory = role ->
 		{
@@ -125,7 +131,9 @@ public class DockerComposeTest
 
 			return null;
 		};
-		return new RoleConfigReader().read(roleConfigString, s -> TestRole.isValid(s) ? TestRole.valueOf(s) : null,
+		return new RoleConfigReader().read(roleConfigString,
+				roleKeyAndValues -> TestRole.isValid(roleKeyAndValues.key()) ? TestRole.valueOf(roleKeyAndValues.key())
+						: null,
 				practitionerRoleFactory);
 	}
 }

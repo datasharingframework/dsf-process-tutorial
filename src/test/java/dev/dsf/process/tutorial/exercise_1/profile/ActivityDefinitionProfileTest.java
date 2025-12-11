@@ -20,11 +20,11 @@ import org.slf4j.LoggerFactory;
 
 import ca.uhn.fhir.validation.ResultSeverityEnum;
 import ca.uhn.fhir.validation.ValidationResult;
-import dev.dsf.fhir.authorization.process.ProcessAuthorizationHelper;
-import dev.dsf.fhir.authorization.process.ProcessAuthorizationHelperImpl;
+import dev.dsf.bpe.v2.service.process.ProcessAuthorizationHelper;
 import dev.dsf.fhir.validation.ResourceValidator;
 import dev.dsf.fhir.validation.ResourceValidatorImpl;
 import dev.dsf.fhir.validation.ValidationSupportRule;
+import dev.dsf.process.tutorial.util.ProcessAuthorizationHelperImpl;
 
 public class ActivityDefinitionProfileTest
 {

@@ -1,4 +1,4 @@
-package dev.dsf.process.tutorial;
+package dev.dsf.process.tutorial.util;
 
 import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
@@ -6,11 +6,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.hl7.fhir.r4.model.Resource;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
@@ -18,14 +15,11 @@ import org.springframework.beans.factory.support.SimpleBeanDefinitionRegistry;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 
-import ca.uhn.fhir.context.FhirContext;
-import dev.dsf.bpe.v2.ProcessPluginDefinition;
 import dev.dsf.bpe.v2.activity.DefaultUserTaskListener;
 import dev.dsf.bpe.v2.spring.ActivityPrototypeBeanCreator;
-import dev.dsf.process.tutorial.exercise_1.TutorialProcessPluginDefinitionTest;
 import dev.dsf.process.tutorial.spring.config.TutorialConfig;
 
-public class Utils
+public class Misc
 {
 	public static List<Class<? extends DefaultUserTaskListener>> getUserTaskListeners(String packageName)
 	{

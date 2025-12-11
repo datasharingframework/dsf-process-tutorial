@@ -18,7 +18,6 @@ import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import org.camunda.bpm.engine.delegate.DelegateTask;
 import org.camunda.bpm.model.bpmn.Bpmn;
 import org.camunda.bpm.model.bpmn.BpmnModelInstance;
 import org.camunda.bpm.model.bpmn.instance.ConditionExpression;
@@ -42,7 +41,7 @@ import dev.dsf.bpe.v2.activity.DefaultUserTaskListener;
 import dev.dsf.bpe.v2.activity.values.CreateQuestionnaireResponseValues;
 import dev.dsf.bpe.v2.service.TaskHelper;
 import dev.dsf.bpe.v2.variables.Variables;
-import dev.dsf.process.tutorial.Utils;
+import dev.dsf.process.tutorial.util.Misc;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BpmnAndUserTaskListenerTest
@@ -93,7 +92,7 @@ public class BpmnAndUserTaskListenerTest
 		String packageName = "dev.dsf.process.tutorial.listener";
 		String errorNoUserTaskListenerFound = "No class extending DefaultUserTaskListener found in package '"
 				+ packageName + "'. Unable to verify if User Task has correct Task Listener set.";
-		List<Class<? extends DefaultUserTaskListener>> userTaskListeners = Utils.getUserTaskListeners(packageName);
+		List<Class<? extends DefaultUserTaskListener>> userTaskListeners = Misc.getUserTaskListeners(packageName);
 		assertTrue(errorNoUserTaskListenerFound, !userTaskListeners.isEmpty());
 
 		String errorUserTaskIsMissingTaskListener = "User Task in process '" + processId + "' in file '" + filename
@@ -114,8 +113,8 @@ public class BpmnAndUserTaskListenerTest
 						.getAttributeValue("class").equals(userTaskListener.getName())))
 				.toList();
 		userTaskListenersInUserTask
-				.forEach(userTaskListener -> assertEquals(Utils.errorMessageBeanMethod(userTaskListener), 1,
-						Utils.countBeanMethods(userTaskListener)));
+				.forEach(userTaskListener -> assertEquals(Misc.errorMessageBeanMethod(userTaskListener), 1,
+						Misc.countBeanMethods(userTaskListener)));
 
 		Map<Class<? extends DefaultUserTaskListener>, List<String>> userTaskListenersWithErrors = userTaskListenersInUserTask
 				.stream()
