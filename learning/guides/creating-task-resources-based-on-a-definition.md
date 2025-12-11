@@ -17,9 +17,9 @@ If the resource profile is only available as a [differential](https://www.hl7.or
 case, we will want to aggregate the changes made to the base resource (in this case [Task](../concepts/fhir/task.md)) by all profiles to make
 it more readable.
 To do this, we first need all the profiles involved. We already have `task-start-dic-process.xml` in our `StructureDefinition` folder.
-It lists a resource called `task-base` in its `baseDefinition` element. This resource is part of the DSF and can be
-found [here](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-task-base-1.0.0.xml).
-Put it into the `StructureDefinition` folder. Since `task-base` has the original FHIR Task as its `baseDefinition`
+It lists a resource called `http://dsf.dev/fhir/StructureDefinition/task` in its `baseDefinition` element. This resource is part of the DSF and can be
+found [here](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-task-2.0.0.xml).
+Put it into the `StructureDefinition` folder. Since `http://dsf.dev/fhir/StructureDefinition/task` has the original FHIR Task as its `baseDefinition`
 element, we are done with this chain.
 In forge, you should now be able to open the `StructureDefinition` folder and select the `task-start-dic-process.xml` profile.
 It should look something like this:

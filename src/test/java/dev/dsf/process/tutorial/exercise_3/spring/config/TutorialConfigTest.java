@@ -1,10 +1,9 @@
 package dev.dsf.process.tutorial.exercise_3.spring.config;
 
-import static dev.dsf.process.tutorial.Utils.countBeanMethods;
-import static dev.dsf.process.tutorial.Utils.errorMessageBeanMethod;
+import static dev.dsf.process.tutorial.util.Misc.countBeanMethods;
+import static dev.dsf.process.tutorial.util.Misc.errorMessageBeanMethod;
 import static org.junit.Assert.assertEquals;
 
-import java.security.DigestException;
 import java.util.Arrays;
 
 import org.junit.Test;
@@ -19,7 +18,7 @@ public class TutorialConfigTest
 	@Test
 	public void testDicTaskServiceBeanDefined() throws Exception
 	{
-		assertEquals(errorMessageBeanMethod(DigestException.class), 1, countBeanMethods(DicTask.class));
+		assertEquals(errorMessageBeanMethod(DicTask.class), 1, countBeanMethods(DicTask.class));
 	}
 
 	@Test

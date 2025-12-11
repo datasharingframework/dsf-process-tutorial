@@ -1,7 +1,7 @@
 ### Examples for Requester and Recipient Elements
 
 Below you will find a set of examples for each Coding used by `requester` and `recipient` elements from
-the [dsf-extension-process-authorization](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-1.0.0.xml). CodeSystems referenced in the examples can be found [here](https://github.com/datasharingframework/dsf/tree/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/CodeSystem).
+the [dsf-extension-process-authorization](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-2.0.0.xml). CodeSystems referenced in the examples can be found [here](https://github.com/datasharingframework/dsf/tree/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/CodeSystem).
 Use this collection as a reference point when creating your own [ActivityDefinitions](../../concepts/fhir/activitydefinition.md).
 
 #### Requester
