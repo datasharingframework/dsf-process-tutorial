@@ -37,7 +37,7 @@ public class ActivityDefinitionProfileTest
 	@ClassRule
 	public static final ValidationSupportRule validationRule = new ValidationSupportRule(VERSION, RELEASE_DATE,
 			Arrays.asList("dsf-activity-definition-2.0.0.xml", "dsf-extension-process-authorization-2.0.0.xml",
-					"dsf-extension-process-authorization-parent-organization-role-2.0.0.xml",
+					"dsf-meta-2.0.0.xml", "dsf-extension-process-authorization-parent-organization-role-2.0.0.xml",
 					"dsf-extension-process-authorization-parent-organization-role-practitioner-2.0.0.xml",
 					"dsf-extension-process-authorization-organization-2.0.0.xml",
 					"dsf-extension-process-authorization-organization-practitioner-2.0.0.xml",
