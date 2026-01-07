@@ -1,35 +1,13 @@
 package dev.dsf.process.tutorial;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
-import dev.dsf.bpe.v2.ProcessPluginDefinition;
+import dev.dsf.bpe.v2.AbstractProcessPluginDefinition;
 import dev.dsf.process.tutorial.spring.config.TutorialConfig;
 
-public class TutorialProcessPluginDefinition implements ProcessPluginDefinition
+public class TutorialProcessPluginDefinition extends AbstractProcessPluginDefinition
 {
-	public static final String VERSION = "2.0.0.1";
-	public static final LocalDate RELEASE_DATE = LocalDate.of(2025, 4, 2);
-
-	@Override
-	public String getName()
-	{
-		return "dsf-process-tutorial";
-	}
-
-	@Override
-	public String getVersion()
-	{
-		return VERSION;
-	}
-
-	@Override
-	public LocalDate getReleaseDate()
-	{
-		return RELEASE_DATE;
-	}
-
 	@Override
 	public List<String> getProcessModels()
 	{
