@@ -11,6 +11,7 @@ import dev.dsf.bpe.v2.activity.MessageEndEvent;
 import dev.dsf.bpe.v2.activity.values.SendTaskValues;
 import dev.dsf.bpe.v2.variables.Target;
 import dev.dsf.bpe.v2.variables.Variables;
+import dev.dsf.process.tutorial.TutorialProcessPluginDefinition;
 
 // Only needed for exercise 6 and above
 public class HelloHrpMessage implements MessageEndEvent
@@ -23,7 +24,10 @@ public class HelloHrpMessage implements MessageEndEvent
 				variables.getStartTask(), "http://dsf.dev/fhir/CodeSystem/tutorial", "tutorial-input",
 				StringType.class);
 
-		return tutorialInputParameter.map(i -> List.of(api.getTaskHelper().createInput(i.getValue(),
-				"http://dsf.dev/fhir/CodeSystem/tutorial", "tutorial-input"))).orElse(List.of());
+		return tutorialInputParameter
+				.map(i -> List
+						.of(api.getTaskHelper().createInput(i.getValue(), "http://dsf.dev/fhir/CodeSystem/tutorial",
+								"tutorial-input", new TutorialProcessPluginDefinition().getResourceVersion())))
+				.orElse(List.of());
 	}
 }

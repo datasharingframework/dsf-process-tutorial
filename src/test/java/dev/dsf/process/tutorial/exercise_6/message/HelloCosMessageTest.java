@@ -74,7 +74,7 @@ public class HelloCosMessageTest
 				eq("tutorial-input"))).thenReturn(Optional.of("Test"));
 
 		Mockito.when(taskHelper.createInput(any(Type.class), eq("http://dsf.dev/fhir/CodeSystem/tutorial"),
-				eq("tutorial-input")))
+				eq("tutorial-input"), eq("1.4")))
 				.thenReturn(new ParameterComponent(
 						new CodeableConcept(
 								new Coding("http://dsf.dev/fhir/CodeSystem/tutorial", "tutorial-input", null)),
@@ -84,7 +84,7 @@ public class HelloCosMessageTest
 				new SendTaskValues("", "", ""), target);
 
 		Mockito.verify(variables).getStartTask();
-		Mockito.verify(taskHelper).createInput(any(Type.class), anyString(), anyString());
+		Mockito.verify(taskHelper).createInput(any(Type.class), anyString(), anyString(), anyString());
 
 		ParameterComponent tutorialInput = testParameterComponents.stream()
 				.filter(parameterComponent -> ((StringType) parameterComponent.getValue()).getValue().equals("Test"))
