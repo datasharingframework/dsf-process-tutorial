@@ -23,7 +23,7 @@ Task Input Parameters are added to the differential element of a [StructureDefin
   <kind value="resource" />
   <abstract value="false" />
   <type value="Task" />
-  <baseDefinition value="http://dsf.dev/fhir/StructureDefinition/task-base" />
+  <baseDefinition value="http://dsf.dev/fhir/StructureDefinition/task" />
   <derivation value="constraint" />
   <differential>
     <!-- Place input parameters here -->
