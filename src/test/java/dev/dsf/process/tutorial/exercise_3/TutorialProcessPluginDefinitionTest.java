@@ -30,9 +30,9 @@ import org.junit.Test;
 
 import dev.dsf.bpe.v2.ProcessPluginDefinition;
 import dev.dsf.process.tutorial.ConstantsTutorial;
-import dev.dsf.process.tutorial.FhirResourceLoader;
 import dev.dsf.process.tutorial.TutorialProcessPluginDefinition;
 import dev.dsf.process.tutorial.service.DicTask;
+import dev.dsf.process.tutorial.util.FhirResourceLoader;
 
 public class TutorialProcessPluginDefinitionTest
 {
