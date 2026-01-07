@@ -22,11 +22,11 @@ import org.slf4j.LoggerFactory;
 
 import ca.uhn.fhir.validation.ResultSeverityEnum;
 import ca.uhn.fhir.validation.ValidationResult;
-import dev.dsf.fhir.authorization.process.ProcessAuthorizationHelper;
-import dev.dsf.fhir.authorization.process.ProcessAuthorizationHelperImpl;
+import dev.dsf.bpe.v2.service.process.ProcessAuthorizationHelper;
 import dev.dsf.fhir.validation.ResourceValidator;
 import dev.dsf.fhir.validation.ResourceValidatorImpl;
 import dev.dsf.fhir.validation.ValidationSupportRule;
+import dev.dsf.process.tutorial.util.ProcessAuthorizationHelperImpl;
 
 public class ActivityDefinitionProfileTest
 {
@@ -34,24 +34,24 @@ public class ActivityDefinitionProfileTest
 
 	@ClassRule
 	public static final ValidationSupportRule validationRule = new ValidationSupportRule(VERSION, RELEASE_DATE,
-			Arrays.asList("dsf-activity-definition-1.0.0.xml", "dsf-extension-process-authorization-1.0.0.xml",
-					"dsf-extension-process-authorization-parent-organization-role-1.0.0.xml",
-					"dsf-extension-process-authorization-parent-organization-role-practitioner-1.0.0.xml",
-					"dsf-extension-process-authorization-organization-1.0.0.xml",
-					"dsf-extension-process-authorization-organization-practitioner-1.0.0.xml",
-					"dsf-extension-process-authorization-practitioner-1.0.0.xml",
-					"dsf-coding-process-authorization-local-all-1.0.0.xml",
-					"dsf-coding-process-authorization-local-all-practitioner-1.0.0.xml",
-					"dsf-coding-process-authorization-local-parent-organization-role-1.0.0.xml",
-					"dsf-coding-process-authorization-local-parent-organization-role-practitioner-1.0.0.xml",
-					"dsf-coding-process-authorization-local-organization-1.0.0.xml",
-					"dsf-coding-process-authorization-local-organization-practitioner-1.0.0.xml",
-					"dsf-coding-process-authorization-remote-all-1.0.0.xml",
-					"dsf-coding-process-authorization-remote-parent-organization-role-1.0.0.xml",
-					"dsf-coding-process-authorization-remote-organization-1.0.0.xml"),
-			Arrays.asList("dsf-process-authorization-1.0.0.xml", "dsf-read-access-tag-1.0.0.xml"),
-			Arrays.asList("dsf-process-authorization-recipient-1.0.0.xml",
-					"dsf-process-authorization-requester-1.0.0.xml", "dsf-read-access-tag-1.0.0.xml"));
+			Arrays.asList("dsf-activity-definition-2.0.0.xml", "dsf-extension-process-authorization-2.0.0.xml",
+					"dsf-meta-2.0.0.xml", "dsf-extension-process-authorization-parent-organization-role-2.0.0.xml",
+					"dsf-extension-process-authorization-parent-organization-role-practitioner-2.0.0.xml",
+					"dsf-extension-process-authorization-organization-2.0.0.xml",
+					"dsf-extension-process-authorization-organization-practitioner-2.0.0.xml",
+					"dsf-extension-process-authorization-practitioner-2.0.0.xml",
+					"dsf-coding-process-authorization-local-all-2.0.0.xml",
+					"dsf-coding-process-authorization-local-all-practitioner-2.0.0.xml",
+					"dsf-coding-process-authorization-local-parent-organization-role-2.0.0.xml",
+					"dsf-coding-process-authorization-local-parent-organization-role-practitioner-2.0.0.xml",
+					"dsf-coding-process-authorization-local-organization-2.0.0.xml",
+					"dsf-coding-process-authorization-local-organization-practitioner-2.0.0.xml",
+					"dsf-coding-process-authorization-remote-all-2.0.0.xml",
+					"dsf-coding-process-authorization-remote-parent-organization-role-2.0.0.xml",
+					"dsf-coding-process-authorization-remote-organization-2.0.0.xml"),
+			Arrays.asList("dsf-process-authorization-2.0.0.xml", "dsf-read-access-tag-2.0.0.xml"),
+			Arrays.asList("dsf-process-authorization-recipient-2.0.0.xml",
+					"dsf-process-authorization-requester-2.0.0.xml", "dsf-read-access-tag-2.0.0.xml"));
 
 	private final ResourceValidator resourceValidator = new ResourceValidatorImpl(validationRule.getFhirContext(),
 			validationRule.getValidationSupport());

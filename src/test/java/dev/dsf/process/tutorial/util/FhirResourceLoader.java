@@ -1,4 +1,4 @@
-package dev.dsf.process.tutorial;
+package dev.dsf.process.tutorial.util;
 
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -16,7 +16,7 @@ public class FhirResourceLoader
 	public static List<Resource> loadResourcesFor(ProcessPluginDefinition processPluginDefinition, String processId)
 	{
 		return processPluginDefinition.getFhirResourcesByProcessId().get(processId).stream()
-				.map(fileName -> Utils.class.getClassLoader().getResourceAsStream(fileName)).map(inputStream ->
+				.map(fileName -> Misc.class.getClassLoader().getResourceAsStream(fileName)).map(inputStream ->
 				{
 					try
 					{
@@ -53,7 +53,7 @@ public class FhirResourceLoader
 					public List<Resource> getValue()
 					{
 						return entry.getValue().stream()
-								.map(fileName -> Utils.class.getClassLoader().getResourceAsStream(fileName))
+								.map(fileName -> Misc.class.getClassLoader().getResourceAsStream(fileName))
 								.map(stream ->
 								{
 									try
