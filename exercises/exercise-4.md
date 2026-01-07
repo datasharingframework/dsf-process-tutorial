@@ -41,7 +41,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-4`.
 1. Add the `dsfdev_cosProcess` and its resources to the `TutorialProcessPluginDefinition` class. This will require a new mapping entry with the full process name of the `cosProcess` as the key and a List of associated FHIR resources as the value.
 1. Modify `DicTask` service class to set the `target` process variable for the `cos.dsf.test` organization.
 1. Configure the `HelloCosMessage` class as a Spring Bean in the `TutorialConfig` class. Don't forget the right scope.
-1. Again, we introduced changes that break compatibility. Older plugin versions at the COS instance won't be able to handle the Task resource type we added earlier. Increment your resource version to `1.3`. 
+1. Again, we introduced changes that break compatibility. Older plugin versions at the COS instance won't be able to handle the Task resource type we added earlier. Increment your resource version to `2.3`. 
 
 ## Solution Verification
 ### Maven Build and Automated Tests

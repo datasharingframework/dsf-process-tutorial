@@ -8,13 +8,14 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<compileSource>21</compileSource>
-		<compileTarget>21</compileTarget>
+		<compileSource>25</compileSource>
+		<compileTarget>25</compileTarget>
 
 		<main.basedir>${project.basedir}</main.basedir>
-		<dsf.version>2.0.0-M4</dsf.version>
+		<dsf.version>2.0.1</dsf.version>
 		<slf4j.version>2.0.9</slf4j.version>
 		<log4j.version>2.22.0</log4j.version>
+		<snake.yaml.version>2.5</snake.yaml.version>
 	</properties>
 
 	<description>TODO</description>
@@ -86,9 +87,8 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>dev.dsf</groupId>
-			<artifactId>dsf-fhir-auth</artifactId>
-			<scope>test</scope>
+			<groupId>org.yaml</groupId>
+			<artifactId>snakeyaml</artifactId>
 		</dependency>
 	</dependencies>
 
@@ -109,11 +109,6 @@
 			<dependency>
 				<groupId>dev.dsf</groupId>
 				<artifactId>dsf-fhir</artifactId>
-				<version>${dsf.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>dev.dsf</groupId>
-				<artifactId>dsf-fhir-auth</artifactId>
 				<version>${dsf.version}</version>
 			</dependency>
 			<dependency>
@@ -170,6 +165,11 @@
 				<groupId>org.camunda.bpm</groupId>
 				<artifactId>camunda-engine</artifactId>
 				<version>7.23.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.yaml</groupId>
+				<artifactId>snakeyaml</artifactId>
+				<version>${snake.yaml.version}</version>
 			</dependency>
 
 			<!-- maven plugin -->
@@ -513,6 +513,10 @@
 					<plugin>
 						<groupId>net.revelc.code</groupId>
 						<artifactId>impsort-maven-plugin</artifactId>
+						<configuration>
+							<!-- TODO remove config option when impsort-maven-plugin support Java 25 -->
+							<ignoreParseErrorsBelowImports>true</ignoreParseErrorsBelowImports>
+						</configuration>
 						<executions>
 							<execution>
 								<goals>

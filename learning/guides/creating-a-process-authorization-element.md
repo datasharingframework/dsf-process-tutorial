@@ -1,7 +1,7 @@
 ### Creating a Process Authorization Element
 
 This guide aims to explain how to create a process authorization element for [ActivityDefinitions](../concepts/fhir/activitydefinition.md).
-The extension defining the process authorization element can be found [here](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-1.0.0.xml).
+The extension defining the process authorization element can be found [here](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-2.0.0.xml).
 Let us start by creating the [extension element](http://hl7.org/fhir/R4/extensibility.html#extension) with the correct URL. You can get the
 value for the URL from the `Extension.url` element:
 ```xml
@@ -170,19 +170,19 @@ The next slice is `requester`:
             <min value="1" />
             <type>
                 <code value="Coding" />
-                <profile value="http://dsf.dev/fhir/StructureDefinition/coding-process-authorization-local-all|1.0.0" />
-                <profile value="http://dsf.dev/fhir/StructureDefinition/coding-process-authorization-local-all-practitioner|1.0.0" />
-                <profile value="http://dsf.dev/fhir/StructureDefinition/coding-process-authorization-local-organization|1.0.0" />
-                <profile value="http://dsf.dev/fhir/StructureDefinition/coding-process-authorization-local-organization-practitioner|1.0.0" />
-                <profile value="http://dsf.dev/fhir/StructureDefinition/coding-process-authorization-local-parent-organization-role|1.0.0" />
-                <profile value="http://dsf.dev/fhir/StructureDefinition/coding-process-authorization-local-parent-organization-role-practitioner|1.0.0" />
-                <profile value="http://dsf.dev/fhir/StructureDefinition/coding-process-authorization-remote-all|1.0.0" />
-                <profile value="http://dsf.dev/fhir/StructureDefinition/coding-process-authorization-remote-organization|1.0.0" />
-                <profile value="http://dsf.dev/fhir/StructureDefinition/coding-process-authorization-remote-parent-organization-role|1.0.0" />
+                <profile value="http://dsf.dev/fhir/StructureDefinition/coding-process-authorization-local-all|2.0.0" />
+                <profile value="http://dsf.dev/fhir/StructureDefinition/coding-process-authorization-local-all-practitioner|2.0.0" />
+                <profile value="http://dsf.dev/fhir/StructureDefinition/coding-process-authorization-local-organization|2.0.0" />
+                <profile value="http://dsf.dev/fhir/StructureDefinition/coding-process-authorization-local-organization-practitioner|2.0.0" />
+                <profile value="http://dsf.dev/fhir/StructureDefinition/coding-process-authorization-local-parent-organization-role|2.0.0" />
+                <profile value="http://dsf.dev/fhir/StructureDefinition/coding-process-authorization-local-parent-organization-role-practitioner|2.0.0" />
+                <profile value="http://dsf.dev/fhir/StructureDefinition/coding-process-authorization-remote-all|2.0.0" />
+                <profile value="http://dsf.dev/fhir/StructureDefinition/coding-process-authorization-remote-organization|2.0.0" />
+                <profile value="http://dsf.dev/fhir/StructureDefinition/coding-process-authorization-remote-parent-organization-role|2.0.0" />
             </type>
             <binding>
                 <strength value="required" />
-                <valueSet value="http://dsf.dev/fhir/ValueSet/process-authorization-requester|1.0.0" />
+                <valueSet value="http://dsf.dev/fhir/ValueSet/process-authorization-requester|2.0.0" />
             </binding>
         </element>
      ...
@@ -199,7 +199,7 @@ Here is what they mean:
 - `local-parent-organization-role`: All local requests made from an organization having a specific role inside a specific parent organization will be allowed.
 - `remote` versions of the above rules work the same but the requester's certificate is instead required to match a thumbprint marked as a remote organization.
 - `practitioner` suffixes all work the same. They include the same rules as their prefixes but now additionally require the requester to match a certain `practitioner-role`. A list of them
-  can be found [here](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/CodeSystem/dsf-practitioner-role-1.0.0.xml). This allows
+  can be found [here](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/CodeSystem/dsf-practitioner-role-2.0.0.xml). This allows
   for more granularity when defining authorization rules within an organization and can be integrated into local user management via [OpenID Connect](https://dsf.dev/stable/maintain/fhir/access-control.html).
 
 As you can see, there are no `practitioner` versions of `remote` authorization rules. From the perspective of the receiving DSF instance,
@@ -220,7 +220,7 @@ Let us start out by adding a `requester` element like we did for previous elemen
 
 
 We now have to look at the elements that are defined in one of the profiles to fill in the remaining elements since they are not defined by the `requester` extension. For demonstration
-purposes, we will choose the [dsf-coding-process-authorization-local-organization-practitioner](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-coding-process-authorization-local-organization-practitioner-1.0.0.xml) profile.
+purposes, we will choose the [dsf-coding-process-authorization-local-organization-practitioner](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-coding-process-authorization-local-organization-practitioner-2.0.0.xml) profile.
 Since all elements listed in the [Coding definition](https://www.hl7.org/fhir/R4/datatypes.html#codesystem) are optional, we only have to look at the `differential` element from the profile we just selected:
 <a id="coding-differential"></a>
 ```xml
@@ -242,7 +242,7 @@ Since all elements listed in the [Coding definition](https://www.hl7.org/fhir/R4
         <max value="1" />
         <type>
             <code value="Extension" />
-            <profile value="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization-practitioner|1.0.0" />
+            <profile value="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization-organization-practitioner|2.0.0" />
         </type>
     </element>
     <element id="Coding.system">
@@ -258,7 +258,7 @@ Since all elements listed in the [Coding definition](https://www.hl7.org/fhir/R4
 </differential>
 ```
 It defines an extension called `organization-practitioner` which is identified through its url attribute. Again, the extension
-is only referenced, its location is in a different file. You can find it [here](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-organization-practitioner-1.0.0.xml).
+is only referenced, its location is in a different file. You can find it [here](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-organization-practitioner-2.0.0.xml).
 Let us look at its `differential` element in the extension file to see how we need to populate the extension:
 ```xml
 <differential>
@@ -381,7 +381,7 @@ Finally, we will add the `practitionerRole` slice:
 ```
 
 Notice that there is no `binding` element specified for `practitionerRole.value[x]`. This is intentional. In the example we used a code from the
-[dsf-practitioner-role](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/CodeSystem/dsf-practitioner-role-1.0.0.xml) CodeSystem.
+[dsf-practitioner-role](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/CodeSystem/dsf-practitioner-role-2.0.0.xml) CodeSystem.
 This CodeSystem includes a standard set of codes which are often sufficient for DSF use cases. You can freely add other CodeSystems if you find these codes
 do not apply for your use case. The code you set here can be used in the [DSF role config](https://dsf.dev/stable/maintain/fhir/access-control.html)
 to allow certain users with this `practitioner-role` to send requests.
@@ -468,7 +468,7 @@ Now we are finished with the `requester` extension and can add it to our process
 ```
 </details>
 
-Now we are back to looking at the [dsf-extension-process-authorization](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-1.0.0.xml) again.
+Now we are back to looking at the [dsf-extension-process-authorization](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-2.0.0.xml) again.
 The last slice for this extension is `recipient`:
 ```xml
 <StructureDefinition xmlns="http://hl7.org/fhir">
@@ -489,13 +489,13 @@ The last slice for this extension is `recipient`:
             <min value="1" />
             <type>
                 <code value="Coding" />
-                <profile value="http://dsf.dev/fhir/StructureDefinition/coding-process-authorization-local-all|1.0.0" />
-                <profile value="http://dsf.dev/fhir/StructureDefinition/coding-process-authorization-local-organization|1.0.0" />
-                <profile value="http://dsf.dev/fhir/StructureDefinition/coding-process-authorization-local-parent-organization-role|1.0.0" />
+                <profile value="http://dsf.dev/fhir/StructureDefinition/coding-process-authorization-local-all|2.0.0" />
+                <profile value="http://dsf.dev/fhir/StructureDefinition/coding-process-authorization-local-organization|2.0.0" />
+                <profile value="http://dsf.dev/fhir/StructureDefinition/coding-process-authorization-local-parent-organization-role|2.0.0" />
             </type>
             <binding>
                 <strength value="required" />
-                <valueSet value="http://dsf.dev/fhir/ValueSet/process-authorization-recipient|1.0.0" />
+                <valueSet value="http://dsf.dev/fhir/ValueSet/process-authorization-recipient|2.0.0" />
             </binding>
         </element>
      ...
@@ -508,7 +508,7 @@ The last slice for this extension is `recipient`:
 The `recipient` will decide which DSF instance is allowed to process that message. That is the reason why you will not find any Codings for `remote` or `practitioner` here.
 For `requester`, we already decided that we will only allow users with a certain role from our own (local) organization to send this message.
 So now we will only allow the DSF instance run by that same local organization to process the message. The right Coding for this job is
-the [coding-process-authorization-local-organization](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-coding-process-authorization-local-organization-1.0.0.xml).
+the [coding-process-authorization-local-organization](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-coding-process-authorization-local-organization-2.0.0.xml).
 The configuration of a local requester and local receiver is often used for the message that starts up the first BPMN process of the plugin.  
 The process of adding the `recipient` slice is the exact same as it is for `requester`. You can follow the steps for the `requester` slice again
 but just use a different Coding.
@@ -560,5 +560,5 @@ but just use a different Coding.
 ```
 </details>
 
-The last element defined in the [process authorization extension](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-1.0.0.xml)
+The last element defined in the [process authorization extension](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-extension-process-authorization-2.0.0.xml)
 is `Extension.url`. But since we added this element at the very beginning of the working through the extension, we are finished with it here.
