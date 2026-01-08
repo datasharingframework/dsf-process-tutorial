@@ -4,7 +4,6 @@ import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_VOTING_PROCE
 import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_VOTING_PROCESS_VOTE;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROCESS_NAME_FULL_VOTE;
 import static dev.dsf.process.tutorial.ConstantsTutorial.RESOURCE_VERSION;
-import static dev.dsf.process.tutorial.TutorialProcessPluginDefinition.RELEASE_DATE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -42,6 +41,7 @@ public class UserVoteTest
 	Questionnaire userVote;
 
 	private final Logger logger = LoggerFactory.getLogger(UserVoteTest.class);
+	private static final LocalDate RELEASE_DATE = new TutorialProcessPluginDefinition().getReleaseDate();
 
 	@ClassRule
 	public static final ValidationSupportRule validationRule = new ValidationSupportRule(RESOURCE_VERSION, RELEASE_DATE,

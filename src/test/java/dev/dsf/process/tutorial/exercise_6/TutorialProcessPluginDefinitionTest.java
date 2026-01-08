@@ -118,26 +118,26 @@ public class TutorialProcessPluginDefinitionTest
 
 		long aCount = cosFhirResources.stream().filter(r -> r instanceof ActivityDefinition)
 				.map(r -> (ActivityDefinition) r).filter(a -> "http://dsf.dev/bpe/Process/cosProcess".equals(a.getUrl())
-						&& ConstantsTutorial.RESOURCE_VERSION.equals(a.getVersion()))
+						&& resourceVersion.equals(a.getVersion()))
 				.count();
 		assertEquals(1, aCount);
 
 		long cCount = cosFhirResources.stream().filter(r -> r instanceof CodeSystem).map(r -> (CodeSystem) r)
 				.filter(c -> "http://dsf.dev/fhir/CodeSystem/tutorial".equals(c.getUrl())
-						&& ConstantsTutorial.RESOURCE_VERSION.equals(c.getVersion()))
+						&& resourceVersion.equals(c.getVersion()))
 				.count();
 		assertEquals(1, cCount);
 
 		long tCount = cosFhirResources.stream().filter(r -> r instanceof StructureDefinition)
 				.map(r -> (StructureDefinition) r)
 				.filter(c -> "http://dsf.dev/fhir/StructureDefinition/task-hello-cos".equals(c.getUrl())
-						&& ConstantsTutorial.RESOURCE_VERSION.equals(c.getVersion()))
+						&& resourceVersion.equals(c.getVersion()))
 				.count();
 		assertEquals(1, tCount);
 
 		long vCount = cosFhirResources.stream().filter(r -> r instanceof ValueSet).map(r -> (ValueSet) r)
 				.filter(v -> "http://dsf.dev/fhir/ValueSet/tutorial".equals(v.getUrl())
-						&& ConstantsTutorial.RESOURCE_VERSION.equals(v.getVersion()))
+						&& resourceVersion.equals(v.getVersion()))
 				.count();
 		assertEquals(1, vCount);
 	}
@@ -161,20 +161,20 @@ public class TutorialProcessPluginDefinitionTest
 
 		long aCount = dicFhirResources.stream().filter(r -> r instanceof ActivityDefinition)
 				.map(r -> (ActivityDefinition) r).filter(a -> "http://dsf.dev/bpe/Process/dicProcess".equals(a.getUrl())
-						&& ConstantsTutorial.RESOURCE_VERSION.equals(a.getVersion()))
+						&& resourceVersion.equals(a.getVersion()))
 				.count();
 		assertEquals(1, aCount);
 
 		long cCount = dicFhirResources.stream().filter(r -> r instanceof CodeSystem).map(r -> (CodeSystem) r)
 				.filter(c -> "http://dsf.dev/fhir/CodeSystem/tutorial".equals(c.getUrl())
-						&& ConstantsTutorial.RESOURCE_VERSION.equals(c.getVersion()))
+						&& resourceVersion.equals(c.getVersion()))
 				.count();
 		assertEquals(1, cCount);
 
 		long t1Count = dicFhirResources.stream().filter(r -> r instanceof StructureDefinition)
 				.map(r -> (StructureDefinition) r)
 				.filter(c -> "http://dsf.dev/fhir/StructureDefinition/task-goodbye-dic".equals(c.getUrl())
-						&& ConstantsTutorial.RESOURCE_VERSION.equals(c.getVersion()))
+						&& resourceVersion.equals(c.getVersion()))
 				.count();
 		assertEquals(1, t1Count);
 
@@ -188,7 +188,7 @@ public class TutorialProcessPluginDefinitionTest
 
 		long t2Count = dicFhirResources.stream().filter(r -> r instanceof StructureDefinition)
 				.map(r -> (StructureDefinition) r).filter(c -> structureDefinitionUrl.equals(c.getUrl())
-						&& ConstantsTutorial.RESOURCE_VERSION.equals(c.getVersion()))
+						&& resourceVersion.equals(c.getVersion()))
 				.count();
 		assertEquals(1, t2Count);
 
@@ -204,7 +204,7 @@ public class TutorialProcessPluginDefinitionTest
 
 		long vCount = dicFhirResources.stream().filter(r -> r instanceof ValueSet).map(r -> (ValueSet) r)
 				.filter(v -> "http://dsf.dev/fhir/ValueSet/tutorial".equals(v.getUrl())
-						&& ConstantsTutorial.RESOURCE_VERSION.equals(v.getVersion()))
+						&& resourceVersion.equals(v.getVersion()))
 				.count();
 		assertEquals(1, vCount);
 	}
@@ -276,7 +276,7 @@ public class TutorialProcessPluginDefinitionTest
 
 		var aOpt = dicFhirResources.stream().filter(r -> r instanceof ActivityDefinition)
 				.map(r -> (ActivityDefinition) r).filter(a -> "http://dsf.dev/bpe/Process/dicProcess".equals(a.getUrl())
-						&& ConstantsTutorial.RESOURCE_VERSION.equals(a.getVersion()))
+						&& resourceVersion.equals(a.getVersion()))
 				.findFirst();
 		assumeTrue(aOpt.isPresent());
 
@@ -294,26 +294,26 @@ public class TutorialProcessPluginDefinitionTest
 
 		long aCount = hrpFhirResources.stream().filter(r -> r instanceof ActivityDefinition)
 				.map(r -> (ActivityDefinition) r).filter(a -> "http://dsf.dev/bpe/Process/hrpProcess".equals(a.getUrl())
-						&& ConstantsTutorial.RESOURCE_VERSION.equals(a.getVersion()))
+						&& resourceVersion.equals(a.getVersion()))
 				.count();
 		assertEquals(1, aCount);
 
 		long cCount = hrpFhirResources.stream().filter(r -> r instanceof CodeSystem).map(r -> (CodeSystem) r)
 				.filter(c -> "http://dsf.dev/fhir/CodeSystem/tutorial".equals(c.getUrl())
-						&& ConstantsTutorial.RESOURCE_VERSION.equals(c.getVersion()))
+						&& resourceVersion.equals(c.getVersion()))
 				.count();
 		assertEquals(1, cCount);
 
 		long tCount = hrpFhirResources.stream().filter(r -> r instanceof StructureDefinition)
 				.map(r -> (StructureDefinition) r)
 				.filter(c -> "http://dsf.dev/fhir/StructureDefinition/task-hello-hrp".equals(c.getUrl())
-						&& ConstantsTutorial.RESOURCE_VERSION.equals(c.getVersion()))
+						&& resourceVersion.equals(c.getVersion()))
 				.count();
 		assertEquals(1, tCount);
 
 		long vCount = hrpFhirResources.stream().filter(r -> r instanceof ValueSet).map(r -> (ValueSet) r)
 				.filter(v -> "http://dsf.dev/fhir/ValueSet/tutorial".equals(v.getUrl())
-						&& ConstantsTutorial.RESOURCE_VERSION.equals(v.getVersion()))
+						&& resourceVersion.equals(v.getVersion()))
 				.count();
 		assertEquals(1, vCount);
 	}

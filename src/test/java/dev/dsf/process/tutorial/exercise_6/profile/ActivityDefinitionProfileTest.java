@@ -1,7 +1,5 @@
 package dev.dsf.process.tutorial.exercise_6.profile;
 
-import static dev.dsf.process.tutorial.TutorialProcessPluginDefinition.RELEASE_DATE;
-import static dev.dsf.process.tutorial.TutorialProcessPluginDefinition.VERSION;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -24,18 +22,22 @@ import org.slf4j.LoggerFactory;
 
 import ca.uhn.fhir.validation.ResultSeverityEnum;
 import ca.uhn.fhir.validation.ValidationResult;
+import dev.dsf.bpe.v2.ProcessPluginDefinition;
 import dev.dsf.bpe.v2.service.process.ProcessAuthorizationHelper;
 import dev.dsf.fhir.validation.ResourceValidator;
 import dev.dsf.fhir.validation.ResourceValidatorImpl;
 import dev.dsf.fhir.validation.ValidationSupportRule;
+import dev.dsf.process.tutorial.TutorialProcessPluginDefinition;
 import dev.dsf.process.tutorial.util.ProcessAuthorizationHelperImpl;
 
 public class ActivityDefinitionProfileTest
 {
 	private static final Logger logger = LoggerFactory.getLogger(ActivityDefinitionProfileTest.class);
+	private static final ProcessPluginDefinition processPluginDefinition = new TutorialProcessPluginDefinition();
 
 	@ClassRule
-	public static final ValidationSupportRule validationRule = new ValidationSupportRule(VERSION, RELEASE_DATE,
+	public static final ValidationSupportRule validationRule = new ValidationSupportRule(
+			processPluginDefinition.getVersion(), processPluginDefinition.getReleaseDate(),
 			Arrays.asList("dsf-activity-definition-2.0.0.xml", "dsf-extension-process-authorization-2.0.0.xml",
 					"dsf-meta-2.0.0.xml", "dsf-extension-process-authorization-parent-organization-role-2.0.0.xml",
 					"dsf-extension-process-authorization-parent-organization-role-practitioner-2.0.0.xml",
@@ -175,7 +177,9 @@ public class ActivityDefinitionProfileTest
 		Extension extTaskProfile = processAuthorization1.getExtensionByUrl("task-profile");
 		assertNotNull(extTaskProfile);
 		assertTrue(extTaskProfile.getValue() instanceof CanonicalType);
-		assertEquals("http://dsf.dev/fhir/StructureDefinition/task-goodbye-dic|" + VERSION,
+		assertEquals(
+				"http://dsf.dev/fhir/StructureDefinition/task-goodbye-dic|"
+						+ processPluginDefinition.getResourceVersion(),
 				((CanonicalType) extTaskProfile.getValue()).getValue());
 
 		Extension extRequester = processAuthorization1.getExtensionByUrl("requester");

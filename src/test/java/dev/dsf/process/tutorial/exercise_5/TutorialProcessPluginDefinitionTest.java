@@ -9,8 +9,6 @@ import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_D
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_DIC_PROCESS_URI;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_HELLO_COS_MESSAGE_NAME;
-import static dev.dsf.process.tutorial.ConstantsTutorial.RESOURCE_VERSION;
-import static dev.dsf.process.tutorial.TutorialProcessPluginDefinition.VERSION;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -317,15 +315,15 @@ public class TutorialProcessPluginDefinitionTest
 		String processUrl = "http://dsf.dev/bpe/Process/cosProcess";
 		List<ActivityDefinition> activityDefinitions = cosFhirResources.stream()
 				.filter(r -> r instanceof ActivityDefinition).map(r -> (ActivityDefinition) r)
-				.filter(a -> processUrl.equals(a.getUrl())).filter(a -> RESOURCE_VERSION.equals(a.getVersion()))
+				.filter(a -> processUrl.equals(a.getUrl())).filter(a -> resourceVersion.equals(a.getVersion()))
 				.collect(Collectors.toList());
 
 		String errorActivityDefinition = "Process is missing ActivityDefinition with url '" + processUrl
-				+ "' and version '" + VERSION + "'";
+				+ "' and version '" + resourceVersion + "'";
 		assertEquals(errorActivityDefinition, 1, activityDefinitions.size());
 
 		String errorMessageRequester = "ActivityDefinition with url '" + processUrl + "' and version '"
-				+ RESOURCE_VERSION + "' is missing expected requester extension";
+				+ resourceVersion + "' is missing expected requester extension";
 		assertEquals(errorMessageRequester, 1, activityDefinitions.get(0).getExtension().stream()
 				.filter(e -> "http://dsf.dev/fhir/StructureDefinition/extension-process-authorization"
 						.equals(e.getUrl()))
@@ -340,7 +338,7 @@ public class TutorialProcessPluginDefinitionTest
 				.filter(i -> "dic.dsf.test".equals(i.getValue())).count());
 
 		String errorMessageRecipient = "ActivityDefinition with url '" + processUrl + "' and version '"
-				+ RESOURCE_VERSION + "' is missing expected recipient extension";
+				+ resourceVersion + "' is missing expected recipient extension";
 		assertEquals(errorMessageRecipient, 1, activityDefinitions.get(0).getExtension().stream()
 				.filter(e -> "http://dsf.dev/fhir/StructureDefinition/extension-process-authorization"
 						.equals(e.getUrl()))
@@ -357,11 +355,11 @@ public class TutorialProcessPluginDefinitionTest
 		String taskHelloCosUrl = "http://dsf.dev/fhir/StructureDefinition/task-hello-cos";
 		List<StructureDefinition> structureDefinitions = cosFhirResources.stream()
 				.filter(r -> r instanceof StructureDefinition).map(r -> (StructureDefinition) r)
-				.filter(s -> taskHelloCosUrl.equals(s.getUrl())).filter(s -> RESOURCE_VERSION.equals(s.getVersion()))
+				.filter(s -> taskHelloCosUrl.equals(s.getUrl())).filter(s -> resourceVersion.equals(s.getVersion()))
 				.collect(Collectors.toList());
 
 		String errorStructureDefinition = "Process is missing StructureDefinition with url '" + taskHelloCosUrl
-				+ "' and version '" + RESOURCE_VERSION + "'";
+				+ "' and version '" + resourceVersion + "'";
 		assertEquals(errorStructureDefinition, 1, structureDefinitions.size());
 
 		assertEquals(2, cosFhirResources.size());

@@ -308,7 +308,7 @@ public class TutorialProcessPluginDefinitionTest
 		assertEquals(errorActivityDefinition, 1, activityDefinitions.size());
 
 		String errorMessageRequester = "ActivityDefinition with url '" + processUrl + "' and version '"
-				+ RESOURCE_VERSION + "' is missing expected requester extension";
+				+ resourceVersion + "' is missing expected requester extension";
 		assertEquals(errorMessageRequester, 1, activityDefinitions.get(0).getExtension().stream()
 				.filter(e -> "http://dsf.dev/fhir/StructureDefinition/extension-process-authorization"
 						.equals(e.getUrl()))
@@ -323,7 +323,7 @@ public class TutorialProcessPluginDefinitionTest
 				.filter(i -> "dic.dsf.test".equals(i.getValue())).count());
 
 		String errorMessageRecipient = "ActivityDefinition with url '" + processUrl + "' and version '"
-				+ RESOURCE_VERSION + "' is missing expected recipient extension";
+				+ resourceVersion + "' is missing expected recipient extension";
 		assertEquals(errorMessageRecipient, 1, activityDefinitions.get(0).getExtension().stream()
 				.filter(e -> "http://dsf.dev/fhir/StructureDefinition/extension-process-authorization"
 						.equals(e.getUrl()))

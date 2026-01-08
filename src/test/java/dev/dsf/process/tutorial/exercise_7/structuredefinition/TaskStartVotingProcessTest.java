@@ -6,9 +6,9 @@ import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_S
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_START_VOTING_PROCESS_INSTANTIATES_CANONICAL;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_START_VOTING_PROCESS_MESSAGE_NAME;
 import static dev.dsf.process.tutorial.ConstantsTutorial.RESOURCE_VERSION;
-import static dev.dsf.process.tutorial.TutorialProcessPluginDefinition.RELEASE_DATE;
 import static org.junit.Assert.assertEquals;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -30,10 +30,12 @@ import dev.dsf.bpe.v2.constants.NamingSystems;
 import dev.dsf.fhir.validation.ResourceValidator;
 import dev.dsf.fhir.validation.ResourceValidatorImpl;
 import dev.dsf.fhir.validation.ValidationSupportRule;
+import dev.dsf.process.tutorial.TutorialProcessPluginDefinition;
 
 public class TaskStartVotingProcessTest
 {
 	private final Logger logger = LoggerFactory.getLogger(TaskStartVotingProcessTest.class);
+	private static final LocalDate RELEASE_DATE = new TutorialProcessPluginDefinition().getReleaseDate();
 
 	@ClassRule
 	public static final ValidationSupportRule validationRule = new ValidationSupportRule(RESOURCE_VERSION, RELEASE_DATE,
