@@ -17,8 +17,8 @@ public abstract class ConstantsTutorial
 
 	public static final String PROFILE_TUTORIAL_TASK_DIC_PROCESS = "http://dsf.dev/fhir/StructureDefinition/task-start-dic-process";
 	public static final String PROFILE_TUTORIAL_TASK_DIC_PROCESS_URI = "http://dsf.dev/bpe/Process/" + PROCESS_NAME_DIC;
-	public static final String PROFILE_TUTORIAL_TASK_DIC_PROCESS_INSTANTIATES_CANONICAL = PROFILE_TUTORIAL_TASK_DIC_PROCESS_URI + "|"
-			+ RESOURCE_VERSION;
+	public static final String PROFILE_TUTORIAL_TASK_DIC_PROCESS_INSTANTIATES_CANONICAL = PROFILE_TUTORIAL_TASK_DIC_PROCESS_URI
+			+ "|" + RESOURCE_VERSION;
 	public static final String PROFILE_TUTORIAL_TASK_DIC_PROCESS_MESSAGE_NAME = "startDicProcess";
 
 	public static final String PROFILE_TUTORIAL_TASK_GOODBYE_DIC = "http://dsf.dev/fhir/StructureDefinition/task-goodbye-dic";
@@ -31,11 +31,11 @@ public abstract class ConstantsTutorial
 	public static final String PROCESS_NAME_FULL_COS = "dsfdev_" + PROCESS_NAME_COS;
 
 	public static final String PROFILE_TUTORIAL_TASK_HELLO_COS = "http://dsf.dev/fhir/StructureDefinition/task-hello-cos";
-	public static final String PROFILE_TUTORIAL_TASK_HELLO_COS_AND_LATEST_VERSION = PROFILE_TUTORIAL_TASK_HELLO_COS + "|"
-			+ RESOURCE_VERSION;
+	public static final String PROFILE_TUTORIAL_TASK_HELLO_COS_AND_LATEST_VERSION = PROFILE_TUTORIAL_TASK_HELLO_COS
+			+ "|" + RESOURCE_VERSION;
 	public static final String PROFILE_TUTORIAL_TASK_COS_PROCESS_URI = "http://dsf.dev/bpe/Process/" + PROCESS_NAME_COS;
-	public static final String PROFILE_TUTORIAL_TASK_HELLO_COS_INSTANTIATES_CANONICAL = PROFILE_TUTORIAL_TASK_COS_PROCESS_URI + "|"
-			+ RESOURCE_VERSION;
+	public static final String PROFILE_TUTORIAL_TASK_HELLO_COS_INSTANTIATES_CANONICAL = PROFILE_TUTORIAL_TASK_COS_PROCESS_URI
+			+ "|" + RESOURCE_VERSION;
 	public static final String PROFILE_TUTORIAL_TASK_HELLO_COS_MESSAGE_NAME = "helloCos";
 
 	public static final String TUTORIAL_COS_ORGANIZATION_IDENTIFIER = "cos.dsf.test";
@@ -45,11 +45,11 @@ public abstract class ConstantsTutorial
 	public static final String PROCESS_NAME_FULL_HRP = "dsfdev_" + PROCESS_NAME_HRP;
 
 	public static final String PROFILE_TUTORIAL_TASK_HELLO_HRP = "http://dsf.dev/fhir/StructureDefinition/task-hello-hrp";
-	public static final String PROFILE_TUTORIAL_TASK_HELLO_HRP_AND_LATEST_VERSION = PROFILE_TUTORIAL_TASK_HELLO_HRP + "|"
-			+ RESOURCE_VERSION;
+	public static final String PROFILE_TUTORIAL_TASK_HELLO_HRP_AND_LATEST_VERSION = PROFILE_TUTORIAL_TASK_HELLO_HRP
+			+ "|" + RESOURCE_VERSION;
 	public static final String PROFILE_TUTORIAL_TASK_HRP_PROCESS_URI = "http://dsf.dev/bpe/Process/" + PROCESS_NAME_HRP;
-	public static final String PROFILE_TUTORIAL_TASK_HELLO_HRP_INSTANTIATES_CANONICAL = PROFILE_TUTORIAL_TASK_HRP_PROCESS_URI + "|"
-			+ RESOURCE_VERSION;
+	public static final String PROFILE_TUTORIAL_TASK_HELLO_HRP_INSTANTIATES_CANONICAL = PROFILE_TUTORIAL_TASK_HRP_PROCESS_URI
+			+ "|" + RESOURCE_VERSION;
 	public static final String PROFILE_TUTORIAL_TASK_HELLO_HRP_MESSAGE_NAME = "helloHrp";
 
 	public static final String CODESYSTEM_TUTORIAL = "http://dsf.dev/fhir/CodeSystem/tutorial";
@@ -73,27 +73,28 @@ public abstract class ConstantsTutorial
 	public static final String PROFILE_TUTORIAL_TASK_START_VOTING_PROCESS = "http://dsf.dev/fhir/StructureDefinition/task-start-voting-process";
 	public static final String PROFILE_TUTORIAL_TASK_START_VOTING_PROCESS_AND_LATEST_VERSION = PROFILE_TUTORIAL_TASK_START_VOTING_PROCESS
 			+ "|" + RESOURCE_VERSION;
-	public static final String PROFILE_TUTORIAL_TASK_VOTING_PROCESS_URI = "http://dsf.dev/bpe/Process/" + PROCESS_NAME_VOTING_PROCESS;
+	public static final String PROFILE_TUTORIAL_TASK_VOTING_PROCESS_URI = "http://dsf.dev/bpe/Process/"
+			+ PROCESS_NAME_VOTING_PROCESS;
 	public static final String PROFILE_TUTORIAL_TASK_START_VOTING_PROCESS_INSTANTIATES_CANONICAL = PROFILE_TUTORIAL_TASK_VOTING_PROCESS_URI
 			+ "|" + RESOURCE_VERSION;
 	public static final String PROFILE_TUTORIAL_TASK_START_VOTING_PROCESS_MESSAGE_NAME = "startVotingProcess";
 
 	public static final String PROFILE_TUTORIAL_TASK_RETURN_VOTE = "http://dsf.dev/fhir/StructureDefinition/task-return-vote";
-	public static final String PROFILE_TUTORIAL_TASK_RETURN_VOTE_AND_LATEST_VERSION = PROFILE_TUTORIAL_TASK_RETURN_VOTE + "|"
-			+ RESOURCE_VERSION;
-	public static final String PROFILE_TUTORIAL_TASK_RETURN_VOTE_INSTANTIATES_CANONICAL = PROFILE_TUTORIAL_TASK_VOTING_PROCESS_URI + "|"
-			+ RESOURCE_VERSION;
+	public static final String PROFILE_TUTORIAL_TASK_RETURN_VOTE_AND_LATEST_VERSION = PROFILE_TUTORIAL_TASK_RETURN_VOTE
+			+ "|" + RESOURCE_VERSION;
+	public static final String PROFILE_TUTORIAL_TASK_RETURN_VOTE_INSTANTIATES_CANONICAL = PROFILE_TUTORIAL_TASK_VOTING_PROCESS_URI
+			+ "|" + RESOURCE_VERSION;
 	public static final String PROFILE_TUTORIAL_TASK_RETURN_VOTE_MESSAGE_NAME = "returnVote";
 
 	public static final String PROCESS_NAME_VOTE = "vote";
 	public static final String PROCESS_NAME_FULL_VOTE = "dsfdev_" + PROCESS_NAME_VOTE;
 
 	public static final String PROFILE_TUTORIAL_TASK_START_VOTE = "http://dsf.dev/fhir/StructureDefinition/task-start-voting-process";
-	public static final String PROFILE_TUTORIAL_TASK_START_VOTE_AND_LATEST_VERSION = PROFILE_TUTORIAL_TASK_START_VOTE + "|"
-			+ RESOURCE_VERSION;
+	public static final String PROFILE_TUTORIAL_TASK_START_VOTE_AND_LATEST_VERSION = PROFILE_TUTORIAL_TASK_START_VOTE
+			+ "|" + RESOURCE_VERSION;
 	public static final String PROFILE_TUTORIAL_TASK_VOTE_URI = "http://dsf.dev/bpe/Process/" + PROCESS_NAME_VOTE;
-	public static final String PROFILE_TUTORIAL_TASK_START_VOTE_INSTANTIATES_CANONICAL = PROFILE_TUTORIAL_TASK_VOTE_URI + "|"
-			+ RESOURCE_VERSION;
+	public static final String PROFILE_TUTORIAL_TASK_START_VOTE_INSTANTIATES_CANONICAL = PROFILE_TUTORIAL_TASK_VOTE_URI
+			+ "|" + RESOURCE_VERSION;
 	public static final String PROFILE_TUTORIAL_TASK_START_VOTE_MESSAGE_NAME = "startVote";
 
 	public static final String VOTE_PROCESS_VARIABLE_VOTE = "vote";
