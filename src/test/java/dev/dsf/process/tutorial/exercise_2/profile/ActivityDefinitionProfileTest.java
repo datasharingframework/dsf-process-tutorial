@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.Arrays;
 
 import org.hl7.fhir.r4.model.ActivityDefinition;
@@ -18,22 +19,36 @@ import org.slf4j.LoggerFactory;
 
 import ca.uhn.fhir.validation.ResultSeverityEnum;
 import ca.uhn.fhir.validation.ValidationResult;
-import dev.dsf.bpe.v2.ProcessPluginDefinition;
 import dev.dsf.bpe.v2.service.process.ProcessAuthorizationHelper;
 import dev.dsf.fhir.validation.ResourceValidator;
 import dev.dsf.fhir.validation.ResourceValidatorImpl;
 import dev.dsf.fhir.validation.ValidationSupportRule;
-import dev.dsf.process.tutorial.TutorialProcessPluginDefinition;
+import dev.dsf.process.tutorial.util.Pom;
 import dev.dsf.process.tutorial.util.ProcessAuthorizationHelperImpl;
 
 public class ActivityDefinitionProfileTest
 {
 	private static final Logger logger = LoggerFactory.getLogger(ActivityDefinitionProfileTest.class);
-	private static final ProcessPluginDefinition processPluginDefinition = new TutorialProcessPluginDefinition();
+	private static final String RESOURCE_VERSION;
+	private static final LocalDate RELEASE_DATE;
+	private static final Pom pom;
+
+	static
+	{
+		try
+		{
+			pom = new Pom();
+			RESOURCE_VERSION = pom.getResourceVersion();
+			RELEASE_DATE = pom.getReleaseDate();
+		}
+		catch (Exception e)
+		{
+			throw new RuntimeException(e);
+		}
+	}
 
 	@ClassRule
-	public static final ValidationSupportRule validationRule = new ValidationSupportRule(
-			processPluginDefinition.getVersion(), processPluginDefinition.getReleaseDate(),
+	public static final ValidationSupportRule validationRule = new ValidationSupportRule(RESOURCE_VERSION, RELEASE_DATE,
 			Arrays.asList("dsf-activity-definition-2.0.0.xml", "dsf-extension-process-authorization-2.0.0.xml",
 					"dsf-meta-2.0.0.xml", "dsf-extension-process-authorization-parent-organization-role-2.0.0.xml",
 					"dsf-extension-process-authorization-parent-organization-role-practitioner-2.0.0.xml",

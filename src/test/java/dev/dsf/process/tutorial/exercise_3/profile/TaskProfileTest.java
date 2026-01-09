@@ -3,7 +3,6 @@ package dev.dsf.process.tutorial.exercise_3.profile;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_DIC_PROCESS;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_DIC_PROCESS_INSTANTIATES_CANONICAL;
 import static dev.dsf.process.tutorial.ConstantsTutorial.PROFILE_TUTORIAL_TASK_DIC_PROCESS_MESSAGE_NAME;
-import static dev.dsf.process.tutorial.ConstantsTutorial.RESOURCE_VERSION;
 import static org.junit.Assert.assertEquals;
 
 import java.time.LocalDate;
@@ -27,12 +26,28 @@ import dev.dsf.bpe.v2.constants.NamingSystems;
 import dev.dsf.fhir.validation.ResourceValidator;
 import dev.dsf.fhir.validation.ResourceValidatorImpl;
 import dev.dsf.fhir.validation.ValidationSupportRule;
-import dev.dsf.process.tutorial.TutorialProcessPluginDefinition;
+import dev.dsf.process.tutorial.util.Pom;
 
 public class TaskProfileTest
 {
 	private static final Logger logger = LoggerFactory.getLogger(TaskProfileTest.class);
-	private static final LocalDate RELEASE_DATE = new TutorialProcessPluginDefinition().getReleaseDate();
+	private static final String RESOURCE_VERSION;
+	private static final LocalDate RELEASE_DATE;
+	private static final Pom pom;
+
+	static
+	{
+		try
+		{
+			pom = new Pom();
+			RESOURCE_VERSION = pom.getResourceVersion();
+			RELEASE_DATE = pom.getReleaseDate();
+		}
+		catch (Exception e)
+		{
+			throw new RuntimeException(e);
+		}
+	}
 
 	@ClassRule
 	public static final ValidationSupportRule validationRule = new ValidationSupportRule(RESOURCE_VERSION, RELEASE_DATE,
