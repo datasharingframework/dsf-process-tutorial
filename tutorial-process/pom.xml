@@ -10,9 +10,10 @@
     </parent>
 
     <artifactId>tutorial-process</artifactId>
+    <version>2.0.0.1-SNAPSHOT</version>
+    <description>A process for the DSF process tutorial</description>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <compileSource>25</compileSource>
         <compileTarget>25</compileTarget>
 
@@ -375,6 +376,7 @@
                             <goal>generate-dev-setup-cert-files</goal>
                         </goals>
                         <configuration>
+                            <certDir>../cert</certDir>
                             <certs>
                                 <cert>
                                     <cn>localhost</cn>
@@ -415,9 +417,7 @@
                                     <targets>
                                         <target>../dev-setup/secrets/app_cos_client_certificate.crt</target>
                                         <target>../dev-setup/secrets/app_cos_client_certificate.key</target>
-                                        <target>../browser-certs/cos-client.p12</target>
-                                        <target>../browser-certs/cos-client.crt</target>
-                                        <target>../browser-certs/cos-client.key</target>
+                                        <target>../browser-certs/cos/cos-client.p12</target>
                                     </targets>
                                 </cert>
                                 <cert>
@@ -426,9 +426,7 @@
                                     <targets>
                                         <target>../dev-setup/secrets/app_dic_client_certificate.crt</target>
                                         <target>../dev-setup/secrets/app_dic_client_certificate.key</target>
-                                        <target>../browser-certs/dic-client.p12</target>
-                                        <target>../browser-certs/dic-client.crt</target>
-                                        <target>../browser-certs/dic-client.key</target>
+                                        <target>../browser-certs/dic/dic-client.p12</target>
                                     </targets>
                                 </cert>
                                 <cert>
@@ -437,15 +435,12 @@
                                     <targets>
                                         <target>../dev-setup/secrets/app_hrp_client_certificate.crt</target>
                                         <target>../dev-setup/secrets/app_hrp_client_certificate.key</target>
-                                        <target>../browser-certs/hrp-client.p12</target>
-                                        <target>../browser-certs/hrp-client.crt</target>
-                                        <target>../browser-certs/hrp-client.key</target>
+                                        <target>../browser-certs/hrp/hrp-client.p12</target>
                                     </targets>
                                 </cert>
                             </certs>
                             <rootCa>
                                 <targets>
-                                    <target>../cert/root-ca.crt</target>
                                     <target>../browser-certs/root-ca.crt</target>
                                 </targets>
                             </rootCa>
