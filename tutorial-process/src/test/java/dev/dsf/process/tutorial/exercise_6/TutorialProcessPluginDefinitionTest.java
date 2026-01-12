@@ -54,8 +54,7 @@ public class TutorialProcessPluginDefinitionTest
 {
 	private static final ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
 
-	private final String version = "2.4.0.1";
-	private final String resourceVersion = "2.4";
+	private final String resourceVersion = "1.4";
 	private static List<Resource> dicFhirResources;
 	private static List<Resource> cosFhirResources;
 	private static List<Resource> hrpFhirResources;

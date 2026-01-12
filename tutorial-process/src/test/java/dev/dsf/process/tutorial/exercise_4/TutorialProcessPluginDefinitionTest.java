@@ -50,8 +50,7 @@ import dev.dsf.process.tutorial.util.FhirResourceLoader;
 
 public class TutorialProcessPluginDefinitionTest
 {
-	private final String version = "2.3.0.1";
-	private final String resourceVersion = "2.3";
+	private final String resourceVersion = "1.3";
 	private static List<Resource> dicFhirResources;
 	private static List<Resource> cosFhirResources;
 

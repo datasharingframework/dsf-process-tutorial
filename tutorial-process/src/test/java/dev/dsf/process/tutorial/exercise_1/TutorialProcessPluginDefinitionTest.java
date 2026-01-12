@@ -31,8 +31,7 @@ import dev.dsf.process.tutorial.util.FhirResourceLoader;
 
 public class TutorialProcessPluginDefinitionTest
 {
-	private final String version = "2.0.0.1";
-	private final String resourceVersion = "2.0";
+	private final String resourceVersion = "1.0";
 
 	private static List<Resource> dicFhirResources;
 
