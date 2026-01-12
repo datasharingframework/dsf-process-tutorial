@@ -89,7 +89,7 @@ public class DockerComposeTest
 		String roleConfigString = "";
 		boolean readRoleConfig = false;
 
-		BufferedReader reader = new BufferedReader(Files.newBufferedReader(Path.of("./dev-setup/docker-compose.yml")));
+		BufferedReader reader = new BufferedReader(Files.newBufferedReader(Path.of("../dev-setup/docker-compose.yml")));
 		String line;
 		while (Objects.nonNull(line = reader.readLine()))
 		{
