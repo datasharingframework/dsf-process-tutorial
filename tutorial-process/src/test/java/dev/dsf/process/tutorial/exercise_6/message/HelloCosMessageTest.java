@@ -8,7 +8,6 @@ import static org.mockito.ArgumentMatchers.eq;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.hl7.fhir.r4.model.CodeableConcept;

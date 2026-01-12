@@ -10,7 +10,7 @@
 		<module>tutorial-process</module>
 	</modules>
 
-	<description>TODO</description>
+	<description>The DSF Process Tutorial</description>
 	<url>https://github.com/datasharingframework/dsf-process-tutorial</url>
 
 	<scm>

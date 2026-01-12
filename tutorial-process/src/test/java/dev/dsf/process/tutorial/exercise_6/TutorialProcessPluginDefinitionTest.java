@@ -16,9 +16,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeNotNull;
 import static org.junit.Assume.assumeTrue;
 
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -43,7 +40,6 @@ import org.hl7.fhir.r4.model.StringType;
 import org.hl7.fhir.r4.model.StructureDefinition;
 import org.hl7.fhir.r4.model.Task;
 import org.hl7.fhir.r4.model.ValueSet;
-import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -53,19 +49,10 @@ import dev.dsf.process.tutorial.TutorialProcessPluginDefinition;
 import dev.dsf.process.tutorial.message.HelloHrpMessage;
 import dev.dsf.process.tutorial.service.CosTask;
 import dev.dsf.process.tutorial.util.FhirResourceLoader;
-import dev.dsf.process.tutorial.util.Pom;
 
 public class TutorialProcessPluginDefinitionTest
 {
-	private static TutorialProcessPluginDefinition definition;
-	private static String propertyFileSnapshot;
-	private static final String propertyFileDefaultContent = """
-			release-date=${project.build.outputTimestamp}
-			version=${project.version}
-			name=${project.artifactId}
-			title=${project.description}
-			publisher=${project.organization.name}
-			publisher-email=pmo@dsf.dev""";
+	private static final ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
 
 	private final String version = "2.4.0.1";
 	private final String resourceVersion = "2.4";
@@ -74,22 +61,11 @@ public class TutorialProcessPluginDefinitionTest
 	private static List<Resource> hrpFhirResources;
 
 	@BeforeClass
-	public static void init() throws Exception
+	public static void loadResources() throws Exception
 	{
-		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
-
 		dicFhirResources = FhirResourceLoader.loadResourcesFor(definition, PROCESS_NAME_FULL_DIC);
 		cosFhirResources = FhirResourceLoader.loadResourcesFor(definition, PROCESS_NAME_FULL_COS);
 		hrpFhirResources = FhirResourceLoader.loadResourcesFor(definition, PROCESS_NAME_FULL_HRP);
-
-		Pom pom = new Pom();
-		replacePropertyPlaceholders(pom);
-	}
-
-	@AfterClass
-	public static void cleanup() throws Exception
-	{
-		restorePropertyPlaceholders();
 	}
 
 	@Test
@@ -490,29 +466,5 @@ public class TutorialProcessPluginDefinitionTest
 		String errorProcessVersion = "Process '" + processId + "' in file '" + filename
 				+ "' is missing version tag '#{version}'";
 		assertEquals(errorProcessVersion, "#{version}", processes.get(0).getCamundaVersionTag());
-	}
-
-	private static void replacePropertyPlaceholders(Pom pom) throws Exception
-	{
-		URL url = TutorialProcessPluginDefinitionTest.class.getResource("plugin.properties");
-		Objects.requireNonNull(url, "plugin.properties not found");
-		Path pluginProperties = Path.of(url.toURI());
-		propertyFileSnapshot = Files.readString(pluginProperties);
-
-		String replacement = propertyFileDefaultContent.replace("${project.build.outputTimestamp}",
-				pom.getReleaseDate().toString());
-		replacement = replacement.replace("${project.version}", pom.getVersion());
-		replacement = replacement.replace("${project.artifactId}", pom.getName());
-		replacement = replacement.replace("${project.description}", pom.getTitle());
-		replacement = replacement.replace("${project.organization.name}", pom.getPublisher());
-		Files.writeString(pluginProperties, replacement);
-	}
-
-	private static void restorePropertyPlaceholders() throws Exception
-	{
-		URL url = TutorialProcessPluginDefinitionTest.class.getResource("plugin.properties");
-		Objects.requireNonNull(url, "plugin.properties not found");
-		Path pluginProperties = Path.of(url.toURI());
-		Files.writeString(pluginProperties, propertyFileSnapshot);
 	}
 }
