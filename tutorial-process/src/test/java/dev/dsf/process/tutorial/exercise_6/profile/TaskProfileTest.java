@@ -30,33 +30,20 @@ import org.slf4j.LoggerFactory;
 
 import ca.uhn.fhir.validation.ResultSeverityEnum;
 import ca.uhn.fhir.validation.ValidationResult;
+import dev.dsf.bpe.v2.ProcessPluginDefinition;
 import dev.dsf.bpe.v2.constants.CodeSystems;
 import dev.dsf.bpe.v2.constants.NamingSystems;
 import dev.dsf.fhir.validation.ResourceValidator;
 import dev.dsf.fhir.validation.ResourceValidatorImpl;
 import dev.dsf.fhir.validation.ValidationSupportRule;
-import dev.dsf.process.tutorial.util.Pom;
+import dev.dsf.process.tutorial.TutorialProcessPluginDefinition;
 
 public class TaskProfileTest
 {
 	private static final Logger logger = LoggerFactory.getLogger(TaskProfileTest.class);
-	private static final String RESOURCE_VERSION;
-	private static final LocalDate RELEASE_DATE;
-	private static final Pom pom;
-
-	static
-	{
-		try
-		{
-			pom = new Pom();
-			RESOURCE_VERSION = pom.getResourceVersion();
-			RELEASE_DATE = pom.getReleaseDate();
-		}
-		catch (Exception e)
-		{
-			throw new RuntimeException(e);
-		}
-	}
+	private static final ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
+	private static final String RESOURCE_VERSION = definition.getResourceVersion();
+	private static final LocalDate RELEASE_DATE = definition.getReleaseDate();
 
 	@ClassRule
 	public static final ValidationSupportRule validationRule = new ValidationSupportRule(RESOURCE_VERSION, RELEASE_DATE,

@@ -5,7 +5,6 @@ import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_VOTING_PROCE
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
