@@ -33,7 +33,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-6`.
 1. Forward the value from the [Task.input](../learning/concepts/fhir/task.md) parameter of the `dicProcess` [Task](../learning/concepts/fhir/task.md) to the `dsfdev_cosProcess` using the `HelloCosMessage`. To do this, you need to override `HelloCosMessage#getAdditionalInputParameters`. Don't forget to also add the definition of your `tutorial-input` [Input Parameter](../learning/concepts/fhir/task.md#task-input-parameters) from `task-start-dic-process.xml` to `task-hello-cos.xml`. 
 1. Add the process in file `hrp-process.bpmn` to the `TutorialProcessPluginDefinition` and configure the FHIR resources needed for the three processes.
 1. Add the `CosTask`, `HelloHrpMessage `, `HrpTask` and `GoodbyeDicMessage` classes as Spring Beans. Don't forget the scope.
-1. Again, we introduced changes that break compatibility. Older plugin versions won't execute the HRP process because the process ID in the BPMN model is still invalid and it is missing a version. Increment your resource version to `2.4`.
+1. Again, we introduced changes that break compatibility. Older plugin versions won't execute the HRP process because the process ID in the BPMN model is still invalid and it is missing a version. Increment your resource version to `1.4`.
 
 
 ## Solution Verification
