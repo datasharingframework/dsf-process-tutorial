@@ -27,8 +27,7 @@ public class PrepareReturnVote implements ServiceTask
 		{
 			String[] readParams = optionalOrganization.get().getEndpoint().get(0).getReference().split("/");
 			String id = readParams[1];
-			Endpoint requesterEndpoint = (Endpoint) api.getFhirClientProvider().getClient("#local").orElseThrow().read()
-					.resource(Endpoint.class).withId(id).execute();
+			Endpoint requesterEndpoint = api.getDsfClientProvider().getLocal().read(Endpoint.class, id);
 
 			Target target = variables.createTarget(requesterRef.getIdentifier().getValue(),
 					requesterEndpoint.getIdentifierFirstRep().getValue(), requesterEndpoint.getAddress(), api
