@@ -22,6 +22,7 @@
 	<compose>
 		<include>
 			<system value="http://dsf.dev/fhir/CodeSystem/tutorial"/>
+			<version value="#{version}"/>
 		</include>
 	</compose>
 </ValueSet> 
