@@ -11,7 +11,7 @@ In order to solve this exercise, you should have solved the first exercise and r
 [Environment Variables](../learning/concepts/dsf/environment-variables.md), 
 [Task Input Parameters](../learning/concepts/fhir/task.md#task-input-parameters),
 [Accessing Task Resources During Execution](../learning/guides/accessing-task-resources-during-execution.md),
-[Placeholders](../learning/concepts/dsf/about-version-placeholders-and-urls.md#placeholders) and
+[Placeholders](../learning/concepts/dsf/about-version-placeholders-and-urls.md) and
 [Read Access Tag](../learning/concepts/dsf/read-access-tag.md).
 
 Solutions to this exercise are found on the branch `solutions/exercise-2`.
@@ -69,7 +69,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-2`.
    The `TaskHelper` instance will prove useful here. Use it in conjunction with `variables` to get the right Task resource from the BPMN process execution.
    </details>
 10. We just changed the elements a Task resource has to include. So you need to change `example-task.xml` for [cURL](../learning/guides/starting-a-process-via-task-resources.md#using-curl) or `Task/task-start-dic-process.xml`, if you want to use the web interface, to include the new input parameter. The actual value may be any arbitrary string.
-   This also means that we need to change the plugin version, since a Task made according to the old StructureDefinition won't be valid for processes still expecting the old StructureDefinition. The new resource version shall be `2.1`.
+   This also means that we need to change the plugin version, since a Task made according to the old StructureDefinition won't be valid for processes still expecting the old StructureDefinition. The new resource version shall be `1.1`.
 
 ## Solution Verification
 ### Maven Build and Automated Tests

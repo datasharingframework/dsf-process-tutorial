@@ -1,0 +1,60 @@
+<CodeSystem xmlns="http://hl7.org/fhir">
+    <meta>
+        <profile value="http://dsf.dev/fhir/StructureDefinition/code-system" />
+        <tag>
+            <system value="http://dsf.dev/fhir/CodeSystem/read-access-tag" />
+            <code value="ALL" />
+        </tag>
+    </meta>
+    <url value="http://dsf.dev/fhir/CodeSystem/voting-process" />
+    <!-- version managed by bpe -->
+    <version value="#{version}" />
+    <name value="Voting Process" />
+    <title value="Voting Process CodeSystem" />
+    <!-- status managed by bpe -->
+    <status value="unknown" />
+    <experimental value="false" />
+    <!-- date managed by bpe -->
+    <date value="#{date}" />
+    <publisher value="DSF" />
+    <description value="CodeSystem with standard values for the DSF tutorial voting processes" />
+    <caseSensitive value="true" />
+    <hierarchyMeaning value="grouped-by" />
+    <versionNeeded value="false" />
+    <content value="complete" />
+    <concept>
+        <code value="binary-question" />
+        <display value="Binary Question" />
+        <definition value="A question which can be answered either by 'yes' or 'no' for the purposes of the voting process." />
+    </concept>
+    <concept>
+        <code value="vote" />
+        <display value="Vote" />
+        <definition value="A voting response to a binary question which can either have a value of 'true' or 'false'." />
+    </concept>
+    <concept>
+        <code value="voting-result"/>
+        <display value="Voting Result"/>
+        <definition value="The result of an instance's voting decision in task.output."/>
+    </concept>
+    <concept>
+        <code value="yes" />
+        <display value="Yes" />
+        <definition value="Positive response to a binary question." />
+    </concept>
+    <concept>
+        <code value="no" />
+        <display value="No" />
+        <definition value="Negative response to a binary question." />
+    </concept>
+    <concept>
+        <code value="timeout" />
+        <display value="Timeout" />
+        <definition value="Voting process timed out." />
+    </concept>
+    <concept>
+        <code value="result-bundle"/>
+        <display value="Result Bundle"/>
+        <definition value="Link to Bundle containing voting results"/>
+    </concept>
+</CodeSystem>
