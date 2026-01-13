@@ -22,8 +22,9 @@ public class StartVote implements MessageIntermediateThrowEvent
 	{
 		String question = api.getTaskHelper().getFirstInputParameterStringValue(variables.getStartTask(),
 				CODESYSTEM_VOTING_PROCESS, CODESYSTEM_VOTING_PROCESS_VALUE_BINARY_QUESTION).get();
+		String resourceVersion = api.getProcessPluginDefinition().getResourceVersion();
 		Task.ParameterComponent questionComponent = api.getTaskHelper().createInput(new StringType(question),
-				CODESYSTEM_VOTING_PROCESS, CODESYSTEM_VOTING_PROCESS_VALUE_BINARY_QUESTION);
+				CODESYSTEM_VOTING_PROCESS, CODESYSTEM_VOTING_PROCESS_VALUE_BINARY_QUESTION, resourceVersion);
 
 		return List.of(questionComponent);
 	}

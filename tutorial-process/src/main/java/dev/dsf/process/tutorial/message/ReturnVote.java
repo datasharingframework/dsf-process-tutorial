@@ -23,8 +23,9 @@ public class ReturnVote implements MessageEndEvent
 			SendTaskValues sendTaskValues, Target target)
 	{
 		boolean vote = variables.getBoolean(VOTE_PROCESS_VARIABLE_VOTE);
+		String resourceVersion = api.getProcessPluginDefinition().getResourceVersion();
 		Task.ParameterComponent voteComponent = api.getTaskHelper().createInput(new BooleanType(vote),
-				CODESYSTEM_VOTING_PROCESS, CODESYSTEM_VOTING_PROCESS_VOTE);
+				CODESYSTEM_VOTING_PROCESS, CODESYSTEM_VOTING_PROCESS_VOTE, resourceVersion);
 
 		return List.of(voteComponent);
 	}
