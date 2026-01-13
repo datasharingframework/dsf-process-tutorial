@@ -24,8 +24,9 @@ public class HelloCosMessage implements MessageIntermediateThrowEvent
 	{
 		Optional<String> tutorialInputParameter = api.getTaskHelper().getFirstInputParameterStringValue(
 				variables.getStartTask(), CODESYSTEM_TUTORIAL, CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT);
+		String resourceVersion = api.getProcessPluginDefinition().getResourceVersion();
 
 		return tutorialInputParameter.map(s -> List.of(api.getTaskHelper().createInput(new StringType().setValue(s),
-				CODESYSTEM_TUTORIAL, CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT))).orElse(List.of());
+				CODESYSTEM_TUTORIAL, CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT, resourceVersion))).orElse(List.of());
 	}
 }
