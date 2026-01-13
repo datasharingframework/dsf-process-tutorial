@@ -23,16 +23,19 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import dev.dsf.bpe.v2.ProcessPluginApi;
+import dev.dsf.bpe.v2.ProcessPluginDefinition;
 import dev.dsf.bpe.v2.activity.values.SendTaskValues;
 import dev.dsf.bpe.v2.constants.NamingSystems;
 import dev.dsf.bpe.v2.service.TaskHelper;
 import dev.dsf.bpe.v2.variables.Target;
 import dev.dsf.bpe.v2.variables.Variables;
+import dev.dsf.process.tutorial.TutorialProcessPluginDefinition;
 import dev.dsf.process.tutorial.message.HelloCosMessage;
 
 @RunWith(MockitoJUnitRunner.class)
 public class HelloCosMessageTest
 {
+	private static final String RESOURCE_VERSION = "1.4";
 
 	@Mock
 	private TaskHelper taskHelper;
@@ -65,6 +68,8 @@ public class HelloCosMessageTest
 
 		MockableHelloCosMessage messageDelegate = new MockableHelloCosMessage();
 
+		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
+
 		Mockito.when(api.getTaskHelper()).thenReturn(taskHelper);
 
 		Mockito.when(variables.getStartTask()).thenReturn(getTask());
@@ -72,11 +77,14 @@ public class HelloCosMessageTest
 		Mockito.when(taskHelper.getFirstInputParameterStringValue(any(), eq("http://dsf.dev/fhir/CodeSystem/tutorial"),
 				eq("tutorial-input"))).thenReturn(Optional.of("Test"));
 
-		Mockito.when(taskHelper.createInput(any(Type.class), eq("http://dsf.dev/fhir/CodeSystem/tutorial"),
-				eq("tutorial-input"), eq("1.4")))
-				.thenReturn(new ParameterComponent(
-						new CodeableConcept(
-								new Coding("http://dsf.dev/fhir/CodeSystem/tutorial", "tutorial-input", null)),
+		Mockito.when(api.getProcessPluginDefinition()).thenReturn(definition);
+
+		Mockito.when(
+				taskHelper.createInput(any(Type.class), eq("http://dsf.dev/fhir/CodeSystem/tutorial"),
+						eq("tutorial-input"), eq(RESOURCE_VERSION)))
+				.thenReturn(new ParameterComponent(new CodeableConcept(
+						new Coding("http://dsf.dev/fhir/CodeSystem/tutorial", "tutorial-input", null)
+								.setVersion(RESOURCE_VERSION)),
 						new StringType("Test")));
 
 		List<ParameterComponent> testParameterComponents = messageDelegate.getAdditionalInputParameters(api, variables,
@@ -84,6 +92,7 @@ public class HelloCosMessageTest
 
 		Mockito.verify(variables).getStartTask();
 		Mockito.verify(taskHelper).createInput(any(Type.class), anyString(), anyString(), anyString());
+		Mockito.verify(api).getProcessPluginDefinition();
 
 		ParameterComponent tutorialInput = testParameterComponents.stream()
 				.filter(parameterComponent -> ((StringType) parameterComponent.getValue()).getValue().equals("Test"))
