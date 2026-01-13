@@ -47,7 +47,7 @@ public class UserVoteTest
 
 	@ClassRule
 	public static final ValidationSupportRule validationRule = new ValidationSupportRule(RESOURCE_VERSION, RELEASE_DATE,
-			Arrays.asList("dsf-task-2.0.0.xml", "dsf-questionnaire-1.5.0.xml"),
+			Arrays.asList("dsf-meta-2.0.0.xml", "dsf-task-2.0.0.xml", "dsf-questionnaire-2.0.0.xml"),
 			Arrays.asList("dsf-read-access-tag-2.0.0.xml"), Arrays.asList("dsf-read-access-tag-2.0.0.xml"));
 
 	private ResourceValidator resourceValidator = new ResourceValidatorImpl(validationRule.getFhirContext(),
