@@ -15,10 +15,10 @@ BPMN process. But first, let's make ourselves familiar with the project structur
 The tutorial project consists of three major parts:
 1. A preconfigured installation of three DSF instances each part of their own organization. The setup can be found in the `dev-setup` directory and is using [Docker](https://www.docker.com/).
 2. A `browser-certs` directory containing all [certificates](../learning/concepts/dsf/certificates.md) that are required during the tutorial.  
-3. The tutorial process plugin and its resources under `src`. Resources include FHIR resources and BPMN files.
+3. The tutorial process plugin and its resources under `tutorial-process/src`. Resources include FHIR resources and BPMN files.
 
-FHIR resources used in the DSF are formatted as XML. You can find them in the `src/main/resources/fhir` directory.
-When creating your own FHIR resources for DSF process plugins you also want to put them in a fitting subdirectory of `src/main/resources/fhir`.
+FHIR resources used in the DSF are formatted as XML. You can find them in the `tutorial-process/src/main/resources/fhir` directory.
+When creating your own FHIR resources for DSF process plugins you also want to put them in a fitting subdirectory of `tutorial-process/src/main/resources/fhir`.
 
 We recommend you take a quick glance at all the topics in the `learning` directory to get a 
 feel for the scope of this tutorial.  

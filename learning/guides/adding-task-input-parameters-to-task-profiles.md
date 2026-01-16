@@ -1,7 +1,7 @@
 ### Adding Task Input Parameters to Task Profiles
 
 Task Input Parameters are added to the differential element of a [StructureDefinition](https://www.hl7.org/fhir/R4/structuredefinition.html) in the
-`src/resources/fhir/StructureDefinition` directory of a project: 
+`tutorial-process/src/resources/fhir/StructureDefinition` directory of a project: 
 ```xml
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <meta>
