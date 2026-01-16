@@ -10,7 +10,7 @@ This profile includes a splicing for `Task.input` with three additional [Input P
 - `business-key`
 - `correlation-key`
 
-When creating your own plugin, you will want to create your own profiles based on the [DSF Task profile](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-task-2.0.0.xml) and put them into `src/resources/fhir/StructureDefinition`.
+When creating your own plugin, you will want to create your own profiles based on the [DSF Task profile](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/StructureDefinition/dsf-task-2.0.0.xml) and put them into `tutorial-process/src/resources/fhir/StructureDefinition`.
 
 #### Task Input Parameters
 
