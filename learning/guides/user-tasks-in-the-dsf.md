@@ -3,7 +3,7 @@
 Creating a [User Task](../concepts/bpmn/user-tasks.md) in a BPMN model, causes the DSF to automatically generate a [QuestionnaireResponse](https://www.hl7.org/fhir/R4/questionnaireresponse.html) resource
 according to a [Questionnaire](https://www.hl7.org/fhir/R4/questionnaire.html) you provided in the [User Task's](../concepts/bpmn/user-tasks.md) `Forms` field when the process execution reaches the [User Task](../concepts/bpmn/user-tasks.md).
 The `Forms` field needs to have a type of `Embedded or External Task Forms` with the `Form key` being the url of your [Questionnaire](https://www.hl7.org/fhir/R4/questionnaire.html) resource.
-The [Questionnaire](https://www.hl7.org/fhir/R4/questionnaire.html) resource needs to be put in the `src/main/resources/fhir/Questionnaire` directory.
+The [Questionnaire](https://www.hl7.org/fhir/R4/questionnaire.html) resource needs to be put in the `tutorial-process/src/main/resources/fhir/Questionnaire` directory.
 The generated [QuestionnaireResponse](https://www.hl7.org/fhir/R4/questionnaireresponse.html) can now be answered by locating 
 the [QuestionnaireResponse](https://www.hl7.org/fhir/R4/questionnaireresponse.html) in the DSF FHIR server UI through `https://your.dsf.fhir.server/fhir/QuestionnaireResponse?_sort=-_lastUpdated&status=in-progress`.
 After filling out the [QuestionnaireResponse](https://www.hl7.org/fhir/R4/questionnaireresponse.html) and submitting it, the process execution will continue with the next BPMN element after the
