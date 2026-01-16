@@ -2,18 +2,18 @@
 ___
 
 # Prerequisites
-In order to be able to solve the exercises described in this tutorial a software development environment with GIT, Java 17, Maven 3.8, Docker, docker-compose, a Java IDE like Eclipse or IntelliJ, a BPMN Editor like the Camunda Modeler and a minimum 16GB of RAM is needed.
+To solve the exercises described in this tutorial a software development environment with GIT, Java 17, Maven 3.8, Docker, docker-compose, a Java IDE like Eclipse or IntelliJ, a BPMN Editor like the Camunda Modeler and a minimum 16GB of RAM is needed.
 Make sure you read through the introductory documentation pages located [here](https://dsf.dev/intro/).
 You also want to have some amount of experience in [HL7 FHIR R4](https://www.hl7.org/fhir/R4/).
 
 ## GIT
-[git](https://git-scm.com) is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.
+[git](https://git-scm.com) is a free and open source distributed version control system designed to handle everything from small to large projects with speed and efficiency.
 
 - An installation guide for Linux, Mac and Windows can be found here: [installation guide](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 - The most basic git CLI commands are described here: [commands](https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository)
 
-## Java 21
-Process plugins for the DSF are written using the [Java](https://www.java.com) programming language in version 21. Various open source releases of the Java Developer Kit (JDK) 21 exist, you are free in your choice.
+## Java 25
+Process plugins for the DSF are written using the [Java](https://www.java.com) programming language in version 25. Various open source releases of the Java Developer Kit (JDK) 25 exist, you are free in your choice.
 
 ## Maven 3.8
 When implementing DSF processes, we use Maven 3.8 to manage the software project's build, reporting and documentation workflow.
