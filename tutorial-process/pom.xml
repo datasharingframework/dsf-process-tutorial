@@ -18,7 +18,7 @@
         <compileTarget>25</compileTarget>
 
         <main.basedir>${project.basedir}</main.basedir>
-        <dsf.version>2.0.1</dsf.version>
+        <dsf.version>2.0.2</dsf.version>
         <slf4j.version>2.0.9</slf4j.version>
         <log4j.version>2.22.0</log4j.version>
         <snake.yaml.version>2.5</snake.yaml.version>
