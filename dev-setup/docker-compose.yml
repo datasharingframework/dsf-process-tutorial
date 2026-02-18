@@ -182,7 +182,7 @@ services:
     secrets:
       - db_liquibase.password
       - db_cos_bpe_user.password
-      - db_cos_bpe_user_camunda.password
+      - db_cos_bpe_user_engine.password
       - ca_chain.crt
       - app_cos_client_certificate.pem
       - app_cos_client_certificate_private_key.pem
@@ -207,7 +207,7 @@ services:
       EXTRA_JVM_ARGS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
       DEV_DSF_BPE_DB_LIQUIBASE_PASSWORD_FILE: /run/secrets/db_liquibase.password
       DEV_DSF_BPE_DB_USER_PASSWORD_FILE: /run/secrets/db_cos_bpe_user.password
-      DEV_DSF_BPE_DB_USER_CAMUNDA_PASSWORD_FILE: /run/secrets/db_cos_bpe_user_camunda.password
+      DEV_DSF_BPE_DB_USER_ENGINE_PASSWORD_FILE: /run/secrets/db_cos_bpe_user_engine.password
       DEV_DSF_BPE_FHIR_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/ca_chain.crt
       DEV_DSF_BPE_FHIR_CLIENT_CERTIFICATE: /run/secrets/app_cos_client_certificate.pem
       DEV_DSF_BPE_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY: /run/secrets/app_cos_client_certificate_private_key.pem
@@ -215,8 +215,8 @@ services:
       DEV_DSF_BPE_DB_URL: jdbc:postgresql://db/cos_bpe
       DEV_DSF_BPE_DB_USER_GROUP: cos_bpe_users
       DEV_DSF_BPE_DB_USER_USERNAME: cos_bpe_server_user
-      DEV_DSF_BPE_DB_USER_CAMUNDA_GROUP: cos_camunda_users
-      DEV_DSF_BPE_DB_USER_CAMUNDA_USERNAME: cos_camunda_server_user
+      DEV_DSF_BPE_DB_USER_ENGINE_GROUP: cos_engine_users
+      DEV_DSF_BPE_DB_USER_ENGINE_USERNAME: cos_engine_server_user
       DEV_DSF_BPE_FHIR_SERVER_BASE_URL: https://cos/fhir
       DEV_DSF_BPE_SERVER_BASE_URL: https://cos/bpe
       DEV_DSF_BPE_SERVER_UI_THEME: dev
@@ -334,7 +334,7 @@ services:
     secrets:
       - db_liquibase.password
       - db_dic_bpe_user.password
-      - db_dic_bpe_user_camunda.password
+      - db_dic_bpe_user_engine.password
       - ca_chain.crt
       - app_dic_client_certificate.pem
       - app_dic_client_certificate_private_key.pem
@@ -359,7 +359,7 @@ services:
       EXTRA_JVM_ARGS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5003
       DEV_DSF_BPE_DB_LIQUIBASE_PASSWORD_FILE: /run/secrets/db_liquibase.password
       DEV_DSF_BPE_DB_USER_PASSWORD_FILE: /run/secrets/db_dic_bpe_user.password
-      DEV_DSF_BPE_DB_USER_CAMUNDA_PASSWORD_FILE: /run/secrets/db_dic_bpe_user_camunda.password
+      DEV_DSF_BPE_DB_USER_ENGINE_PASSWORD_FILE: /run/secrets/db_dic_bpe_user_engine.password
       DEV_DSF_BPE_FHIR_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/ca_chain.crt
       DEV_DSF_BPE_FHIR_CLIENT_CERTIFICATE: /run/secrets/app_dic_client_certificate.pem
       DEV_DSF_BPE_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY: /run/secrets/app_dic_client_certificate_private_key.pem
@@ -367,8 +367,8 @@ services:
       DEV_DSF_BPE_DB_URL: jdbc:postgresql://db/dic_bpe
       DEV_DSF_BPE_DB_USER_GROUP: dic_bpe_users
       DEV_DSF_BPE_DB_USER_USERNAME: dic_bpe_server_user
-      DEV_DSF_BPE_DB_USER_CAMUNDA_GROUP: dic_camunda_users
-      DEV_DSF_BPE_DB_USER_CAMUNDA_USERNAME: dic_camunda_server_user
+      DEV_DSF_BPE_DB_USER_ENGINE_GROUP: dic_engine_users
+      DEV_DSF_BPE_DB_USER_ENGINE_USERNAME: dic_engine_server_user
       DEV_DSF_BPE_FHIR_SERVER_BASE_URL: https://dic/fhir
       DEV_DSF_BPE_SERVER_BASE_URL: https://dic/bpe
       DEV_DSF_BPE_SERVER_UI_THEME: dev
@@ -477,7 +477,7 @@ services:
     secrets:
       - db_liquibase.password
       - db_hrp_bpe_user.password
-      - db_hrp_bpe_user_camunda.password
+      - db_hrp_bpe_user_engine.password
       - ca_chain.crt
       - app_hrp_client_certificate.pem
       - app_hrp_client_certificate_private_key.pem
@@ -502,7 +502,7 @@ services:
       EXTRA_JVM_ARGS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5004
       DEV_DSF_BPE_DB_LIQUIBASE_PASSWORD_FILE: /run/secrets/db_liquibase.password
       DEV_DSF_BPE_DB_USER_PASSWORD_FILE: /run/secrets/db_hrp_bpe_user.password
-      DEV_DSF_BPE_DB_USER_CAMUNDA_PASSWORD_FILE: /run/secrets/db_hrp_bpe_user_camunda.password
+      DEV_DSF_BPE_DB_USER_ENGINE_PASSWORD_FILE: /run/secrets/db_hrp_bpe_user_engine.password
       DEV_DSF_BPE_FHIR_CLIENT_TRUST_SERVER_CERTIFICATE_CAS: /run/secrets/ca_chain.crt
       DEV_DSF_BPE_FHIR_CLIENT_CERTIFICATE: /run/secrets/app_hrp_client_certificate.pem
       DEV_DSF_BPE_FHIR_CLIENT_CERTIFICATE_PRIVATE_KEY: /run/secrets/app_hrp_client_certificate_private_key.pem
@@ -510,8 +510,8 @@ services:
       DEV_DSF_BPE_DB_URL: jdbc:postgresql://db/hrp_bpe
       DEV_DSF_BPE_DB_USER_GROUP: hrp_bpe_users
       DEV_DSF_BPE_DB_USER_USERNAME: hrp_bpe_server_user
-      DEV_DSF_BPE_DB_USER_CAMUNDA_GROUP: hrp_camunda_users
-      DEV_DSF_BPE_DB_USER_CAMUNDA_USERNAME: hrp_camunda_server_user
+      DEV_DSF_BPE_DB_USER_ENGINE_GROUP: hrp_engine_users
+      DEV_DSF_BPE_DB_USER_ENGINE_USERNAME: hrp_engine_server_user
       DEV_DSF_BPE_FHIR_SERVER_BASE_URL: https://hrp/fhir
       DEV_DSF_BPE_SERVER_BASE_URL: https://hrp/bpe
       DEV_DSF_BPE_SERVER_UI_THEME: dev
@@ -564,8 +564,8 @@ secrets:
     file: ./secrets/db_dic_fhir_user_permanent_delete.password
   db_dic_bpe_user.password:
     file: ./secrets/db_dic_bpe_user.password
-  db_dic_bpe_user_camunda.password:
-    file: ./secrets/db_dic_bpe_user_camunda.password
+  db_dic_bpe_user_engine.password:
+    file: ./secrets/db_dic_bpe_user_engine.password
 
   db_hrp_fhir_user.password:
     file: ./secrets/db_hrp_fhir_user.password
@@ -573,8 +573,8 @@ secrets:
     file: ./secrets/db_hrp_fhir_user_permanent_delete.password
   db_hrp_bpe_user.password:
     file: ./secrets/db_hrp_bpe_user.password
-  db_hrp_bpe_user_camunda.password:
-    file: ./secrets/db_hrp_bpe_user_camunda.password
+  db_hrp_bpe_user_engine.password:
+    file: ./secrets/db_hrp_bpe_user_engine.password
 
   db_cos_fhir_user.password:
     file: ./secrets/db_cos_fhir_user.password
@@ -582,8 +582,8 @@ secrets:
     file: ./secrets/db_cos_fhir_user_permanent_delete.password
   db_cos_bpe_user.password:
     file: ./secrets/db_cos_bpe_user.password
-  db_cos_bpe_user_camunda.password:
-    file: ./secrets/db_cos_bpe_user_camunda.password
+  db_cos_bpe_user_engine.password:
+    file: ./secrets/db_cos_bpe_user_engine.password
 
   ca_chain.crt:
     file: ./secrets/ca_chain.crt
