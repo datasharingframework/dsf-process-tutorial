@@ -1,8 +1,8 @@
 <Task xmlns="http://hl7.org/fhir">
     <meta>
-        <profile value="http://dsf.dev/fhir/StructureDefinition/task-start-dic-process|2.0"/>
+        <profile value="http://dsf.dev/fhir/StructureDefinition/task-start-dic-process|1.2"/>
     </meta>
-    <instantiatesCanonical value="http://dsf.dev/bpe/Process/dicProcess|2.0" />
+    <instantiatesCanonical value="http://dsf.dev/bpe/Process/dicProcess|1.2" />
     <status value="requested"/>
     <intent value="order"/>
     <authoredOn value="2024-02-08T10:00:00+00:00" />
