@@ -38,7 +38,7 @@
     <input>
         <type>
             <coding>
-                <system value="http://dsf.dev/fhir/CodeSystem/tutorial" />
+                <system value="http://tutorial.org/fhir/CodeSystem/tutorial" />
                 <code value="tutorial-input" />
             </coding>
         </type>

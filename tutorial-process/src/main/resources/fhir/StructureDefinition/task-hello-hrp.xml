@@ -63,7 +63,7 @@
       <path value="Task.input.type" />
       <binding>
         <strength value="required" />
-        <valueSet value="http://dsf.dev/fhir/ValueSet/tutorial" />
+        <valueSet value="http://tutorial.org/fhir/ValueSet/tutorial" />
       </binding>
     </element>
     <element id="Task.input:tutorial-input.type.coding">

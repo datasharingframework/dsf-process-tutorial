@@ -1,6 +1,6 @@
 package org.tutorial.process.tutorial.spring.config;
 
-import static dev.dsf.process.tutorial.ConstantsTutorial.PROCESS_NAME_FULL_DIC;
+import static org.tutorial.process.tutorial.ConstantsTutorial.PROCESS_NAME_FULL_DIC;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;

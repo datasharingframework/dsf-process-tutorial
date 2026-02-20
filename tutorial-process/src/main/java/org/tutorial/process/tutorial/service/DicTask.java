@@ -1,7 +1,7 @@
 package org.tutorial.process.tutorial.service;
 
-import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_TUTORIAL;
-import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT;
+import static org.tutorial.process.tutorial.ConstantsTutorial.CODESYSTEM_TUTORIAL;
+import static org.tutorial.process.tutorial.ConstantsTutorial.CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT;
 
 import java.util.Optional;
 
