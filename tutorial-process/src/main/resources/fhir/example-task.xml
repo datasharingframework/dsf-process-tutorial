@@ -2,7 +2,7 @@
     <meta>
         <profile value="http://dsf.dev/fhir/StructureDefinition/task-start-dic-process|1.1"/>
     </meta>
-    <instantiatesCanonical value="http://dsf.dev/bpe/Process/dicProcess|1.1" />
+    <instantiatesCanonical value="http://tutorial.org/bpe/Process/dicProcess|1.1" />
     <status value="requested"/>
     <intent value="order"/>
     <authoredOn value="2024-02-08T10:00:00+00:00" />
