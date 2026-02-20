@@ -88,7 +88,7 @@ public class BpmnAndUserTaskListenerTest
 				+ "' with name " + userTask.getName() + " is missing Form Key with value " + questionnaireUrl;
 		assertEquals(errorUserTaskIsMissingCorrectFormKey, questionnaireUrl, userTask.getCamundaFormKey());
 
-		String packageName = "dev.dsf.process.tutorial.listener";
+		String packageName = "org.tutorial.process.tutorial.listener";
 		String errorNoUserTaskListenerFound = "No class extending DefaultUserTaskListener found in package '"
 				+ packageName + "'. Unable to verify if User Task has correct Task Listener set.";
 		List<Class<? extends DefaultUserTaskListener>> userTaskListeners = Misc.getUserTaskListeners(packageName);
