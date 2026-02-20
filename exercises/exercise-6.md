@@ -6,23 +6,23 @@ In this exercise we will look at message flow between three organizations as wel
 With this exercise we will add a third process and complete a message loop from `dic.dsf.test` to `cos.dsf.test` to `hrp.dsf.test` and back to `dic.dsf.test`.
 
 In order to solve this exercise, you should have solved exercise 5 and read the topics on 
-[Managing Multiple Incoming Messages and Missing Messages](../learning/guides/managing-mutiple-incoming-messages-and-missing-messages.md)
-and [Message Correlation](../learning/concepts/dsf/message-correlation.md).
+[Managing Multiple Incoming Messages and Missing Messages](https://dsf.dev/process-development/api-v2/guides/managing-mutiple-incoming-messages-and-missing-messages.html)
+and [Message Correlation](https://dsf.dev/process-development/api-v2/dsf/message-correlation.html).
 
 Solutions to this exercise are found on the branch `solutions/exercise-6`.
 
 ## Exercise Tasks
 
 1. Modify the `dsfdev_dicProcess`:
-   * Change the [Message End Event](../learning/concepts/bpmn/messaging.md#message-end-event) to an [Intermediate Message Throw Event](../learning/concepts/bpmn/messaging.md#message-intermediate-throwing-event). This also means that `HelloCosMessage.java` needs to implement `MessageIntermediateThrowEvent` instead of `MessageEndEvent`.
-   * Add an [Event Based Gateway](../learning/concepts/bpmn/gateways.md#event-based-gateway) after the throw event
-   * Configure two cases for the [Event Based Gateway](../learning/concepts/bpmn/gateways.md#event-based-gateway):
-      1. An [Intermediate Message Catch Event](../learning/concepts/bpmn/messaging.md#message-intermediate-catching-event) to catch the `goodbyeDic` message from the `dsfdev_hrpProcess`.
-      1. An [Intermediate Timer Catch Event](../learning/concepts/bpmn/timer-intermediate-catching-events.md) to end the process if no message is sent by the `dsfdev_hrpProcess` after two minutes.
-         Make sure both cases finish with a process [End Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/none-events/).
-1. Modify the `dsfdev_cosProcess` to use a [Message End Event](../learning/concepts/bpmn/messaging.md#message-end-event) to trigger the process in file `hrp-process.bpmn`. Figure out the values for the `instantiatesCanonical`, `profile` and `messageName` input parameters of the [Message End Event](../learning/concepts/bpmn/messaging.md#message-end-event) based on the [AcitvityDefinition](../learning/concepts/fhir/activitydefinition.md) in file `hrp-process.xml`. Change the `Cos Task` element into a Service Task and include the `CosTask` as the implementation.
-1. Modify the process in file `hrp-process.bpmn` and set the _process definition key_ and _version_. Figure out the appropriate values based on the [AcitvityDefinition](../learning/concepts/fhir/activitydefinition.md) in file `hrp-process.xml`.
-1. Add a new process authorization extension element to the ActivityDefinition for `dsfdev_dicProcess` using the [parent organization role coding](../learning/concepts/dsf/examples-for-requester-and-recipient-elements.md) where
+   * Change the [Message End Event](https://dsf.dev/process-development/api-v2/fhir/messaging.html#message-end-event) to an [Intermediate Message Throw Event](https://dsf.dev/process-development/api-v2/fhir/messaging.html#message-intermediate-throwing-event). This also means that `HelloCosMessage.java` needs to implement `MessageIntermediateThrowEvent` instead of `MessageEndEvent`.
+   * Add an [Event Based Gateway](https://dsf.dev/process-development/api-v2/bpmn/gateways.html#event-based-gateway) after the throw event
+   * Configure two cases for the [Event Based Gateway](https://dsf.dev/process-development/api-v2/bpmn/gateways.html#event-based-gateway):
+      1. An [Intermediate Message Catch Event](https://dsf.dev/process-development/api-v2/fhir/messaging.html#message-intermediate-catching-event) to catch the `goodbyeDic` message from the `dsfdev_hrpProcess`.
+      1. An [Intermediate Timer Catch Event](https://dsf.dev/process-development/api-v2/bpmn/timer-intermediate-catching-events.html) to end the process if no message is sent by the `dsfdev_hrpProcess` after two minutes.
+         Make sure both cases finish with a process End Event.
+1. Modify the `dsfdev_cosProcess` to use a [Message End Event](https://dsf.dev/process-development/api-v2/fhir/messaging.html#message-end-event) to trigger the process in file `hrp-process.bpmn`. Figure out the values for the `instantiatesCanonical`, `profile` and `messageName` input parameters of the [Message End Event](https://dsf.dev/process-development/api-v2/dsf/messaging.html#message-end-event) based on the [AcitvityDefinition](https://dsf.dev/process-development/api-v2/fhir/activitydefinition.html) in file `hrp-process.xml`. Change the `Cos Task` element into a Service Task and include the `CosTask` as the implementation.
+1. Modify the process in file `hrp-process.bpmn` and set the _process definition key_ and _version_. Figure out the appropriate values based on the [AcitvityDefinition](https://dsf.dev/process-development/api-v2/fhir/activitydefinition.html) in file `hrp-process.xml`.
+1. Add a new process authorization extension element to the ActivityDefinition for `dsfdev_dicProcess` using the [parent organization role coding](https://dsf.dev/process-development/api-v2/dsf/requester-and-recipient.html) where
      only remote organizations which are part of `medizininformatik-initiative.de` and have the `HRP` role are allowed to request `goodByeDic` messages and only
      organizations which are part of `medizininformatik-initiative.de` and have the `DIC` role are allowed to receive `goodByeDic` messages
      <details>
@@ -30,7 +30,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-6`.
 
      Take a look at the [dsf-organization-role](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/CodeSystem/dsf-organization-role-2.0.0.xml) CodeSystem.
      </details>
-1. Forward the value from the [Task.input](../learning/concepts/fhir/task.md) parameter of the `dicProcess` [Task](../learning/concepts/fhir/task.md) to the `dsfdev_cosProcess` using the `HelloCosMessage`. To do this, you need to override `HelloCosMessage#getAdditionalInputParameters`. Don't forget to also add the definition of your `tutorial-input` [Input Parameter](../learning/concepts/fhir/task.md#task-input-parameters) from `task-start-dic-process.xml` to `task-hello-cos.xml`. 
+1. Forward the value from the [Task.input](https://dsf.dev/process-development/api-v2/fhir/task.html) parameter of the `dicProcess` [Task](https://dsf.dev/process-development/api-v2/fhir/task.html) to the `dsfdev_cosProcess` using the `HelloCosMessage`. To do this, you need to override `HelloCosMessage#getAdditionalInputParameters`. Don't forget to also add the definition of your `tutorial-input` [Input Parameter](https://dsf.dev/process-development/api-v2/fhir/task.html#task-input-parameters) from `task-start-dic-process.xml` to `task-hello-cos.xml`. 
 1. Add the process in file `hrp-process.bpmn` to the `TutorialProcessPluginDefinition` and configure the FHIR resources needed for the three processes.
 1. Add the `CosTask`, `HelloHrpMessage `, `HrpTask` and `GoodbyeDicMessage` classes as Spring Beans. Don't forget the scope.
 1. Again, we introduced changes that break compatibility. Older plugin versions won't execute the HRP process because the process ID in the BPMN model is still invalid and it is missing a version. Increment your resource version to `1.4`.
@@ -85,16 +85,16 @@ in `.../dsf-process-tutorial/browser-certs/hrp/hrp-client.p12` (password: passwo
    ```
    docker-compose up hrp-bpe
    ```
-   Verify the DSF BPE server started successfully and deployed the `dsfdev_hrpProcess`. The DSF BPE server should print a message that the process was deployed. The DSF FHIR server should now have a new [ActivityDefinition](../learning/concepts/fhir/activitydefinition.md) resource. Go to https://hrp/fhir/ActivityDefinition to check if the expected resource was created by the BPE while deploying the process. The returned FHIR [Bundle](http://hl7.org/fhir/R4/bundle.html) should contain a three [ActivityDefinition](../learning/concepts/fhir/activitydefinition.md) resources. Also, go to https://hrp/fhir/StructureDefinition?url=http://dsf.dev/fhir/StructureDefinition/task-hello-hrp to check if the expected [Task](../learning/concepts/fhir/task.md) profile was created.
+   Verify the DSF BPE server started successfully and deployed the `dsfdev_hrpProcess`. The DSF BPE server should print a message that the process was deployed. The DSF FHIR server should now have a new [ActivityDefinition](https://dsf.dev/process-development/api-v2/fhir/activitydefinition.html) resource. Go to https://hrp/fhir/ActivityDefinition to check if the expected resource was created by the BPE while deploying the process. The returned FHIR [Bundle](http://hl7.org/fhir/R4/bundle.html) should contain a three [ActivityDefinition](https://dsf.dev/process-development/api-v2/fhir/activitydefinition.html) resources. Also, go to https://hrp/fhir/StructureDefinition?url=http://dsf.dev/fhir/StructureDefinition/task-hello-hrp to check if the expected [Task](https://dsf.dev/process-development/api-v2/fhir/task.html) profile was created.
 
-7. Start the `dsfdev_dicProcess` by posting a specific FHIR [Task](../learning/concepts/fhir/task.md) resource to the DSF FHIR server of the `dic.dsf.test` organization using either cURL or the DSF FHIR server's web interface. Check out [Starting A Process Via Task Resources](../learning/guides/starting-a-process-via-task-resources.md) again if you are unsure.
+7. Start the `dsfdev_dicProcess` by posting a specific FHIR [Task](https://dsf.dev/process-development/api-v2/fhir/task.html) resource to the DSF FHIR server of the `dic.dsf.test` organization using either cURL or the DSF FHIR server's web interface. Check out [Starting A Process Via Task Resources](https://dsf.dev/process-development/api-v2/guides/starting-a-process-via-task-resources.html) again if you are unsure.
 
-   Verify that the FHIR [Task](../learning/concepts/fhir/task.md) resource was created at the DSF FHIR server and the `dsfdev_dicProcess` was executed by the DSF BPE server of the `dic.dsf.test` organization. The DSF BPE server of the `dic.dsf.test` organization should print a message showing that a [Task](../learning/concepts/fhir/task.md) resource to start the `dsfdev_cosProcess` was sent to the `cos.dsf.test` organization.  
-   Verify that a FHIR [Task](../learning/concepts/fhir/task.md) resource was created at the DSF FHIR server of the `cos.dsf.test` organization and the `dsfdev_cosProcess` was executed by the DSF BPE server of the `cos.dsf.test` organization. The DSF BPE server of the `cos.dsf.test` organization should print a message showing that a [Task](../learning/concepts/fhir/task.md) resource to start the `dsfdev_hrpProcess` was sent to the `hrp.dsf.test` organization.  
+   Verify that the FHIR [Task](https://dsf.dev/process-development/api-v2/fhir/task.html) resource was created at the DSF FHIR server and the `dsfdev_dicProcess` was executed by the DSF BPE server of the `dic.dsf.test` organization. The DSF BPE server of the `dic.dsf.test` organization should print a message showing that a [Task](https://dsf.dev/process-development/api-v2/fhir/task.html) resource to start the `dsfdev_cosProcess` was sent to the `cos.dsf.test` organization.  
+   Verify that a FHIR [Task](https://dsf.dev/process-development/api-v2/fhir/task.html) resource was created at the DSF FHIR server of the `cos.dsf.test` organization and the `dsfdev_cosProcess` was executed by the DSF BPE server of the `cos.dsf.test` organization. The DSF BPE server of the `cos.dsf.test` organization should print a message showing that a [Task](https://dsf.dev/process-development/api-v2/fhir/task.html) resource to start the `dsfdev_hrpProcess` was sent to the `hrp.dsf.test` organization.  
    
    Based on the value of the Task.input parameter you send, the `dsfdev_hrpProcess` will either send a `goodbyeDic` message to the `dic.dsf.test` organization or finish without sending a message.
    
-   To trigger the `goodbyeDic` message, use `send-response` as the `http://dsf.dev/fhir/CodeSystem/tutorial#tutorial-input` input parameter.
+   To trigger the `goodbyeDic` message, use `send-response` as the `tutorial-input` input parameter.
    
    Verify that the `dsfdev_dicProcess` either finishes with the arrival of the `goodbyeDic` message or after waiting for two minutes.
 
