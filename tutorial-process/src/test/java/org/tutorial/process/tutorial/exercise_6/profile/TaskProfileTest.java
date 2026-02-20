@@ -27,6 +27,7 @@ import org.junit.ClassRule;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.tutorial.process.tutorial.TutorialProcessPluginDefinition;
 
 import ca.uhn.fhir.validation.ResultSeverityEnum;
 import ca.uhn.fhir.validation.ValidationResult;
@@ -36,7 +37,6 @@ import dev.dsf.bpe.v2.constants.NamingSystems;
 import dev.dsf.fhir.validation.ResourceValidator;
 import dev.dsf.fhir.validation.ResourceValidatorImpl;
 import dev.dsf.fhir.validation.ValidationSupportRule;
-import org.tutorial.process.tutorial.TutorialProcessPluginDefinition;
 
 public class TaskProfileTest
 {

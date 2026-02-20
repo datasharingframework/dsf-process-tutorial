@@ -42,13 +42,13 @@ import org.hl7.fhir.r4.model.Task;
 import org.hl7.fhir.r4.model.ValueSet;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import dev.dsf.bpe.v2.ProcessPluginDefinition;
 import org.tutorial.process.tutorial.ConstantsTutorial;
 import org.tutorial.process.tutorial.TutorialProcessPluginDefinition;
 import org.tutorial.process.tutorial.message.HelloCosMessage;
 import org.tutorial.process.tutorial.service.DicTask;
 import org.tutorial.process.tutorial.util.FhirResourceLoader;
+
+import dev.dsf.bpe.v2.ProcessPluginDefinition;
 
 public class TutorialProcessPluginDefinitionTest
 {

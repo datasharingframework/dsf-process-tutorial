@@ -16,7 +16,6 @@ import java.util.stream.Stream;
 
 import org.hl7.fhir.r4.model.Coding;
 import org.junit.Test;
-
 import org.tutorial.process.tutorial.util.DsfRole;
 import org.tutorial.process.tutorial.util.RoleConfig;
 import org.tutorial.process.tutorial.util.RoleConfigReader;

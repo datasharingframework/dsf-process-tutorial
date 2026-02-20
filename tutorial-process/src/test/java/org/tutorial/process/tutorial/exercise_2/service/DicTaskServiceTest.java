@@ -40,16 +40,16 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.tutorial.process.tutorial.ConstantsTutorial;
+import org.tutorial.process.tutorial.TutorialProcessPluginDefinition;
+import org.tutorial.process.tutorial.service.DicTask;
+import org.tutorial.process.tutorial.util.FhirResourceLoader;
 
 import dev.dsf.bpe.v2.ProcessPluginApi;
 import dev.dsf.bpe.v2.ProcessPluginDefinition;
 import dev.dsf.bpe.v2.constants.NamingSystems;
 import dev.dsf.bpe.v2.service.TaskHelper;
 import dev.dsf.bpe.v2.variables.Variables;
-import org.tutorial.process.tutorial.ConstantsTutorial;
-import org.tutorial.process.tutorial.TutorialProcessPluginDefinition;
-import org.tutorial.process.tutorial.service.DicTask;
-import org.tutorial.process.tutorial.util.FhirResourceLoader;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DicTaskServiceTest

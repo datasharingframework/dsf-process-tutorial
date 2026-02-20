@@ -14,10 +14,10 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.SimpleBeanDefinitionRegistry;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
+import org.tutorial.process.tutorial.spring.config.TutorialConfig;
 
 import dev.dsf.bpe.v2.activity.DefaultUserTaskListener;
 import dev.dsf.bpe.v2.spring.ActivityPrototypeBeanCreator;
-import org.tutorial.process.tutorial.spring.config.TutorialConfig;
 
 public class Misc
 {

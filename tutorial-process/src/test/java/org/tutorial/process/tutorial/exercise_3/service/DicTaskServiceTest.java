@@ -22,12 +22,12 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.tutorial.process.tutorial.service.DicTask;
 
 import dev.dsf.bpe.v2.ProcessPluginApi;
 import dev.dsf.bpe.v2.constants.NamingSystems;
 import dev.dsf.bpe.v2.service.TaskHelper;
 import dev.dsf.bpe.v2.variables.Variables;
-import org.tutorial.process.tutorial.service.DicTask;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DicTaskServiceTest
