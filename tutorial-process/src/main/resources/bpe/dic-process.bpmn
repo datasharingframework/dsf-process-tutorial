@@ -32,7 +32,7 @@
   <bpmn:message id="Message_1nn2wdw" name="startDicProcess" />
   <bpmn:message id="Message_33na25b" name="helloCos" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="dsfdev_dicProcess">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="tutorialorg_dicProcess">
       <bpmndi:BPMNShape id="ServiceTask_0um3ad2_di" bpmnElement="DicTask">
         <dc:Bounds x="280" y="81" width="100" height="80" />
       </bpmndi:BPMNShape>
