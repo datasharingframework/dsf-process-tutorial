@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1yb5vw3" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.39.0">
-  <bpmn:process id="dsfdev_dicProcess" isExecutable="true" camunda:versionTag="#{version}">
+  <bpmn:process id="tutorialorg_dicProcess" isExecutable="true" camunda:versionTag="#{version}">
     <bpmn:extensionElements />
     <bpmn:endEvent id="EndEvent_0xd0x8k">
       <bpmn:incoming>Flow_1xiq2xo</bpmn:incoming>
@@ -9,7 +9,7 @@
       <bpmn:outgoing>Flow_1ec43cj</bpmn:outgoing>
       <bpmn:messageEventDefinition messageRef="Message_1nn2wdw" />
     </bpmn:startEvent>
-    <bpmn:serviceTask id="Activity_1tegofl" name="Dic Task" camunda:class="dev.dsf.process.tutorial.service.DicTask">
+    <bpmn:serviceTask id="Activity_1tegofl" name="Dic Task" camunda:class="org.tutorial.process.tutorial.service.DicTask">
       <bpmn:incoming>Flow_1ec43cj</bpmn:incoming>
       <bpmn:outgoing>Flow_1xiq2xo</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -18,7 +18,7 @@
   </bpmn:process>
   <bpmn:message id="Message_1nn2wdw" name="startDicProcess" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="dsfdev_dicProcess">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="tutorialorg_dicProcess">
       <bpmndi:BPMNShape id="EndEvent_0xd0x8k_di" bpmnElement="EndEvent_0xd0x8k">
         <dc:Bounds x="462" y="103" width="36" height="36" />
       </bpmndi:BPMNShape>

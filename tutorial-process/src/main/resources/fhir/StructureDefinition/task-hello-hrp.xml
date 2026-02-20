@@ -6,7 +6,7 @@
       <code value="ALL" />
     </tag>
   </meta>
-  <url value="http://dsf.dev/fhir/StructureDefinition/task-hello-hrp" />
+  <url value="http://tutorial.org/fhir/StructureDefinition/task-hello-hrp" />
   <!-- version managed by bpe -->
   <version value="#{version}" />
   <name value="helloHrp" />
@@ -24,7 +24,7 @@
   <differential>
     <element id="Task.instantiatesCanonical">
       <path value="Task.instantiatesCanonical" />
-      <fixedCanonical value="http://dsf.dev/bpe/Process/hrpProcess|#{version}" />
+      <fixedCanonical value="http://tutorial.org/bpe/Process/hrpProcess|#{version}" />
     </element>
     <element id="Task.input">
       <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">
@@ -63,7 +63,7 @@
       <path value="Task.input.type" />
       <binding>
         <strength value="required" />
-        <valueSet value="http://dsf.dev/fhir/ValueSet/tutorial" />
+        <valueSet value="http://tutorial.org/fhir/ValueSet/tutorial" />
       </binding>
     </element>
     <element id="Task.input:tutorial-input.type.coding">
@@ -74,7 +74,7 @@
     <element id="Task.input:tutorial-input.type.coding.system">
       <path value="Task.input.type.coding.system" />
       <min value="1" />
-      <fixedCanonical value="http://dsf.dev/fhir/CodeSystem/tutorial" />
+      <fixedCanonical value="http://tutorial.org/fhir/CodeSystem/tutorial" />
     </element>
     <element id="Task.input:tutorial-input.type.coding.code">
       <path value="Task.input.type.coding.code" />
