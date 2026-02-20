@@ -6,7 +6,7 @@
             <code value="ALL" />
         </tag>
     </meta>
-    <url value="http://dsf.dev/fhir/ValueSet/voting-parameters"/>
+    <url value="http://tutorial.org/fhir/ValueSet/voting-parameters"/>
     <!-- version managed by bpe -->
     <version value="#{version}" />
     <name value="Voting Parameters"/>
@@ -21,7 +21,7 @@
     <immutable value="true"/>
     <compose>
         <include>
-            <system value="http://dsf.dev/fhir/CodeSystem/voting-process"/>
+            <system value="http://tutorial.org/fhir/CodeSystem/voting-process"/>
             <version value="#{version}"/>
             <concept>
                 <code value="binary-question" />

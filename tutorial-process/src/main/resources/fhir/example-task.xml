@@ -1,8 +1,8 @@
 <Task xmlns="http://hl7.org/fhir">
     <meta>
-        <profile value="http://dsf.dev/fhir/StructureDefinition/task-start-dic-process|1.4"/>
+        <profile value="http://tutorial.org/fhir/StructureDefinition/task-start-dic-process|1.4"/>
     </meta>
-    <instantiatesCanonical value="http://dsf.dev/bpe/Process/dicProcess|1.4" />
+    <instantiatesCanonical value="http://tutorial.org/bpe/Process/dicProcess|1.4" />
     <status value="requested"/>
     <intent value="order"/>
     <authoredOn value="2024-02-08T10:00:00+00:00" />
@@ -34,7 +34,7 @@
     <input>
         <type>
             <coding>
-                <system value="http://dsf.dev/fhir/CodeSystem/tutorial" />
+                <system value="http://tutorial.org/fhir/CodeSystem/tutorial" />
                 <code value="tutorial-input" />
             </coding>
         </type>

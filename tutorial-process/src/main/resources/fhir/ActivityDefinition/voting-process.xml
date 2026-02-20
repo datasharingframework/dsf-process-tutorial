@@ -11,7 +11,7 @@
             <valueString value="startVotingProcess" />
         </extension>
         <extension url="task-profile">
-            <valueCanonical value="http://dsf.dev/fhir/StructureDefinition/task-start-voting-process|#{version}" />
+            <valueCanonical value="http://tutorial.org/fhir/StructureDefinition/task-start-voting-process|#{version}" />
         </extension>
         <extension url="requester">
             <valueCoding>
@@ -43,7 +43,7 @@
             <valueString value="returnVote" />
         </extension>
         <extension url="task-profile">
-            <valueCanonical value="http://dsf.dev/fhir/StructureDefinition/task-return-vote|#{version}" />
+            <valueCanonical value="http://tutorial.org/fhir/StructureDefinition/task-return-vote|#{version}" />
         </extension>
         <extension url="requester">
             <valueCoding>
@@ -76,7 +76,7 @@
             </valueCoding>
         </extension>
     </extension>
-    <url value="http://dsf.dev/bpe/Process/votingProcess" />
+    <url value="http://tutorial.org/bpe/Process/votingProcess" />
     <!-- version managed by bpe -->
     <version value="#{version}" />
     <name value="VotingProcess" />

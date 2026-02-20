@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0soqulx" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.39.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.23.0">
-  <bpmn:process id="dsfdev_hrpProcess" isExecutable="true" camunda:versionTag="#{version}">
+  <bpmn:process id="tutorialorg_hrpProcess" isExecutable="true" camunda:versionTag="#{version}">
     <bpmn:startEvent id="startHelloHrp">
       <bpmn:outgoing>Flow_11zt459</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_1wapcah" messageRef="Message_094gydj" />
@@ -8,16 +8,16 @@
     <bpmn:endEvent id="endGoodbyeDic">
       <bpmn:extensionElements />
       <bpmn:incoming>Flow_1nlpchb</bpmn:incoming>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_0raq415" messageRef="Message_000lvyx" camunda:class="dev.dsf.process.tutorial.message.GoodbyeDicMessage">
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0raq415" messageRef="Message_000lvyx" camunda:class="org.tutorial.process.tutorial.message.GoodbyeDicMessage">
         <bpmn:extensionElements>
           <camunda:field name="instantiatesCanonical">
-            <camunda:string>http://dsf.dev/bpe/Process/dicProcess|#{version}</camunda:string>
+            <camunda:string>http://tutorial.org/bpe/Process/dicProcess|#{version}</camunda:string>
           </camunda:field>
           <camunda:field name="messageName">
             <camunda:string>goodbyeDic</camunda:string>
           </camunda:field>
           <camunda:field name="profile">
-            <camunda:string>http://dsf.dev/fhir/StructureDefinition/task-goodbye-dic|#{version}</camunda:string>
+            <camunda:string>http://tutorial.org/fhir/StructureDefinition/task-goodbye-dic|#{version}</camunda:string>
           </camunda:field>
         </bpmn:extensionElements>
       </bpmn:messageEventDefinition>
@@ -38,7 +38,7 @@
     <bpmn:sequenceFlow id="Flow_0uum1dq" sourceRef="Gateway_0qeqwwo" targetRef="Event_1wvmkv4">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!sendResponse}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:serviceTask id="HrpTask" name="Hrp Task" camunda:class="dev.dsf.process.tutorial.service.HrpTask">
+    <bpmn:serviceTask id="HrpTask" name="Hrp Task" camunda:class="org.tutorial.process.tutorial.service.HrpTask">
       <bpmn:incoming>Flow_11zt459</bpmn:incoming>
       <bpmn:outgoing>Flow_1end5mr</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -46,7 +46,7 @@
   <bpmn:message id="Message_094gydj" name="helloHrp" />
   <bpmn:message id="Message_000lvyx" name="goodbyeDic" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="dsfdev_hrpProcess">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="tutorialorg_hrpProcess">
       <bpmndi:BPMNShape id="Event_1azgt5l_di" bpmnElement="startHelloHrp">
         <dc:Bounds x="179" y="79" width="36" height="36" />
       </bpmndi:BPMNShape>
