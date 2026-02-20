@@ -4,7 +4,7 @@ ___
 # Exercise 2 - Environment Variables and Input Parameters
 BPMN processes might require additional information during execution, e.g. for configuration purposes. 
 We will take a look at two possibilities on how to pass additional information to a BPMN process: Environment Variables and Input Parameters.   
-The goal of this exercise is to enhance the `dsfdev_dicProcess` by trying them both. 
+The goal of this exercise is to enhance the `tutorialorg_dicProcess` by trying them both. 
 In both cases the information will be available in the `execute` method of your service class.
 
 In order to solve this exercise, you should have solved the first exercise and read the topics on
@@ -28,7 +28,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-2`.
 
 3. Use the value of the environment variable in the `DicTask` class to decide whether the log message from exercise 1 should be printed.
 4. Add the new environment variable to the `dic-bpe` service in `dev-setup/docker-compose.yml` and set the value to `"true"`.
-5. Create a new [CodeSystem](https://dsf.dev/process-development/api-v2/fhir/codesystem.html) with url `http://dsf.dev/fhir/CodeSystem/tutorial` having a concept with code `tutorial-input` and name the file `tutorial.xml`. Don't forget to add the `read-access-tag`.
+5. Create a new [CodeSystem](https://dsf.dev/process-development/api-v2/fhir/codesystem.html) with url `http://tutorial.org/fhir/CodeSystem/tutorial` having a concept with code `tutorial-input` and name the file `tutorial.xml`. Don't forget to add the `read-access-tag`.
    <details>
    <summary>Don't know how to create a CodeSystem?</summary>
 
@@ -61,7 +61,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-2`.
    Check out [this guide](https://dsf.dev/process-development/api-v2/guides/adding-task-parameters-to-task-profiles.html).
    </details>
 
-8. `task-start-dic-process` and by extension the process `dsfdev_dicProcess` now requires additional FHIR resources. Make sure the return value for `TutorialProcessPluginDefinition#getFhirResourcesByProcessId` also includes the new [CodeSystem](https://dsf.dev/process-development/api-v2/fhir/codesystem.html) and [ValueSet](https://dsf.dev/process-development/api-v2/fhir/valueset.html) resources for the `dsfdev_dicProcess`.
+8. `task-start-dic-process` and by extension the process `tutorialorg_dicProcess` now requires additional FHIR resources. Make sure the return value for `TutorialProcessPluginDefinition#getFhirResourcesByProcessId` also includes the new [CodeSystem](https://dsf.dev/process-development/api-v2/fhir/codesystem.html) and [ValueSet](https://dsf.dev/process-development/api-v2/fhir/valueset.html) resources for the `tutorialorg_dicProcess`.
 9. Read the new input parameter in the `DicTask` class from the start [Task](https://dsf.dev/process-development/api-v2/fhir/task.html) and add the value to the log message from exercise 1.
    <details>
    <summary>Don't know how to get the input parameter?</summary>
@@ -82,7 +82,7 @@ mvn clean install -Pexercise-2
 Verify that the build was successful and no test failures occurred.
 
 ### Process Execution and Manual Tests
-To verify the `dsfdev_dicProcess` can be executed successfully, we need to deploy it into a DSF instance and execute the process. The maven `install` build is configured to create a process jar file with all necessary resources and copy the jar to the appropriate locations of the docker dev setup.
+To verify the `tutorialorg_dicProcess` can be executed successfully, we need to deploy it into a DSF instance and execute the process. The maven `install` build is configured to create a process jar file with all necessary resources and copy the jar to the appropriate locations of the docker dev setup.
 
 1. Start the DSF FHIR server for the `dic.dsf.test` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
    ```
@@ -94,11 +94,11 @@ To verify the `dsfdev_dicProcess` can be executed successfully, we need to deplo
    ```
    docker-compose up dic-bpe
    ```
-   Verify the DSF BPE server started successfully and deployed the `dsfdev_dicProcess`.
+   Verify the DSF BPE server started successfully and deployed the `tutorialorg_dicProcess`.
 
-3. Start the `dsfdev_dicProcess` by posting an appropriate FHIR [Task](https://dsf.dev/process-development/api-v2/fhir/task.html) resource to the DSF FHIR server of the `dic.dsf.test` organization using either cURL or the DSF FHIR server's web interface. Check out [Starting A Process Via Task Resources](https://dsf.dev/process-development/api-v2/guides/starting-a-process-via-task-resources.html) again if you are unsure.
+3. Start the `tutorialorg_dicProcess` by posting an appropriate FHIR [Task](https://dsf.dev/process-development/api-v2/fhir/task.html) resource to the DSF FHIR server of the `dic.dsf.test` organization using either cURL or the DSF FHIR server's web interface. Check out [Starting A Process Via Task Resources](https://dsf.dev/process-development/api-v2/guides/starting-a-process-via-task-resources.html) again if you are unsure.
 
-   Verify that the `dsfdev_dicProcess` was executed by the DSF BPE server. The BPE server should:
+   Verify that the `tutorialorg_dicProcess` was executed by the DSF BPE server. The BPE server should:
     * Print a message showing that the process was started.
     * If logging is enabled - print the log message and the value of the input parameter you added to the `DicTask`
       implementation.

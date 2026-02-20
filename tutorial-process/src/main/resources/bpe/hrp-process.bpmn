@@ -8,13 +8,13 @@
     <bpmn:endEvent id="endGoodbyeDic">
       <bpmn:extensionElements />
       <bpmn:incoming>Flow_1nlpchb</bpmn:incoming>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_0raq415" messageRef="Message_000lvyx" camunda:class="dev.dsf.process.tutorial.message.GoodbyeDicMessage">
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0raq415" messageRef="Message_000lvyx" camunda:class="message.tutorial.org.process.tutorial.GoodbyeDicMessage">
         <bpmn:extensionElements>
           <camunda:field name="instantiatesCanonical">
-            <camunda:string>http://dsf.dev/bpe/Process/dicProcess/#{version}</camunda:string>
+            <camunda:string>http://tutorial.org/bpe/Process/dicProcess/#{version}</camunda:string>
           </camunda:field>
           <camunda:field name="profile">
-            <camunda:string>http://dsf.dev/fhir/StructureDefinition/task-goodbye-dic|#{version}</camunda:string>
+            <camunda:string>http://tutorial.org/fhir/StructureDefinition/task-goodbye-dic|#{version}</camunda:string>
           </camunda:field>
           <camunda:field name="messageName">
             <camunda:string>goodbyeDic</camunda:string>
@@ -38,7 +38,7 @@
     <bpmn:sequenceFlow id="Flow_0uum1dq" sourceRef="Gateway_0qeqwwo" targetRef="Event_1wvmkv4">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!sendResponse}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:serviceTask id="HrpTask" name="Hrp Task" camunda:class="dev.dsf.process.tutorial.service.HrpTask">
+    <bpmn:serviceTask id="HrpTask" name="Hrp Task" camunda:class="service.tutorial.org.process.tutorial.HrpTask">
       <bpmn:incoming>Flow_11zt459</bpmn:incoming>
       <bpmn:outgoing>Flow_1end5mr</bpmn:outgoing>
     </bpmn:serviceTask>
