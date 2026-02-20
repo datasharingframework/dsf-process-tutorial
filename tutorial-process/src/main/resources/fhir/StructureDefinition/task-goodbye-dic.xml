@@ -6,7 +6,7 @@
       <code value="ALL" />
     </tag>
   </meta>
-  <url value="http://dsf.dev/fhir/StructureDefinition/task-goodbye-dic" />
+  <url value="http://tutorial.org/fhir/StructureDefinition/task-goodbye-dic" />
   <!-- version managed by bpe -->
   <version value="#{version}" />
   <name value="goodbyeDic" />
@@ -24,7 +24,7 @@
   <differential>
     <element id="Task.instantiatesCanonical">
       <path value="Task.instantiatesCanonical" />
-      <fixedCanonical value="http://dsf.dev/bpe/Process/dicProcess|#{version}" />
+      <fixedCanonical value="http://tutorial.org/bpe/Process/dicProcess|#{version}" />
     </element>
     <element id="Task.input">
       <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">

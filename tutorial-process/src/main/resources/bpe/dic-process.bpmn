@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1yb5vw3" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.39.0">
-  <bpmn:process id="dsfdev_dicProcess" isExecutable="true" camunda:versionTag="#{version}">
+  <bpmn:process id="tutorialorg_dicProcess" isExecutable="true" camunda:versionTag="#{version}">
     <bpmn:extensionElements />
     <bpmn:sequenceFlow id="SequenceFlow_0bbhq2r" sourceRef="startHelloDic" targetRef="DicTask" />
-    <bpmn:serviceTask id="DicTask" name="Dic Task" camunda:class="dev.dsf.process.tutorial.service.DicTask">
+    <bpmn:serviceTask id="DicTask" name="Dic Task" camunda:class="org.tutorial.process.tutorial.service.DicTask">
       <bpmn:incoming>SequenceFlow_0bbhq2r</bpmn:incoming>
       <bpmn:outgoing>Flow_13xoqmm</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -29,13 +29,13 @@
       <bpmn:messageEventDefinition id="MessageEventDefinition_0nb89rt" messageRef="Message_33na25b" camunda:class="dev.dsf.process.tutorial.message.HelloCosMessage">
         <bpmn:extensionElements>
           <camunda:field name="instantiatesCanonical">
-            <camunda:string>http://dsf.dev/bpe/Process/cosProcess|#{version}</camunda:string>
+            <camunda:string>http://tutorial.org/bpe/Process/cosProcess|#{version}</camunda:string>
           </camunda:field>
           <camunda:field name="messageName">
             <camunda:string>helloCos</camunda:string>
           </camunda:field>
           <camunda:field name="profile">
-            <camunda:string>http://dsf.dev/fhir/StructureDefinition/task-hello-cos|#{version}</camunda:string>
+            <camunda:string>http://tutorial.org/fhir/StructureDefinition/task-hello-cos|#{version}</camunda:string>
           </camunda:field>
         </bpmn:extensionElements>
       </bpmn:messageEventDefinition>
@@ -76,7 +76,7 @@
   <bpmn:message id="Message_33na25b" name="helloCos" />
   <bpmn:message id="Message_09n3j1k" name="goodbyeDic" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="dsfdev_dicProcess">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="tutorialorg_dicProcess">
       <bpmndi:BPMNShape id="ServiceTask_0um3ad2_di" bpmnElement="DicTask">
         <dc:Bounds x="280" y="81" width="100" height="80" />
       </bpmndi:BPMNShape>
