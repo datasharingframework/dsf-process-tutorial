@@ -387,7 +387,7 @@ services:
             dsf-role:
               - ADMIN
 
-      DEV_DSF_PROCESS_TUTORIAL_LOGGINGENABLED: true
+      ORG_TUTORIAL_PROCESS_TUTORIAL_LOGGINGENABLED: true
       ORG_TUTORIAL_PROCESS_TUTORIAL_USERVOTE: true
     networks:
       dic-bpe-frontend:
