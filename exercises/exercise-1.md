@@ -23,16 +23,16 @@ FHIR resources used in the DSF are formatted as XML. You can find them in the `t
 When creating your own FHIR resources for DSF process plugins you also want to put them in a fitting subdirectory of `tutorial-process/src/main/resources/fhir`.
 
 # Exercise 1 - Simple Process
-In order to solve this exercise, you need to have read the topics on [FHIR](../learning/concepts/fhir/info.md), 
-[FHIR Task](../learning/concepts/fhir/task.md), 
-[The Process Plugin Definition](../learning/concepts/dsf/the-process-plugin-definition.md), 
-[Spring Integration](../learning/concepts/dsf/spring-integration.md), [Service Tasks](../learning/concepts/bpmn/service-tasks.md), 
-[Service Delegates](../learning/concepts/dsf/service-delegates.md),
-[BPMN Process Execution](../learning/concepts/dsf/bpmn-process-execution.md), 
-[BPMN Process Variables](../learning/concepts/dsf/bpmn-process-variables.md), 
-[Accessing BPMN Process Variables](../learning/guides/accessing-bpmn-process-variables.md),
-[About Version, Placeholders and URLs](../learning/concepts/dsf/about-version-placeholders-and-urls.md)
-and [Starting a Process via Task Resources](../learning/guides/starting-a-process-via-task-resources.md).
+In order to solve this exercise, you need to have read the topics on [FHIR Task](https://dsf.dev/process-development/api-v2/fhir/task.html),
+[The Process Plugin Definition](https://dsf.dev/process-development/api-v2/dsf/process-plugin-definition.html),
+[Spring Integration](https://dsf.dev/process-development/api-v2/dsf/spring-framework-integration.html), [Service Tasks](https://dsf.dev/process-development/api-v2/bpmn/service-tasks.html),
+[Activities](https://dsf.dev/process-development/api-v2/dsf/activities.html),
+[BPMN Process Execution](https://dsf.dev/process-development/api-v2/dsf/bpmn-process-execution.html),
+[BPMN Process Variables](https://dsf.dev/process-development/api-v2/dsf/bpmn-process-variables.html),
+[Accessing BPMN Process Variables](https://dsf.dev/process-development/api-v2/guides/accessing-bpmn-process-variables.html),
+[Versions, Placeholders and URLs](https://dsf.dev/process-development/api-v2/dsf/versions-placeholders-urls.html)
+and [Starting a Process via Task Resources](https://dsf.dev/process-development/api-v2/guides/starting-a-process-via-task-resources.html).
+
 
 Solutions to this exercise are found on the branch `solutions/exercise-1`.
 
@@ -42,7 +42,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-1`.
     <details>
     <summary>Don't know how to register prototype beans?</summary>
     
-    Check out [this guide](../learning/guides/registering-prototype-beans.md).
+    Take a look at the example configuration in [Spring Integration](https://dsf.dev/process-development/api-v2/dsf/spring-framework-integration.html).
     </details>
 
 3. Add a log message to the `DicTask#execute` method that logs the recipient organization identifier from the start [FHIR Task](../learning/concepts/fhir/task.md) resource.
