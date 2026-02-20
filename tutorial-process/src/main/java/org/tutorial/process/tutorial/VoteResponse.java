@@ -1,4 +1,4 @@
-package dev.dsf.process.tutorial.util;
+package org.tutorial.process.tutorial;
 
 public enum VoteResponse
 {

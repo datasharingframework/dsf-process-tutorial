@@ -6,7 +6,7 @@
             <code value="ALL"/>
         </tag>
     </meta>
-    <url value="http://dsf.dev/fhir/Questionnaire/user-vote"/>
+    <url value="http://tutorial.org/fhir/Questionnaire/user-vote"/>
     <!-- version managed by bpe -->
     <version value="#{version}"/>
     <!-- date managed by bpe -->

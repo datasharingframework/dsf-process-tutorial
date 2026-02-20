@@ -1,4 +1,4 @@
-package dev.dsf.process.tutorial.service;
+package org.tutorial.process.tutorial.service;
 
 import java.util.Optional;
 

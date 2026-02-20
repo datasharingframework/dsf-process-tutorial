@@ -1,16 +1,16 @@
-package dev.dsf.process.tutorial.service;
+package org.tutorial.process.tutorial.service;
 
-import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_VOTING_PROCESS;
-import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_VOTING_PROCESS_VOTE;
+import static org.tutorial.process.tutorial.ConstantsTutorial.CODESYSTEM_VOTING_PROCESS;
+import static org.tutorial.process.tutorial.ConstantsTutorial.CODESYSTEM_VOTING_PROCESS_VOTE;
 
 import org.hl7.fhir.r4.model.BooleanType;
+import org.tutorial.process.tutorial.VoteResponse;
 
 import dev.dsf.bpe.v2.ProcessPluginApi;
 import dev.dsf.bpe.v2.activity.ServiceTask;
 import dev.dsf.bpe.v2.error.ErrorBoundaryEvent;
 import dev.dsf.bpe.v2.variables.Target;
 import dev.dsf.bpe.v2.variables.Variables;
-import dev.dsf.process.tutorial.util.VoteResponse;
 
 public class SaveVotingResult implements ServiceTask
 {

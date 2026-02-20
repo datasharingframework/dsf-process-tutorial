@@ -1,11 +1,12 @@
-package dev.dsf.process.tutorial.service;
+package org.tutorial.process.tutorial.service;
+
+import org.tutorial.process.tutorial.VoteResponse;
 
 import dev.dsf.bpe.v2.ProcessPluginApi;
 import dev.dsf.bpe.v2.activity.ServiceTask;
 import dev.dsf.bpe.v2.error.ErrorBoundaryEvent;
 import dev.dsf.bpe.v2.variables.Target;
 import dev.dsf.bpe.v2.variables.Variables;
-import dev.dsf.process.tutorial.util.VoteResponse;
 
 public class SaveTimeoutResult implements ServiceTask
 {

@@ -1,11 +1,11 @@
-package dev.dsf.process.tutorial.service;
+package org.tutorial.process.tutorial.service;
 
-import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_VOTING_PROCESS;
-import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_VOTING_PROCESS_VALUE_BINARY_QUESTION;
-import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_VOTING_PROCESS_VOTING_RESULT;
-import static dev.dsf.process.tutorial.ConstantsTutorial.SYSTEM_DSF_ORGANIZATION_IDENTIFIER;
-import static dev.dsf.process.tutorial.ConstantsTutorial.VOTING_RESULT_EXTENSION_ORGANIZATION_IDENTIFIER;
-import static dev.dsf.process.tutorial.ConstantsTutorial.VOTING_RESULT_EXTENSION_URL;
+import static org.tutorial.process.tutorial.ConstantsTutorial.CODESYSTEM_VOTING_PROCESS;
+import static org.tutorial.process.tutorial.ConstantsTutorial.CODESYSTEM_VOTING_PROCESS_VALUE_BINARY_QUESTION;
+import static org.tutorial.process.tutorial.ConstantsTutorial.CODESYSTEM_VOTING_PROCESS_VOTING_RESULT;
+import static org.tutorial.process.tutorial.ConstantsTutorial.SYSTEM_DSF_ORGANIZATION_IDENTIFIER;
+import static org.tutorial.process.tutorial.ConstantsTutorial.VOTING_RESULT_EXTENSION_ORGANIZATION_IDENTIFIER;
+import static org.tutorial.process.tutorial.ConstantsTutorial.VOTING_RESULT_EXTENSION_URL;
 
 import java.util.Optional;
 
@@ -17,12 +17,12 @@ import org.hl7.fhir.r4.model.Identifier;
 import org.hl7.fhir.r4.model.Meta;
 import org.hl7.fhir.r4.model.Task;
 import org.hl7.fhir.r4.model.Task.TaskOutputComponent;
+import org.tutorial.process.tutorial.VoteResponse;
 
 import dev.dsf.bpe.v2.ProcessPluginApi;
 import dev.dsf.bpe.v2.activity.ServiceTask;
 import dev.dsf.bpe.v2.error.ErrorBoundaryEvent;
 import dev.dsf.bpe.v2.variables.Variables;
-import dev.dsf.process.tutorial.util.VoteResponse;
 
 public class AggregateResults implements ServiceTask
 {

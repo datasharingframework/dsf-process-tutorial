@@ -1,4 +1,4 @@
-package dev.dsf.process.tutorial.message;
+package org.tutorial.process.tutorial.message;
 
 import dev.dsf.bpe.v2.activity.MessageSendTask;
 

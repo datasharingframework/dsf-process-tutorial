@@ -1,8 +1,8 @@
-package dev.dsf.process.tutorial.message;
+package org.tutorial.process.tutorial.message;
 
-import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_VOTING_PROCESS;
-import static dev.dsf.process.tutorial.ConstantsTutorial.CODESYSTEM_VOTING_PROCESS_VOTE;
-import static dev.dsf.process.tutorial.ConstantsTutorial.VOTE_PROCESS_VARIABLE_VOTE;
+import static org.tutorial.process.tutorial.ConstantsTutorial.CODESYSTEM_VOTING_PROCESS;
+import static org.tutorial.process.tutorial.ConstantsTutorial.CODESYSTEM_VOTING_PROCESS_VOTE;
+import static org.tutorial.process.tutorial.ConstantsTutorial.VOTE_PROCESS_VARIABLE_VOTE;
 
 import java.util.List;
 

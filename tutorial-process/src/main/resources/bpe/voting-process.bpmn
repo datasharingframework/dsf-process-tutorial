@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1nrw1pp" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.17.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.20.0">
-  <bpmn:process id="dsfdev_votingProcess" isExecutable="true" camunda:versionTag="#{version}" camunda:historyTimeToLive="180">
+  <bpmn:process id="tutorialorg_votingProcess" isExecutable="true" camunda:versionTag="#{version}" camunda:historyTimeToLive="180">
     <bpmn:startEvent id="startVotingProcess" name="Start Voting Process">
       <bpmn:outgoing>Flow_1g64g0p</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_1kujibg" messageRef="Message_3jearks" />
     </bpmn:startEvent>
-    <bpmn:serviceTask id="selectTargets" name="Select Targets" camunda:class="dev.dsf.process.tutorial.service.SelectTargets">
+    <bpmn:serviceTask id="selectTargets" name="Select Targets" camunda:class="org.tutorial.process.tutorial.service.SelectTargets">
       <bpmn:incoming>Flow_1g64g0p</bpmn:incoming>
       <bpmn:outgoing>Flow_1q4qzm6</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -19,13 +19,13 @@
       <bpmn:intermediateThrowEvent id="startVote" name="Start Vote">
         <bpmn:incoming>Flow_0ckjh1t</bpmn:incoming>
         <bpmn:outgoing>Flow_0w92m73</bpmn:outgoing>
-        <bpmn:messageEventDefinition id="MessageEventDefinition_18f9g9j" messageRef="Message_39qqba1" camunda:class="dev.dsf.process.tutorial.message.StartVote">
+        <bpmn:messageEventDefinition id="MessageEventDefinition_18f9g9j" messageRef="Message_39qqba1" camunda:class="org.tutorial.process.tutorial.message.StartVote">
           <bpmn:extensionElements>
             <camunda:field name="instantiatesCanonical">
-              <camunda:string>http://dsf.dev/bpe/Process/vote|#{version}</camunda:string>
+              <camunda:string>http://tutorial.org/bpe/Process/vote|#{version}</camunda:string>
             </camunda:field>
             <camunda:field name="profile">
-              <camunda:string>http://dsf.dev/fhir/StructureDefinition/task-start-vote|#{version}</camunda:string>
+              <camunda:string>http://tutorial.org/fhir/StructureDefinition/task-start-vote|#{version}</camunda:string>
             </camunda:field>
             <camunda:field name="messageName">
               <camunda:string>startVote</camunda:string>
@@ -43,7 +43,7 @@
       <bpmn:sequenceFlow id="Flow_16qa387" sourceRef="Gateway_1nbdhwn" targetRef="returnVote" />
       <bpmn:eventBasedGateway id="Gateway_1nbdhwn">
         <bpmn:extensionElements>
-          <camunda:executionListener class="dev.dsf.process.tutorial.listener.SetCorrelationKeyListener" event="start" />
+          <camunda:executionListener class="org.tutorial.process.tutorial.listener.SetCorrelationKeyListener" event="start" />
         </bpmn:extensionElements>
         <bpmn:incoming>Flow_0w92m73</bpmn:incoming>
         <bpmn:outgoing>Flow_16qa387</bpmn:outgoing>
@@ -57,11 +57,11 @@
         </bpmn:timerEventDefinition>
       </bpmn:intermediateCatchEvent>
       <bpmn:sequenceFlow id="Flow_0cx7wjf" sourceRef="Gateway_1nbdhwn" targetRef="Event_0iqrn0g" />
-      <bpmn:serviceTask id="Activity_1t6i9ak" name="Save Voting Result" camunda:class="dev.dsf.process.tutorial.service.SaveVotingResult">
+      <bpmn:serviceTask id="Activity_1t6i9ak" name="Save Voting Result" camunda:class="org.tutorial.process.tutorial.service.SaveVotingResult">
         <bpmn:incoming>Flow_1e6biub</bpmn:incoming>
         <bpmn:outgoing>Flow_06zl7ql</bpmn:outgoing>
       </bpmn:serviceTask>
-      <bpmn:serviceTask id="Activity_0xq9m6y" name="Save Timeout Result" camunda:class="dev.dsf.process.tutorial.service.SaveTimeoutResult">
+      <bpmn:serviceTask id="Activity_0xq9m6y" name="Save Timeout Result" camunda:class="org.tutorial.process.tutorial.service.SaveTimeoutResult">
         <bpmn:incoming>Flow_1c8hjfg</bpmn:incoming>
         <bpmn:outgoing>Flow_0m6qfr1</bpmn:outgoing>
       </bpmn:serviceTask>
@@ -83,7 +83,7 @@
       <bpmn:sequenceFlow id="Flow_1e6biub" sourceRef="returnVote" targetRef="Activity_1t6i9ak" />
     </bpmn:subProcess>
     <bpmn:sequenceFlow id="Flow_1q4qzm6" sourceRef="selectTargets" targetRef="Activity_1wih2dg" />
-    <bpmn:serviceTask id="Activity_1qwgkce" name="Aggregate Results" camunda:class="dev.dsf.process.tutorial.service.AggregateResults">
+    <bpmn:serviceTask id="Activity_1qwgkce" name="Aggregate Results" camunda:class="org.tutorial.process.tutorial.service.AggregateResults">
       <bpmn:incoming>Flow_1sf4q4r</bpmn:incoming>
       <bpmn:outgoing>Flow_15bxvy1</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -100,7 +100,7 @@
   <bpmn:message id="Message_39qqba1" name="startVote" />
   <bpmn:message id="Message_13466cc" name="returnVote" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="dsfdev_votingProcess">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="tutorialorg_votingProcess">
       <bpmndi:BPMNShape id="Event_0fqf1pm_di" bpmnElement="startVotingProcess">
         <dc:Bounds x="162" y="159" width="36" height="36" />
         <bpmndi:BPMNLabel>

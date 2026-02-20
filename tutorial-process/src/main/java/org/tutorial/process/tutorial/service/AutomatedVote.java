@@ -1,6 +1,6 @@
-package dev.dsf.process.tutorial.service;
+package org.tutorial.process.tutorial.service;
 
-import static dev.dsf.process.tutorial.ConstantsTutorial.VOTE_PROCESS_VARIABLE_VOTE;
+import static org.tutorial.process.tutorial.ConstantsTutorial.VOTE_PROCESS_VARIABLE_VOTE;
 
 import java.util.Random;
 

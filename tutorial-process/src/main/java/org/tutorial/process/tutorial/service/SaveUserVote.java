@@ -1,13 +1,13 @@
-package dev.dsf.process.tutorial.service;
+package org.tutorial.process.tutorial.service;
 
 import org.hl7.fhir.r4.model.BooleanType;
 import org.hl7.fhir.r4.model.QuestionnaireResponse;
+import org.tutorial.process.tutorial.ConstantsTutorial;
 
 import dev.dsf.bpe.v2.ProcessPluginApi;
 import dev.dsf.bpe.v2.activity.ServiceTask;
 import dev.dsf.bpe.v2.error.ErrorBoundaryEvent;
 import dev.dsf.bpe.v2.variables.Variables;
-import dev.dsf.process.tutorial.ConstantsTutorial;
 
 public class SaveUserVote implements ServiceTask
 {
