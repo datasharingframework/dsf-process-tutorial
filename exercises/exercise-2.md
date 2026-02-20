@@ -41,7 +41,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-2`.
    `tutorial-process/src/main/resources/fhir/CodeSystem`.
    </details>
 
-6. Create a new [ValueSet](https://dsf.dev/process-development/api-v2/fhir/valueset.html) with url `http://dsf.dev/fhir/ValueSet/tutorial` that includes all concepts from the [CodeSystem](https://dsf.dev/process-development/api-v2/fhir/codesystem.html) and name the file `tutorial.xml`. Don't forget to add the `read-access-tag`.
+6. Create a new [ValueSet](https://dsf.dev/process-development/api-v2/fhir/valueset.html) with url `http://tutorial.org/fhir/ValueSet/tutorial` that includes all concepts from the [CodeSystem](https://dsf.dev/process-development/api-v2/fhir/codesystem.html) and name the file `tutorial.xml`. Don't forget to add the `read-access-tag`.
    <details>
    <summary>Don't know how to create a ValueSet?</summary>
 

@@ -79,7 +79,7 @@ public class TutorialProcessPluginDefinitionTest
 	{
 		String codeSystemUrl = CODESYSTEM_TUTORIAL;
 		String codeSystemCode = CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT;
-		String valueSetUrl = "http://dsf.dev/fhir/ValueSet/tutorial";
+		String valueSetUrl = "http://tutorial.org/fhir/ValueSet/tutorial";
 		String structureDefinitionUrl = "http://tutorial.org/fhir/StructureDefinition/task-start-dic-process";
 
 
