@@ -8,19 +8,19 @@
       <bpmn:outgoing>SequenceFlow_0bbhq2r</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_0refdls" messageRef="Message_0bmy3hn" />
     </bpmn:startEvent>
-    <bpmn:serviceTask id="CosTask" name="Cos Task" camunda:class="dev.dsf.process.tutorial.service.CosTask">
+    <bpmn:serviceTask id="CosTask" name="Cos Task" camunda:class="org.tutorial.process.tutorial.service.CosTask">
       <bpmn:incoming>SequenceFlow_0bbhq2r</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0oyvmcd</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:endEvent id="endHelloCos">
       <bpmn:incoming>SequenceFlow_0oyvmcd</bpmn:incoming>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_1xuxohn" messageRef="Message_1jciunk" camunda:class="dev.dsf.process.tutorial.message.HelloHrpMessage">
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1xuxohn" messageRef="Message_1jciunk" camunda:class="org.tutorial.process.tutorial.message.HelloHrpMessage">
         <bpmn:extensionElements>
           <camunda:field name="instantiatesCanonical">
-            <camunda:string>http://dsf.dev/bpe/Process/hrpProcess|#{version}</camunda:string>
+            <camunda:string>http://tutorial.org/bpe/Process/hrpProcess|#{version}</camunda:string>
           </camunda:field>
           <camunda:field name="profile">
-            <camunda:string>http://dsf.dev/fhir/StructureDefinition/task-hello-hrp|#{version}</camunda:string>
+            <camunda:string>http://tutorial.org/fhir/StructureDefinition/task-hello-hrp|#{version}</camunda:string>
           </camunda:field>
           <camunda:field name="messageName">
             <camunda:string>helloHrp</camunda:string>

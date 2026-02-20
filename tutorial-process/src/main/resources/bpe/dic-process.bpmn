@@ -26,7 +26,7 @@
     <bpmn:intermediateThrowEvent id="Event_131wxu7">
       <bpmn:incoming>Flow_1tgz2ty</bpmn:incoming>
       <bpmn:outgoing>Flow_1olex7y</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_0nb89rt" messageRef="Message_33na25b" camunda:class="dev.dsf.process.tutorial.message.HelloCosMessage">
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0nb89rt" messageRef="Message_33na25b" camunda:class="org.tutorial.process.tutorial.message.HelloCosMessage">
         <bpmn:extensionElements>
           <camunda:field name="instantiatesCanonical">
             <camunda:string>http://tutorial.org/bpe/Process/cosProcess|#{version}</camunda:string>
