@@ -8,11 +8,11 @@ import java.util.Arrays;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Value;
-
-import dev.dsf.bpe.v2.documentation.ProcessDocumentation;
 import org.tutorial.process.tutorial.message.HelloCosMessage;
 import org.tutorial.process.tutorial.service.DicTask;
 import org.tutorial.process.tutorial.spring.config.TutorialConfig;
+
+import dev.dsf.bpe.v2.documentation.ProcessDocumentation;
 
 public class TutorialConfigTest
 {

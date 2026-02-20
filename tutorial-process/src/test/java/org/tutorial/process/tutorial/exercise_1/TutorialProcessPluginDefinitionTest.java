@@ -22,12 +22,12 @@ import org.hl7.fhir.r4.model.StructureDefinition;
 import org.hl7.fhir.r4.model.Task;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import dev.dsf.bpe.v2.ProcessPluginDefinition;
 import org.tutorial.process.tutorial.ConstantsTutorial;
 import org.tutorial.process.tutorial.TutorialProcessPluginDefinition;
 import org.tutorial.process.tutorial.service.DicTask;
 import org.tutorial.process.tutorial.util.FhirResourceLoader;
+
+import dev.dsf.bpe.v2.ProcessPluginDefinition;
 
 public class TutorialProcessPluginDefinitionTest
 {

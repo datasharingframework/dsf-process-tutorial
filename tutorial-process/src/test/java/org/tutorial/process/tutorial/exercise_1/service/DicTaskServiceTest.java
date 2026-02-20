@@ -17,11 +17,11 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.tutorial.process.tutorial.service.DicTask;
 
 import dev.dsf.bpe.v2.ProcessPluginApi;
 import dev.dsf.bpe.v2.constants.NamingSystems;
 import dev.dsf.bpe.v2.variables.Variables;
-import org.tutorial.process.tutorial.service.DicTask;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DicTaskServiceTest

@@ -3,8 +3,9 @@ package org.tutorial.process.tutorial;
 import java.util.List;
 import java.util.Map;
 
-import dev.dsf.bpe.v2.AbstractProcessPluginDefinition;
 import org.tutorial.process.tutorial.spring.config.TutorialConfig;
+
+import dev.dsf.bpe.v2.AbstractProcessPluginDefinition;
 
 public class TutorialProcessPluginDefinition extends AbstractProcessPluginDefinition
 {

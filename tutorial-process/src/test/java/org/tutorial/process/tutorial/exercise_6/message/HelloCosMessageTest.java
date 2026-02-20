@@ -21,6 +21,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.tutorial.process.tutorial.TutorialProcessPluginDefinition;
+import org.tutorial.process.tutorial.message.HelloCosMessage;
 
 import dev.dsf.bpe.v2.ProcessPluginApi;
 import dev.dsf.bpe.v2.ProcessPluginDefinition;
@@ -29,8 +31,6 @@ import dev.dsf.bpe.v2.constants.NamingSystems;
 import dev.dsf.bpe.v2.service.TaskHelper;
 import dev.dsf.bpe.v2.variables.Target;
 import dev.dsf.bpe.v2.variables.Variables;
-import org.tutorial.process.tutorial.TutorialProcessPluginDefinition;
-import org.tutorial.process.tutorial.message.HelloCosMessage;
 
 @RunWith(MockitoJUnitRunner.class)
 public class HelloCosMessageTest

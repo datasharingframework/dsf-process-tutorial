@@ -5,7 +5,6 @@ import static org.tutorial.process.tutorial.util.Misc.countBeanMethods;
 import static org.tutorial.process.tutorial.util.Misc.errorMessageBeanMethod;
 
 import org.junit.Test;
-
 import org.tutorial.process.tutorial.service.DicTask;
 
 public class TutorialConfigTest
