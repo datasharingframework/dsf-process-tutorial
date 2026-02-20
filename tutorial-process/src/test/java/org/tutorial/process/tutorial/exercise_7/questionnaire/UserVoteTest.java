@@ -132,7 +132,7 @@ public class UserVoteTest
 	@Test
 	public void testQuestionnaireHasCorrectUrl()
 	{
-		String correctUrl = "http://dsf.dev/fhir/Questionnaire/user-vote";
+		String correctUrl = "http://tutorial.org/fhir/Questionnaire/user-vote";
 		String errorWrongUrl = "Questionnaire 'user-vote' has wrong URL. Expected '" + correctUrl + "' but got '"
 				+ userVote.getUrl() + "'.";
 		assertTrue(errorWrongUrl, correctUrl.equals(userVote.getUrl()));
