@@ -85,7 +85,7 @@ public class TaskStartVotingProcessTest
 		Extension votingResultExtension = new Extension();
 		votingResultExtension.addExtension().setUrl("organization-identifier").setValue(
 				new Identifier().setSystem("http://dsf.dev/sid/organization-identifier").setValue("dic.dsf.test"));
-		votingResultExtension.setUrl("http://dsf.dev/fhir/StructureDefinition/extension-voting-result");
+		votingResultExtension.setUrl("http://tutorial.org/fhir/StructureDefinition/extension-voting-result");
 		Task.TaskOutputComponent outputComponent = task.addOutput();
 		outputComponent.setValue(new Coding().setSystem(CODESYSTEM_VOTING_PROCESS).setCode("yes"));
 		outputComponent.getType().addCoding(new Coding().setSystem(CODESYSTEM_VOTING_PROCESS).setCode("voting-result"));

@@ -132,7 +132,7 @@ public class TutorialProcessPluginDefinitionTest
 		assertEquals(1, tCount);
 
 		long vCount = cosFhirResources.stream().filter(r -> r instanceof ValueSet).map(r -> (ValueSet) r)
-				.filter(v -> "http://dsf.dev/fhir/ValueSet/tutorial".equals(v.getUrl())
+				.filter(v -> "http://tutorial.org/fhir/ValueSet/tutorial".equals(v.getUrl())
 						&& resourceVersion.equals(v.getVersion()))
 				.count();
 		assertEquals(1, vCount);
@@ -200,7 +200,7 @@ public class TutorialProcessPluginDefinitionTest
 						.anyMatch(elementDefinition -> Integer.valueOf(elementDefinition.getMax()).equals(3)));
 
 		long vCount = dicFhirResources.stream().filter(r -> r instanceof ValueSet).map(r -> (ValueSet) r)
-				.filter(v -> "http://dsf.dev/fhir/ValueSet/tutorial".equals(v.getUrl())
+				.filter(v -> "http://tutorial.org/fhir/ValueSet/tutorial".equals(v.getUrl())
 						&& resourceVersion.equals(v.getVersion()))
 				.count();
 		assertEquals(1, vCount);
@@ -313,7 +313,7 @@ public class TutorialProcessPluginDefinitionTest
 		assertEquals(1, tCount);
 
 		long vCount = hrpFhirResources.stream().filter(r -> r instanceof ValueSet).map(r -> (ValueSet) r)
-				.filter(v -> "http://dsf.dev/fhir/ValueSet/tutorial".equals(v.getUrl())
+				.filter(v -> "http://tutorial.org/fhir/ValueSet/tutorial".equals(v.getUrl())
 						&& resourceVersion.equals(v.getVersion()))
 				.count();
 		assertEquals(1, vCount);

@@ -68,7 +68,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-7`. The s
                <max value="1"/>
                <binding>
                    <strength value="required"/>
-                   <valueSet value="http://dsf.dev/fhir/ValueSet/voting-results"/>
+                   <valueSet value="http://tutorial.org/fhir/ValueSet/voting-results"/>
                </binding>
             </element>
        ```
@@ -93,7 +93,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-7`. The s
           <max value="1"/>
           <type>
              <code value="Extension"/>
-             <profile value="http://dsf.dev/fhir/StructureDefinition/my-extension"/>
+             <profile value="http://tutorial.org/fhir/StructureDefinition/my-extension"/>
           </type>
        </element>
        ```
@@ -177,7 +177,7 @@ in `.../dsf-process-tutorial/browser-certs/hrp/hrp-client.p12` (password: passwo
 
 7. Start the `tutorialorg_votingProcess` by posting a specific FHIR [Task](https://dsf.dev/process-development/api-v2/fhir/task.html) resource to the DSF FHIR server of the `dic.dsf.test` organization using either cURL or the DSF FHIR server's web interface. Check out [Starting A Process Via Task Resources](https://dsf.dev/process-development/api-v2/guides/starting-a-process-via-task-resources.html) again if you are unsure. Make sure to populate the Input Parameters.
 
-   Verify that the FHIR [Task](https://dsf.dev/process-development/api-v2/fhir/task.html) resource was created at the DSF FHIR server and the `tutorialorg_votingProcess` was executed. To do this, navigate to https://dic/fhir/QuestionnaireResponse?_sort=-_lastUpdated&status=in-progress. There should be a QuestionnaireResponse resource with status `in-progress` based on a Questionnaire resource with URL `http://dsf.dev/fhir/Questionnaire/user-vote`. 
+   Verify that the FHIR [Task](https://dsf.dev/process-development/api-v2/fhir/task.html) resource was created at the DSF FHIR server and the `tutorialorg_votingProcess` was executed. To do this, navigate to https://dic/fhir/QuestionnaireResponse?_sort=-_lastUpdated&status=in-progress. There should be a QuestionnaireResponse resource with status `in-progress` based on a Questionnaire resource with URL `http://tutorial.org/fhir/Questionnaire/user-vote`. 
    Click on the QuestionnaireResponse, answer the question and press `Submit`. Navigate to https://dic/fhir/Task?_sort=-_lastUpdated and find the latest Task resource with message-name `startVotingProcess`. It should have a status of `completed`. Clicking on the Task resource redirects to the detailed Task view and three Output Parameters should now be present. Each one describes the voting result of
    an Organization that responded in the `vote` process. The responses from `cos.dsf.test` and `hrp.dsf.test` have a randomly generated response, but they should not have a value of `timeout`. Depending on whether you completed the QuestionnaireResponse in time, the output for `dic.dsf.text` should show your answer or `timeout`.
 
