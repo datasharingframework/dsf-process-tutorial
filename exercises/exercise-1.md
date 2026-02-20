@@ -9,19 +9,20 @@ Over the course of the exercises you should remember to take a look at the DSF F
 You can use the logs provided by docker or the debug logs located in `dev-setup/{dsfInstance}/bpe/log` and `dev-setup/{dsfInstance}/fhir/log`.
 The DSF FHIR server also has an audit log available in this directory.
 
-# Exercise 1 - Simple Process
-The first exercise focuses on setting up the development environment used in this tutorial and shows how to implement and execute a simple
-BPMN process. But first, let's make ourselves familiar with the project structure.  
+# Tutorial Introduction
 The tutorial project consists of three major parts:
 1. A preconfigured installation of three DSF instances each part of their own organization. The setup can be found in the `dev-setup` directory and is using [Docker](https://www.docker.com/).
 2. A `browser-certs` directory containing all [certificates](../learning/concepts/dsf/certificates.md) that are required during the tutorial.  
 3. The tutorial process plugin and its resources under `tutorial-process/src`. Resources include FHIR resources and BPMN files.
 
+The tutorial will sometimes instruct using certain names for things like file names or variables. This is done to more easily write the tests used to verify your solution.
+If tests fail, make sure everything is named as expected by the test. Appropriate Maven profiles are activated in Maven commands for each exercise in its [Solution Verification](#solution-verification)
+section. Solutions show ONE way that definitely works and is usually considered best practice. Feel free to turn off verification and experiment!
+
 FHIR resources used in the DSF are formatted as XML. You can find them in the `tutorial-process/src/main/resources/fhir` directory.
 When creating your own FHIR resources for DSF process plugins you also want to put them in a fitting subdirectory of `tutorial-process/src/main/resources/fhir`.
 
-We recommend you take a quick glance at all the topics in the `learning` directory to get a 
-feel for the scope of this tutorial.  
+# Exercise 1 - Simple Process
 In order to solve this exercise, you need to have read the topics on [FHIR](../learning/concepts/fhir/info.md), 
 [FHIR Task](../learning/concepts/fhir/task.md), 
 [The Process Plugin Definition](../learning/concepts/dsf/the-process-plugin-definition.md), 
