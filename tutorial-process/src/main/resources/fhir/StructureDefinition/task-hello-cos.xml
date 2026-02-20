@@ -6,7 +6,7 @@
       <code value="ALL" />
     </tag>
   </meta>
-  <url value="http://dsf.dev/fhir/StructureDefinition/task-hello-cos" />
+  <url value="http://tutorial.org/fhir/StructureDefinition/task-hello-cos" />
   <!-- version managed by bpe -->
   <version value="#{version}" />
   <name value="helloCosProcess" />
@@ -24,7 +24,7 @@
   <differential>
     <element id="Task.instantiatesUri">
       <path value="Task.instantiatesUri" />
-      <fixedUri value="http://dsf.dev/bpe/Process/cosProcess/#{version}" />
+      <fixedUri value="http://tutorial.org/bpe/Process/cosProcess/#{version}" />
     </element>
     <element id="Task.input">
       <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name">

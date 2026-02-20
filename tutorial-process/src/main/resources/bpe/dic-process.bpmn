@@ -3,7 +3,7 @@
   <bpmn:process id="tutorialorg_dicProcess" isExecutable="true" camunda:versionTag="#{version}">
     <bpmn:extensionElements />
     <bpmn:sequenceFlow id="SequenceFlow_0bbhq2r" sourceRef="startHelloDic" targetRef="DicTask" />
-    <bpmn:serviceTask id="DicTask" name="Dic Task" camunda:class="dev.dsf.process.tutorial.service.DicTask">
+    <bpmn:serviceTask id="DicTask" name="Dic Task" camunda:class="org.tutorial.process.tutorial.service.DicTask">
       <bpmn:incoming>SequenceFlow_0bbhq2r</bpmn:incoming>
       <bpmn:outgoing>Flow_0m5mslr</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -13,7 +13,7 @@
     </bpmn:startEvent>
     <bpmn:endEvent id="endHelloDic">
       <bpmn:incoming>Flow_0m5mslr</bpmn:incoming>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_1u9uh7y" messageRef="Message_33na25b" camunda:class="dev.dsf.process.tutorial.message.HelloCosMessage">
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1u9uh7y" messageRef="Message_33na25b" camunda:class="org.tutorial.process.tutorial.message.HelloCosMessage">
         <bpmn:extensionElements>
           <camunda:field name="instantiatesCanonical">
             <camunda:string>http://tutorial.org/bpe/Process/cosProcess|#{version}</camunda:string>
