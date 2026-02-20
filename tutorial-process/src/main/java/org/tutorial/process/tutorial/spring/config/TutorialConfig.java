@@ -17,7 +17,7 @@ import dev.dsf.bpe.v2.spring.ActivityPrototypeBeanCreator;
 @Configuration
 public class TutorialConfig
 {
-	@Value("${dev.dsf.process.tutorial.loggingEnabled:false}")
+	@Value("${org.tutorial.process.tutorial.loggingEnabled:false}")
 	@ProcessDocumentation(description = "Set to true to enable logging", required = false, processNames = PROCESS_NAME_FULL_DIC)
 	private boolean loggingEnabled;
 
