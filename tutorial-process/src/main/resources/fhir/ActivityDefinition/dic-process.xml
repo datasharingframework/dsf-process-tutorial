@@ -11,7 +11,7 @@
 			<valueString value="startDicProcess" />
 		</extension>
 		<extension url="task-profile">
-			<valueCanonical value="http://dsf.dev/fhir/StructureDefinition/task-start-dic-process|#{version}" />
+			<valueCanonical value="http://tutorial.org/fhir/StructureDefinition/task-start-dic-process|#{version}" />
 		</extension>
 		<extension url="requester">
 			<valueCoding>
@@ -26,7 +26,7 @@
 			</valueCoding>
 		</extension>
 	</extension>
-	<url value="http://dsf.dev/bpe/Process/dicProcess" />
+	<url value="http://tutorial.org/bpe/Process/dicProcess" />
 	<!-- version managed by bpe -->
 	<version value="#{version}" />
 	<name value="DicProcess" />
