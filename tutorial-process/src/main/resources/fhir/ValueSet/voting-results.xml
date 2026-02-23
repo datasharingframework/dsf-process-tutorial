@@ -6,7 +6,7 @@
             <code value="ALL" />
         </tag>
     </meta>
-    <url value="http://tutorial.org/fhir/ValueSet/voting-results"/>
+    <url value="http://example.org/fhir/ValueSet/voting-results"/>
     <!-- version managed by bpe -->
     <version value="#{version}" />
     <name value="Voting Result"/>
@@ -21,7 +21,7 @@
     <immutable value="true"/>
     <compose>
         <include>
-            <system value="http://tutorial.org/fhir/CodeSystem/voting-process"/>
+            <system value="http://example.org/fhir/CodeSystem/voting-process"/>
             <version value="#{version}"/>
             <concept>
                 <code value="yes"/>

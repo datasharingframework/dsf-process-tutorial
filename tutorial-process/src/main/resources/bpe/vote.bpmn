@@ -26,10 +26,10 @@
             <camunda:string>returnVote</camunda:string>
           </camunda:field>
           <camunda:field name="profile">
-            <camunda:string>http://tutorial.org/fhir/StructureDefinition/task-return-vote|#{version}</camunda:string>
+            <camunda:string>http://example.org/fhir/StructureDefinition/task-return-vote|#{version}</camunda:string>
           </camunda:field>
           <camunda:field name="instantiatesCanonical">
-            <camunda:string>http://tutorial.org/bpe/Process/votingProcess|#{version}</camunda:string>
+            <camunda:string>http://example.org/bpe/Process/votingProcess|#{version}</camunda:string>
           </camunda:field>
         </bpmn:extensionElements>
       </bpmn:messageEventDefinition>
