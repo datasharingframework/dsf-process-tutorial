@@ -19,7 +19,7 @@ public class HrpTask implements ServiceTask
 	public void execute(ProcessPluginApi api, Variables variables) throws ErrorBoundaryEvent, Exception
 	{
 		Optional<String> tutorialInputParameter = api.getTaskHelper().getFirstInputParameterStringValue(
-				variables.getStartTask(), "http://tutorial.org/fhir/CodeSystem/tutorial", "tutorial-input");
+				variables.getStartTask(), "http://example.org/fhir/CodeSystem/tutorial", "tutorial-input");
 		boolean sendResponse = tutorialInputParameter.map("send-response"::equals).orElse(false);
 		variables.setBoolean("sendResponse", sendResponse);
 

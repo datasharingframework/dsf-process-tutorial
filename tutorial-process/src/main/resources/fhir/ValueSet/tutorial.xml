@@ -6,7 +6,7 @@
 			<code value="ALL" />
 		</tag>
 	</meta>
-	<url value="http://tutorial.org/fhir/ValueSet/tutorial"/>
+	<url value="http://example.org/fhir/ValueSet/tutorial"/>
 	<!-- version managed by bpe -->
 	<version value="#{version}" />
 	<name value="Tutorial"/>
@@ -21,7 +21,7 @@
 	<immutable value="true"/>
 	<compose>
 		<include>
-			<system value="http://tutorial.org/fhir/CodeSystem/tutorial"/>
+			<system value="http://example.org/fhir/CodeSystem/tutorial"/>
 			<version value="#{version}"/>
 		</include>
 	</compose>
