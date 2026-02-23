@@ -78,8 +78,8 @@ public class TutorialProcessPluginDefinitionTest
 	{
 		String codeSystemUrl = CODESYSTEM_TUTORIAL;
 		String codeSystemCode = CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT;
-		String valueSetUrl = "http://tutorial.org/fhir/ValueSet/tutorial";
-		String structureDefinitionUrl = "http://tutorial.org/fhir/StructureDefinition/task-start-dic-process";
+		String valueSetUrl = "http://example.org/fhir/ValueSet/tutorial";
+		String structureDefinitionUrl = "http://example.org/fhir/StructureDefinition/task-start-dic-process";
 
 
 		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
@@ -142,20 +142,20 @@ public class TutorialProcessPluginDefinitionTest
 
 	private void validateDraftTaskResource(Task draftTask)
 	{
-		String error = "Draft Task has wrong/missing meta.profile value. Expected 'http://tutorial.org/fhir/StructureDefinition/task-start-dic-process|"
+		String error = "Draft Task has wrong/missing meta.profile value. Expected 'http://example.org/fhir/StructureDefinition/task-start-dic-process|"
 				+ resourceVersion
-				+ "' or 'http://tutorial.org/fhir/StructureDefinition/task-start-dic-process|#{version}'.";
+				+ "' or 'http://example.org/fhir/StructureDefinition/task-start-dic-process|#{version}'.";
 		assertTrue(error, draftTask.getMeta().getProfile().stream().anyMatch(profile -> profile.getValue()
-				.equals("http://tutorial.org/fhir/StructureDefinition/task-start-dic-process|" + resourceVersion)));
+				.equals("http://example.org/fhir/StructureDefinition/task-start-dic-process|" + resourceVersion)));
 
 		String identifierSystem = "http://dsf.dev/sid/task-identifier";
 		error = "Draft Task has wrong/missing identifier.system value. Expected '" + identifierSystem + "'.";
 		assertTrue(error, draftTask.getIdentifier().stream()
 				.anyMatch(identifier -> identifier.getSystem().equals(identifierSystem)));
 
-		String identifierValue = "http://tutorial.org/bpe/Process/dicProcess/" + resourceVersion
+		String identifierValue = "http://example.org/bpe/Process/dicProcess/" + resourceVersion
 				+ "/task-start-dic-process";
-		String identifierValuePlaceholder = "http://tutorial.org/bpe/Process/dicProcess/#{version}/task-start-dic-process";
+		String identifierValuePlaceholder = "http://example.org/bpe/Process/dicProcess/#{version}/task-start-dic-process";
 		error = "Draft Task has wrong/missing identifier.value. Expected '" + identifierValue + "' or '"
 				+ identifierValuePlaceholder + "'.";
 		assertTrue(error, draftTask.getIdentifier().stream()
