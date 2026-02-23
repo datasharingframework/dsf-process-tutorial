@@ -104,5 +104,5 @@ public abstract class ConstantsTutorial
 	public static final String VOTE_PROCESS_VARIABLE_SHOULD_USER_VOTE = "userVote";
 
 	public static final String QUESTIONNAIRE_USER_VOTE_URL = "http://example.org/fhir/Questionnaire/user-vote";
-	public static final String SYSTEM_DSF_ORGANIZATION_IDENTIFIER = "http://example.org/sid/organization-identifier";
+	public static final String SYSTEM_DSF_ORGANIZATION_IDENTIFIER = "http://dsf.dev/sid/organization-identifier";
 }
