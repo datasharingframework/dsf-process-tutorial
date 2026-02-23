@@ -35,7 +35,7 @@ import dev.dsf.bpe.v2.spring.ActivityPrototypeBeanCreator;
 public class TutorialConfig
 {
 	@Value("${org.tutorial.process.tutorial.loggingEnabled:false}")
-	@ProcessDocumentation(description = "Set to true to enable logging", required = false, processNames = PROCESS_NAME_FULL_DIC)
+	@ProcessDocumentation(description = "Set to true to enable logging", example = "true", processNames = PROCESS_NAME_FULL_DIC)
 	private boolean loggingEnabled;
 
 	@Value("${org.tutorial.process.tutorial.userVote:false}")
