@@ -20,12 +20,12 @@ public class HelloHrpMessage implements MessageEndEvent
 			SendTaskValues sendTaskValues, Target target)
 	{
 		Optional<Task.ParameterComponent> tutorialInputParameter = api.getTaskHelper().getFirstInputParameter(
-				variables.getStartTask(), "http://tutorial.org/fhir/CodeSystem/tutorial", "tutorial-input",
+				variables.getStartTask(), "http://example.org/fhir/CodeSystem/tutorial", "tutorial-input",
 				StringType.class);
 
 		return tutorialInputParameter
 				.map(i -> List.of(
-						api.getTaskHelper().createInput(i.getValue(), "http://tutorial.org/fhir/CodeSystem/tutorial",
+						api.getTaskHelper().createInput(i.getValue(), "http://example.org/fhir/CodeSystem/tutorial",
 								"tutorial-input", api.getProcessPluginDefinition().getResourceVersion())))
 				.orElse(List.of());
 	}

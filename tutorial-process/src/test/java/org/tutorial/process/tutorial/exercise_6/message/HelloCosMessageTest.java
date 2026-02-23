@@ -75,16 +75,16 @@ public class HelloCosMessageTest
 		Mockito.when(variables.getStartTask()).thenReturn(getTask());
 
 		Mockito.when(taskHelper.getFirstInputParameterStringValue(any(),
-				eq("http://tutorial.org/fhir/CodeSystem/tutorial"), eq("tutorial-input")))
+				eq("http://example.org/fhir/CodeSystem/tutorial"), eq("tutorial-input")))
 				.thenReturn(Optional.of("Test"));
 
 		Mockito.when(api.getProcessPluginDefinition()).thenReturn(definition);
 
 		Mockito.when(
-				taskHelper.createInput(any(Type.class), eq("http://tutorial.org/fhir/CodeSystem/tutorial"),
+				taskHelper.createInput(any(Type.class), eq("http://example.org/fhir/CodeSystem/tutorial"),
 						eq("tutorial-input"), eq(RESOURCE_VERSION)))
 				.thenReturn(new ParameterComponent(new CodeableConcept(
-						new Coding("http://tutorial.org/fhir/CodeSystem/tutorial", "tutorial-input", null)
+						new Coding("http://example.org/fhir/CodeSystem/tutorial", "tutorial-input", null)
 								.setVersion(RESOURCE_VERSION)),
 						new StringType("Test")));
 
@@ -100,7 +100,7 @@ public class HelloCosMessageTest
 				.findFirst().get();
 		assertEquals(1,
 				tutorialInput.getType().getCoding().stream()
-						.filter(c -> "http://tutorial.org/fhir/CodeSystem/tutorial".equals(c.getSystem()))
+						.filter(c -> "http://example.org/fhir/CodeSystem/tutorial".equals(c.getSystem()))
 						.filter(c -> "tutorial-input".equals(c.getCode())).count());
 		assertTrue(tutorialInput.getValue() instanceof StringType);
 		assertEquals("Test", ((StringType) tutorialInput.getValue()).getValue());
@@ -112,7 +112,7 @@ public class HelloCosMessageTest
 		task.getRestriction().addRecipient().getIdentifier().setSystem(NamingSystems.OrganizationIdentifier.SID)
 				.setValue("MeDIC");
 		task.addInput().setValue(new StringType("Test")).getType().addCoding()
-				.setSystem("http://tutorial.org/fhir/CodeSystem/tutorial").setCode("tutorial-input");
+				.setSystem("http://example.org/fhir/CodeSystem/tutorial").setCode("tutorial-input");
 
 		return task;
 	}
