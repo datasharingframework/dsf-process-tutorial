@@ -29,7 +29,7 @@
       <bpmn:messageEventDefinition id="MessageEventDefinition_0nb89rt" messageRef="Message_33na25b" camunda:class="org.tutorial.process.tutorial.message.HelloCosMessage">
         <bpmn:extensionElements>
           <camunda:field name="instantiatesCanonical">
-            <camunda:string>http://tutorial.org/bpe/Process/cosProcess|#{version}</camunda:string>
+            <camunda:string>http://example.org/bpe/Process/cosProcess|#{version}</camunda:string>
           </camunda:field>
           <camunda:field name="messageName">
             <camunda:string>helloCos</camunda:string>

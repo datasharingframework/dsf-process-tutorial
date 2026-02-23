@@ -11,7 +11,7 @@
 			<valueString value="startDicProcess" />
 		</extension>
 		<extension url="task-profile">
-			<valueCanonical value="http://tutorial.org/fhir/StructureDefinition/task-start-dic-process|#{version}" />
+			<valueCanonical value="http://example.org/fhir/StructureDefinition/task-start-dic-process|#{version}" />
 		</extension>
 		<extension url="requester">
 			<valueCoding>
