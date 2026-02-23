@@ -16,10 +16,10 @@
       <bpmn:messageEventDefinition id="MessageEventDefinition_1u9uh7y" messageRef="Message_33na25b" camunda:class="org.tutorial.process.tutorial.message.HelloCosMessage">
         <bpmn:extensionElements>
           <camunda:field name="instantiatesCanonical">
-            <camunda:string>http://tutorial.org/bpe/Process/cosProcess|#{version}</camunda:string>
+            <camunda:string>http://example.org/bpe/Process/cosProcess|#{version}</camunda:string>
           </camunda:field>
           <camunda:field name="profile">
-            <camunda:string>http://tutorial.org/fhir/StructureDefinition/task-hello-cos|#{version}</camunda:string>
+            <camunda:string>http://example.org/fhir/StructureDefinition/task-hello-cos|#{version}</camunda:string>
           </camunda:field>
           <camunda:field name="messageName">
             <camunda:string>helloCos</camunda:string>
