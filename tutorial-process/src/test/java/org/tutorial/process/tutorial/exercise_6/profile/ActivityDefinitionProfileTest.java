@@ -179,7 +179,7 @@ public class ActivityDefinitionProfileTest
 		Extension extTaskProfile = processAuthorization1.getExtensionByUrl("task-profile");
 		assertNotNull(extTaskProfile);
 		assertTrue(extTaskProfile.getValue() instanceof CanonicalType);
-		assertEquals("http://tutorial.org/fhir/StructureDefinition/task-goodbye-dic|" + RESOURCE_VERSION,
+		assertEquals("http://example.org/fhir/StructureDefinition/task-goodbye-dic|" + RESOURCE_VERSION,
 				((CanonicalType) extTaskProfile.getValue()).getValue());
 
 		Extension extRequester = processAuthorization1.getExtensionByUrl("requester");

@@ -270,7 +270,7 @@ public class DicTaskServiceTest
 		task.getRestriction().addRecipient().getIdentifier().setSystem(NamingSystems.OrganizationIdentifier.SID)
 				.setValue("MeDIC");
 		task.addInput().setValue(new StringType("Test")).getType().addCoding()
-				.setSystem("http://tutorial.org/fhir/CodeSystem/tutorial").setCode("tutorial-input");
+				.setSystem("http://example.org/fhir/CodeSystem/tutorial").setCode("tutorial-input");
 
 		return task;
 	}

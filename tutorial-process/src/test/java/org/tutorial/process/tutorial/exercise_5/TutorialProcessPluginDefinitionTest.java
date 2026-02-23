@@ -153,8 +153,8 @@ public class TutorialProcessPluginDefinitionTest
 	{
 		String codeSystemUrl = CODESYSTEM_TUTORIAL;
 		String codeSystemCode = CODESYSTEM_TUTORIAL_VALUE_TUTORIAL_INPUT;
-		String valueSetUrl = "http://tutorial.org/fhir/ValueSet/tutorial";
-		String structureDefinitionUrl = "http://tutorial.org/fhir/StructureDefinition/task-start-dic-process";
+		String valueSetUrl = "http://example.org/fhir/ValueSet/tutorial";
+		String structureDefinitionUrl = "http://example.org/fhir/StructureDefinition/task-start-dic-process";
 
 
 		ProcessPluginDefinition definition = new TutorialProcessPluginDefinition();
@@ -217,20 +217,20 @@ public class TutorialProcessPluginDefinitionTest
 
 	private void validateDraftTaskResource(Task draftTask)
 	{
-		String error = "Draft Task has wrong/missing meta.profile value. Expected 'http://tutorial.org/fhir/StructureDefinition/task-start-dic-process|"
+		String error = "Draft Task has wrong/missing meta.profile value. Expected 'http://example.org/fhir/StructureDefinition/task-start-dic-process|"
 				+ resourceVersion
-				+ "' or 'http://tutorial.org/fhir/StructureDefinition/task-start-dic-process|#{version}'.";
+				+ "' or 'http://example.org/fhir/StructureDefinition/task-start-dic-process|#{version}'.";
 		assertTrue(error, draftTask.getMeta().getProfile().stream().anyMatch(profile -> profile.getValue()
-				.equals("http://tutorial.org/fhir/StructureDefinition/task-start-dic-process|" + resourceVersion)));
+				.equals("http://example.org/fhir/StructureDefinition/task-start-dic-process|" + resourceVersion)));
 
 		String identifierSystem = "http://dsf.dev/sid/task-identifier";
 		error = "Draft Task has wrong/missing identifier.system value. Expected '" + identifierSystem + "'.";
 		assertTrue(error, draftTask.getIdentifier().stream()
 				.anyMatch(identifier -> identifier.getSystem().equals(identifierSystem)));
 
-		String identifierValue = "http://tutorial.org/bpe/Process/dicProcess/" + resourceVersion
+		String identifierValue = "http://example.org/bpe/Process/dicProcess/" + resourceVersion
 				+ "/task-start-dic-process";
-		String identifierValuePlaceholder = "http://tutorial.org/bpe/Process/dicProcess/#{version}/task-start-dic-process";
+		String identifierValuePlaceholder = "http://example.org/bpe/Process/dicProcess/#{version}/task-start-dic-process";
 		error = "Draft Task has wrong/missing identifier.value. Expected '" + identifierValue + "' or '"
 				+ identifierValuePlaceholder + "'.";
 		assertTrue(error, draftTask.getIdentifier().stream()
@@ -313,7 +313,7 @@ public class TutorialProcessPluginDefinitionTest
 	@Test
 	public void testCosProcessResources() throws Exception
 	{
-		String processUrl = "http://tutorial.org/bpe/Process/cosProcess";
+		String processUrl = "http://example.org/bpe/Process/cosProcess";
 		List<ActivityDefinition> activityDefinitions = cosFhirResources.stream()
 				.filter(r -> r instanceof ActivityDefinition).map(r -> (ActivityDefinition) r)
 				.filter(a -> processUrl.equals(a.getUrl())).filter(a -> resourceVersion.equals(a.getVersion()))
@@ -353,7 +353,7 @@ public class TutorialProcessPluginDefinitionTest
 				.filter(i -> "http://dsf.dev/sid/organization-identifier".equals(i.getSystem()))
 				.filter(i -> "cos.dsf.test".equals(i.getValue())).count());
 
-		String taskHelloCosUrl = "http://tutorial.org/fhir/StructureDefinition/task-hello-cos";
+		String taskHelloCosUrl = "http://example.org/fhir/StructureDefinition/task-hello-cos";
 		List<StructureDefinition> structureDefinitions = cosFhirResources.stream()
 				.filter(r -> r instanceof StructureDefinition).map(r -> (StructureDefinition) r)
 				.filter(s -> taskHelloCosUrl.equals(s.getUrl())).filter(s -> resourceVersion.equals(s.getVersion()))
