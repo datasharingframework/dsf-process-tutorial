@@ -50,7 +50,7 @@ public class BpmnAndUserTaskListenerTest
 	{
 		String filename = "bpe/vote.bpmn";
 		String processId = "tutorialorg_vote";
-		String questionnaireUrl = "http://tutorial.org/fhir/Questionnaire/user-vote|#{version}";
+		String questionnaireUrl = "http://example.org/fhir/Questionnaire/user-vote|#{version}";
 
 		BpmnModelInstance model = Bpmn
 				.readModelFromStream(this.getClass().getClassLoader().getResourceAsStream(filename));

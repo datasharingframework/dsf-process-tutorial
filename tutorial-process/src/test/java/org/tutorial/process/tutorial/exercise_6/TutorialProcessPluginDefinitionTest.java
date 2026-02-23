@@ -113,26 +113,26 @@ public class TutorialProcessPluginDefinitionTest
 
 		long aCount = cosFhirResources.stream().filter(r -> r instanceof ActivityDefinition)
 				.map(r -> (ActivityDefinition) r)
-				.filter(a -> "http://tutorial.org/bpe/Process/cosProcess".equals(a.getUrl())
+				.filter(a -> "http://example.org/bpe/Process/cosProcess".equals(a.getUrl())
 						&& resourceVersion.equals(a.getVersion()))
 				.count();
 		assertEquals(1, aCount);
 
 		long cCount = cosFhirResources.stream().filter(r -> r instanceof CodeSystem).map(r -> (CodeSystem) r)
-				.filter(c -> "http://tutorial.org/fhir/CodeSystem/tutorial".equals(c.getUrl())
+				.filter(c -> "http://example.org/fhir/CodeSystem/tutorial".equals(c.getUrl())
 						&& resourceVersion.equals(c.getVersion()))
 				.count();
 		assertEquals(1, cCount);
 
 		long tCount = cosFhirResources.stream().filter(r -> r instanceof StructureDefinition)
 				.map(r -> (StructureDefinition) r)
-				.filter(c -> "http://tutorial.org/fhir/StructureDefinition/task-hello-cos".equals(c.getUrl())
+				.filter(c -> "http://example.org/fhir/StructureDefinition/task-hello-cos".equals(c.getUrl())
 						&& resourceVersion.equals(c.getVersion()))
 				.count();
 		assertEquals(1, tCount);
 
 		long vCount = cosFhirResources.stream().filter(r -> r instanceof ValueSet).map(r -> (ValueSet) r)
-				.filter(v -> "http://tutorial.org/fhir/ValueSet/tutorial".equals(v.getUrl())
+				.filter(v -> "http://example.org/fhir/ValueSet/tutorial".equals(v.getUrl())
 						&& resourceVersion.equals(v.getVersion()))
 				.count();
 		assertEquals(1, vCount);
@@ -157,20 +157,20 @@ public class TutorialProcessPluginDefinitionTest
 
 		long aCount = dicFhirResources.stream().filter(r -> r instanceof ActivityDefinition)
 				.map(r -> (ActivityDefinition) r)
-				.filter(a -> "http://tutorial.org/bpe/Process/dicProcess".equals(a.getUrl())
+				.filter(a -> "http://example.org/bpe/Process/dicProcess".equals(a.getUrl())
 						&& resourceVersion.equals(a.getVersion()))
 				.count();
 		assertEquals(1, aCount);
 
 		long cCount = dicFhirResources.stream().filter(r -> r instanceof CodeSystem).map(r -> (CodeSystem) r)
-				.filter(c -> "http://tutorial.org/fhir/CodeSystem/tutorial".equals(c.getUrl())
+				.filter(c -> "http://example.org/fhir/CodeSystem/tutorial".equals(c.getUrl())
 						&& resourceVersion.equals(c.getVersion()))
 				.count();
 		assertEquals(1, cCount);
 
 		long t1Count = dicFhirResources.stream().filter(r -> r instanceof StructureDefinition)
 				.map(r -> (StructureDefinition) r)
-				.filter(c -> "http://tutorial.org/fhir/StructureDefinition/task-goodbye-dic".equals(c.getUrl())
+				.filter(c -> "http://example.org/fhir/StructureDefinition/task-goodbye-dic".equals(c.getUrl())
 						&& resourceVersion.equals(c.getVersion()))
 				.count();
 		assertEquals(1, t1Count);
@@ -200,7 +200,7 @@ public class TutorialProcessPluginDefinitionTest
 						.anyMatch(elementDefinition -> Integer.valueOf(elementDefinition.getMax()).equals(3)));
 
 		long vCount = dicFhirResources.stream().filter(r -> r instanceof ValueSet).map(r -> (ValueSet) r)
-				.filter(v -> "http://tutorial.org/fhir/ValueSet/tutorial".equals(v.getUrl())
+				.filter(v -> "http://example.org/fhir/ValueSet/tutorial".equals(v.getUrl())
 						&& resourceVersion.equals(v.getVersion()))
 				.count();
 		assertEquals(1, vCount);
@@ -208,20 +208,20 @@ public class TutorialProcessPluginDefinitionTest
 
 	private void validateDraftTaskResource(Task draftTask)
 	{
-		String error = "Draft Task has wrong/missing meta.profile value. Expected 'http://tutorial.org/fhir/StructureDefinition/task-start-dic-process|"
+		String error = "Draft Task has wrong/missing meta.profile value. Expected 'http://example.org/fhir/StructureDefinition/task-start-dic-process|"
 				+ resourceVersion
-				+ "' or 'http://tutorial.org/fhir/StructureDefinition/task-start-dic-process|#{version}'.";
+				+ "' or 'http://example.org/fhir/StructureDefinition/task-start-dic-process|#{version}'.";
 		assertTrue(error, draftTask.getMeta().getProfile().stream().anyMatch(profile -> profile.getValue()
-				.equals("http://tutorial.org/fhir/StructureDefinition/task-start-dic-process|" + resourceVersion)));
+				.equals("http://example.org/fhir/StructureDefinition/task-start-dic-process|" + resourceVersion)));
 
 		String identifierSystem = "http://dsf.dev/sid/task-identifier";
 		error = "Draft Task has wrong/missing identifier.system value. Expected '" + identifierSystem + "'.";
 		assertTrue(error, draftTask.getIdentifier().stream()
 				.anyMatch(identifier -> identifier.getSystem().equals(identifierSystem)));
 
-		String identifierValue = "http://tutorial.org/bpe/Process/dicProcess/" + resourceVersion
+		String identifierValue = "http://example.org/bpe/Process/dicProcess/" + resourceVersion
 				+ "/task-start-dic-process";
-		String identifierValuePlaceholder = "http://tutorial.org/bpe/Process/dicProcess/#{version}/task-start-dic-process";
+		String identifierValuePlaceholder = "http://example.org/bpe/Process/dicProcess/#{version}/task-start-dic-process";
 		error = "Draft Task has wrong/missing identifier.value. Expected '" + identifierValue + "' or '"
 				+ identifierValuePlaceholder + "'.";
 		assertTrue(error, draftTask.getIdentifier().stream()
@@ -275,7 +275,7 @@ public class TutorialProcessPluginDefinitionTest
 
 		var aOpt = dicFhirResources.stream().filter(r -> r instanceof ActivityDefinition)
 				.map(r -> (ActivityDefinition) r)
-				.filter(a -> "http://tutorial.org/bpe/Process/dicProcess".equals(a.getUrl())
+				.filter(a -> "http://example.org/bpe/Process/dicProcess".equals(a.getUrl())
 						&& resourceVersion.equals(a.getVersion()))
 				.findFirst();
 		assumeTrue(aOpt.isPresent());
@@ -294,26 +294,26 @@ public class TutorialProcessPluginDefinitionTest
 
 		long aCount = hrpFhirResources.stream().filter(r -> r instanceof ActivityDefinition)
 				.map(r -> (ActivityDefinition) r)
-				.filter(a -> "http://tutorial.org/bpe/Process/hrpProcess".equals(a.getUrl())
+				.filter(a -> "http://example.org/bpe/Process/hrpProcess".equals(a.getUrl())
 						&& resourceVersion.equals(a.getVersion()))
 				.count();
 		assertEquals(1, aCount);
 
 		long cCount = hrpFhirResources.stream().filter(r -> r instanceof CodeSystem).map(r -> (CodeSystem) r)
-				.filter(c -> "http://tutorial.org/fhir/CodeSystem/tutorial".equals(c.getUrl())
+				.filter(c -> "http://example.org/fhir/CodeSystem/tutorial".equals(c.getUrl())
 						&& resourceVersion.equals(c.getVersion()))
 				.count();
 		assertEquals(1, cCount);
 
 		long tCount = hrpFhirResources.stream().filter(r -> r instanceof StructureDefinition)
 				.map(r -> (StructureDefinition) r)
-				.filter(c -> "http://tutorial.org/fhir/StructureDefinition/task-hello-hrp".equals(c.getUrl())
+				.filter(c -> "http://example.org/fhir/StructureDefinition/task-hello-hrp".equals(c.getUrl())
 						&& resourceVersion.equals(c.getVersion()))
 				.count();
 		assertEquals(1, tCount);
 
 		long vCount = hrpFhirResources.stream().filter(r -> r instanceof ValueSet).map(r -> (ValueSet) r)
-				.filter(v -> "http://tutorial.org/fhir/ValueSet/tutorial".equals(v.getUrl())
+				.filter(v -> "http://example.org/fhir/ValueSet/tutorial".equals(v.getUrl())
 						&& resourceVersion.equals(v.getVersion()))
 				.count();
 		assertEquals(1, vCount);
