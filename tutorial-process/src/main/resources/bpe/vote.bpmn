@@ -10,7 +10,7 @@
       <bpmn:outgoing>Flow_1l9j9al</bpmn:outgoing>
       <bpmn:outgoing>Flow_0iqof8t</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:userTask id="Activity_1i64l8h" name="User Vote" camunda:formKey="http://tutorial.org/fhir/Questionnaire/user-vote|#{version}">
+    <bpmn:userTask id="Activity_1i64l8h" name="User Vote" camunda:formKey="http://example.org/fhir/Questionnaire/user-vote|#{version}">
       <bpmn:extensionElements>
         <camunda:taskListener class="org.tutorial.process.tutorial.listener.UserVoteListener" event="create" />
       </bpmn:extensionElements>
@@ -34,10 +34,10 @@
             <camunda:string>returnVote</camunda:string>
           </camunda:field>
           <camunda:field name="profile">
-            <camunda:string>http://tutorial.org/fhir/StructureDefinition/task-return-vote|#{version}</camunda:string>
+            <camunda:string>http://example.org/fhir/StructureDefinition/task-return-vote|#{version}</camunda:string>
           </camunda:field>
           <camunda:field name="instantiatesCanonical">
-            <camunda:string>http://tutorial.org/bpe/Process/votingProcess|#{version}</camunda:string>
+            <camunda:string>http://example.org/bpe/Process/votingProcess|#{version}</camunda:string>
           </camunda:field>
         </bpmn:extensionElements>
       </bpmn:messageEventDefinition>

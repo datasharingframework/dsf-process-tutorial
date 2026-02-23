@@ -6,7 +6,7 @@
             <code value="ALL"/>
         </tag>
     </meta>
-    <url value="http://tutorial.org/fhir/StructureDefinition/extension-voting-result"/>
+    <url value="http://example.org/fhir/StructureDefinition/extension-voting-result"/>
     <!-- version managed by bpe -->
     <version value="#{version}" />
     <name value="VotingResult"/>
@@ -69,7 +69,7 @@
         </element>
         <element id="Extension.url">
             <path value="Extension.url"/>
-            <fixedUri value="http://tutorial.org/fhir/StructureDefinition/extension-voting-result"/>
+            <fixedUri value="http://example.org/fhir/StructureDefinition/extension-voting-result"/>
         </element>
         <element id="Extension.value[x]">
             <path value="Extension.value[x]"/>

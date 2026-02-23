@@ -6,7 +6,7 @@
             <code value="ALL" />
         </tag>
     </meta>
-    <url value="http://tutorial.org/fhir/StructureDefinition/task-start-voting-process" />
+    <url value="http://example.org/fhir/StructureDefinition/task-start-voting-process" />
     <!-- version managed by bpe -->
     <version value="#{version}" />
     <name value="startVotingProcess" />
@@ -24,7 +24,7 @@
     <differential>
         <element id="Task.instantiatesCanonical">
             <path value="Task.instantiatesCanonical" />
-            <fixedCanonical value="http://tutorial.org/bpe/Process/votingProcess|#{version}" />
+            <fixedCanonical value="http://example.org/bpe/Process/votingProcess|#{version}" />
         </element>
         <element id="Task.requester.type">
             <path value="Task.requester.type"/>
@@ -81,7 +81,7 @@
             <max value="1"/>
             <binding>
                 <strength value="required" />
-                <valueSet value="http://tutorial.org/fhir/ValueSet/voting-parameters" />
+                <valueSet value="http://example.org/fhir/ValueSet/voting-parameters" />
             </binding>
         </element>
         <element id="Task.input:binary-question.type.coding">
@@ -93,7 +93,7 @@
             <path value="Task.input.type.coding.system" />
             <min value="1"/>
             <max value="1"/>
-            <fixedUri value="http://tutorial.org/fhir/CodeSystem/voting-process" />
+            <fixedUri value="http://example.org/fhir/CodeSystem/voting-process" />
         </element>
         <element id="Task.input:binary-question.type.coding.code">
             <path value="Task.input.type.coding.code" />
@@ -130,7 +130,7 @@
             <max value="1"/>
             <type>
                 <code value="Extension"/>
-                <profile value="http://tutorial.org/fhir/StructureDefinition/extension-voting-result"/>
+                <profile value="http://example.org/fhir/StructureDefinition/extension-voting-result"/>
             </type>
         </element>
         <element id="Task.output:voting-result.type">
@@ -139,7 +139,7 @@
             <max value="1"/>
             <binding>
                 <strength value="required"/>
-                <valueSet value="http://tutorial.org/fhir/ValueSet/voting-parameters"/>
+                <valueSet value="http://example.org/fhir/ValueSet/voting-parameters"/>
             </binding>
         </element>
         <element id="Task.output:voting-result.type.coding">
@@ -151,7 +151,7 @@
             <path value="Task.output.type.coding.system"/>
             <min value="1"/>
             <max value="1"/>
-            <fixedUri value="http://tutorial.org/fhir/CodeSystem/voting-process"/>
+            <fixedUri value="http://example.org/fhir/CodeSystem/voting-process"/>
         </element>
         <element id="Task.output:voting-result.type.coding.code">
             <path value="Task.output.type.coding.code"/>
@@ -170,7 +170,7 @@
             <path value="Task.output.value[x].system"/>
             <min value="1"/>
             <max value="1"/>
-            <fixedUri value="http://tutorial.org/fhir/CodeSystem/voting-process"/>
+            <fixedUri value="http://example.org/fhir/CodeSystem/voting-process"/>
         </element>
         <element id="Task.output:voting-result.value[x].code">
             <path value="Task.output.value[x].code"/>
@@ -178,7 +178,7 @@
             <max value="1"/>
             <binding>
                 <strength value="required"/>
-                <valueSet value="http://tutorial.org/fhir/ValueSet/voting-results"/>
+                <valueSet value="http://example.org/fhir/ValueSet/voting-results"/>
             </binding>
         </element>
     </differential>

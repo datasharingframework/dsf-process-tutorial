@@ -22,10 +22,10 @@
         <bpmn:messageEventDefinition id="MessageEventDefinition_18f9g9j" messageRef="Message_39qqba1" camunda:class="org.tutorial.process.tutorial.message.StartVote">
           <bpmn:extensionElements>
             <camunda:field name="instantiatesCanonical">
-              <camunda:string>http://tutorial.org/bpe/Process/vote|#{version}</camunda:string>
+              <camunda:string>http://example.org/bpe/Process/vote|#{version}</camunda:string>
             </camunda:field>
             <camunda:field name="profile">
-              <camunda:string>http://tutorial.org/fhir/StructureDefinition/task-start-vote|#{version}</camunda:string>
+              <camunda:string>http://example.org/fhir/StructureDefinition/task-start-vote|#{version}</camunda:string>
             </camunda:field>
             <camunda:field name="messageName">
               <camunda:string>startVote</camunda:string>
