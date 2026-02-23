@@ -371,6 +371,12 @@
                 <version>${dsf.version}</version>
                 <executions>
                     <execution>
+                        <id>generate-documentation</id>
+                        <goals>
+                            <goal>generate-config-doc</goal>
+                        </goals>
+                    </execution>
+                    <execution>
                         <id>default-cli</id>
                         <goals>
                             <goal>generate-dev-setup-cert-files</goal>
@@ -482,6 +488,9 @@
                         </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <configDocPackages>org.tutorial.process.tutorial.spring.config</configDocPackages>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
