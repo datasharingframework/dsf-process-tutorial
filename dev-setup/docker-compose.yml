@@ -65,7 +65,7 @@ services:
     volumes:
       - type: volume
         source: db-data
-        target: /var/lib/postgresql/data
+        target: /var/lib/postgresql
       - type: bind
         source: ./db/init-db.sh
         target: /docker-entrypoint-initdb.d/init-db.sh
