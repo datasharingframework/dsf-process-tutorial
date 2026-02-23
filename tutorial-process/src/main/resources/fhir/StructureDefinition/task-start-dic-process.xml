@@ -79,7 +79,7 @@
       <path value="Task.input.type" />
       <binding>
         <strength value="required" />
-        <valueSet value="http://tutorial.org/fhir/ValueSet/tutorial" />
+        <valueSet value="http://example.org/fhir/ValueSet/tutorial" />
       </binding>
     </element>
     <element id="Task.input:tutorial-input.type.coding">
@@ -90,7 +90,7 @@
     <element id="Task.input:tutorial-input.type.coding.system">
       <path value="Task.input.type.coding.system" />
       <min value="1" />
-      <fixedUri value="http://tutorial.org/fhir/CodeSystem/tutorial" />
+      <fixedUri value="http://example.org/fhir/CodeSystem/tutorial" />
     </element>
     <element id="Task.input:tutorial-input.type.coding.code">
       <path value="Task.input.type.coding.code" />
