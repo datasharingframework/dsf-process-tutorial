@@ -11,13 +11,13 @@
       <bpmn:messageEventDefinition id="MessageEventDefinition_0raq415" messageRef="Message_000lvyx" camunda:class="org.tutorial.process.tutorial.message.GoodbyeDicMessage">
         <bpmn:extensionElements>
           <camunda:field name="instantiatesCanonical">
-            <camunda:string>http://tutorial.org/bpe/Process/dicProcess|#{version}</camunda:string>
+            <camunda:string>http://example.org/bpe/Process/dicProcess|#{version}</camunda:string>
           </camunda:field>
           <camunda:field name="messageName">
             <camunda:string>goodbyeDic</camunda:string>
           </camunda:field>
           <camunda:field name="profile">
-            <camunda:string>http://tutorial.org/fhir/StructureDefinition/task-goodbye-dic|#{version}</camunda:string>
+            <camunda:string>http://example.org/fhir/StructureDefinition/task-goodbye-dic|#{version}</camunda:string>
           </camunda:field>
         </bpmn:extensionElements>
       </bpmn:messageEventDefinition>

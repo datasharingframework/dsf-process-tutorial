@@ -35,7 +35,7 @@
             <camunda:string>helloCos</camunda:string>
           </camunda:field>
           <camunda:field name="profile">
-            <camunda:string>http://tutorial.org/fhir/StructureDefinition/task-hello-cos|#{version}</camunda:string>
+            <camunda:string>http://example.org/fhir/StructureDefinition/task-hello-cos|#{version}</camunda:string>
           </camunda:field>
         </bpmn:extensionElements>
       </bpmn:messageEventDefinition>
