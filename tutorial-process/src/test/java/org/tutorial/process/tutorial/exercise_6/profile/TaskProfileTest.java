@@ -86,7 +86,7 @@ public class TaskProfileTest
 		task.addInput().setValue(new StringType(PROFILE_TUTORIAL_TASK_DIC_PROCESS_MESSAGE_NAME)).getType()
 				.addCoding(CodeSystems.BpmnMessage.messageName());
 		task.addInput().setValue(new StringType("Tutorial input")).getType().addCoding()
-				.setSystem("http://tutorial.org/fhir/CodeSystem/tutorial").setCode("tutorial-input");
+				.setSystem("http://example.org/fhir/CodeSystem/tutorial").setCode("tutorial-input");
 
 		return task;
 	}
@@ -124,7 +124,7 @@ public class TaskProfileTest
 		task.addInput().setValue(new StringType(UUID.randomUUID().toString())).getType()
 				.addCoding(CodeSystems.BpmnMessage.businessKey());
 		task.addInput().setValue(new StringType("Tutorial input")).getType().addCoding()
-				.setSystem("http://tutorial.org/fhir/CodeSystem/tutorial").setCode("tutorial-input");
+				.setSystem("http://example.org/fhir/CodeSystem/tutorial").setCode("tutorial-input");
 
 		return task;
 	}
@@ -162,7 +162,7 @@ public class TaskProfileTest
 		task.addInput().setValue(new StringType(UUID.randomUUID().toString())).getType()
 				.addCoding(CodeSystems.BpmnMessage.businessKey());
 		task.addInput().setValue(new StringType("Tutorial input")).getType().addCoding()
-				.setSystem("http://tutorial.org/fhir/CodeSystem/tutorial").setCode("tutorial-input");
+				.setSystem("http://example.org/fhir/CodeSystem/tutorial").setCode("tutorial-input");
 
 		return task;
 	}
