@@ -17,10 +17,10 @@
       <bpmn:messageEventDefinition id="MessageEventDefinition_1xuxohn" messageRef="Message_1jciunk" camunda:class="org.tutorial.process.tutorial.message.HelloHrpMessage">
         <bpmn:extensionElements>
           <camunda:field name="instantiatesCanonical">
-            <camunda:string>http://tutorial.org/bpe/Process/hrpProcess|#{version}</camunda:string>
+            <camunda:string>http://example.org/bpe/Process/hrpProcess|#{version}</camunda:string>
           </camunda:field>
           <camunda:field name="profile">
-            <camunda:string>http://tutorial.org/fhir/StructureDefinition/task-hello-hrp|#{version}</camunda:string>
+            <camunda:string>http://example.org/fhir/StructureDefinition/task-hello-hrp|#{version}</camunda:string>
           </camunda:field>
           <camunda:field name="messageName">
             <camunda:string>helloHrp</camunda:string>

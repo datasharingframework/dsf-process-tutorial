@@ -118,7 +118,7 @@ public class DicTaskServiceTest
 		Mockito.when(api.getTaskHelper()).thenReturn(taskHelper);
 		Mockito.when(variables.getStartTask()).thenReturn(task);
 		Mockito.when(taskHelper.getFirstInputParameterStringValue(any(),
-				eq("http://tutorial.org/fhir/CodeSystem/tutorial"), eq("tutorial-input")))
+				eq("http://example.org/fhir/CodeSystem/tutorial"), eq("tutorial-input")))
 				.thenReturn(Optional.of("Test"));
 		Mockito.when(variables.createTarget(orgIdValue, endpointIdValue, endpointAddress)).thenReturn(new Target()
 		{
@@ -151,7 +151,7 @@ public class DicTaskServiceTest
 
 		ArgumentCaptor<Task> captor = ArgumentCaptor.forClass(Task.class);
 		Mockito.verify(taskHelper).getFirstInputParameterStringValue(captor.capture(),
-				eq("http://tutorial.org/fhir/CodeSystem/tutorial"), eq("tutorial-input"));
+				eq("http://example.org/fhir/CodeSystem/tutorial"), eq("tutorial-input"));
 		Mockito.verify(variables, atLeastOnce()).getStartTask();
 		assertEquals(task, captor.getValue());
 
@@ -177,7 +177,7 @@ public class DicTaskServiceTest
 		task.getRestriction().addRecipient().getIdentifier().setSystem(NamingSystems.OrganizationIdentifier.SID)
 				.setValue("MeDIC");
 		task.addInput().setValue(new StringType("Test")).getType().addCoding()
-				.setSystem("http://tutorial.org/fhir/CodeSystem/tutorial").setCode("tutorial-input");
+				.setSystem("http://example.org/fhir/CodeSystem/tutorial").setCode("tutorial-input");
 
 		return task;
 	}
