@@ -13,7 +13,7 @@ public abstract class ConstantsTutorial
 	public static final String RESOURCE_VERSION = processPluginDefinition.getResourceVersion();
 
 	public static final String PROCESS_NAME_DIC = "dicProcess";
-	public static final String PROCESS_NAME_FULL_DIC = "tutorialorg_" + PROCESS_NAME_DIC;
+	public static final String PROCESS_NAME_FULL_DIC = "exampleorg_" + PROCESS_NAME_DIC;
 
 	public static final String PROFILE_TUTORIAL_TASK_DIC_PROCESS = "http://example.org/fhir/StructureDefinition/task-start-dic-process";
 	public static final String PROFILE_TUTORIAL_TASK_DIC_PROCESS_URI = "http://example.org/bpe/Process/"
@@ -29,7 +29,7 @@ public abstract class ConstantsTutorial
 
 	// The HELLO_COS constants are only needed for exercise 4 and above
 	public static final String PROCESS_NAME_COS = "cosProcess";
-	public static final String PROCESS_NAME_FULL_COS = "tutorialorg_" + PROCESS_NAME_COS;
+	public static final String PROCESS_NAME_FULL_COS = "exampleorg_" + PROCESS_NAME_COS;
 
 	public static final String PROFILE_TUTORIAL_TASK_HELLO_COS = "http://example.org/fhir/StructureDefinition/task-hello-cos";
 	public static final String PROFILE_TUTORIAL_TASK_HELLO_COS_AND_LATEST_VERSION = PROFILE_TUTORIAL_TASK_HELLO_COS
@@ -44,7 +44,7 @@ public abstract class ConstantsTutorial
 
 	// The HELLO_HRP constants are only needed for exercise 6 and above
 	public static final String PROCESS_NAME_HRP = "hrpProcess";
-	public static final String PROCESS_NAME_FULL_HRP = "tutorialorg_" + PROCESS_NAME_HRP;
+	public static final String PROCESS_NAME_FULL_HRP = "exampleorg_" + PROCESS_NAME_HRP;
 
 	public static final String PROFILE_TUTORIAL_TASK_HELLO_HRP = "http://example.org/fhir/StructureDefinition/task-hello-hrp";
 	public static final String PROFILE_TUTORIAL_TASK_HELLO_HRP_AND_LATEST_VERSION = PROFILE_TUTORIAL_TASK_HELLO_HRP
@@ -71,7 +71,7 @@ public abstract class ConstantsTutorial
 	public static final String TUTORIAL_HRP_ORGANIZATION_IDENTIFIER = "hrp.dsf.test";
 
 	public static final String PROCESS_NAME_VOTING_PROCESS = "votingProcess";
-	public static final String PROCESS_NAME_FULL_VOTING_PROCESS = "tutorialorg_" + PROCESS_NAME_VOTING_PROCESS;
+	public static final String PROCESS_NAME_FULL_VOTING_PROCESS = "exampleorg_" + PROCESS_NAME_VOTING_PROCESS;
 
 	public static final String PROFILE_TUTORIAL_TASK_START_VOTING_PROCESS = "http://example.org/fhir/StructureDefinition/task-start-voting-process";
 	public static final String PROFILE_TUTORIAL_TASK_START_VOTING_PROCESS_AND_LATEST_VERSION = PROFILE_TUTORIAL_TASK_START_VOTING_PROCESS
@@ -90,7 +90,7 @@ public abstract class ConstantsTutorial
 	public static final String PROFILE_TUTORIAL_TASK_RETURN_VOTE_MESSAGE_NAME = "returnVote";
 
 	public static final String PROCESS_NAME_VOTE = "vote";
-	public static final String PROCESS_NAME_FULL_VOTE = "tutorialorg_" + PROCESS_NAME_VOTE;
+	public static final String PROCESS_NAME_FULL_VOTE = "exampleorg_" + PROCESS_NAME_VOTE;
 
 	public static final String PROFILE_TUTORIAL_TASK_START_VOTE = "http://example.org/fhir/StructureDefinition/task-start-voting-process";
 	public static final String PROFILE_TUTORIAL_TASK_START_VOTE_AND_LATEST_VERSION = PROFILE_TUTORIAL_TASK_START_VOTE
