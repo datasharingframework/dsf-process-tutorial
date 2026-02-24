@@ -45,7 +45,7 @@ mvn clean install -Pexercise-3
 Verify that the build was successful and no test failures occurred.
 
 ### Process Execution and Manual Tests
-To verify the `tutorialorg_dicProcess` can be executed successfully, we need to deploy it into a DSF instance and execute the process. The maven `install` build is configured to create a process jar file with all necessary resources and copy the jar to the appropriate locations of the docker dev setup.
+To verify the `exampleorg_dicProcess` can be executed successfully, we need to deploy it into a DSF instance and execute the process. The maven `install` build is configured to create a process jar file with all necessary resources and copy the jar to the appropriate locations of the docker dev setup.
 
 1. Start the DSF FHIR server for the `dic.dsf.test` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
    ```
@@ -57,10 +57,10 @@ To verify the `tutorialorg_dicProcess` can be executed successfully, we need to 
    ```
    docker-compose up dic-bpe
    ```
-   Verify the DSF BPE server started successfully and deployed the `tutorialorg_dicProcess`.
+   Verify the DSF BPE server started successfully and deployed the `exampleorg_dicProcess`.
 
 3. Visit https://dic/fhir. First, use the client certificate to log into the DSF FHIR server and make sure you are 
-   still able to start a `tutorialorg_dicProcess` via the [web interface](https://dsf.dev/process-development/api-v2/guides/starting-a-process-via-task-resources.html#using-the-dsf-fhir-servers-web-interface).
+   still able to start a `exampleorg_dicProcess` via the [web interface](https://dsf.dev/process-development/api-v2/guides/starting-a-process-via-task-resources.html#using-the-dsf-fhir-servers-web-interface).
 4. Now try doing it again, but this time use Keycloak to log in. Your username and password are both `tutorial`. Also, you might have to clear your browser's
    SSL state because it keeps using the client certificate from before. Afterward, you can visit https://dic/fhir again but refuse to send a 
    client certificate when asked. This should forward you to the Keycloak login page.

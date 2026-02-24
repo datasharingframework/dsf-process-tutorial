@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1yb5vw3" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.39.0">
-  <bpmn:process id="tutorialorg_cosProcess" isExecutable="true" camunda:versionTag="#{version}">
+  <bpmn:process id="exampleorg_cosProcess" isExecutable="true" camunda:versionTag="#{version}">
     <bpmn:extensionElements />
     <bpmn:sequenceFlow id="SequenceFlow_0bbhq2r" sourceRef="startHelloCos" targetRef="CosTask" />
     <bpmn:sequenceFlow id="SequenceFlow_0oyvmcd" sourceRef="CosTask" targetRef="endHelloCos" />
@@ -19,7 +19,7 @@
   </bpmn:process>
   <bpmn:message id="Message_0bmy3hn" name="helloCos" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="tutorialorg_cosProcess">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="exampleorg_cosProcess">
       <bpmndi:BPMNShape id="Event_1c1jqme_di" bpmnElement="endHelloCos">
         <dc:Bounds x="462" y="103" width="36" height="36" />
       </bpmndi:BPMNShape>
