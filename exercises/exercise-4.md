@@ -24,7 +24,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-4`.
 
    Read the concept [here](https://dsf.dev/process-development/api-v2/dsf/versions-placeholders-urls.html#urls) again.
     </details>
-1. Modify the `tutorialorg_cosProcess` in the `cos-process.bpmn` file and configure the message name of the [Message Start Event](https://dsf.dev/process-development/api-v2/fhir/messaging.html#message-start-event) with the same value as the message name of the [Message End Event](https://dsf.dev/process-development/api-v2/fhir/messaging.html#message-end-event) in the `tutorialorg_dicProcess`. 
+1. Modify the `tutorialorg_cosProcess` in the `cos-process.bpmn` file and configure the message name of the [Message Start Event](https://dsf.dev/process-development/api-v2/bpmn/messaging.html#message-start-event) with the same value as the message name of the [Message End Event](https://dsf.dev/process-development/api-v2/bpmn/messaging.html#message-end-event) in the `tutorialorg_dicProcess`. 
 1. Create a new [StructureDefinition](http://hl7.org/fhir/R4/structuredefinition.html) with a [Task](https://dsf.dev/process-development/api-v2/fhir/task.html) profile for the `helloCos` message.
     <details>
    <summary>Don't know how to get started?</summary>
