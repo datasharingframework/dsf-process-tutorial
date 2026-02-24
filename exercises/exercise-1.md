@@ -23,8 +23,8 @@ FHIR resources used in the DSF are formatted as XML. You can find them in the `t
 When creating your own FHIR resources for DSF process plugins you also want to put them in a fitting subdirectory of `tutorial-process/src/main/resources/fhir`.
 
 # Exercise 1 - Simple Process
-In this exercise you will add functionality to a service task in the already existing process called `tutorialorg_dicProcess` and learn how to start
-processes in the DSF. The BPMN model for the `tutorialorg_dicProcess` is located in `tutorial-process/src/main/resources/bpe`. 
+In this exercise you will add functionality to a service task in the already existing process called `exampleorg_dicProcess` and learn how to start
+processes in the DSF. The BPMN model for the `exampleorg_dicProcess` is located in `tutorial-process/src/main/resources/bpe`. 
 
 Documentation topics related to this exercise are [FHIR Task](https://dsf.dev/process-development/api-v2/fhir/task.html),
 [The Process Plugin Definition](https://dsf.dev/process-development/api-v2/dsf/process-plugin-definition.html),
@@ -100,7 +100,7 @@ mvn clean install -Pexercise-1
 Verify that the build was successful and no test failures occurred.
 
 ### Process Execution and Manual Tests
-To verify the `tutorialorg_dicProcess` can be executed successfully, we need to deploy it into a DSF instance and execute the process. The maven `install` build is configured to create a process jar file with all necessary resources and to copy the jar to the appropriate locations of the docker dev setup.
+To verify the `exampleorg_dicProcess` can be executed successfully, we need to deploy it into a DSF instance and execute the process. The maven `install` build is configured to create a process jar file with all necessary resources and to copy the jar to the appropriate locations of the docker dev setup.
 
 1. Start the DSF FHIR server for the `dic.dsf.test` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
 	```
@@ -118,14 +118,14 @@ To verify the `tutorialorg_dicProcess` can be executed successfully, we need to 
 	```
 	docker-compose up dic-bpe
 	```
-	Verify the DSF BPE server started successfully and deployed the `tutorialorg_dicProcess`. 
+	Verify the DSF BPE server started successfully and deployed the `exampleorg_dicProcess`. 
     The DSF BPE server should print a message that the process was deployed. The DSF FHIR server should now have a new ActivityDefinition resource. Go to `https://dic/fhir/ActivityDefinition` to check if the expected resource was created by the BPE while deploying the process. The returned FHIR Bundle should contain a single ActivityDefinition. Also, go to `https://dic/fhir/StructureDefinition?url=http://example.org/fhir/StructureDefinition/task-start-dic-process` to check if the expected [FHIR Task](https://dsf.dev/process-development/api-v2/fhir/task.html) profile was created.
 
-3. Start the `tutorialorg_dicProcess` by posting an appropriate [FHIR Task](https://dsf.dev/process-development/api-v2/fhir/task.html) resource to the DSF FHIR server using either cURL or the DSF FHIR server's web interface. Check out [Starting A Process Via Task Resources](https://dsf.dev/process-development/api-v2/guides/starting-a-process-via-task-resources.html) again if you are unsure.  
+3. Start the `exampleorg_dicProcess` by posting an appropriate [FHIR Task](https://dsf.dev/process-development/api-v2/fhir/task.html) resource to the DSF FHIR server using either cURL or the DSF FHIR server's web interface. Check out [Starting A Process Via Task Resources](https://dsf.dev/process-development/api-v2/guides/starting-a-process-via-task-resources.html) again if you are unsure.  
 	
     Verify that the  [FHIR Task](https://dsf.dev/process-development/api-v2/fhir/task.html) resource could be created at the DSF FHIR server. Either look at your docker container log for the DIC FHIR server or find your [Task](https://dsf.dev/process-development/api-v2/fhir/task.html) resource in the list of all [Task](https://dsf.dev/process-development/api-v2/fhir/task.html) resources under https://dic/fhir/Task/. 
 	
-    Verify that the `tutorialorg_dicProcess` was executed by the DSF BPE server. The BPE server should print a message showing that the process was started, print the log message you added to the `DicTask` class and end with a message showing that the process finished.
+    Verify that the `exampleorg_dicProcess` was executed by the DSF BPE server. The BPE server should print a message showing that the process was started, print the log message you added to the `DicTask` class and end with a message showing that the process finished.
 
 ___
 [Prerequisites](prerequisites.md) • [Exercise 0](exercise-0.md) • **Exercise 1** • [Exercise 1.1](exercise-1-1.md) • [Exercise 2](exercise-2.md) • [Exercise 3](exercise-3.md) • [Exercise 4](exercise-4.md) • [Exercise 5](exercise-5.md) • [Exercise 6](exercise-6.md) • [Exercise 7](exercise-7.md)
