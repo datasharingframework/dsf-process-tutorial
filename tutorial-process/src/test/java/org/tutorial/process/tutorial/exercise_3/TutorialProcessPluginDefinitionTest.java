@@ -57,7 +57,7 @@ public class TutorialProcessPluginDefinitionTest
 	public void testDicProcessBpmnProcessFile() throws Exception
 	{
 		String filename = "bpe/dic-process.bpmn";
-		String processId = "tutorialorg_dicProcess";
+		String processId = "exampleorg_dicProcess";
 
 		BpmnModelInstance model = Bpmn
 				.readModelFromStream(this.getClass().getClassLoader().getResourceAsStream(filename));
