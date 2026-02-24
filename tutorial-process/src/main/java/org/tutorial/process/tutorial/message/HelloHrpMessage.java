@@ -24,8 +24,8 @@ public class HelloHrpMessage implements MessageEndEvent
 				StringType.class);
 
 		return tutorialInputParameter
-				.map(i -> List.of(
-						api.getTaskHelper().createInput(i.getValue(), "http://example.org/fhir/CodeSystem/tutorial",
+				.map(i -> List
+						.of(api.getTaskHelper().createInput(i.getValue(), "http://example.org/fhir/CodeSystem/tutorial",
 								"tutorial-input", api.getProcessPluginDefinition().getResourceVersion())))
 				.orElse(List.of());
 	}
