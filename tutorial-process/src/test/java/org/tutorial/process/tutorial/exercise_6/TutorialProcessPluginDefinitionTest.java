@@ -323,7 +323,7 @@ public class TutorialProcessPluginDefinitionTest
 	public void testDicProcessBpmnProcessFile() throws Exception
 	{
 		String filename = "bpe/dic-process.bpmn";
-		String processId = "tutorialorg_dicProcess";
+		String processId = "exampleorg_dicProcess";
 
 		BpmnModelInstance model = Bpmn
 				.readModelFromStream(this.getClass().getClassLoader().getResourceAsStream(filename));
@@ -390,7 +390,7 @@ public class TutorialProcessPluginDefinitionTest
 	public void testCosProcessBpmnProcessFile() throws Exception
 	{
 		String filename = "bpe/cos-process.bpmn";
-		String processId = "tutorialorg_cosProcess";
+		String processId = "exampleorg_cosProcess";
 
 		BpmnModelInstance model = Bpmn
 				.readModelFromStream(this.getClass().getClassLoader().getResourceAsStream(filename));
@@ -455,7 +455,7 @@ public class TutorialProcessPluginDefinitionTest
 	public void testHrpProcessBpmnProcessFile() throws Exception
 	{
 		String filename = "bpe/hrp-process.bpmn";
-		String processId = "tutorialorg_hrpProcess";
+		String processId = "exampleorg_hrpProcess";
 
 		BpmnModelInstance model = Bpmn
 				.readModelFromStream(this.getClass().getClassLoader().getResourceAsStream(filename));

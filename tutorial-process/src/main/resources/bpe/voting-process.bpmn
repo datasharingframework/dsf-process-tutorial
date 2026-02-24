@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1nrw1pp" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.17.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.20.0">
-  <bpmn:process id="tutorialorg_votingProcess" isExecutable="true" camunda:versionTag="#{version}" camunda:historyTimeToLive="180">
+  <bpmn:process id="exampleorg_votingProcess" isExecutable="true" camunda:versionTag="#{version}" camunda:historyTimeToLive="180">
     <bpmn:startEvent id="startVotingProcess" name="Start Voting Process">
       <bpmn:outgoing>Flow_1g64g0p</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_1kujibg" messageRef="Message_3jearks" />
@@ -100,7 +100,7 @@
   <bpmn:message id="Message_39qqba1" name="startVote" />
   <bpmn:message id="Message_13466cc" name="returnVote" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="tutorialorg_votingProcess">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="exampleorg_votingProcess">
       <bpmndi:BPMNShape id="Event_0fqf1pm_di" bpmnElement="startVotingProcess">
         <dc:Bounds x="162" y="159" width="36" height="36" />
         <bpmndi:BPMNLabel>
