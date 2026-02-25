@@ -34,4 +34,5 @@ dev-setup/.env
 dev-setup/docker-compose.override.yml
 
 cert
-browser-certs
+browser-certslinter-cli-*.jar
+linter-cli-*.jar
