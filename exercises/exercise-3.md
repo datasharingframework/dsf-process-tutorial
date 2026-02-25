@@ -22,7 +22,7 @@ and [ActivityDefinitions](https://dsf.dev/process-development/api-v2/fhir/activi
 
 ## Exercise Tasks
 
-1. Add another `requester` element to the ActivityDefinition `dic-process.xml` which allows all local clients with a practitioner role of `DSF_ADMIN` to request `dicProcess` messages.
+1. Change the `requester` element in the ActivityDefinition `dic-process.xml` to allow all local clients with a practitioner role of `DSF_ADMIN` to request `dicProcess` messages.
    <details>
    <summary>Don't know how to change the ActivityDefinition?</summary>
 
@@ -30,7 +30,17 @@ and [ActivityDefinitions](https://dsf.dev/process-development/api-v2/fhir/activi
    You can also check out the [guide on creating ActivityDefinitions](https://dsf.dev/process-development/api-v2/guides/creating-activity-definitions.html).
    </details>
 
-2. Just like in [exercise 2](exercise-2.md), we just changed a FHIR resource in a way that breaks compatibility with older versions of the plugin. Therefore, we need to signal this change by incrementing the resource version to `1.2`.
+2. We just made it so you will not be able to start the `dicProcess` using the client certificate used in earlier exercises.
+   Add another `requester` to the ActivityDefinition `dic-process.xml` which allows local clients from the `dic.dsf.test` organization to request `dicProcess` messages,
+   in case you still want to use the client certificate to start the process.
+   <details>
+   <summary>Don't know how to change the ActivityDefinition?</summary>
+
+   There is a list of examples for the `requester` element [here](https://dsf.dev/process-development/api-v2/dsf/requester-and-recipient.html).
+   You can also check out the [guide on creating ActivityDefinitions](https://dsf.dev/process-development/api-v2/guides/creating-activity-definitions.html).
+   </details>
+
+3. Just like in [exercise 2](exercise-2.md), we just changed a FHIR resource in a way that breaks compatibility with older versions of the plugin. Therefore, we need to signal this change by incrementing the resource version to `1.2`.
 
    
 
