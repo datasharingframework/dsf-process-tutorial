@@ -26,7 +26,7 @@ An `EXTRA_JVM_ARGS` environment variable is already configured for all DSF FHIR 
 
 4. Create a debug breakpoint in the first line of the `DicTask` class `execute` method. 
 5. Start your previously defined remote Java debugger in your IDE.
-6. Execute the `TutorialExampleStarter` class to start `exampleorg_dicProcess`.
+6. Start `exampleorg_dicProcess` either via the DSF FHIR server UI using the Draft Task created in [exercise 1](exercise-1.md) or cURL.
 7. Use your IDE's debugger to step through the code of the `DicTask` class `execute` method.
 
 ## Hint
