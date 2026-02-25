@@ -174,7 +174,7 @@ public class TutorialProcessPluginDefinitionTest
 		assertEquals(errorFaultyProcessName, ConstantsTutorial.PROCESS_NAME_FULL_DIC, dicProcessKey);
 
 		String errorCodeSystem = "Process is missing CodeSystem with url '" + codeSystemUrl + "' and concept '"
-				+ codeSystemCode + "' with type 'string'";
+				+ codeSystemCode;
 		assertEquals(errorCodeSystem, 1, dicFhirResources.stream().filter(r -> r instanceof CodeSystem)
 				.map(r -> (CodeSystem) r).filter(c -> codeSystemUrl.equals(c.getUrl()))
 				.filter(c -> c.getConcept().stream().anyMatch(con -> codeSystemCode.equals(con.getCode()))).count());
