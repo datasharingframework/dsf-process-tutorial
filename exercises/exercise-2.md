@@ -86,13 +86,13 @@ To verify the `exampleorg_dicProcess` can be executed successfully, we need to d
 
 1. Start the DSF FHIR server for the `dic.dsf.test` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
    ```
-   docker-compose up dic-fhir
+   docker compose up dic-fhir
    ```
    Verify the DSF FHIR server started successfully at https://dic/fhir.
 
 2. Start the DSF BPE server for the `dic.dsf.test` organization in second console at location `.../dsf-process-tutorial/dev-setup`:
    ```
-   docker-compose up dic-bpe
+   docker compose up dic-bpe
    ```
    Verify the DSF BPE server started successfully and deployed the `exampleorg_dicProcess`.
 

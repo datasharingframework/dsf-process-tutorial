@@ -20,8 +20,8 @@ Solutions to this exercise are found on the branch `solutions/exercise-6`.
       1. An [Intermediate Message Catch Event](https://dsf.dev/process-development/api-v2/bpmn/messaging.html#message-intermediate-catching-event) to catch the `goodbyeDic` message from the `exampleorg_hrpProcess`.
       1. An [Intermediate Timer Catch Event](https://dsf.dev/process-development/api-v2/bpmn/timer-intermediate-catching-events.html) to end the process if no message is sent by the `exampleorg_hrpProcess` after two minutes.
          Make sure both cases finish with a process End Event.
-1. Modify the `exampleorg_cosProcess` to use a [Message End Event](https://dsf.dev/process-development/api-v2/bpmn/messaging.html#message-end-event) to trigger the process in file `hrp-process.bpmn`. Figure out the values for the `instantiatesCanonical`, `profile` and `messageName` input parameters of the [Message End Event](https://dsf.dev/process-development/api-v2/dsf/messaging.html#message-end-event) based on the [AcitvityDefinition](https://dsf.dev/process-development/api-v2/fhir/activitydefinition.html) in file `hrp-process.xml`. Change the `Cos Task` element into a Service Task and include the `CosTask` as the implementation.
-1. Modify the process in file `hrp-process.bpmn` and set the _process definition key_ and _version_. Figure out the appropriate values based on the [AcitvityDefinition](https://dsf.dev/process-development/api-v2/fhir/activitydefinition.html) in file `hrp-process.xml`.
+1. Modify the `exampleorg_cosProcess` to use a [Message End Event](https://dsf.dev/process-development/api-v2/bpmn/messaging.html#message-end-event) to trigger the process in file `hrp-process.bpmn`. Figure out the values for the `instantiatesCanonical`, `profile` and `messageName` input parameters of the [Message End Event](https://dsf.dev/process-development/api-v2/dsf/messaging.html#message-end-event) based on the [ActivityDefinition](https://dsf.dev/process-development/api-v2/fhir/activitydefinition.html) in file `hrp-process.xml`. Change the `Cos Task` element into a Service Task and include the `CosTask` as the implementation.
+1. Modify the process in file `hrp-process.bpmn` and set the _process definition key_ and _version_. Figure out the appropriate values based on the [ActivityDefinition](https://dsf.dev/process-development/api-v2/fhir/activitydefinition.html) in file `hrp-process.xml`.
 1. Add a new process authorization extension element to the ActivityDefinition for `exampleorg_dicProcess` using the [parent organization role coding](https://dsf.dev/process-development/api-v2/dsf/requester-and-recipient.html) where
      only remote organizations which are part of `medizininformatik-initiative.de` and have the `HRP` role are allowed to request `goodByeDic` messages and only
      organizations which are part of `medizininformatik-initiative.de` and have the `DIC` role are allowed to receive `goodByeDic` messages
@@ -47,45 +47,45 @@ Verify that the build was successful and no test failures occurred.
 ### Process Execution and Manual Tests
 To verify the `exampleorg_dicProcess`, `exampleorg_cosProcess` and `exampleorg_hrpProcess`es can be executed successfully, we need to deploy them into DSF instances and execute the `exampleorg_dicProcess`. The maven `install` build is configured to create a process jar file with all necessary resources and copy the jar to the appropriate locations of the docker dev setup.
 Don't forget that you will have to add the client certificate for the `HRP` instance to your browser the same way you added it for the `DIC` and `COS` instances
-in [exercise 1](exercise-1.md) and [exercise 4](exercise-5.md) or use the Keycloak user `Tyler Tester` with username `test` and password `test`. Otherwise, you won't be able to access [https://hrp/fhir](https://hrp/fhir). You can find the client certificate
+in [exercise 1](exercise-1.md) and [exercise 4](exercise-4.md) or use the Keycloak user `Tyler Tester` with username `test` and password `test`. Otherwise, you won't be able to access [https://hrp/fhir](https://hrp/fhir). You can find the client certificate
 in `.../dsf-process-tutorial/browser-certs/hrp/hrp-client.p12` (password: password).
 
 1. Start the DSF FHIR server for the `dic.dsf.test` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
    ```
-   docker-compose up dic-fhir
+   docker compose up dic-fhir
    ```
    Verify the DSF FHIR server started successfully at https://dic/fhir.
 
 2. Start the DSF BPE server for the `dic.dsf.test` organization in a second console at location `.../dsf-process-tutorial/dev-setup`:
    ```
-   docker-compose up dic-bpe
+   docker compose up dic-bpe
    ```
    Verify the DSF BPE server started successfully and deployed the `exampleorg_dicProcess`.
 
 3. Start the DSF FHIR server for the `cos.dsf.test` organization in a third console at location `.../dsf-process-tutorial/dev-setup`:
    ```
-   docker-compose up cos-fhir
+   docker compose up cos-fhir
    ```
    Verify the DSF FHIR server started successfully at https://cos/fhir.
 
 4. Start the DSF BPE server for the `cos.dsf.test` organization in a fourth console at location `.../dsf-process-tutorial/dev-setup`:
    ```
-   docker-compose up cos-bpe
+   docker compose up cos-bpe
    ```
-   Verify the DSF BPE server started successfully and deployed the `exampleorg_dicProcess`.
+   Verify the DSF BPE server started successfully and deployed the `exampleorg_cosProcess`.
 
 
-5. Start the DSF FHIR server for the `hrp.dsf.test` organization in a fifth at location `.../dsf-process-tutorial/dev-setup`:
+5. Start the DSF FHIR server for the `hrp.dsf.test` organization in a fifth console at location `.../dsf-process-tutorial/dev-setup`:
    ```
-   docker-compose up hrp-fhir
+   docker compose up hrp-fhir
    ```
    Verify the DSF FHIR server started successfully at https://hrp/fhir.
 
 6. Start the DSF BPE server for the `hrp.dsf.test` organization in a sixth console at location `.../dsf-process-tutorial/dev-setup`:
    ```
-   docker-compose up hrp-bpe
+   docker compose up hrp-bpe
    ```
-   Verify the DSF BPE server started successfully and deployed the `exampleorg_hrpProcess`. The DSF BPE server should print a message that the process was deployed. The DSF FHIR server should now have a new [ActivityDefinition](https://dsf.dev/process-development/api-v2/fhir/activitydefinition.html) resource. Go to https://hrp/fhir/ActivityDefinition to check if the expected resource was created by the BPE while deploying the process. The returned FHIR [Bundle](http://hl7.org/fhir/R4/bundle.html) should contain a three [ActivityDefinition](https://dsf.dev/process-development/api-v2/fhir/activitydefinition.html) resources. Also, go to https://hrp/fhir/StructureDefinition?url=http://example.org/fhir/StructureDefinition/task-hello-hrp to check if the expected [Task](https://dsf.dev/process-development/api-v2/fhir/task.html) profile was created.
+   Verify the DSF BPE server started successfully and deployed the `exampleorg_hrpProcess`. The DSF BPE server should print a message that the process was deployed. The DSF FHIR server should now have a new [ActivityDefinition](https://dsf.dev/process-development/api-v2/fhir/activitydefinition.html) resource. Go to https://hrp/fhir/ActivityDefinition to check if the expected resource was created by the BPE while deploying the process. The returned FHIR [Bundle](http://hl7.org/fhir/R4/bundle.html) should contain three [ActivityDefinition](https://dsf.dev/process-development/api-v2/fhir/activitydefinition.html) resources. Also, go to https://hrp/fhir/StructureDefinition?url=http://example.org/fhir/StructureDefinition/task-hello-hrp to check if the expected [Task](https://dsf.dev/process-development/api-v2/fhir/task.html) profile was created.
 
 7. Start the `exampleorg_dicProcess` by posting a specific FHIR [Task](https://dsf.dev/process-development/api-v2/fhir/task.html) resource to the DSF FHIR server of the `dic.dsf.test` organization using either cURL or the DSF FHIR server's web interface. Check out [Starting A Process Via Task Resources](https://dsf.dev/process-development/api-v2/guides/starting-a-process-via-task-resources.html) again if you are unsure.
 

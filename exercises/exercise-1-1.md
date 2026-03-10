@@ -7,16 +7,16 @@ This exercise looks at how to use the Java debugger of your IDE to remotely debu
 ## Introduction
 The DSF FHIR server and the DSF BPE server applications are written in Java and as such are executed on a headless JRE 25 within their docker containers. Command line arguments can be passed to the JVM inside the [ghcr.io/datasharingframework/fhir](https://github.com/datasharingframework/dsf/pkgs/container/fhir) and [ghcr.io/datasharingframework/bpe](https://github.com/datasharingframework/dsf/pkgs/container/bpe) docker images by specifying the environment variable `EXTRA_JVM_ARGS`. This can be used for example to configure the minimum and maximum heap of the JVM; but can also be used to specify a remote debugging port, which we will use in this exercise.
 
-An `EXTRA_JVM_ARGS` environment variable is already configured for all DSF FHIR server and DSF BPE server docker containers in the tutorial docker-compose test setup. Take a look at the [docker-compose.yml](https://github.com/datasharingframework/dsf-process-tutorial/blob/main/dev-setup/docker-compose.yml) file to look up the port numbers specified for the different DSF FHIR and DSF BPE servers.
+An `EXTRA_JVM_ARGS` environment variable is already configured for all DSF FHIR server and DSF BPE server docker containers in the tutorial docker compose test setup. Take a look at the [docker-compose.yml](https://github.com/datasharingframework/dsf-process-tutorial/blob/main/dev-setup/docker-compose.yml) file to look up the port numbers specified for the different DSF FHIR and DSF BPE servers.
 
 ## Exercise Tasks
 1. Start the DSF FHIR server for the `dic.dsf.test` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
     ```
-    docker-compose up dic-fhir
+    docker compose up dic-fhir
     ```
 2. Start the DSF BPE server for the `dic.dsf.test` organization in second console at location `.../dsf-process-tutorial/dev-setup`:
     ```
-    docker-compose up dic-bpe
+    docker compose up dic-bpe
     ```
 3. Configure your Java IDE for remote debugging
     * Eclipse:  

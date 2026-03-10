@@ -4,10 +4,10 @@ ___
 Before you start working on any exercises, you should verify that you meet the requirements outlined in [prerequisites](prerequisites.md) by successfully building and deploying a plugin.  
 For this, you should follow these steps:  
 1. Checkout the branch `solutions/exercise-1`
-2. Build the project using maven `package`. Make sure you either check the profile for exercise 1 or no profile at all
+2. Build the project using maven `package`. Make sure you either activate the Maven profile `exercise-1` or use no profile at all
 3. Start the scenario from the `dev-setup` folder:  
    ```shell
-      docker-compose up
+      docker compose up
    ```
 4. Add the CA certificate from `browser-certs/root-ca.crt` to your browser's certificate store
 5. Add the client certificate from `browser-certs/Webbrowser_Test_User.p12` to your browser's certificate store
@@ -20,7 +20,7 @@ For this, you should follow these steps:
 12. You may choose to either keep or delete the CA certificate. A later exercise will require this certificate to be present again
 13. Tear down the test scenario:
    ```shell
-      docker-compose down
+      docker compose down
    ```
 14. Checkout the branch `main`
 15. You may proceed to [exercise 1](exercise-1.md)

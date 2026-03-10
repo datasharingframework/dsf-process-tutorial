@@ -6,7 +6,7 @@ Communication between organizations in BPMN processes is modeled using message f
 
 To demonstrate communication between two organizations we will configure message flow between the processes `exampleorg_dicProcess` and `exampleorg_cosProcess`. After that, the processes are to be executed at the organizations `dic.dsf.test` and `cos.dsf.test` respectively in the docker dev setup, with the former triggering execution of the latter by automatically sending a [Task](http://hl7.org/fhir/R4/task.html) resource from organization `dic.dsf.test` to organization `cos.dsf.test`.
 
-In order to solve this exercise, you should have solved exercise 2 and read the topics on
+In order to solve this exercise, you should have solved exercise 3 and read the topics on
 [Messaging](https://dsf.dev/process-development/api-v2/dsf/messaging.html),
 [Message Activities](https://dsf.dev/process-development/api-v2/dsf/message-activities.html),
 [Version Pattern](https://dsf.dev/process-development/api-v2/dsf/versions-placeholders-urls.html#version-pattern),
@@ -59,25 +59,25 @@ in `.../dsf-process-tutorial/browser-certs/cos/cos-client.p12` (password: passwo
 
 1. Start the DSF FHIR server for the `dic.dsf.test` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
    ```
-   docker-compose up dic-fhir
+   docker compose up dic-fhir
    ```
    Verify the DSF FHIR server started successfully at https://dic/fhir.
 
 2. Start the DSF BPE server for the `dic.dsf.test` organization in another console at location `.../dsf-process-tutorial/dev-setup`:
    ```
-   docker-compose up dic-bpe
+   docker compose up dic-bpe
    ```
    Verify the DSF BPE server started successfully and deployed the `exampleorg_dicProcess`.
 
 3. Start the DSF FHIR server for the `cos.dsf.test` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
    ```
-   docker-compose up cos-fhir
+   docker compose up cos-fhir
    ```
    Verify the DSF FHIR server started successfully at https://cos/fhir.
 
 4. Start the DSF BPE server for the `cos.dsf.test` organization in another console at location `.../dsf-process-tutorial/dev-setup`:
    ```
-   docker-compose up cos-bpe
+   docker compose up cos-bpe
    ```
    Verify the DSF BPE server started successfully and deployed the `exampleorg_cosProcess`. The DSF BPE server should print a message that the process was deployed. The DSF FHIR server should now have a new [ActivityDefinition](https://dsf.dev/process-development/api-v2/fhir/activitydefinition.html) resource. Go to https://cos/fhir/ActivityDefinition to check if the expected resource was created by the BPE while deploying the process. The returned FHIR [Bundle](http://hl7.org/fhir/R4/bundle.html) should contain two [ActivityDefinition](https://dsf.dev/process-development/api-v2/fhir/activitydefinition.html) resources. Also, go to https://cos/fhir/StructureDefinition?url=http://example.org/fhir/StructureDefinition/task-hello-cos to check if the expected [Task](https://dsf.dev/process-development/api-v2/fhir/task.html) profile was created.
 

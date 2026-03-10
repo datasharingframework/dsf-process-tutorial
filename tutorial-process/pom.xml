@@ -489,7 +489,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <configDocPackages>org.tutorial.process.tutorial.spring.config</configDocPackages>
+                    <configDocPackages>org.example.process.tutorial.spring.config</configDocPackages>
                 </configuration>
             </plugin>
             <plugin>
