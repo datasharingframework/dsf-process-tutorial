@@ -6,7 +6,7 @@ Communication between organizations in BPMN processes is modeled using message f
 
 To demonstrate communication between two organizations we will configure message flow between the processes `exampleorg_dicProcess` and `exampleorg_cosProcess`. After that, the processes are to be executed at the organizations `dic.dsf.test` and `cos.dsf.test` respectively in the docker dev setup, with the former triggering execution of the latter by automatically sending a [Task](http://hl7.org/fhir/R4/task.html) resource from organization `dic.dsf.test` to organization `cos.dsf.test`.
 
-In order to solve this exercise, you should have solved exercise 2 and read the topics on
+In order to solve this exercise, you should have solved exercise 3 and read the topics on
 [Messaging](https://dsf.dev/process-development/api-v2/dsf/messaging.html),
 [Message Activities](https://dsf.dev/process-development/api-v2/dsf/message-activities.html),
 [Version Pattern](https://dsf.dev/process-development/api-v2/dsf/versions-placeholders-urls.html#version-pattern),
@@ -24,24 +24,24 @@ Solutions to this exercise are found on the branch `solutions/exercise-4`.
 
    Read the concept [here](https://dsf.dev/process-development/api-v2/dsf/versions-placeholders-urls.html#urls) again.
     </details>
-1. Modify the `exampleorg_cosProcess` in the `cos-process.bpmn` file and configure the message name of the [Message Start Event](https://dsf.dev/process-development/api-v2/bpmn/messaging.html#message-start-event) with the same value as the message name of the [Message End Event](https://dsf.dev/process-development/api-v2/bpmn/messaging.html#message-end-event) in the `exampleorg_dicProcess`. 
-1. Create a new [StructureDefinition](http://hl7.org/fhir/R4/structuredefinition.html) with a [Task](https://dsf.dev/process-development/api-v2/fhir/task.html) profile for the `helloCos` message.
+2. Modify the `exampleorg_cosProcess` in the `cos-process.bpmn` file and configure the message name of the [Message Start Event](https://dsf.dev/process-development/api-v2/bpmn/messaging.html#message-start-event) with the same value as the message name of the [Message End Event](https://dsf.dev/process-development/api-v2/bpmn/messaging.html#message-end-event) in the `exampleorg_dicProcess`. 
+3. Create a new [StructureDefinition](http://hl7.org/fhir/R4/structuredefinition.html) with a [Task](https://dsf.dev/process-development/api-v2/fhir/task.html) profile for the `helloCos` message.
     <details>
    <summary>Don't know how to get started?</summary>
    
    You can base this [Task](https://dsf.dev/process-development/api-v2/fhir/task.html) profile off the `StructureDefinition/task-start-dic-process.xml` resource. Then look for elements that need to be added, changed or can be omitted.
     </details>
-1. Create a new [ActivityDefinition](https://dsf.dev/process-development/api-v2/fhir/activitydefinition.html) resource for the `exampleorg_cosProcess` and configure the authorization extension to allow the `dic.dsf.test` organization as the requester and the `cos.dsf.test` organization as the recipient. The file has to be called `cos-process.xml`.
+4. Create a new [ActivityDefinition](https://dsf.dev/process-development/api-v2/fhir/activitydefinition.html) resource for the `exampleorg_cosProcess` and configure the authorization extension to allow the `dic.dsf.test` organization as the requester and the `cos.dsf.test` organization as the recipient. The file has to be called `cos-process.xml`.
    <details>
    <summary>Don't know how to get started?</summary>
 
    You can base this ActivityDefinition off the `ActivityDefinition/dic-process.xml` resource. Then look for elements that need to be added, changed or can be omitted.
    Or you can take a look at the [guide on creating ActivityDefinitions](https://dsf.dev/process-development/api-v2/guides/creating-activity-definitions.html).
    </details>
-1. Add the `exampleorg_cosProcess` and its resources to the `TutorialProcessPluginDefinition` class. This will require a new mapping entry with the full process name of the `cosProcess` as the key and a List of associated FHIR resources as the value.
-1. Modify `DicTask` service class to set the `target` process variable for the `cos.dsf.test` organization.
-1. Configure the `HelloCosMessage` class as a Spring Bean in the `TutorialConfig` class. Don't forget the right scope.
-1. Again, we introduced changes that break compatibility. Older plugin versions at the COS instance won't be able to handle the Task resource type we added earlier. Increment your resource version to `1.3`. 
+5. Add the `exampleorg_cosProcess` and its resources to the `TutorialProcessPluginDefinition` class. This will require a new mapping entry with the full process name of the `cosProcess` as the key and a List of associated FHIR resources as the value.
+6. Modify `DicTask` service class to set the `target` process variable for the `cos.dsf.test` organization.
+7. Configure the `HelloCosMessage` class as a Spring Bean in the `TutorialConfig` class. Don't forget the right scope.
+8. Again, we introduced changes that break compatibility. Older plugin versions at the COS instance won't be able to handle the Task resource type we added earlier. Increment your resource version to `1.3`. 
 
 ## Solution Verification
 ### Maven Build and Automated Tests
@@ -59,25 +59,25 @@ in `.../dsf-process-tutorial/browser-certs/cos/cos-client.p12` (password: passwo
 
 1. Start the DSF FHIR server for the `dic.dsf.test` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
    ```
-   docker-compose up dic-fhir
+   docker compose up dic-fhir
    ```
    Verify the DSF FHIR server started successfully at https://dic/fhir.
 
 2. Start the DSF BPE server for the `dic.dsf.test` organization in another console at location `.../dsf-process-tutorial/dev-setup`:
    ```
-   docker-compose up dic-bpe
+   docker compose up dic-bpe
    ```
    Verify the DSF BPE server started successfully and deployed the `exampleorg_dicProcess`.
 
 3. Start the DSF FHIR server for the `cos.dsf.test` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
    ```
-   docker-compose up cos-fhir
+   docker compose up cos-fhir
    ```
    Verify the DSF FHIR server started successfully at https://cos/fhir.
 
 4. Start the DSF BPE server for the `cos.dsf.test` organization in another console at location `.../dsf-process-tutorial/dev-setup`:
    ```
-   docker-compose up cos-bpe
+   docker compose up cos-bpe
    ```
    Verify the DSF BPE server started successfully and deployed the `exampleorg_cosProcess`. The DSF BPE server should print a message that the process was deployed. The DSF FHIR server should now have a new [ActivityDefinition](https://dsf.dev/process-development/api-v2/fhir/activitydefinition.html) resource. Go to https://cos/fhir/ActivityDefinition to check if the expected resource was created by the BPE while deploying the process. The returned FHIR [Bundle](http://hl7.org/fhir/R4/bundle.html) should contain two [ActivityDefinition](https://dsf.dev/process-development/api-v2/fhir/activitydefinition.html) resources. Also, go to https://cos/fhir/StructureDefinition?url=http://example.org/fhir/StructureDefinition/task-hello-cos to check if the expected [Task](https://dsf.dev/process-development/api-v2/fhir/task.html) profile was created.
 

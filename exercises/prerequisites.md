@@ -1,8 +1,8 @@
-**Prerequisites** • [Exercise 0](exercise-0.md) • [Exercise 1](exercise-1.md) • [Exercise 1.1](exercise-1-1.md) • [Exercise 2](exercise-2.md) • [Exercise 4](exercise-4.md) • [Exercise 5](exercise-5.md) • [Exercise 6](exercise-6.md) • [Exercise 7](exercise-7.md)
+**Prerequisites** • [Exercise 0](exercise-0.md) • [Exercise 1](exercise-1.md) • [Exercise 1.1](exercise-1-1.md) • [Exercise 2](exercise-2.md) • [Exercise 3](exercise-3.md) •  [Exercise 4](exercise-4.md) • [Exercise 5](exercise-5.md) • [Exercise 6](exercise-6.md) • [Exercise 7](exercise-7.md)
 ___
 
 # Prerequisites
-To solve the exercises described in this tutorial a software development environment with GIT, Java 17, Maven 3.8, Docker, docker-compose, a Java IDE like Eclipse or IntelliJ, a BPMN Editor like the Camunda Modeler and a minimum 16GB of RAM is needed.
+To solve the exercises described in this tutorial a software development environment with GIT, Java 25, Maven 3.8, Docker, docker compose, a Java IDE like Eclipse or IntelliJ, a BPMN Editor like the Camunda Modeler and a minimum 16GB of RAM is needed.
 Make sure you read through the introductory documentation pages located [here](https://dsf.dev/explore/concepts/introduction.html).
 You also want to have some amount of experience in [HL7 FHIR R4](https://www.hl7.org/fhir/R4/).
 
@@ -23,12 +23,12 @@ When implementing DSF processes, we use Maven 3.8 to manage the software project
 
 You can also find all DSF Maven artifacts [here](https://mvnrepository.com/artifact/dev.dsf).
 
-## Docker and docker-compose
-To be able to test the implemented processes, we use a dev-setup based on Docker and docker-compose. This allows us to simulate multiple organizations with different roles and run the processes across "organizational boundaries".
+## Docker and docker compose
+To be able to test the implemented processes, we use a dev-setup based on Docker and docker compose. This allows us to simulate multiple organizations with different roles and run the processes across "organizational boundaries".
 
-- An installation guide for Docker and docker-compose can be found here: [installation guide](https://docs.docker.com/get-docker/)
+- An installation guide for Docker and docker compose can be found here: [installation guide](https://docs.docker.com/get-docker/)
 - The most important Docker commands are described here: [Docker commands](https://docs.docker.com/engine/reference/run/)
-- An overview of docker-compose commands are described here: [docker-compose commands](https://docs.docker.com/compose/reference/)
+- An overview of docker compose commands are described here: [docker-compose commands](https://docs.docker.com/compose/reference/)
 
 ### Host entries for dev-setup
 The following entries are required in the `hosts` file of your computer so that the FHIR servers of the simulated organizations can be accessed in your web browser. On Linux and Mac this file is located at `/etc/hosts`. On Windows you can find it at `C:\Windows\System32\drivers\etc\hosts`.
@@ -57,4 +57,4 @@ relies on Camunda 7 which is incompatible with Camunda 8.
 The minimum hardware requirements to run all simulated organizations as part of the Docker dev-setup is 16 GB of RAM.
 
 ___
-**Prerequisites** • [Exercise 0](exercise-0.md) • [Exercise 1](exercise-1.md) • [Exercise 1.1](exercise-1-1.md) • [Exercise 2](exercise-2.md) • [Exercise 4](exercise-4.md) • [Exercise 5](exercise-5.md) • [Exercise 6](exercise-6.md) • [Exercise 7](exercise-7.md)
+**Prerequisites** • [Exercise 0](exercise-0.md) • [Exercise 1](exercise-1.md) • [Exercise 1.1](exercise-1-1.md) • [Exercise 2](exercise-2.md) • [Exercise 3](exercise-3.md) • [Exercise 4](exercise-4.md) • [Exercise 5](exercise-5.md) • [Exercise 6](exercise-6.md) • [Exercise 7](exercise-7.md)
