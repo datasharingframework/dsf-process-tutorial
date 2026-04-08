@@ -1,6 +1,6 @@
 <Task xmlns="http://hl7.org/fhir">
     <meta>
-        <profile value="http://dsf.dev/fhir/StructureDefinition/task-start-dic-process|1.0"/>
+        <profile value="http://example.org/fhir/StructureDefinition/task-start-dic-process|1.0"/>
     </meta>
     <instantiatesCanonical value="http://example.org/bpe/Process/dicProcess|1.0" />
     <status value="requested"/>
