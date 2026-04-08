@@ -61,6 +61,6 @@ public class Misc
 	{
 		return "One public spring bean method with return type " + returnType.getSimpleName() + ", annotation "
 				+ Bean.class.getSimpleName() + " and annotation " + Scope.class.getSimpleName() + " with type "
-				+ SCOPE_PROTOTYPE + " expected in " + TutorialConfig.class.getSimpleName();
+				+ SCOPE_PROTOTYPE + " or ActivityPrototypeBeanCreator with return type " + returnType.getSimpleName() + " expected in " + TutorialConfig.class.getSimpleName();
 	}
 }
