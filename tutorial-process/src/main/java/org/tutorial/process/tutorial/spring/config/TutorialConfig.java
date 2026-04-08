@@ -47,7 +47,8 @@ public class TutorialConfig
 		return new ActivityPrototypeBeanCreator(HelloCosMessage.class, CosTask.class, HelloHrpMessage.class,
 				HrpTask.class, GoodbyeDicMessage.class, StartVotingProcess.class, SelectTargets.class, StartVote.class,
 				SaveUserVote.class, AutomatedVote.class, PrepareReturnVote.class, ReturnVote.class,
-				SaveVotingResult.class, SaveTimeoutResult.class, AggregateResults.class);
+				SaveVotingResult.class, SaveTimeoutResult.class, AggregateResults.class,
+				SetCorrelationKeyListener.class);
 	}
 
 	@Bean
@@ -62,12 +63,5 @@ public class TutorialConfig
 	public DecideWhetherUserVote decideWhetherUserVote()
 	{
 		return new DecideWhetherUserVote(userVote);
-	}
-
-	@Bean
-	@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-	public SetCorrelationKeyListener setCorrelationKeyListener()
-	{
-		return new SetCorrelationKeyListener();
 	}
 }
