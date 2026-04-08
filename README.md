@@ -24,7 +24,7 @@ Exercise 1.1 looks at how to use the Java debugger of your IDE to remote debug t
 ## Exercise 2 - Input Parameters
 In order to configure processes that are packaged as process plugins, we will take a look at two possibilities on how to pass parameters into a process. For more details see the [exercise 2 description](exercises/exercise-2.md).
 
-## Exercise 3 - DSF User Authentication and Authorization
+## Exercise 3 - DSF User Role Configuration
 This exercise looks at how to set authorization rules for DSF users and process plugins. For more details see the [exercise 3 description](exercises/exercise-3.md).
 
 ## Exercise 4 - Messaging

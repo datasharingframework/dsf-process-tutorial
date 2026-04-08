@@ -77,7 +77,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-1`.
      You will need it to start your process via cURL.
 
         <details>
-        <summary>Don't where to get values for organization identifiers?</summary>
+        <summary>Don't know where to get values for organization identifiers?</summary>
 
         Take a look at the topic on [organization identifiers](https://dsf.dev/process-development/api-v2/dsf/organization-identifiers.html).
         </details>   
@@ -104,7 +104,7 @@ To verify the `exampleorg_dicProcess` can be executed successfully, we need to d
 
 1. Start the DSF FHIR server for the `dic.dsf.test` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
 	```
-	docker-compose up dic-fhir
+	docker compose up dic-fhir
 	```
 	Verify the DSF FHIR server started successfully at https://dic/fhir. 
 	The DSF FHIR server uses a server certificate that was generated during the first maven install build. 
@@ -116,7 +116,7 @@ To verify the `exampleorg_dicProcess` can be executed successfully, we need to d
 
 2. Start the DSF BPE server for the `dic.dsf.test` organization in a second console in the `dev-setup` directory:
 	```
-	docker-compose up dic-bpe
+	docker compose up dic-bpe
 	```
 	Verify the DSF BPE server started successfully and deployed the `exampleorg_dicProcess`. 
     The DSF BPE server should print a message that the process was deployed. The DSF FHIR server should now have a new ActivityDefinition resource. Go to `https://dic/fhir/ActivityDefinition` to check if the expected resource was created by the BPE while deploying the process. The returned FHIR Bundle should contain a single ActivityDefinition. Also, go to `https://dic/fhir/StructureDefinition?url=http://example.org/fhir/StructureDefinition/task-start-dic-process` to check if the expected [FHIR Task](https://dsf.dev/process-development/api-v2/fhir/task.html) profile was created.

@@ -5,7 +5,7 @@ ___
 
 This exercise introduces a new scenario which will serve as an example on how [User Tasks](https://dsf.dev/process-development/api-v2/bpmn/user-tasks.html), resource download and [Task Output Parameters](https://dsf.dev/process-development/api-v2/fhir/task.html#task-output-parameters)
 may be utilized. The scenario is a voting process where one DSF instances of the tutorial setup will send a binary question (yes/no) to the other instances and itself.
-The question can be set when starting the voting process. The question can will then be answerable through a [QuestionnaireResponse](https://dsf.dev/process-development/api-v2/fhir/questionnaire-and-questionnaireresponse.html) resource on the instance's DSF FHIR server.
+The question can be set when starting the voting process. The question will then be answerable through a [QuestionnaireResponse](https://dsf.dev/process-development/api-v2/fhir/questionnaire-and-questionnaireresponse.html) resource on the instance's DSF FHIR server.
 The answer then gets sent back to the instance which initiated the voting process. This exercise will focus on [User Tasks](https://dsf.dev/process-development/api-v2/bpmn/user-tasks.html) and [Task Output Parameters](https://dsf.dev/process-development/api-v2/fhir/task.html#task-output-parameters).
 The scenario comes with a skeleton including two BPMN models. One for orchestrating the voting process called `exampleorg_votingProcess` found in `voting-process.bpmn` and the subprocess which handles the vote itself found in `vote.bpmn`. 
 It also includes most of the Java implementation for both processes and the required FHIR resources. Your task will be to fill in the parts concerning the [User Task](https://dsf.dev/process-development/api-v2/bpmn/user-tasks.html)
@@ -15,7 +15,8 @@ In order to solve this exercise, you should have solved exercise 6 and read the 
 [User Tasks](https://dsf.dev/process-development/api-v2/guides/user-tasks-in-the-dsf.html#questionnaire-template), [Questionnaire and QuestionnaireResponse](https://dsf.dev/process-development/api-v2/fhir/questionnaire-and-questionnaireresponse.html)
 and [adding Task Output Parameters](https://dsf.dev/process-development/api-v2/guides/adding-task-parameters-to-task-profiles.html).
 
-Solutions to this exercise are found on the branch `solutions/exercise-7`. The skeleton can be found on the branch `skeleton/exercise-7`.
+Solutions to this exercise are found on the branch `solutions/exercise-7`. The skeleton can be found on the branch `skeleton/exercise-7`. It contains an entirely new process with missing pieces that will be added as part of the exercise tasks. 
+You may checkout the skeleton branch and start working from there. You may also merge the skeleton branch into the branch you were working on so far, at your own risk.
 
 ## Exercise Tasks
 1. The StructureDefinition `task-start-voting-process.xml` describes the Task resource which starts the voting process. It already has an input parameter called `binary-question` which stores 
@@ -124,6 +125,7 @@ Solutions to this exercise are found on the branch `solutions/exercise-7`. The s
     * The new Java class needs to inherit from `DefaultUserTaskListener`
     * Override `beforeQuestionnaireResponseCreate` and set the text of the [QuestionnaireResponse](https://dsf.dev/process-development/api-v2/fhir/questionnaire-and-questionnaireresponse.html) item with linkId `binary-question` to the value of the 
       Start Task's input parameter with name `binary-question`
+    * Register the listener as a Spring Bean. `UserTaskListeners` are an `Activity`.
 
 ## Solution Verification
 ### Maven Build and Automated Tests
@@ -136,42 +138,41 @@ Verify that the build was successful and no test failures occurred.
 ### Process Execution and Manual Tests
 To verify the `exampleorg_votingProcess` can be executed successfully, we need to deploy them into DSF instances and execute the `exampleorg_votingProcess`. The maven `install` build is configured to create a process jar file with all necessary resources and copy the jar to the appropriate locations of the docker dev setup.
 Again, you may decide to authenticate and start the process via the certificate or the Keycloak user `Tyler Tester` with username `test` and password `test`. You can find the client certificate
-in `.../dsf-process-tutorial/browser-certs/hrp/hrp-client.p12` (password: password).
+in `.../dsf-process-tutorial/browser-certs/dic/dic-client.p12` (password: password).
 
 1. Start the DSF FHIR server for the `dic.dsf.test` organization in a console at location `.../dsf-process-tutorial/dev-setup`:
    ```
-   docker-compose up dic-fhir
+   docker compose up dic-fhir
    ```
    Verify the DSF FHIR server started successfully at https://dic/fhir.
 
 2. Start the DSF BPE server for the `dic.dsf.test` organization in a second console at location `.../dsf-process-tutorial/dev-setup`:
    ```
-   docker-compose up dic-bpe
+   docker compose up dic-bpe
    ```
    Verify the DSF BPE server started successfully and deployed the `exampleorg_votingProcess`.
 
 3. Start the DSF FHIR server for the `cos.dsf.test` organization in a third console at location `.../dsf-process-tutorial/dev-setup`:
    ```
-   docker-compose up cos-fhir
+   docker compose up cos-fhir
    ```
    Verify the DSF FHIR server started successfully at https://cos/fhir.
 
 4. Start the DSF BPE server for the `cos.dsf.test` organization in a fourth console at location `.../dsf-process-tutorial/dev-setup`:
    ```
-   docker-compose up cos-bpe
+   docker compose up cos-bpe
    ```
    Verify the DSF BPE server started successfully and deployed the `exampleorg_votingProcess`.
 
-
 5. Start the DSF FHIR server for the `hrp.dsf.test` organization in a fifth at location `.../dsf-process-tutorial/dev-setup`:
    ```
-   docker-compose up hrp-fhir
+   docker compose up hrp-fhir
    ```
    Verify the DSF FHIR server started successfully at https://hrp/fhir.
 
 6. Start the DSF BPE server for the `hrp.dsf.test` organization in a sixth console at location `.../dsf-process-tutorial/dev-setup`:
    ```
-   docker-compose up hrp-bpe
+   docker compose up hrp-bpe
    ```
    Verify the DSF BPE server started successfully and deployed the `exampleorg_votingProcess`.
 
@@ -179,7 +180,7 @@ in `.../dsf-process-tutorial/browser-certs/hrp/hrp-client.p12` (password: passwo
 
    Verify that the FHIR [Task](https://dsf.dev/process-development/api-v2/fhir/task.html) resource was created at the DSF FHIR server and the `exampleorg_votingProcess` was executed. To do this, navigate to https://dic/fhir/QuestionnaireResponse?_sort=-_lastUpdated&status=in-progress. There should be a QuestionnaireResponse resource with status `in-progress` based on a Questionnaire resource with URL `http://example.org/fhir/Questionnaire/user-vote`. 
    Click on the QuestionnaireResponse, answer the question and press `Submit`. Navigate to https://dic/fhir/Task?_sort=-_lastUpdated and find the latest Task resource with message-name `startVotingProcess`. It should have a status of `completed`. Clicking on the Task resource redirects to the detailed Task view and three Output Parameters should now be present. Each one describes the voting result of
-   an Organization that responded in the `vote` process. The responses from `cos.dsf.test` and `hrp.dsf.test` have a randomly generated response, but they should not have a value of `timeout`. Depending on whether you completed the QuestionnaireResponse in time, the output for `dic.dsf.text` should show your answer or `timeout`.
+   an Organization that responded in the `vote` process. The responses from `cos.dsf.test` and `hrp.dsf.test` have a randomly generated response, but they should not have a value of `timeout`. Depending on whether you completed the QuestionnaireResponse in time, the output for `dic.dsf.test` should show your answer or `timeout`.
 
 ___
 [Prerequisites](prerequisites.md) • [Exercise 0](exercise-0.md) • [Exercise 1](exercise-1.md) • [Exercise 1.1](exercise-1-1.md) • [Exercise 2](exercise-2.md) • [Exercise 3](exercise-3.md) • [Exercise 4](exercise-4.md) • [Exercise 5](exercise-5.md) • [Exercise 6](exercise-6.md) • **Exercise 7**
