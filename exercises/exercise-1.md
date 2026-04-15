@@ -23,25 +23,60 @@ FHIR resources used in the DSF are formatted as XML. You can find them in the `t
 When creating your own FHIR resources for DSF process plugins you also want to put them in a fitting subdirectory of `tutorial-process/src/main/resources/fhir`.
 
 # Exercise 1 - Simple Process
-In this exercise you will add functionality to a service task in the already existing process called `exampleorg_dicProcess` and learn how to start
-processes in the DSF. The BPMN model for the `exampleorg_dicProcess` is located in `tutorial-process/src/main/resources/bpe`. 
+In this exercise you will wire up a Java service task to an already existing BPMN process and start it for the first time. The goal is simple: the process runs, your Java code executes, and a log message appears.
 
-Documentation topics related to this exercise are [FHIR Task](https://dsf.dev/process-development/api-v2/fhir/task.html),
-[The Process Plugin Definition](https://dsf.dev/process-development/api-v2/dsf/process-plugin-definition.html),
-[Spring Integration](https://dsf.dev/process-development/api-v2/dsf/spring-framework-integration.html),
-[Activities](https://dsf.dev/process-development/api-v2/dsf/activities.html),
-[BPMN Process Execution](https://dsf.dev/process-development/api-v2/dsf/bpmn-process-execution.html),
-[BPMN Process Variables](https://dsf.dev/process-development/api-v2/dsf/bpmn-process-variables.html),
-[Accessing BPMN Process Variables](https://dsf.dev/process-development/api-v2/guides/accessing-bpmn-process-variables.html),
-[Versions, Placeholders and URLs](https://dsf.dev/process-development/api-v2/dsf/versions-placeholders-urls.html)
-and [Starting a Process via Task Resources](https://dsf.dev/process-development/api-v2/guides/starting-a-process-via-task-resources.html).
-
+The BPMN model for the `exampleorg_dicProcess` is located in `tutorial-process/src/main/resources/bpe/dic-process.bpmn`.  
+The Java service task class you will fill in is `tutorial-process/src/main/java/org/tutorial/process/tutorial/service/DicTask.java`.
 
 Solutions to this exercise are found on the branch `solutions/exercise-1`.
 
+<details>
+<summary>Background reading (documentation links for this exercise)</summary>
+
+You do not need to read all of these before starting. Use them as a reference when something is unclear:
+
+- [FHIR Task](https://dsf.dev/process-development/api-v2/fhir/task.html)
+- [The Process Plugin Definition](https://dsf.dev/process-development/api-v2/dsf/process-plugin-definition.html)
+- [Spring Integration](https://dsf.dev/process-development/api-v2/dsf/spring-framework-integration.html)
+- [Activities](https://dsf.dev/process-development/api-v2/dsf/activities.html)
+- [BPMN Process Execution](https://dsf.dev/process-development/api-v2/dsf/bpmn-process-execution.html)
+- [BPMN Process Variables](https://dsf.dev/process-development/api-v2/dsf/bpmn-process-variables.html)
+- [Accessing BPMN Process Variables](https://dsf.dev/process-development/api-v2/guides/accessing-bpmn-process-variables.html)
+- [Versions, Placeholders and URLs](https://dsf.dev/process-development/api-v2/dsf/versions-placeholders-urls.html)
+- [Starting a Process via Task Resources](https://dsf.dev/process-development/api-v2/guides/starting-a-process-via-task-resources.html)
+</details>
+
 ## Exercise Tasks
 1. Set the `DicTask` class as the service implementation of the appropriate service task within the `dic-process.bpmn` process model.
-2. Register the `DicTask` class as a prototype bean in the `TutorialConfig` class.
+
+    **What:** Open `tutorial-process/src/main/resources/bpe/dic-process.bpmn` and set the `camunda:class` attribute on the `<bpmn:serviceTask>` element to the fully qualified class name of `DicTask`.  
+    **Why:** Camunda needs to know which Java class to instantiate and call when it reaches this task during process execution.  
+    **How it looks in XML:**
+    <details>
+    <summary>How it looks in XML?</summary>
+   
+     ```xml
+    <bpmn:serviceTask id="Activity_1tegofl" name="Dic Task"
+        camunda:class="org.tutorial.process.tutorial.service.DicTask">
+    ```
+    The value follows the pattern `<package>.<ClassName>`, which matches the folder structure under `tutorial-process/src/main/java/`. If you use the **Camunda Modeler**, switch the task's implementation type to **"Java Class"** and enter the same fully qualified name in the field that appears.
+
+    </details>
+   
+    <details>
+    <summary>What does the fully qualified class name look like in other processes?</summary>
+
+    For orientation: the `CosTask` class lives at `tutorial-process/src/main/java/org/tutorial/process/tutorial/service/CosTask.java`, so its fully qualified name is `org.tutorial.process.tutorial.service.CosTask`. `DicTask` sits in the same package.
+    </details>
+
+2. Register the `DicTask` class as a prototype bean in the `TutorialConfig` class located at `tutorial-process/src/main/java/org/tutorial/process/tutorial/spring/config/TutorialConfig.java`.
+    
+    <details>
+    <summary>Why prototype scope?</summary>   
+
+    The DSF BPE engine creates a new instance of a service task class for every process execution. Spring's default scope is singleton, so we must explicitly declare the bean as `@Scope("prototype")` to prevent shared state between concurrent executions.
+    </details>
+
     <details>
     <summary>Don't know how to register prototype beans?</summary>
     
@@ -53,25 +88,54 @@ Solutions to this exercise are found on the branch `solutions/exercise-1`.
     <details>
         <summary>Don't know where to get a logger?</summary>
     
-    This project uses slf4j. So use `LoggerFactory` to get yourself a logger instance.
+    This project uses slf4j. Use `LoggerFactory` to get yourself a logger instance.
     </details>
     
     <details>
         <summary>Can't find a way to get the start task?</summary>
     
-    The `execute` method provides a `Variables` instance. Try it through this one.
+    The `execute` method provides a `Variables` instance. It might provide a fitting method.
     </details>
     
     <details>
         <summary>Don't know where to look for the identifier?</summary>
-    
-    Take a look at the official [FHIR Task](https://hl7.org/fhir/R4/task.html) resource, find elements that have a recipient and maneuver your way to those elements using the right getters. Then test which of them has the correct value.
+
+    Try to navigate to the identifier value with the equivalent getters according to the following:
+    The FHIR Task resource has a `restriction` element that lists the allowed recipients. Its structure looks like this:
+
+    ```xml
+    <Task>
+      <!-- ... other elements ... -->
+      <restriction>
+        <recipient>
+          <identifier>
+            <value value="dic.dsf.test"/>  <!-- this is what we want -->
+          </identifier>
+        </recipient>
+      </restriction>
+    </Task>
+    ```
+
+    Hint: Don't iterate over the list of all recipients. `getRecipientFirstRep()` is a HAPI convenience method that returns the first element of the recipient list. In practice a Task can have more than one recipient, but for this simple example there is always exactly one.
     </details>
 
 4. In order to start your process you need to either create a regular [Task](https://dsf.dev/process-development/api-v2/fhir/task.html) resource
     or a [Draft Task Resource](https://dsf.dev/process-development/api-v2/dsf/draft-task-resources.html). Based on whether you would like
     to use cURL or the DSF FHIR server's web interface for starting processes you can do one of the following
     assignments (although we invite you to do both):
+    
+    <details>
+   
+    <summary>Special DSF FHIR Task Elements</summary>
+    FHIR Task that starts a DSF process have the following fields with special meaning:
+
+    | Element | Purpose                                                                                                                                    |
+    |---|--------------------------------------------------------------------------------------------------------------------------------------------|
+    | `instantiatesCanonical` | Which process (and version) should be started. Points to the process URI defined in the `ActivityDefinition`.                              |
+    | `requester` / `restriction.recipient` | Who sends the request (requester) and to which organization it is addressed (recipient). Uses organization identifiers.                    |
+    | `input` (message-name) | Which BPMN Message Start Event should be triggered. The value must match the message name in the BPMN file (here: `startDicProcess`), and be defined as an expected input within the linked ActivityDefinition. |
+    </details>
+
    * Create a [Task](https://dsf.dev/process-development/api-v2/fhir/task.html) resource in `tutorial-process/src/main/resources/fhir/example-task.xml` based on the [Task](https://dsf.dev/process-development/api-v2/fhir/task.html)
      profile `tutorial-process/src/main/resources/fhir/StructureDefinition/task-start-dic-process.xml`.  
      You will need it to start your process via cURL.
