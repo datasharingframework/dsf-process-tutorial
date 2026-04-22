@@ -3,38 +3,39 @@ ___
 
 # Exercise 3 - DSF User Role Configuration
 
-In [Exercise 1](exercise-1.md), you added a client certificate to your browser in order to be allowed to access the DIC FHIR
-server. In later exercises we will also use some of the other DSF installations like the cos.dsf.test or hrp.dsf.test. You could add a 
-client certificate to your browser for each one, or you could configure yourself a specific DSF user
-with access to all DSF installations.  
-This is part of the DSF's access control using the role configuration mechanism. It allows you to specify
-exact rules for accessing the FHIR REST API and starting processes for certain users. Either by providing
-thumbprints of their client certificates or by using [OpenID Connect](https://openid.net/developers/how-connect-works/).  
-For this exercise, we will include [OpenID Connect](https://openid.net/developers/how-connect-works/) in the configuration through a [Keycloak](https://www.keycloak.org/) instance. We have already created a user for you in the `DIC` realm who has sufficient
-access to the FHIR REST API and who is allowed to start our `dicProcess`.  
-The administration console for Keycloak is accessible under https://keycloak:8443.
-Credentials for administrator access are `username: admin` and `password: admin`. There is also a DSF Role Config for the [DIC FHIR server instance](../dev-setup/docker-compose.yml) set up in accordance with the Keycloak configuration.   
-Your task will be to take this user and explicitly allow them to start the `dicProcess`. Optionally, you can also add
-Keycloak users for the `COS` and `HRP` instances.
+In this exercise you will learn how to control **who is allowed to start a process** in the DSF. You will configure authorization rules in an `ActivityDefinition` file and add a Keycloak-based user alongside the existing certificate-based access.
 
-Documentation topics related to this exercise are [Access Control](https://dsf.dev/operations/latest/fhir/access-control.html) 
-and [ActivityDefinitions](https://dsf.dev/process-development/api-v2/fhir/activitydefinition.html).
+The file you will work in is `tutorial-process/src/main/resources/fhir/ActivityDefinition/dic-process.xml`.
+
+<details>
+<summary>Background reading (documentation links for this exercise)</summary>
+
+- [Access Control](https://dsf.dev/operations/latest/fhir/access-control.html)
+- [ActivityDefinitions](https://dsf.dev/process-development/api-v2/fhir/activitydefinition.html)
+- [Requester and Recipient](https://dsf.dev/process-development/api-v2/dsf/requester-and-recipient.html)
+- [Guide: Creating ActivityDefinitions](https://dsf.dev/process-development/api-v2/guides/creating-activity-definitions.html)
+</details>
+
+A [Keycloak](https://www.keycloak.org/) instance is already running as part of the dev setup. A user has been created for you in the `DIC` realm. The Keycloak admin console is accessible at https://keycloak:8443 (`username: admin`, `password: admin`). Your task is to allow this user to start the `dicProcess`. Optionally you can also add Keycloak users for the `COS` and `HRP` instances.
 
 ## Exercise Tasks
 
-1. Change the `requester` element in the ActivityDefinition `dic-process.xml` to allow all local clients with a practitioner role of `DSF_ADMIN` to request `dicProcess` messages.
+1. Change the `requester` element in the ActivityDefinition `tutorial-process/src/main/resources/fhir/ActivityDefinition/dic-process.xml` to allow all local clients with a practitioner role of `DSF_ADMIN` to request `dicProcess` messages. There is a documentation page to help you [understand the process authorization extension](https://dsf.dev/process-development/api-v2/dsf/understanding-the-process-authorization-extension.html).
+
    <details>
-   <summary>Don't know how to change the ActivityDefinition?</summary>
+   <summary>Need a ready-made example?</summary>
 
    There is a list of examples for the `requester` element [here](https://dsf.dev/process-development/api-v2/dsf/requester-and-recipient.html).
    You can also check out the [guide on creating ActivityDefinitions](https://dsf.dev/process-development/api-v2/guides/creating-activity-definitions.html).
    </details>
 
 2. We just made it so you will not be able to start the `dicProcess` using the client certificate used in earlier exercises.
-   Add another `requester` to the ActivityDefinition `dic-process.xml` which allows local clients from the `dic.dsf.test` organization to request `dicProcess` messages,
-   in case you still want to use the client certificate to start the process.
+   Add a **second** `<extension url="requester">` entry to the same authorization block in `dic-process.xml` which allows local clients from the `dic.dsf.test` organization to request `dicProcess` messages, in case you still want to use the client certificate to start the process.
+
+    You need the `LOCAL_ORGANIZATION` code combined with the `extension-process-authorization-organization` nested extension pointing to `dic.dsf.test`.
+
    <details>
-   <summary>Don't know how to change the ActivityDefinition?</summary>
+   <summary>Need a ready-made example?</summary>
 
    There is a list of examples for the `requester` element [here](https://dsf.dev/process-development/api-v2/dsf/requester-and-recipient.html).
    You can also check out the [guide on creating ActivityDefinitions](https://dsf.dev/process-development/api-v2/guides/creating-activity-definitions.html).
