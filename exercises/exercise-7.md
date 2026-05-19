@@ -3,20 +3,23 @@ ___
 
 # Exercise 7 - User Tasks and Task Output Parameters
 
-This exercise introduces a new scenario which will serve as an example on how [User Tasks](https://dsf.dev/process-development/api-v2/bpmn/user-tasks.html), resource download and [Task Output Parameters](https://dsf.dev/process-development/api-v2/fhir/task.html#task-output-parameters)
-may be utilized. The scenario is a voting process where one DSF instances of the tutorial setup will send a binary question (yes/no) to the other instances and itself.
-The question can be set when starting the voting process. The question will then be answerable through a [QuestionnaireResponse](https://dsf.dev/process-development/api-v2/fhir/questionnaire-and-questionnaireresponse.html) resource on the instance's DSF FHIR server.
-The answer then gets sent back to the instance which initiated the voting process. This exercise will focus on [User Tasks](https://dsf.dev/process-development/api-v2/bpmn/user-tasks.html) and [Task Output Parameters](https://dsf.dev/process-development/api-v2/fhir/task.html#task-output-parameters).
-The scenario comes with a skeleton including two BPMN models. One for orchestrating the voting process called `exampleorg_votingProcess` found in `voting-process.bpmn` and the subprocess which handles the vote itself found in `vote.bpmn`. 
-It also includes most of the Java implementation for both processes and the required FHIR resources. Your task will be to fill in the parts concerning the [User Task](https://dsf.dev/process-development/api-v2/bpmn/user-tasks.html)
-and [Task Output Parameters](https://dsf.dev/process-development/api-v2/fhir/task.html#task-output-parameters).
+In this exercise you will implement the user-interaction part of a voting process: a binary yes/no question is sent to all three DSF instances, each user answers it via a `QuestionnaireResponse` in the DSF FHIR server web UI, and the results are collected as output parameters on the original Task resource.
 
-In order to solve this exercise, you should have solved exercise 6 and read the topics on
-[User Tasks](https://dsf.dev/process-development/api-v2/guides/user-tasks-in-the-dsf.html#questionnaire-template), [Questionnaire and QuestionnaireResponse](https://dsf.dev/process-development/api-v2/fhir/questionnaire-and-questionnaireresponse.html)
-and [adding Task Output Parameters](https://dsf.dev/process-development/api-v2/guides/adding-task-parameters-to-task-profiles.html).
+The skeleton for this exercise (two BPMN models + most Java and FHIR resources) is already provided. Your task is to fill in the **User Task** and **Task Output Parameter** pieces.
 
-Solutions to this exercise are found on the branch `solutions/exercise-7`. The skeleton can be found on the branch `skeleton/exercise-7`. It contains an entirely new process with missing pieces that will be added as part of the exercise tasks. 
-You may checkout the skeleton branch and start working from there. You may also merge the skeleton branch into the branch you were working on so far, at your own risk.
+- **Skeleton branch:** `skeleton/exercise-7` — check this out and work from there (or merge it into your current branch at your own risk)
+- **BPMN files:** `voting-process.bpmn` (orchestrates the voting process) and `vote.bpmn` (handles the vote itself)
+
+Solutions to this exercise are found on the branch `solutions/exercise-7`.
+
+<details>
+<summary>Background reading (documentation links for this exercise)</summary>
+
+- [User Tasks in the DSF + Questionnaire Template](https://dsf.dev/process-development/api-v2/guides/user-tasks-in-the-dsf.html#questionnaire-template)
+- [Questionnaire and QuestionnaireResponse](https://dsf.dev/process-development/api-v2/fhir/questionnaire-and-questionnaireresponse.html)
+- [Adding Task Output Parameters](https://dsf.dev/process-development/api-v2/guides/adding-task-parameters-to-task-profiles.html)
+
+</details>
 
 ## Exercise Tasks
 1. The StructureDefinition `task-start-voting-process.xml` describes the Task resource which starts the voting process. It already has an input parameter called `binary-question` which stores 
