@@ -2,46 +2,93 @@
 ___
 
 # Exercise 4 - Messaging
-Communication between organizations in BPMN processes is modeled using message flow. The fourth exercise shows how a process at one organization can trigger a process at another organization.
-
-To demonstrate communication between two organizations we will configure message flow between the processes `exampleorg_dicProcess` and `exampleorg_cosProcess`. After that, the processes are to be executed at the organizations `dic.dsf.test` and `cos.dsf.test` respectively in the docker dev setup, with the former triggering execution of the latter by automatically sending a [Task](http://hl7.org/fhir/R4/task.html) resource from organization `dic.dsf.test` to organization `cos.dsf.test`.
-
-In order to solve this exercise, you should have solved exercise 3 and read the topics on
-[Messaging](https://dsf.dev/process-development/api-v2/dsf/messaging.html),
-[Message Activities](https://dsf.dev/process-development/api-v2/dsf/message-activities.html),
-[Version Pattern](https://dsf.dev/process-development/api-v2/dsf/versions-placeholders-urls.html#version-pattern),
-[URLs](https://dsf.dev/process-development/api-v2/dsf/versions-placeholders-urls.html#urls) 
-and [Target and Targets](https://dsf.dev/process-development/api-v2/dsf/target-and-targets.html).
+In this exercise you will make two organizations talk to each other: `dic.dsf.test` will automatically trigger a process at `cos.dsf.test` by sending a FHIR Task resource across organizations. You will configure both BPMN files and the required FHIR resources for this to work.
 
 Solutions to this exercise are found on the branch `solutions/exercise-4`.
 
+<details>
+<summary>Background reading (documentation links for this exercise)</summary>
+
+- [Messaging](https://dsf.dev/process-development/api-v2/dsf/messaging.html)
+- [Message Activities](https://dsf.dev/process-development/api-v2/dsf/message-activities.html)
+- [Version Pattern](https://dsf.dev/process-development/api-v2/dsf/versions-placeholders-urls.html#version-pattern)
+- [URLs](https://dsf.dev/process-development/api-v2/dsf/versions-placeholders-urls.html#urls)
+- [Target and Targets](https://dsf.dev/process-development/api-v2/dsf/target-and-targets.html)
+</details>
+
 ## Exercise Tasks
-1. Replace the [End Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/none-events/#none-end-event) of the `exampleorg_dicProcess` in the `dic-process.bpmn` file with a [Message End Event](https://dsf.dev/process-development/api-v2/dsf/messaging.html#message-end-event). Give the [Message End Event](https://dsf.dev/process-development/api-v2/dsf/messaging.html#message-end-event) a name and an ID and set its implementation to the `HelloCosMessage` class.  
-   Configure field injections `instantiatesCanonical`, `profile` and `messageName` in the BPMN model for the [Message End Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/message-events/#message-end-event).
-    Use `http://example.org/fhir/StructureDefinition/task-hello-cos|#{version}` as the profile and `helloCos` as the message name. Figure out what the appropriate `instantiatesCanonical` value is, based on the name (process definition key) of the process to be triggered.
-   <details>
-   <summary>Can't remember how instantiatesCanonical is built?</summary>
 
-   Read the concept [here](https://dsf.dev/process-development/api-v2/dsf/versions-placeholders-urls.html#urls) again.
-    </details>
-2. Modify the `exampleorg_cosProcess` in the `cos-process.bpmn` file and configure the message name of the [Message Start Event](https://dsf.dev/process-development/api-v2/bpmn/messaging.html#message-start-event) with the same value as the message name of the [Message End Event](https://dsf.dev/process-development/api-v2/bpmn/messaging.html#message-end-event) in the `exampleorg_dicProcess`. 
-3. Create a new [StructureDefinition](http://hl7.org/fhir/R4/structuredefinition.html) with a [Task](https://dsf.dev/process-development/api-v2/fhir/task.html) profile for the `helloCos` message.
+1. Replace the [End Event](https://docs.camunda.org/manual/7.17/reference/bpmn20/events/none-events/#none-end-event) of the `exampleorg_dicProcess` in `dic-process.bpmn` with a [Message End Event](https://dsf.dev/process-development/api-v2/dsf/messaging.html#message-end-event). Give the event a name and an ID, then configure it as follows:
+
+    **In Camunda Modeler:**
+    - Click the End Event circle → change its type to **Message End Event** (envelope icon)
+    - In the properties panel, set **Implementation** to **Java Class** and enter: `org.tutorial.process.tutorial.message.HelloCosMessage`
+    - Switch to the **Field Injections** tab and add three entries:
+
+    | Field name | Type | Value |
+    |---|---|---|
+    | `profile` | String | `http://example.org/fhir/StructureDefinition/task-hello-cos|#{version}` |
+    | `messageName` | String | `helloCos` |
+    | `instantiatesCanonical` | String | *(see hint below)* |
+
+    **What do these three field injections mean?**
+
+    | Field | Purpose                                                                                                                                                                       |
+    |---|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+    | `profile` | The StructureDefinition URL that the FHIR Task sent to the target organization must conform to. This links the outgoing message to a specific Task profile.                   |
+    | `messageName` | The BPMN message name that identifies which Message Start Event at the target process should be triggered. Must match exactly the message name you set in `cos-process.bpmn`. |
+    | `instantiatesCanonical` | The process URI + version of the *target* process to be started.                                                                                                              |
+
     <details>
-   <summary>Don't know how to get started?</summary>
-   
-   You can base this [Task](https://dsf.dev/process-development/api-v2/fhir/task.html) profile off the `StructureDefinition/task-start-dic-process.xml` resource. Then look for elements that need to be added, changed or can be omitted.
-    </details>
-4. Create a new [ActivityDefinition](https://dsf.dev/process-development/api-v2/fhir/activitydefinition.html) resource for the `exampleorg_cosProcess` and configure the authorization extension to allow the `dic.dsf.test` organization as the requester and the `cos.dsf.test` organization as the recipient. The file has to be called `cos-process.xml`.
-   <details>
-   <summary>Don't know how to get started?</summary>
+    <summary>Can't figure out the instantiatesCanonical value?</summary>
 
-   You can base this ActivityDefinition off the `ActivityDefinition/dic-process.xml` resource. Then look for elements that need to be added, changed or can be omitted.
-   Or you can take a look at the [guide on creating ActivityDefinitions](https://dsf.dev/process-development/api-v2/guides/creating-activity-definitions.html).
-   </details>
-5. Add the `exampleorg_cosProcess` and its resources to the `TutorialProcessPluginDefinition` class. This will require a new mapping entry with the full process name of the `cosProcess` as the key and a List of associated FHIR resources as the value.
-6. Modify `DicTask` service class to set the `target` process variable for the `cos.dsf.test` organization.
-7. Configure the `HelloCosMessage` class as a Spring Bean in the `TutorialConfig` class. Don't forget the right scope.
-8. Again, we introduced changes that break compatibility. Older plugin versions at the COS instance won't be able to handle the Task resource type we added earlier. Increment your resource version to `1.3`. 
+    The process definition key of the COS process is `cosProcess`. Follow the [URL pattern](https://dsf.dev/process-development/api-v2/dsf/versions-placeholders-urls.html#urls) to create the correct value.
+    </details>
+2. Open `cos-process.bpmn` and configure the **Message Start Event** message name to match the `messageName` value from step 1 (`helloCos`).
+
+3. Create a new StructureDefinition Task profile for the `helloCos` message. Save it as a resource under `fhir/StructureDefinition/task-hello-cos.xml`.
+
+    <details>
+    <summary>Don't know how to get started?</summary>
+
+    Base this Task profile on `fhir/StructureDefinition/task-start-dic-process.xml`. Key differences: the `instantiatesCanonical` must point to the COS process URI, and the `message-name` input slice value must be `helloCos`. The `correlation-key` slice should be allowed (`max` not `0`) since inter-organization messages need a correlation key. Remove the `tutorial-input` slice if it was added in exercise 2.
+    </details>
+
+4. Create a new ActivityDefinition for the `exampleorg_cosProcess`. Save it as `fhir/ActivityDefinition/cos-process.xml`. Configure the authorization extension:
+    - **requester**: `dic.dsf.test` (remote organization) → use code `REMOTE_ORGANIZATION` with a nested `extension-process-authorization-organization` pointing to `dic.dsf.test`
+    - **recipient**: `cos.dsf.test` (local organization) → use code `LOCAL_ORGANIZATION` with a nested `extension-process-authorization-organization` pointing to `cos.dsf.test`
+
+    <details>
+    <summary>Don't know how to get started?</summary>
+
+    Base this ActivityDefinition on `fhir/ActivityDefinition/dic-process.xml` and adapt `url`, `name`, `title`, `message-name`, `task-profile`, `requester` and `recipient`. Refer back to the [documentation on the process authorization extension](https://dsf.dev/process-development/api-v2/dsf/understanding-the-process-authorization-extension.html) for the XML patterns.
+    Or take a look at the [guide on creating ActivityDefinitions](https://dsf.dev/process-development/api-v2/guides/creating-activity-definitions.html).
+    </details>
+
+5. Add the `exampleorg_cosProcess` and its resources to the `TutorialProcessPluginDefinition` class (`TutorialProcessPluginDefinition.java`). Add a new entry to the Map returned by `getFhirResourcesByProcessId()` using the full process name of the `cosProcess` as the key and a list containing the new ActivityDefinition and StructureDefinition files as the value. Also add `bpe/cos-process.bpmn` to `getProcessModels()`.
+
+6. Modify the `DicTask` service class to set the `target` process variable for the `cos.dsf.test` organization.
+
+    The `target` variable tells the DSF's Message End Event where to send the outgoing FHIR Task. Call `variables.createTarget(...)` with three parameters:
+
+    | Parameter | What it identifies                                                                                                                                            | Value for this exercise |
+    |---|---------------------------------------------------------------------------------------------------------------------------------------------------------------|---|
+    | Organization identifier | The DSF organization that should receive the message. Can be found in the allow list (e.g for the cos organization in `dev-setup/cos/fhir/conf/bundle.xml`). | `"cos.dsf.test"` |
+    | Endpoint identifier | The DSF endpoint name registered at that organization. Can be found in the allow list (e.g for the cos organization in `dev-setup/cos/fhir/conf/bundle.xml`). | `"cos.dsf.test_Endpoint"` |
+    | FHIR base URL | The FHIR server URL of the target DSF instance                                                                                                                | `"https://cos/fhir"` |
+
+    ```java
+    Target target = variables.createTarget(
+        "cos.dsf.test",
+        "cos.dsf.test_Endpoint",
+        "https://cos/fhir"
+    );
+    variables.setTarget(target);
+    ```
+
+7. Configure the `HelloCosMessage` class as a Spring prototype bean in the `TutorialConfig` class, the same way you registered `DicTask`.
+
+8. Again, we introduced changes that break compatibility. Older plugin versions at the COS instance won't be able to handle the Task resource type we added earlier. Increment your resource version to `1.3`.
 
 ## Solution Verification
 ### Maven Build and Automated Tests
