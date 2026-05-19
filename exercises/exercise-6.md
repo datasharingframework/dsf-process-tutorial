@@ -2,38 +2,175 @@
 ___
 
 # Exercise 6 - Event Based Gateways and Intermediate Events
-In this exercise we will look at message flow between three organizations as well as how to continue a waiting process if no return message arrives. 
-With this exercise we will add a third process and complete a message loop from `dic.dsf.test` to `cos.dsf.test` to `hrp.dsf.test` and back to `dic.dsf.test`.
-
-In order to solve this exercise, you should have solved exercise 5 and read the topics on 
-[Managing Multiple Incoming Messages and Missing Messages](https://dsf.dev/process-development/api-v2/guides/managing-mutiple-incoming-messages-and-missing-messages.html)
-and [Message Correlation](https://dsf.dev/process-development/api-v2/dsf/message-correlation.html).
+In this exercise you will complete a three-organization message loop: `dic.dsf.test` → `cos.dsf.test` → `hrp.dsf.test` → back to `dic.dsf.test`. The DIC process will no longer end immediately after sending — it will wait for a reply from HRP (or time out after two minutes).
 
 Solutions to this exercise are found on the branch `solutions/exercise-6`.
 
+<details>
+<summary>Background reading (documentation links for this exercise)</summary>
+
+- [Managing Multiple Incoming Messages and Missing Messages](https://dsf.dev/process-development/api-v2/guides/managing-mutiple-incoming-messages-and-missing-messages.html)
+- [Message Correlation](https://dsf.dev/process-development/api-v2/dsf/message-correlation.html)
+- [Message Intermediate Throwing Event](https://dsf.dev/process-development/api-v2/bpmn/messaging.html#message-intermediate-throwing-event)
+- [Timer Intermediate Catching Event](https://dsf.dev/process-development/api-v2/bpmn/timer-intermediate-catching-events.html)
+- [Event Based Gateway](https://dsf.dev/process-development/api-v2/bpmn/gateways.html#event-based-gateway)
+- [BPMN Process ID and Version Placeholder](https://dsf.dev/process-development/api-v2/dsf/versions-placeholders-urls.html)
+- [ActivityDefinition Process Authorization: Requester and Recipient](https://dsf.dev/process-development/api-v2/dsf/requester-and-recipient.html)
+</details>
+
 ## Exercise Tasks
 
-1. Modify the `exampleorg_dicProcess`:
-   * Change the [Message End Event](https://dsf.dev/process-development/api-v2/bpmn/messaging.html#message-end-event) to an [Intermediate Message Throw Event](https://dsf.dev/process-development/api-v2/bpmn/messaging.html#message-intermediate-throwing-event). This also means that `HelloCosMessage.java` needs to implement `MessageIntermediateThrowEvent` instead of `MessageEndEvent`.
-   * Add an [Event Based Gateway](https://dsf.dev/process-development/api-v2/bpmn/gateways.html#event-based-gateway) after the throw event
-   * Configure two cases for the [Event Based Gateway](https://dsf.dev/process-development/api-v2/bpmn/gateways.html#event-based-gateway):
-      1. An [Intermediate Message Catch Event](https://dsf.dev/process-development/api-v2/bpmn/messaging.html#message-intermediate-catching-event) to catch the `goodbyeDic` message from the `exampleorg_hrpProcess`.
-      1. An [Intermediate Timer Catch Event](https://dsf.dev/process-development/api-v2/bpmn/timer-intermediate-catching-events.html) to end the process if no message is sent by the `exampleorg_hrpProcess` after two minutes.
-         Make sure both cases finish with a process End Event.
-2. Modify the `exampleorg_cosProcess` to use a [Message End Event](https://dsf.dev/process-development/api-v2/bpmn/messaging.html#message-end-event) to trigger the process in file `hrp-process.bpmn`. Figure out the values for the `instantiatesCanonical`, `profile` and `messageName` input parameters of the [Message End Event](https://dsf.dev/process-development/api-v2/dsf/messaging.html#message-end-event) based on the [ActivityDefinition](https://dsf.dev/process-development/api-v2/fhir/activitydefinition.html) in file `hrp-process.xml`. Change the `Cos Task` element into a Service Task and include the `CosTask` as the implementation.
-3. Modify the process in file `hrp-process.bpmn` and set the _process definition key_ and _version_. Figure out the appropriate values based on the [AcitvityDefinition](https://dsf.dev/process-development/api-v2/fhir/activitydefinition.html) in file `hrp-process.xml`.
-4. Add a new process authorization extension element to the ActivityDefinition for `exampleorg_dicProcess` using the [parent organization role coding](https://dsf.dev/process-development/api-v2/dsf/requester-and-recipient.html) where
-     only remote organizations which are part of `medizininformatik-initiative.de` and have the `HRP` role are allowed to request `goodByeDic` messages and only
-     organizations which are part of `medizininformatik-initiative.de` and have the `DIC` role are allowed to receive `goodByeDic` messages
-     <details>
-     <summary>Don't know which values to choose for roles?</summary>
+1. **Modify `exampleorg_dicProcess`** (`dic-process.bpmn`)
 
-     Take a look at the [dsf-organization-role](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/CodeSystem/dsf-organization-role-2.0.0.xml) CodeSystem.
-     </details>
-5. Forward the value from the [Task.input](https://dsf.dev/process-development/api-v2/fhir/task.html) parameter of the `dicProcess` [Task](https://dsf.dev/process-development/api-v2/fhir/task.html) to the `exampleorg_cosProcess` using the `HelloCosMessage`. To do this, you need to override `HelloCosMessage#getAdditionalInputParameters`. Don't forget to also add the definition of your `tutorial-input` [Input Parameter](https://dsf.dev/process-development/api-v2/fhir/task.html#task-input-parameters) from `task-start-dic-process.xml` to `task-hello-cos.xml`. `HelloHrpMessage` already implements the forwarding of the [Input Parameter](https://dsf.dev/process-development/api-v2/fhir/task.html#task-input-parameters) to the HRP instance and might have to be adjusted e.g. if other the [Input Parameter](https://dsf.dev/process-development/api-v2/fhir/task.html#task-input-parameters) was named differently.
-6. Add the process in file `hrp-process.bpmn` to the `TutorialProcessPluginDefinition` and configure the FHIR resources needed for the three processes.
-7. Add the `CosTask`, `HelloHrpMessage `, `HrpTask` and `GoodbyeDicMessage` classes as Spring Beans. Don't forget the scope.
-8. Again, we introduced changes that break compatibility. Older plugin versions won't execute the HRP process because the process ID in the BPMN model is still invalid and it is missing a version. Increment your resource version to `1.4`.
+    > **Why this step is needed:** Right now the DIC process *ends* when it sends the `helloCos` message. We need it to *pause and wait* for a `goodbyeDic` reply from HRP instead. To achieve this, the Message End Event must become an Intermediate Message Throw Event — meaning the process continues rather than ending.
+   
+    <details>
+    <summary>Change Message End Event → Intermediate Message Throw Event</summary>
+    
+    - Click the Message End Event → change its type to **Intermediate Throw Event (Message)** (the envelope in a circle, not filled)
+    - The field injections (`profile`, `messageName`, `instantiatesCanonical`) stay the same
+    - In `HelloCosMessage.java`, change the implemented interface from `MessageEndEvent` to `MessageIntermediateThrowEvent`
+    </details>
+    
+    <details>
+    <summary>Add an Event Based Gateway after the throw event</summary>
+
+    - Draw a sequence flow from the Intermediate Throw Event to a new **Event Based Gateway** (pentagon symbol)
+    - The process will now wait at this gateway until one of the configured events fires
+    </details>
+
+    <details>
+    <summary>Configure two outgoing paths from the gateway: one leading to a Message Intermediate Catch Event and one leading to a Timer Intermediate Catch Event. Both paths must end with a plain End Event.</summary>
+
+    | Path | Event type                                                        | Purpose |
+       |---|-------------------------------------------------------------------|---|
+    | Path 1 | **Message Intermediate Catch Event** — message name: `goodbyeDic` | Process continues normally when HRP replies |
+    | Path 2 | **Timer Intermediate Catch Event** — duration: `PT2M` (2 minutes) | Process ends with a timeout if HRP does not reply |
+    
+    Click the Event Based Gateway → choose either **Message Intermediate Catch Event** or **Timer Intermediate Catch Event**
+    </details>
+
+2. **Modify `exampleorg_cosProcess`** (`cos-process.bpmn`)
+
+    Work through the four sub-steps in order:
+
+    <details>
+    <summary>Change the `Cos Task` element into a Service Task.</summary>
+
+    - In Camunda Modeler, click the `Cos Task` element → change its type to **Service Task** (wrench icon)
+    - Set **Implementation** to **Java Class** and enter: `org.tutorial.process.tutorial.service.CosTask`
+
+    </details>
+   
+    > **Why:** A plain Task element in BPMN is just a label — it does not execute any Java code. A Service Task connects to a Java class and calls its `execute()` method when the process reaches it.
+
+    <details>
+    <summary>Change the End Event into a Message End Event.</summary>
+
+    - Click the End Event → change its type to **Message End Event** (filled envelope)
+    - This event will send a Task to `hrp.dsf.test` to start `exampleorg_hrpProcess`
+
+    </details>
+   
+    <details>
+    <summary>Set the Java class and BPMN message reference.</summary>
+
+    - Set **Implementation** to **Java Class**: `org.tutorial.process.tutorial.message.HelloHrpMessage`
+    - In the **Message** tab, create or select a BPMN message and name it `helloHrp`
+
+    </details>
+    
+    <details>
+    <summary>Set the Field Injections.</summary>
+    
+    Look at `fhir/ActivityDefinition/hrp-process.xml` to find the values:
+
+    | Field | Where to look in hrp-process.xml | Value |
+       |---|---|---|
+    | `profile` | `<extension url="task-profile"><valueCanonical .../>` | `http://example.org/fhir/StructureDefinition/task-hello-hrp|#{version}` |
+    | `messageName` | `<extension url="message-name"><valueString .../>` | `helloHrp` |
+    | `instantiatesCanonical` | `<url value="..."/>` → append `|#{version}` | `http://example.org/bpe/Process/hrpProcess|#{version}` |
+
+    </details>
+
+3. **Fix the HRP process id and class names** (`hrp-process.bpmn`)
+
+    <details>
+    <summary>Set the process `id` (currently `change_me`) and `version tag`.</summary>
+
+    - The id follows the [pattern](https://dsf.dev/process-development/api-v2/dsf/versions-placeholders-urls.html) `{publisher}_{processName}`. Derive it from `fhir/ActivityDefinition/hrp-process.xml`:
+    - The `<url>` element reads: `http://example.org/bpe/Process/hrpProcess`
+    - The last segment is `hrpProcess`
+    - The publisher prefix in this tutorial is `exampleorg`
+    - Result: **`exampleorg_hrpProcess`**
+   
+    </details>
+
+    > **Note:** The field is called **`id`** on the `<bpmn:process>` element — not "key". It uniquely identifies the process within the BPE.
+
+    <details>
+    <summary>Fix the Java class name in the `HrpTask` service task.</summary>
+
+    Currently the BPMN contains a wrong class name. The correct fully qualified class name is:
+    ```
+    org.tutorial.process.tutorial.service.HrpTask
+    ```
+
+    </details>
+
+    <details>
+    <summary>Fix the Java class name in the `GoodbyeDicMessage` end event.</summary>
+
+    Same issue. The correct fully qualified class name is:
+    ```
+    org.tutorial.process.tutorial.message.GoodbyeDicMessage
+    ```
+
+    </details>
+
+4. **Add a new authorization block to the DIC `ActivityDefinition`** (`fhir/ActivityDefinition/dic-process.xml`)
+
+    The DIC process must now also accept the `goodbyeDic` message that HRP sends back. Add a **second** `<extension url="http://dsf.dev/fhir/StructureDefinition/extension-process-authorization">` block with the following four components:
+
+    **4a) Message name**  
+    **4b) Task profile**  
+    **4c) [Requester](https://dsf.dev/process-development/api-v2/dsf/requester-and-recipient.html#remote-parent-organization-role)** — who may send `goodbyeDic`? Only remote organizations with the `HRP` role in `medizininformatik-initiative.de`.  
+    **4d) [Recipient](https://dsf.dev/process-development/api-v2/dsf/requester-and-recipient.html#local-parent-organization-role-1)** — who may receive `goodbyeDic`? Only local organizations with the `DIC` role.  
+
+    <details>
+    <summary>Not sure which role codes are available?</summary>
+
+    Take a look at the [dsf-organization-role](https://github.com/datasharingframework/dsf/blob/main/dsf-fhir/dsf-fhir-validation/src/main/resources/fhir/CodeSystem/dsf-organization-role-2.0.0.xml) CodeSystem.
+    </details>
+   
+    <details>
+    <summary>Need a refresher on process authorization in ActivityDefinitions?</summary>
+
+    Take a look at the [guide on creating ActivityDefinitions](https://dsf.dev/process-development/api-v2/guides/creating-activity-definitions.html#_2-extension-process-authorization).
+    </details>
+
+5. **Forward the `tutorial-input` parameter from DIC to COS**
+
+    <details>
+    <summary>Override `HelloCosMessage#getAdditionalInputParameters`</summary>
+
+    The `HelloCosMessage` class (`HelloCosMessage.java`) currently sends no additional input parameters. Override `getAdditionalInputParameters` to read `tutorial-input` from the DIC start Task and include it in the outgoing COS Task.
+    You can model your implementation on `HelloHrpMessage` which already does this.
+    </details>
+    
+    <details>
+    <summary>Add the `tutorial-input` slice to `task-hello-cos.xml`</summary>
+
+    The COS Task profile (`fhir/StructureDefinition/task-hello-cos.xml`) must declare the `tutorial-input` input parameter, otherwise the DSF will reject the Task as non-conformant. Copy the `tutorial-input` slice definition from `task-start-dic-process.xml` and add it to `task-hello-cos.xml`.
+    </details>
+
+6. **Register all processes and resources in `TutorialProcessPluginDefinition`**
+
+    - Add `bpe/hrp-process.bpmn` to `getProcessModels()`
+    - Add a new map entry for `ConstantsTutorial.PROCESS_NAME_FULL_HRP` in `getFhirResourcesByProcessId()` listing its ActivityDefinition, StructureDefinition, and any CodeSystem/ValueSet files
+
+7. **Add the `CosTask`, `HelloHrpMessage `, `HrpTask` and `GoodbyeDicMessage` classes as Spring Beans. Remember to use the right scope.**
+8. **Again, we introduced changes that break compatibility. Older plugin versions won't execute the HRP process because the process id in the BPMN model was still invalid. Increment your resource version to `1.4`.**
 
 
 ## Solution Verification
