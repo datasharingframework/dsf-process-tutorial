@@ -2,19 +2,65 @@
 ___
 
 # Exercise 5 - Exclusive Gateways
-Different execution paths in a process based on the state of process variables can be achieved using Exclusive Gateways. In Exercise 5 we will examine how this can be implemented by modifying the `exampleorg_dicProcess`.
+In this exercise you will add a decision point to the `exampleorg_dicProcess`: based on the value of the `tutorial-input` parameter sent with the start Task, the process will either trigger `exampleorg_cosProcess` or stop right there.
 
-In order to solve this exercise, you should have solved Exercise 4 and read the topics on
-[Exclusive Gateways](https://dsf.dev/process-development/api-v2/bpmn/gateways.html)
-and [Conditions](https://dsf.dev/process-development/api-v2/bpmn/conditions.html).
+The file you will primarily work in is `dic-process.bpmn` and `DicTask.java`.
 
 Solutions to this exercise are found on the branch `solutions/exercise-5`.
 
+<details>
+<summary>Background reading (documentation links for this exercise)</summary>
+
+- [Exclusive Gateways](https://dsf.dev/process-development/api-v2/bpmn/gateways.html)
+- [Conditions](https://dsf.dev/process-development/api-v2/bpmn/conditions.html)
+</details>
+
 ## Exercise Tasks
-1. Add an exclusive gateway to the `exampleorg_dicProcess` model and two outgoing sequence flows - the first starting the process `exampleorg_cosProcess`, the second stopping the process `exampleorg_dicProcess` without starting the process `exampleorg_cosProcess`.
-2. Add condition expressions to each outgoing sequence flow which decides the path that will be taken based on a boolean value.
-3. In the `DicTask` class, create a boolean variable which decides whether the `exampleorg_cosProcess` should be started based on the start Task's input parameter `tutorial-input`.
-4. Add the boolean variable to the process execution variables, storing the decision. It needs to have the same name as the variable used in the condition expression from `2.`
+
+1. Open `tutorial-process/src/main/resources/bpe/dic-process.bpmn` in **Camunda Modeler** and add an **Exclusive Gateway** between the `DicTask` service task and the current end/message-end event.
+
+    Connect two outgoing sequence flows from the gateway:
+    - **Path A**: leads to the Message End Event that sends `helloCos` (from Exercise 4) → starts `exampleorg_cosProcess`
+    - **Path B**: leads to a plain End Event → stops `exampleorg_dicProcess` without contacting COS
+
+    <details>
+    <summary>Camunda Modeler instructions</summary>
+
+    - Click the `DicTask` service task → select **Append Gateway**
+    - Draw a sequence flow from the gateway to the existing Message End Event (Path A)
+    - Draw another sequence flow from the gateway to a new plain End Event (Path B)
+    </details>
+    
+2. Add a **condition expression** to each outgoing sequence flow so the BPE knows which path to take at runtime.
+
+    The BPE uses **JUEL** (Java Unified Expression Language) for conditions. Condition expressions read process variables by name. For a boolean variable called `sendToCos`, the expressions would be:
+
+    | Sequence flow | Condition expression | Meaning |
+    |---|---|---|
+    | Path A (→ COS) | `${sendToCos}` | Take this path when `sendToCos` is `true` |
+    | Path B (→ End) | `${!sendToCos}` | Take this path when `sendToCos` is `false` |
+
+    You can freely choose the variable name — just make sure it matches exactly between the condition expressions here and the process variable you set in step 4.
+
+    <details>
+    <summary>Camunda Modeler instructions</summary>
+
+    - Click a sequence flow arrow → in the properties panel on the right, find **Condition Type** → select **Expression**
+    - Enter the expression (e.g. `${sendToCos}`) in the **Expression** field
+    </details>
+    
+3. In the `DicTask` class, read the `tutorial-input` string from the start Task and derive a boolean decision from it.
+
+    **What:** Evaluate whether the input value signals that the COS process should be started.  
+    **Why:** The gateway condition reads a process variable — that variable must be set by your Java code before the gateway is reached. This is done in the next step.
+
+    <details>
+    <summary>Not sure how to read the tutorial-input parameter?</summary>
+
+    Use the `TaskHelper` together with `variables` as you did in Exercise 2. The input type code is `tutorial-input` from CodeSystem `http://example.org/fhir/CodeSystem/tutorial`. Once you have the string value, decide on a convention — for example, `"true"` means start COS, anything else means stop.
+    </details>
+
+4. Store the boolean result as a **named process variable** using `variables.setBoolean(...)`. The variable name must be **identical** to the name used in the condition expressions in step 2.
 
 
 ## Solution Verification

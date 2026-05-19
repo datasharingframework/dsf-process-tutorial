@@ -2,19 +2,21 @@
 ___
 
 # Exercise 2 - Environment Variables and Input Parameters
-BPMN processes might require additional information during execution, e.g. for configuration purposes. 
-We will take a look at two possibilities on how to pass additional information to a BPMN process: Environment Variables and Input Parameters.   
-The goal of this exercise is to enhance the `exampleorg_dicProcess` by trying them both. 
-In both cases the information will be available in the `execute` method of your service class.
+In this exercise you will pass additional information into a running process in two different ways: via an **environment variable** (configured outside the process, at deployment time) and via a **FHIR Task Input Parameter** (supplied at the start of every process).
 
-In order to solve this exercise, you should have solved the first exercise and read the topics on
-[Environment Variables](https://dsf.dev/process-development/api-v2/dsf/environment-variables.html), 
-[Task Input Parameters](https://dsf.dev/process-development/api-v2/fhir/task.html#task-input-parameters),
-[Accessing Task Resources During Execution](https://dsf.dev/process-development/api-v2/guides/accessing-task-resources-during-execution.html),
-[Placeholders](https://dsf.dev/process-development/api-v2/dsf/versions-placeholders-urls.html) and
-[Read Access Tag](https://dsf.dev/process-development/api-v2/dsf/read-access-tag.html).
+Both values will be accessible inside the `execute` method of your `DicTask` service class.
 
 Solutions to this exercise are found on the branch `solutions/exercise-2`.
+
+<details>
+<summary>Background reading (documentation links for this exercise)</summary>
+
+- [Environment Variables](https://dsf.dev/process-development/api-v2/dsf/environment-variables.html)
+- [Task Input Parameters](https://dsf.dev/process-development/api-v2/fhir/task.html#task-input-parameters)
+- [Accessing Task Resources During Execution](https://dsf.dev/process-development/api-v2/guides/accessing-task-resources-during-execution.html)
+- [Placeholders](https://dsf.dev/process-development/api-v2/dsf/versions-placeholders-urls.html)
+- [Read Access Tag](https://dsf.dev/process-development/api-v2/dsf/read-access-tag.html)
+</details>
 
 
 ## Exercise Tasks
@@ -54,14 +56,16 @@ Solutions to this exercise are found on the branch `solutions/exercise-2`.
    `tutorial-process/src/main/resources/fhir/ValueSet`.
    </details>
 
-7. Add a new input parameter of type `tutorial-input` with `Task.input.value[x]` as a `string` to the `task-start-dic-process.xml` [Task](https://dsf.dev/process-development/api-v2/fhir/task.html) profile.
+7. Add a new input parameter of type `tutorial-input` with `Task.input.value[x]` as a `string` to the StructureDefinition profile file `tutorial-process/src/main/resources/fhir/StructureDefinition/task-start-dic-process.xml`.
+
+    > **Note:** The `task-start-dic-process.xml` exists both under the `StructureDefinition` and `Task` directories under `resources`. In terms of Object Oriented Programming, the StructureDefinition is the class and the Task resource is an instance.
    <details>
    <summary>Don't know how to add a new input parameter?</summary>
 
    Check out [this guide](https://dsf.dev/process-development/api-v2/guides/adding-task-parameters-to-task-profiles.html).
    </details>
 
-8. `task-start-dic-process` and by extension the process `exampleorg_dicProcess` now requires additional FHIR resources. Make sure the return value for `TutorialProcessPluginDefinition#getFhirResourcesByProcessId` also includes the new [CodeSystem](https://dsf.dev/process-development/api-v2/fhir/codesystem.html) and [ValueSet](https://dsf.dev/process-development/api-v2/fhir/valueset.html) resources for the `exampleorg_dicProcess`.
+8. Make sure the return value for `TutorialProcessPluginDefinition#getFhirResourcesByProcessId` also includes the new [CodeSystem](https://dsf.dev/process-development/api-v2/fhir/codesystem.html) and [ValueSet](https://dsf.dev/process-development/api-v2/fhir/valueset.html) resources for the `exampleorg_dicProcess`. The process `exampleorg_dicProcess` now requires these additional FHIR resources because `task-start-dic-process` references them — without registering them here, the DSF BPE server will reject the StructureDefinition (and thus process deployment) because it can't find the resources referenced in it.
 9. Read the new input parameter in the `DicTask` class from the start [Task](https://dsf.dev/process-development/api-v2/fhir/task.html) and add the value to the log message from exercise 1.
    <details>
    <summary>Don't know how to get the input parameter?</summary>
